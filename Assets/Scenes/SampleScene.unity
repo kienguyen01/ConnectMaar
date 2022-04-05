@@ -312,7 +312,7 @@ GameObject:
   - component: {fileID: 1435077228}
   - component: {fileID: 1435077227}
   m_Layer: 0
-  m_Name: Tile
+  m_Name: Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -330,9 +330,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d5360c3283f1c24faa6923c04b6444d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hexPrefab: {fileID: 1138415741100340284, guid: c9866f59bed5d0a4fa3b4f6a57456cbe, type: 3}
-  housePrefab: {fileID: 186562, guid: 86491ebb1ab7eeb47bab67b087ff9343, type: 3}
-  solarPrefab: {fileID: 2888545007160614275, guid: 91be685d712222d4699056da8fb7e534, type: 3}
+  hexPrefab: {fileID: -1727450691104041770, guid: ee9cefcd5d0a6904fb8e61aabae82936, type: 3}
+  housePrefab: {fileID: 1251334238118037910, guid: 86491ebb1ab7eeb47bab67b087ff9343, type: 3}
+  solarPrefab: {fileID: 33546426220886354, guid: 91be685d712222d4699056da8fb7e534, type: 3}
+  church: {fileID: 8981359773989595561, guid: 9c5af23356e8b6145b41394b8fd33c83, type: 3}
+  stadium: {fileID: -4581833014947893947, guid: 83b4af855fb86ff4eb38ba51a9580d3c, type: 3}
 --- !u!4 &1435077228
 Transform:
   m_ObjectHideFlags: 0
