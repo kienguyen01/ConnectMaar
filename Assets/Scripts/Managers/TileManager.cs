@@ -48,7 +48,36 @@ public class TileManager : MonoBehaviour
         }
     }
     
-    
+    /// <summary>
+    /// Function to retrive neighbouring cells from a tile
+    /// </summary>
+    /// <param name="t"></param>
+    /// <returns></returns>
+    public List<Tile> getNeigbours(Tile t)//TODO optimize
+    {
+        List<Tile> neighbours = new List<Tile>();
+
+        if (t.Y % 2 != 0)
+        {
+            neighbours.Add((tiles[t.X])[(t.Y - 1)]);
+            neighbours.Add((tiles[t.X + 1])[(t.Y - 1)]);
+            neighbours.Add((tiles[t.X + 1])[(t.Y)]);
+            neighbours.Add((tiles[t.X + 1])[(t.Y + 1)]);
+            neighbours.Add((tiles[t.X])[(t.Y + 1)]);
+            neighbours.Add((tiles[t.X - 1])[(t.Y)]);
+        }
+        else
+        {
+            neighbours.Add((tiles[t.X-1])[(t.Y - 1)]);
+            neighbours.Add((tiles[t.X])[(t.Y - 1)]);
+            neighbours.Add((tiles[t.X + 1])[(t.Y)]);
+            neighbours.Add((tiles[t.X])[(t.Y + 1)]);
+            neighbours.Add((tiles[t.X - 1])[(t.Y + 1)]);
+            neighbours.Add((tiles[t.X - 1])[(t.Y)]);
+        }
+
+        return neighbours;
+    }
 
     Tile GenerateTilesMap(int x, int y)
     {
@@ -61,6 +90,16 @@ public class TileManager : MonoBehaviour
         Tile hex_cell = (Tile)Instantiate(hexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
         hex_cell.name = "Hex_" + x + "_" + y;
 
+        hex_cell.X = x;
+        hex_cell.Y = y;
+        hex_cell.onSelected += (Player Instigator) =>
+        {
+            //Assert
+            MeshRenderer mr = hex_cell.GetComponentInChildren<MeshRenderer>();
+            mr.material.color = Color.red;
+
+            List<Tile> temp = getNeigbours(hex_cell);
+        };
 
         hex_cell.transform.SetParent(this.transform);
 

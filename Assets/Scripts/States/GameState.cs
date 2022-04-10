@@ -39,5 +39,4 @@ public class GameState : MonoBehaviour
 
         }
     }
-
 }

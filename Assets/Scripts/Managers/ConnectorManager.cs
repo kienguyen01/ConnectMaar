@@ -27,6 +27,11 @@ public class ConnectorManager : MonoBehaviour
             chooseTile();
         }
     }
+
+    /// <summary>
+    /// Function that selects one tile when tapped
+    /// </summary>
+    /// <returns></returns>
     Tile chooseTile()
     {
         Tile tileTouched;
@@ -42,10 +47,7 @@ public class ConnectorManager : MonoBehaviour
             GameObject tileObjectTouched = hitInfo.collider.transform.gameObject;
             tileTouched = tileObjectTouched.GetComponent<Tile>();
 
-            MeshRenderer mr = tileTouched.GetComponentInChildren<MeshRenderer>();
-            mr.material.color = Color.red;
-
-            Debug.Log(tileTouched.name);
+            tileTouched.onSelected(new Player());
             
             return tileTouched;
         }

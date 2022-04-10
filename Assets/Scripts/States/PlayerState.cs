@@ -5,6 +5,12 @@ using UnityEngine.Assertions;
 using UnityEngine.Events;
 
 [System.Serializable]
+public struct ConnectorConfig
+{
+    public ConnectorManager ConnectorManagerClass;
+}
+
+[System.Serializable]
 public struct PlayerInfo
 {
     public string name;
@@ -13,8 +19,11 @@ public struct PlayerInfo
 
 }
 
+
 public class PlayerState : MonoBehaviour
 {
+
+    public ConnectorConfig config;
     public Player playerClass;
     public PlayerCamera cameraClass;
 
@@ -22,6 +31,9 @@ public class PlayerState : MonoBehaviour
     
     private Player player;
     private PlayerCamera camera;
+
+    [HideInInspector]
+    public ConnectorManager connectorManager;
 
     [HideInInspector]
     public float points = 0;
@@ -34,7 +46,15 @@ public class PlayerState : MonoBehaviour
 
         //player = CreatePlayer();
         //camera = CreateCamera(player.gameObject);
-        
+
+        //Assert.IsNotNull(config.PlayerStateClass);
+        //Assert.IsTrue(PlayerStarts.Length > 0);
+
+        Debug.Log(config.ConnectorManagerClass ? "true" : "false");
+        if (config.ConnectorManagerClass)
+        {
+            connectorManager = Instantiate(config.ConnectorManagerClass);
+        }
     }
 
     private Player CreatePlayer()
@@ -55,24 +75,5 @@ public class PlayerState : MonoBehaviour
     private void Update()
     {
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-
-        RaycastHit hitInfo;
-
-
-        if (Physics.Raycast(ray, out hitInfo))
-        {
-
-            GameObject tileTouched = hitInfo.collider.transform.gameObject;
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                MeshRenderer mr = tileTouched.GetComponentInChildren<MeshRenderer>();
-                mr.material.color = Color.red;
-
-                Debug.Log(tileTouched.name);
-            }
-        }
     }
 }
