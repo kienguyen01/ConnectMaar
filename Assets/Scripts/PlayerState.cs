@@ -70,6 +70,8 @@ public class PlayerState : MonoBehaviour
             {
                 MeshRenderer mr = tileTouched.GetComponentInChildren<MeshRenderer>();
                 mr.material.color = Color.red;
+
+                Debug.Log(tileTouched.name);
             }
         }
     }

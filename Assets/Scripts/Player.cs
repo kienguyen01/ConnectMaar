@@ -5,8 +5,17 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerPropertyTakenData
 {
-    public List<House> houseList;
-    public List<SpecialBuildings> specialBuildingList;
+    public List<List<Tile>> tilesTaken;
+}
+
+[System.Serializable]
+public class PlayerGameData
+{
+    public int pointGranted;
+    public int handSize;
+    public int numNode;
+    public bool hasSolarInNetwork;
+    public bool hasHeatInNetwork;
 }
 public class Player : MonoBehaviour
 {
@@ -14,5 +23,7 @@ public class Player : MonoBehaviour
     public PlayerState Owner;
 
     public PlayerPropertyTakenData propertyTakenData;
+    public PlayerGameData gameData;
 
+    
 }

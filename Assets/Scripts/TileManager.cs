@@ -17,9 +17,9 @@ public class TileManager : MonoBehaviour
     float xOffset = 1.04f;
     float zOffset = 0.9f;
 
-    public Tile[,] tileClasses;
+    //public Tile[,] tiles;
 
-    public List<Tile> tiles = new List<Tile>();
+    public List<List<Tile>> tiles = new List<List<Tile>>();
 
     public UnityAction<PlayerState> OnTileChosen;
 
@@ -37,14 +37,20 @@ public class TileManager : MonoBehaviour
     {
         for (int x = 0; x < WIDTH_MAP; x++)
         {
+            List<Tile> tileRow = new List<Tile>();
+
             for (int y = 0; y < HEIGHT_MAP; y++)
             {
-                GenerateCellMap(x, y);
+                tileRow.Add((GenerateTilesMap(x, y)));
             }
+
+            tiles.Add(tileRow);
         }
     }
+    
+    
 
-    void GenerateCellMap(int x, int y)
+    Tile GenerateTilesMap(int x, int y)
     {
         float xPos = x * xOffset;
         // check odd row => go inside
@@ -87,5 +93,6 @@ public class TileManager : MonoBehaviour
             stadium_cell.transform.SetParent(hex_cell.transform);
             stadium_cell.name = "stadium_" + x + "_" + y;
         }
+        return hex_cell;
     }
 }
