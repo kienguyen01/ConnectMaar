@@ -24,7 +24,11 @@ public class ConnectorManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            chooseTile();
+            if (Input.touchCount == 1)
+            {
+                chooseTile();
+
+            }
         }
     }
 

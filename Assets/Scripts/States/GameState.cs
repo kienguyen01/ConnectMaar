@@ -14,6 +14,8 @@ public class GameState : MonoBehaviour
 {
     public GameStateConfig config;
     public GameObject[] PlayerStarts;
+    public Camera MainCamera;
+    public Camera phoneCamera;
 
     [HideInInspector]
     public List<PlayerState> playerStates;
