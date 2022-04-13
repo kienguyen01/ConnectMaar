@@ -26,6 +26,8 @@ public class PlayerGameData
     public bool hasSolarInNetwork;
     public bool hasHeatInNetwork;
     public List<Tile> tilesTaken;
+    public List<Tile> tilesChosen;
+    public List<Connection> connectionsDone;
 }
 
 public class PlayerState : MonoBehaviour

@@ -15,21 +15,23 @@ public class Tile : MonoBehaviour
     public int Y { get => y; set => y = value; }
     public PlayerState SelectedBy { get => selectedBy; 
         set 
-        { 
-            //Highlight the tile somehow
+        {
 
+            this.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
 
+            //TODO: selectedBy is empty.
+            
             selectedBy = value;
         }
     }
 
     public PlayerState OwnedBy
     {
-        get => selectedBy;
+        get => ownedBy;
         set
         {
             //todo add colours to playerstates so we can do playerstate.playercolour
-            this.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
+            //this.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
             selectedBy = value;
         }
     }
