@@ -17,9 +17,9 @@ public class TileManager : MonoBehaviour
     float xOffset = 1.04f;
     float zOffset = 0.9f;
 
-    public Tile[,] tileClasses;
+    //public Tile[,] tiles;
 
-    public List<Tile> tiles = new List<Tile>();
+    public List<List<Tile>> tiles = new List<List<Tile>>();
 
     public UnityAction<PlayerState> OnTileChosen;
 
@@ -37,14 +37,49 @@ public class TileManager : MonoBehaviour
     {
         for (int x = 0; x < WIDTH_MAP; x++)
         {
+            List<Tile> tileRow = new List<Tile>();
+
             for (int y = 0; y < HEIGHT_MAP; y++)
             {
-                GenerateCellMap(x, y);
+                tileRow.Add((GenerateTilesMap(x, y)));
             }
+
+            tiles.Add(tileRow);
         }
     }
+    
+    /// <summary>
+    /// Function to retrive neighbouring cells from a tile
+    /// </summary>
+    /// <param name="t"></param>
+    /// <returns></returns>
+    public List<Tile> getNeigbours(Tile t)//TODO optimize
+    {
+        List<Tile> neighbours = new List<Tile>();
 
-    void GenerateCellMap(int x, int y)
+        if (t.Y % 2 != 0)
+        {
+            neighbours.Add((tiles[t.X])[(t.Y - 1)]);
+            neighbours.Add((tiles[t.X + 1])[(t.Y - 1)]);
+            neighbours.Add((tiles[t.X + 1])[(t.Y)]);
+            neighbours.Add((tiles[t.X + 1])[(t.Y + 1)]);
+            neighbours.Add((tiles[t.X])[(t.Y + 1)]);
+            neighbours.Add((tiles[t.X - 1])[(t.Y)]);
+        }
+        else
+        {
+            neighbours.Add((tiles[t.X-1])[(t.Y - 1)]);
+            neighbours.Add((tiles[t.X])[(t.Y - 1)]);
+            neighbours.Add((tiles[t.X + 1])[(t.Y)]);
+            neighbours.Add((tiles[t.X])[(t.Y + 1)]);
+            neighbours.Add((tiles[t.X - 1])[(t.Y + 1)]);
+            neighbours.Add((tiles[t.X - 1])[(t.Y)]);
+        }
+
+        return neighbours;
+    }
+
+    Tile GenerateTilesMap(int x, int y)
     {
         float xPos = x * xOffset;
         // check odd row => go inside
@@ -54,9 +89,11 @@ public class TileManager : MonoBehaviour
         }
         Tile hex_cell = (Tile)Instantiate(hexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
         hex_cell.name = "Hex_" + x + "_" + y;
+        hex_cell.X = x;
+        hex_cell.Y = y;
 
-
-        hex_cell.transform.SetParent(this.transform);
+        addMethods(hex_cell);
+        
 
         if ((x == 3 && y == 12) || (x == 5 && y == 10) || (x == 7 && y == 15) || (x == 2 && y == 19))
         {
@@ -87,5 +124,22 @@ public class TileManager : MonoBehaviour
             stadium_cell.transform.SetParent(hex_cell.transform);
             stadium_cell.name = "stadium_" + x + "_" + y;
         }
+        return hex_cell;
+    }
+
+    private void addMethods(Tile tile)
+    {
+        tile.onTaken += (PlayerState Instigator) =>
+        {
+            tile.OwnedBy = Instigator;
+            List<Tile> temp = getNeigbours(tile);
+        };
+        tile.onSelected += (PlayerState Instigator) =>
+        {
+            tile.OwnedBy = Instigator;
+            List<Tile> temp = getNeigbours(tile);
+        };
+
+        tile.transform.SetParent(this.transform);
     }
 }
