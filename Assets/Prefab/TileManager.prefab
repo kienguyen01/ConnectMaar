@@ -49,4 +49,3 @@ MonoBehaviour:
   solarPrefab: {fileID: 33546426220886354, guid: 91be685d712222d4699056da8fb7e534, type: 3}
   church: {fileID: 8981359773989595561, guid: 9c5af23356e8b6145b41394b8fd33c83, type: 3}
   stadium: {fileID: -4581833014947893947, guid: 83b4af855fb86ff4eb38ba51a9580d3c, type: 3}
-  tiles: []
