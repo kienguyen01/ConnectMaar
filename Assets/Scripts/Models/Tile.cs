@@ -8,8 +8,34 @@ public class Tile : MonoBehaviour
     private int x;
     private int y;
 
+    private PlayerState selectedBy;
+    private PlayerState ownedBy;
+
     public int X { get => x; set => x = value; }
     public int Y { get => y; set => y = value; }
+    public PlayerState SelectedBy { get => selectedBy; 
+        set 
+        { 
+            //Highlight the tile somehow
 
-    public UnityAction<Player> onSelected;
+
+            selectedBy = value;
+        }
+    }
+
+    public PlayerState OwnedBy
+    {
+        get => selectedBy;
+        set
+        {
+            //todo add colours to playerstates so we can do playerstate.playercolour
+            this.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
+            selectedBy = value;
+        }
+    }
+
+
+    public UnityAction<PlayerState> onSelected;
+
+    public UnityAction<PlayerState> onTaken;
 }

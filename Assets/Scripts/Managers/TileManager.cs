@@ -89,19 +89,11 @@ public class TileManager : MonoBehaviour
         }
         Tile hex_cell = (Tile)Instantiate(hexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
         hex_cell.name = "Hex_" + x + "_" + y;
-
         hex_cell.X = x;
         hex_cell.Y = y;
-        hex_cell.onSelected += (Player Instigator) =>
-        {
-            //Assert
-            MeshRenderer mr = hex_cell.GetComponentInChildren<MeshRenderer>();
-            mr.material.color = Color.red;
 
-            List<Tile> temp = getNeigbours(hex_cell);
-        };
-
-        hex_cell.transform.SetParent(this.transform);
+        addMethods(hex_cell);
+        
 
         if ((x == 3 && y == 12) || (x == 5 && y == 10) || (x == 7 && y == 15) || (x == 2 && y == 19))
         {
@@ -133,5 +125,21 @@ public class TileManager : MonoBehaviour
             stadium_cell.name = "stadium_" + x + "_" + y;
         }
         return hex_cell;
+    }
+
+    private void addMethods(Tile tile)
+    {
+        tile.onTaken += (PlayerState Instigator) =>
+        {
+            tile.OwnedBy = Instigator;
+            List<Tile> temp = getNeigbours(tile);
+        };
+        tile.onSelected += (PlayerState Instigator) =>
+        {
+            tile.OwnedBy = Instigator;
+            List<Tile> temp = getNeigbours(tile);
+        };
+
+        tile.transform.SetParent(this.transform);
     }
 }
