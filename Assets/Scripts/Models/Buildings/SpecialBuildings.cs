@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class SpecialBuildings : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Tile original;
+    public Tile firstRelated;
+    public Tile secondRelated;
+    public Tile thirdRelated;
 
-    // Update is called once per frame
-    void Update()
+
+
+    public SpecialBuildings(Tile original)
     {
-        
+        this.original = original;
+        firstRelated.X = original.X - 1;
+        firstRelated.Y = original.Y - 1;
+        secondRelated.X = original.X;
+        secondRelated.Y = original.Y - 2;
+        thirdRelated.X = original.X;
+        thirdRelated.Y = original.Y - 1;
     }
 }

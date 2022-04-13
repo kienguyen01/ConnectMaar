@@ -11,6 +11,9 @@ public class TileManager : MonoBehaviour
     public SpecialBuildings church;
     public SpecialBuildings stadium;
 
+    List<List<Tile>> specialBuildings = new List<List<Tile>>();
+
+
     int WIDTH_MAP = 20;
     int HEIGHT_MAP = 20;
 
@@ -33,8 +36,37 @@ public class TileManager : MonoBehaviour
 
     public UnityAction<int> OnTileAvailableChanged;
 
+    //todo discuss if this approach is doable and how to make sure these tiles having special buildings
+    void InitSpecialBuildings()
+    {
+        List<Tile> stadium = new List<Tile>();
+        //Add specialbuilding tiles
+        stadium.Add((tiles[10])[(18)]);
+        stadium.Add((tiles[10])[(17)]);
+        stadium.Add((tiles[10])[(16)]);
+        stadium.Add((tiles[9])[(17)]);
+
+        specialBuildings.Add(stadium);
+    }
+
+    public List<Tile> getSpecialBuildingChosen(Tile t)
+    { 
+        List<Tile> specialBuildingChosen = new List<Tile>();
+
+        for (int i = 0; i < specialBuildings.Count; i++)
+        {
+            if (specialBuildings[i].Contains(t))
+            {
+                specialBuildingChosen = specialBuildings[i];
+            }
+        }
+
+        return specialBuildingChosen;
+    }
+
     private void Start()
     {
+        
         for (int x = 0; x < WIDTH_MAP; x++)
         {
             List<Tile> tileRow = new List<Tile>();
@@ -46,6 +78,8 @@ public class TileManager : MonoBehaviour
 
             tiles.Add(tileRow);
         }
+
+        InitSpecialBuildings();
     }
     
     /// <summary>
@@ -79,6 +113,76 @@ public class TileManager : MonoBehaviour
         return neighbours;
     }
 
+    public List<Tile> getSpecialBuildings(Tile t)
+    {
+        List<Tile> specialbuildings = new List<Tile> ();
+
+        specialbuildings.Add((tiles[t.X])[(t.Y)]);
+        specialbuildings.Add((tiles[t.X-1])[(t.Y-1)]);
+        specialbuildings.Add((tiles[t.X])[(t.Y-1)]);
+        specialbuildings.Add((tiles[t.X])[(t.Y-2)]);
+
+
+        return specialbuildings;
+    }
+
+    /// <summary>
+    /// Get all tiles that are touched, passing List<Tile> because of special buildings will be a list of tiles
+    /// </summary>
+    /// <param name="tiles"></param>
+    /// <returns></returns>
+    public List<Tile> getTilesTouched(List<Tile> tiles)
+    {
+        List<Tile> touchedTiles = new List<Tile>();
+        foreach(Tile t in tiles)
+        {
+            touchedTiles.Add(t);
+        }
+        return touchedTiles; 
+    }
+
+
+
+
+    public List<Tile> getPossibleStepBy3(Tile t)
+    {
+        List<Tile> possibleTilesStepBy3 = new List<Tile>();
+
+        if(t.X < 2 && t.Y > 2)
+        {
+            possibleTilesStepBy3.Add((tiles[t.X + 2])[t.Y]);
+            possibleTilesStepBy3.Add((tiles[t.X - 1])[t.Y + 2]);
+            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y + 2]);
+            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y - 2]);
+            possibleTilesStepBy3.Add((tiles[t.X - 1])[t.Y - 2]);
+        }
+        if(t.X < 1 && t.Y > 2)
+        {
+            possibleTilesStepBy3.Add((tiles[t.X + 2])[t.Y]);
+            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y + 2]);
+            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y - 2]);
+        }
+        if (t.Y < 2 && t.X > 2)
+        {
+            possibleTilesStepBy3.Add((tiles[t.X - 2])[t.Y]);
+            possibleTilesStepBy3.Add((tiles[t.X + 2])[t.Y]);
+            possibleTilesStepBy3.Add((tiles[t.X - 1])[t.Y + 2]);
+            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y + 2]);
+        }
+        else
+        {
+            possibleTilesStepBy3.Add((tiles[t.X - 2])[t.Y]);
+            possibleTilesStepBy3.Add((tiles[t.X + 2])[t.Y]);
+            possibleTilesStepBy3.Add((tiles[t.X - 1])[t.Y + 2]);
+            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y + 2]);
+            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y - 2]);
+            possibleTilesStepBy3.Add((tiles[t.X - 1])[t.Y - 2]);
+        }
+        
+
+        return possibleTilesStepBy3;
+    }
+
     Tile GenerateTilesMap(int x, int y)
     {
         float xPos = x * xOffset;
@@ -89,19 +193,11 @@ public class TileManager : MonoBehaviour
         }
         Tile hex_cell = (Tile)Instantiate(hexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
         hex_cell.name = "Hex_" + x + "_" + y;
-
         hex_cell.X = x;
         hex_cell.Y = y;
-        hex_cell.onSelected += (Player Instigator) =>
-        {
-            //Assert
-            MeshRenderer mr = hex_cell.GetComponentInChildren<MeshRenderer>();
-            mr.material.color = Color.red;
 
-            List<Tile> temp = getNeigbours(hex_cell);
-        };
-
-        hex_cell.transform.SetParent(this.transform);
+        addMethods(hex_cell);
+        
 
         if ((x == 3 && y == 12) || (x == 5 && y == 10) || (x == 7 && y == 15) || (x == 2 && y == 19))
         {
@@ -134,4 +230,34 @@ public class TileManager : MonoBehaviour
         }
         return hex_cell;
     }
+
+    private void addMethods(Tile tile)
+    {
+        tile.onTaken += (PlayerState Instigator) =>
+        {
+            tile.OwnedBy = Instigator;
+            List<Tile> temp = getNeigbours(tile);
+        };
+        tile.onSelected += (PlayerState Instigator) =>
+        {
+            List<Tile> temp = getSpecialBuildingChosen(tile);
+                                                                                                                                                 
+
+            foreach(Tile t in temp)
+            {
+                t.SelectedBy = Instigator;
+                //Instigator.gameData.tilesChosen.Add(t);
+            }
+            tile.SelectedBy = Instigator;
+        };
+
+        tile.transform.SetParent(this.transform);
+    }
+
+
 }
+
+//TODO TODAY AND TOMORROW:
+//CONNECTORS MANAGER
+//TILE MANAGER WITH LOGIC OF CONNECTION
+//COLOR CELLS ON EVENTS

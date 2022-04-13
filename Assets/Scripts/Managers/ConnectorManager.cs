@@ -5,57 +5,23 @@ using UnityEngine;
 
 public abstract class Connector : MonoBehaviour
 {
-    List<Tile> tiles = new List<Tile>();
-    Tile endingTile;
-    Tile startingTile;
+    protected int length;
+
+    public int getLength()
+    {
+        return this.length;
+    }
+}
+
+public abstract class Connection : MonoBehaviour
+{
+    List<Connector> tiles = new List<Connector>();
     int length;
     Player ownedPlayer;
 }
 public class ConnectorManager : MonoBehaviour
 {
-    List<Connector> connectors = new List<Connector>();
 
-    private void OnTileChosen()
-    {
-        
-    }
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (Input.touchCount == 1)
-            {
-                chooseTile();
-
-            }
-        }
-    }
-
-    /// <summary>
-    /// Function that selects one tile when tapped
-    /// </summary>
-    /// <returns></returns>
-    Tile chooseTile()
-    {
-        Tile tileTouched;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-
-        RaycastHit hitInfo;
-
-
-        if (Physics.Raycast(ray, out hitInfo))
-        {
-
-            GameObject tileObjectTouched = hitInfo.collider.transform.gameObject;
-            tileTouched = tileObjectTouched.GetComponent<Tile>();
-
-            tileTouched.onSelected(new Player());
-            
-            return tileTouched;
-        }
-
-        return null;
-    }
+    List<Connector> tempConnectors = new List<Connector>();
+    List<Connector> takenConnectors = new List<Connector>();
 }
