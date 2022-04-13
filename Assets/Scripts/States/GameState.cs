@@ -31,6 +31,8 @@ public class GameState : MonoBehaviour
         //Assert.IsTrue(PlayerStarts.Length > 0);
 
         Debug.Log($"TileManager - {(config.TileManagerClass ? "true" : "false")}");
+        Debug.Log($"PlayerState in GameState - {(config.PlayerStateClass ? "true" : "false")}");
+
         if (config.TileManagerClass)
         {
             tileManager = Instantiate(config.TileManagerClass);
@@ -75,6 +77,7 @@ public class GameState : MonoBehaviour
 
             tileTouched.onSelected(playerStates[0]);
 
+            playerStates[0].gameData.tilesChosen.Add(tileTouched);
             return tileTouched;
         }
 
