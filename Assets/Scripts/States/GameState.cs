@@ -47,6 +47,11 @@ public class GameState : MonoBehaviour
         playerStates.Add(Instantiate(config.PlayerStateClass));
     }
 
+    //only for local player => should not be updated
+    //coroutine for a local player instead when playerTurn == true
+    //as soon as the turn end => kill coroutine
+    //listener in playerstate to determine the turn
+    
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -60,6 +65,7 @@ public class GameState : MonoBehaviour
     /// Function that selects one tile when tapped
     /// </summary>
     /// <returns></returns>
+    //passing parameter of playerstate
     Tile chooseTile()
     {
         Tile tileTouched;

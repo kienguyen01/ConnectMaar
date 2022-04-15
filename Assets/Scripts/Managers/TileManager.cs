@@ -35,6 +35,24 @@ public class TileManager : MonoBehaviour
     }
 
     public UnityAction<int> OnTileAvailableChanged;
+    List<Tile> windturbineTiles;
+    void InitPowerSources()
+    {
+        List<Tile> powerSources = new List<Tile>();
+
+        windturbineTiles = powerSources;
+
+    }
+
+    List<Tile> housesTiles;
+
+    void InitHouses()
+    {
+        //some random shit goes here
+        List<Tile> houses = new List<Tile>();
+
+        housesTiles = houses;
+    }
 
     //todo discuss if this approach is doable and how to make sure these tiles having special buildings
     void InitSpecialBuildings()
@@ -254,6 +272,55 @@ public class TileManager : MonoBehaviour
         tile.transform.SetParent(this.transform);
     }
 
+
+
+    bool isValidNormalConnection(List<Tile> chosenTiles, PlayerState Owner)
+    {
+        Tile startTile = chosenTiles[0];
+        Tile endTile = chosenTiles[-1];
+
+        foreach (Tile windturbine in windturbineTiles) {
+            List<Tile> surroundingTiles = getNeigbours(windturbine);
+
+            if (surroundingTiles.Contains(startTile))
+            {
+                if (housesTiles.Contains(endTile))
+                {
+                    return true;
+                }
+
+                foreach (List<Tile> specialBuiling in specialBuildings)
+                {
+                    if (specialBuiling.Contains(endTile))
+                    {
+                        return true;
+                    }
+                }
+            }
+            else if (surroundingTiles.Contains(startTile))
+            {
+                if (housesTiles.Contains(endTile))
+                {
+                    return true;
+                }
+                foreach (List<Tile> specialBuiling in specialBuildings)
+                {
+                    if (specialBuiling.Contains(endTile))
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    bool isValidSpecialConnection(List<Tile> chosenTiles, PlayerState Owner)
+    {
+
+
+        return false;
+    }
 
 }
 

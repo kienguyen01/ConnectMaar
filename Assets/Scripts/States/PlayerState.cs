@@ -11,13 +11,7 @@ public struct ConnectorConfig
 }
 
 [System.Serializable]
-public struct PlayerInfo
-{
-    public string name;
-    public float points;
-}
 
-[System.Serializable]
 public class PlayerGameData
 {
     public int pointGranted;
