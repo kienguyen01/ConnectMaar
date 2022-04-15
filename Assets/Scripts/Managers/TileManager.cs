@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,8 @@ public class TileManager : MonoBehaviour
     public Tile hexPrefab;
     public House housePrefab;
     public SolarPanel solarPrefab;
-    public SpecialBuildings church;
-    public SpecialBuildings stadium;
+    public SpecialBuilding church;
+    public SpecialBuilding stadium;
 
     List<List<Tile>> specialBuildings = new List<List<Tile>>();
 
@@ -38,7 +39,7 @@ public class TileManager : MonoBehaviour
 
     //todo discuss if this approach is doable and how to make sure these tiles having special buildings
     void InitSpecialBuildings()
-    {
+    {/*
         List<Tile> stadium = new List<Tile>();
         //Add specialbuilding tiles
         stadium.Add((tiles[10])[(18)]);
@@ -46,7 +47,7 @@ public class TileManager : MonoBehaviour
         stadium.Add((tiles[10])[(16)]);
         stadium.Add((tiles[9])[(17)]);
 
-        specialBuildings.Add(stadium);
+        specialBuildings.Add(stadium);*/
     }
 
     public List<Tile> getSpecialBuildingChosen(Tile t)
@@ -195,8 +196,6 @@ public class TileManager : MonoBehaviour
         hex_cell.name = "Hex_" + x + "_" + y;
         hex_cell.X = x;
         hex_cell.Y = y;
-
-        addMethods(hex_cell);
         
 
         if ((x == 3 && y == 12) || (x == 5 && y == 10) || (x == 7 && y == 15) || (x == 2 && y == 19))
@@ -215,7 +214,7 @@ public class TileManager : MonoBehaviour
 
         if (x == 5 && y == 14)
         {
-            SpecialBuildings church_cell = (SpecialBuildings)Instantiate(church, new Vector3(xPos, 0.35f, y * zOffset + 0.45f), Quaternion.Euler(-90, 90, 0));
+            SpecialBuilding church_cell = (SpecialBuilding)Instantiate(church, new Vector3(xPos, 0.35f, y * zOffset + 0.45f), Quaternion.Euler(-90, 90, 0));
             church_cell.transform.localScale = new Vector3(15.0f, 15.0f, 15.0f);
             church_cell.transform.SetParent(hex_cell.transform);
             church_cell.name = "church_" + x + "_" + y;
@@ -223,12 +222,44 @@ public class TileManager : MonoBehaviour
 
         if (x == 10 && y == 18)
         {
-            SpecialBuildings stadium_cell = (SpecialBuildings)Instantiate(stadium, new Vector3(xPos, 0.205f, y * zOffset - 0.923f), Quaternion.Euler(-90, 0, 0));
+            SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(stadium, new Vector3(xPos, 0.205f, y * zOffset - 0.923f), Quaternion.Euler(-90, 0, 0));
             stadium_cell.transform.localScale = new Vector3(0.15f, 0.15f, 0.3f);
             stadium_cell.transform.SetParent(hex_cell.transform);
             stadium_cell.name = "stadium_" + x + "_" + y;
         }
+
+        addMethods(hex_cell);
+        addSpecialBuilding(hex_cell);
+
         return hex_cell;
+    }
+
+    
+    private void addSpecialBuilding(Tile hex_cell)
+    {
+        string tileCoords = hex_cell.X.ToString().PadLeft(3, '0') + "|" + hex_cell.Y.ToString().PadLeft(3, '0');
+
+        switch (tileCoords)
+        {
+            case "010|018":
+                SpecialBuilding structure = new SpecialBuilding();
+                hex_cell.SetStructure(structure);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private bool isOccupied(Tile tile) {
+        if (tile.occupied)
+        {
+            return true;
+        }
+        else if (tile.IsSpecial())
+        {
+            return true;
+        }
+        return false;
     }
 
     private void addMethods(Tile tile)

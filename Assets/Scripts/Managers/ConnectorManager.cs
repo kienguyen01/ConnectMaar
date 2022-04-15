@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public abstract class Connector : MonoBehaviour
+public abstract class Connector : Structure
 {
     protected int length;
 
