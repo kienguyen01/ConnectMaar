@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HeatPipeConnector : Connector
 {
+    public override bool IsSpecial { get => false; }
+
     // Start is called before the first frame update
     void Start()
     {

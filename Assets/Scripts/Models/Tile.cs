@@ -10,7 +10,7 @@ public class Tile : MonoBehaviour
     private int y;
 
     private PlayerState selectedBy;
-    private PlayerState ownedBy;
+    private PlayerState ownedBy;    
 
     public Structure Structure;
 
@@ -46,7 +46,7 @@ public class Tile : MonoBehaviour
         {
             //todo add colours to playerstates so we can do playerstate.playercolour
             this.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
-            selectedBy = value;
+            ownedBy = value;
         }
     }
 
