@@ -211,15 +211,15 @@ public class TileManager : MonoBehaviour
 
         if (x == 5 && y == 14)
         {
-            SpecialBuilding church_cell = (SpecialBuilding)Instantiate(church, new Vector3(xPos, 0.35f, y * zOffset + 0.45f), Quaternion.Euler(-90, 90, 0));
+            SpecialBuilding church_cell = (SpecialBuilding)Instantiate(church, new Vector3(xPos + 0.512f, 0.35f, y * zOffset - 0.636f), Quaternion.Euler(-90, 90, 0));
             church_cell.transform.localScale = new Vector3(15.0f, 15.0f, 15.0f);
             church_cell.transform.SetParent(hex_cell.transform);
             church_cell.name = "church_" + x + "_" + y;
         }
 
-        if (x == 10 && y == 18)
+        if (x == 9 && y == 17)
         {
-            SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(stadium, new Vector3(xPos, 0.205f, y * zOffset - 0.923f), Quaternion.Euler(-90, 0, 0));
+            SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(stadium, new Vector3(xPos + 0.5f, 0.205f, y * zOffset), Quaternion.Euler(-90, 0, 0));
             stadium_cell.transform.localScale = new Vector3(0.15f, 0.15f, 0.3f);
             stadium_cell.transform.SetParent(hex_cell.transform);
             stadium_cell.name = "stadium_" + x + "_" + y;
@@ -247,7 +247,10 @@ public class TileManager : MonoBehaviour
 
         switch (tileCoords)
         {
-            case "010|018":
+            case "009|017":
+                hex_cell.AddStructure<SpecialBuilding>();
+                break;
+            case "005|014":
                 hex_cell.AddStructure<SpecialBuilding>();
                 break;
             default:
@@ -269,11 +272,11 @@ public class TileManager : MonoBehaviour
 
     private void addMethods(Tile tile)
     {
-        tile.onTaken += (PlayerState Instigator) =>
-        {
-            tile.OwnedBy = Instigator;
-            List<Tile> temp = getNeigbours(tile);
-        };
+        //tile.onTaken += (PlayerState Instigator) =>
+        //{
+        //    tile.OwnedBy = Instigator;
+        //    List<Tile> temp = getNeigbours(tile);
+        //};
         tile.onSelected += (PlayerState Instigator) =>
         {
             if (!Instigator.gameData.tilesChosen.Contains(tile))
@@ -289,6 +292,17 @@ public class TileManager : MonoBehaviour
         };
 
         tile.transform.SetParent(this.transform);
+    }
+
+    private void endButtonOnclick(PlayerState Instigator)
+    {
+        Instigator.gameData.tilesTaken.AddRange(Instigator.gameData.tilesChosen);
+        Instigator.gameData.tilesChosen = new List<Tile>();
+        foreach(Tile tile in Instigator.gameData.tilesChosen)
+        {
+            tile.OwnedBy = Instigator;
+            
+        }
     }
 
     private bool isOccupiedBySamePlayer(Tile tile, PlayerState Instigator)
@@ -312,6 +326,8 @@ public class TileManager : MonoBehaviour
         }
         return false;
     }
+
+    
 }
 
 //TODO TODAY AND TOMORROW:

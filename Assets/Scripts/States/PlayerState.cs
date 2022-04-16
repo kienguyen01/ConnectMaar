@@ -33,14 +33,13 @@ public class PlayerGameData
 public class PlayerState : MonoBehaviour
 {
     public ConnectorConfig config;
-
     public Player playerClass;
     public PlayerCamera cameraClass;
 
 
     [HideInInspector]
     public PlayerGameData gameData;
-
+    
     //public string name;
     
     private PlayerCamera pCamera;
