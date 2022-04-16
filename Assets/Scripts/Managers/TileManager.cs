@@ -303,7 +303,7 @@ public class TileManager : MonoBehaviour
         foreach(Tile tile in Instigator.gameData.tilesTaken)
         {
             tile.OwnedBy = Instigator;
-            
+            tile.SelectedBy = null;
         }
     }
 
