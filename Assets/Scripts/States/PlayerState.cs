@@ -104,7 +104,7 @@ public class PlayerState : MonoBehaviour
         foreach (Tile tile in this.gameData.tilesTaken)
         {
             tile.OwnedBy = this;
-
+            tile.SelectedBy = null;
         }
     }
 }
