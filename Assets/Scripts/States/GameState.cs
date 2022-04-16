@@ -49,9 +49,29 @@ public class GameState : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            chooseTile();
+            Debug.Log("isTurn" + playerStates[0].gameData.isTurn.ToString());
+            if (playerStates[0].gameData.isTurn)
+            {
+                playerStates[0].gameData.isTurn = false;
+            }
+            else
+            {
+                playerStates[0].gameData.isTurn = true;
+            }
+        }
+        if (playerStates[0].gameData.isTurn)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                chooseTile();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            tileManager.endButtonOnClick(playerStates[0]);
         }
     }
 

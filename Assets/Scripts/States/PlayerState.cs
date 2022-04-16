@@ -20,6 +20,7 @@ public struct PlayerInfo
 [System.Serializable]
 public class PlayerGameData
 {
+    public bool isTurn;
     public int pointGranted;
     public int handSize;
     public int numNode;
@@ -36,6 +37,7 @@ public class PlayerState : MonoBehaviour
     public Player playerClass;
     public PlayerCamera cameraClass;
 
+    
 
     [HideInInspector]
     public PlayerGameData gameData;
@@ -53,6 +55,7 @@ public class PlayerState : MonoBehaviour
 
     public void Awake()
     {
+        gameData.isTurn = false;
         //Assert.IsNotNull(playerClass);
         //Assert.IsNotNull(cameraClass);
 

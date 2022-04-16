@@ -6,11 +6,11 @@ using UnityEngine;
 public abstract class Connector : Structure
 {
     protected int length;
-
+    protected List<Tile> tiles;
     public int getLength()
     {
-        return this.length;
-    }
+        return tiles.Count;
+    } 
 }
 
 public abstract class Connection : MonoBehaviour
