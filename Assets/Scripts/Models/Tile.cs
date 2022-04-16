@@ -53,17 +53,7 @@ public class Tile : MonoBehaviour
     private Tile SetStructure(Structure structure)
     {
         Structure = structure;
-
-        occupied = false;
-        occupied = structure.IsBuilding ? true : false;
-        /*if (structure.isBuilding == true)
-        {
-            occupied = true;
-        }
-        else
-        {
-            occupied = false;
-        }*/
+        occupied = structure.IsBuilding;
         return this;
     }
 
@@ -123,6 +113,13 @@ public class Tile : MonoBehaviour
         }
 
         SetStructure((Structure)this.gameObject.AddComponent(typeof(T)));
+        return this;
+    }
+
+    public Tile AddStructure<T>(Structure s)
+    {
+        s.transform.SetParent(this.transform);
+        SetStructure(s);
         return this;
     }
 
