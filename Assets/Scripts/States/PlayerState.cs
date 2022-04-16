@@ -93,4 +93,17 @@ public class PlayerState : MonoBehaviour
     {
 
     }
+
+    public void EndTurn()
+    {
+        Debug.Log("clicked end button");
+        this.gameData.tilesTaken.AddRange(this.gameData.tilesChosen);
+        this.gameData.tilesChosen = new List<Tile>();
+        this.gameData.isTurn = false;
+        foreach (Tile tile in this.gameData.tilesTaken)
+        {
+            tile.OwnedBy = this;
+
+        }
+    }
 }

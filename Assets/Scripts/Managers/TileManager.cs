@@ -294,19 +294,6 @@ public class TileManager : MonoBehaviour
         tile.transform.SetParent(this.transform);
     }
 
-    public void endButtonOnClick(PlayerState Instigator)
-    {
-        Debug.Log("clicked end button");
-        Instigator.gameData.tilesTaken.AddRange(Instigator.gameData.tilesChosen);
-        Instigator.gameData.tilesChosen = new List<Tile>();
-        Instigator.gameData.isTurn = false;
-        foreach(Tile tile in Instigator.gameData.tilesTaken)
-        {
-            tile.OwnedBy = Instigator;
-            
-        }
-    }
-
     private bool isOccupiedBySamePlayer(Tile tile, PlayerState Instigator)
     {
         if (tile.occupied && (tile.OwnedBy == Instigator || tile.SelectedBy == Instigator))

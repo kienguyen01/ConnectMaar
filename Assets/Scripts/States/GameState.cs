@@ -71,7 +71,7 @@ public class GameState : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
-            tileManager.endButtonOnClick(playerStates[0]);
+            playerStates[0].EndTurn();
         }
     }
 
