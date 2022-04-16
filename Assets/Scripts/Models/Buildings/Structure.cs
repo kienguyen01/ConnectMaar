@@ -4,5 +4,7 @@ using UnityEngine;
 
 public abstract class Structure : MonoBehaviour
 {
-    public bool isSpecial;
+    public virtual bool IsBuilding { get => true;  }
+
+    public virtual bool IsSpecial  { get => false; }
 }

@@ -142,9 +142,6 @@ public class TileManager : MonoBehaviour
         return touchedTiles; 
     }
 
-
-
-
     public List<Tile> getPossibleStepBy3(Tile t)
     {
         List<Tile> possibleTilesStepBy3 = new List<Tile>();
@@ -231,9 +228,18 @@ public class TileManager : MonoBehaviour
         addMethods(hex_cell);
         addSpecialBuilding(hex_cell);
 
+        setEmpties(hex_cell);
+
         return hex_cell;
     }
 
+    private void setEmpties(Tile hex_cell)
+    {
+        if(hex_cell.Structure == null)
+        {
+            hex_cell.AddStructure<EmptyStructure>();
+        }
+    }
     
     private void addSpecialBuilding(Tile hex_cell)
     {
@@ -242,20 +248,19 @@ public class TileManager : MonoBehaviour
         switch (tileCoords)
         {
             case "010|018":
-                SpecialBuilding structure = new SpecialBuilding();
-                hex_cell.SetStructure(structure);
+                hex_cell.AddStructure<SpecialBuilding>();
                 break;
             default:
                 break;
         }
     }
 
-    private bool isOccupied(Tile tile) {
+    public bool isOccupied(Tile tile) {
         if (tile.occupied)
         {
             return true;
         }
-        else if (tile.IsSpecial())
+        else if (tile.IsSpecial(this))
         {
             return true;
         }
@@ -271,21 +276,42 @@ public class TileManager : MonoBehaviour
         };
         tile.onSelected += (PlayerState Instigator) =>
         {
-            List<Tile> temp = getSpecialBuildingChosen(tile);
-                                                                                                                                                 
-
-            foreach(Tile t in temp)
+            if (!Instigator.gameData.tilesChosen.Contains(tile))
             {
-                t.SelectedBy = Instigator;
-                //Instigator.gameData.tilesChosen.Add(t);
+                Instigator.gameData.tilesChosen.Add(tile);
+                tile.SelectedBy = Instigator;
             }
-            tile.SelectedBy = Instigator;
+            else
+            {
+                Instigator.gameData.tilesChosen.Remove(tile);
+                tile.SelectedBy = null;
+            }
         };
 
         tile.transform.SetParent(this.transform);
     }
 
+    private bool isOccupiedBySamePlayer(Tile tile, PlayerState Instigator)
+    {
+        if (tile.occupied && (tile.OwnedBy == Instigator || tile.SelectedBy == Instigator))
+        {
+            return true;
+        }
 
+        return false;
+    }
+
+    bool isValidTileToChoose(Tile t, PlayerState playerState)
+    {
+        foreach (Tile tile in getNeigbours(t))
+        {
+            if (isOccupiedBySamePlayer(tile, playerState))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 //TODO TODAY AND TOMORROW:

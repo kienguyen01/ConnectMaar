@@ -14,6 +14,7 @@ public class Tile : MonoBehaviour
 
     public Structure Structure;
 
+
     public bool occupied;
 
     public int X { get => x; set => x = value; }
@@ -21,10 +22,18 @@ public class Tile : MonoBehaviour
     public PlayerState SelectedBy { get => selectedBy; 
         set 
         {
-
-            this.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
-
-            //TODO: selectedBy is empty.
+            if(value == null)
+            {
+                //remove highlight
+                Destroy(this.gameObject.GetComponent<Outline>());
+            }
+            else
+            {
+                //change to highlight
+                this.gameObject.AddComponent<Outline>()
+                    .OutlineWidth = 4.0f;
+                this.gameObject.GetComponent<Outline>().OutlineMode = Outline.Mode.OutlineAndSilhouette;
+            }
             
             selectedBy = value;
         }
@@ -36,71 +45,85 @@ public class Tile : MonoBehaviour
         set
         {
             //todo add colours to playerstates so we can do playerstate.playercolour
-            //this.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
+            this.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
             selectedBy = value;
         }
     }
 
-    public Tile SetStructure(Structure structure)
+    private Tile SetStructure(Structure structure)
     {
         Structure = structure;
-        occupied = true;
+
+        occupied = false;
+        occupied = structure.IsBuilding ? true : false;
+        /*if (structure.isBuilding == true)
+        {
+            occupied = true;
+        }
+        else
+        {
+            occupied = false;
+        }*/
         return this;
     }
 
-    public bool IsSpecial()
+    public bool IsSpecial(TileManager tm)
     {
-        if ((this.Structure as SpecialBuilding).isSpecial)
+        if (this.Structure.IsSpecial)
         {
             return true;
         }
         else
         {
-            Tile temp = new Tile();
             if(this.Y%2 == 0)
             {
-                temp.X = this.X - 1;
-                temp.Y = this.Y - 1;
-                if ((temp.Structure as SpecialBuilding).isSpecial)
+                if (tm.tiles[X - 1][Y - 1].Structure.IsSpecial)
                 {
                     return true;
                 }
-                temp.X = this.X - 1;
-                temp.Y = this.Y;
-                if ((temp.Structure as SpecialBuilding).isSpecial)
+                
+                if (tm.tiles[X - 1][Y].Structure.IsSpecial)
                 {
                     return true;
                 }
-                temp.X = this.X - 1;
-                temp.Y = this.Y + 1;
-                if ((temp.Structure as SpecialBuilding).isSpecial)
+
+                if (tm.tiles[X - 1][Y + 1].Structure.IsSpecial)
                 {
                     return true;
                 }
             }
             else
             {
-                temp.X = this.X;
-                temp.Y = this.Y - 1;
-                if ((temp.Structure as SpecialBuilding).isSpecial)
+                if (tm.tiles[X][Y - 1].Structure.IsSpecial)
                 {
                     return true;
                 }
-                temp.X = this.X - 1;
-                temp.Y = this.Y;
-                if ((temp.Structure as SpecialBuilding).isSpecial)
+
+                if (tm.tiles[X - 1][Y].Structure.IsSpecial)
                 {
                     return true;
                 }
-                temp.X = this.X;
-                temp.Y = this.Y + 1;
-                if ((temp.Structure as SpecialBuilding).isSpecial)
+
+                if (tm.tiles[X][Y + 1].Structure.IsSpecial)
                 {
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    public Tile AddStructure<T>()
+    {
+        Structure currentObj = this.gameObject.GetComponent<Structure>();
+
+        if (currentObj != null)
+        {
+            Destroy(currentObj);
+        }
+
+        SetStructure((Structure)this.gameObject.AddComponent(typeof(T)));
+        return this;
     }
 
     public UnityAction<PlayerState> onSelected;

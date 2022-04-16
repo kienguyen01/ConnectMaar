@@ -75,9 +75,8 @@ public class GameState : MonoBehaviour
             GameObject tileObjectTouched = hitInfo.collider.transform.gameObject;
             tileTouched = tileObjectTouched.GetComponent<Tile>();
 
-            tileTouched.onSelected(playerStates[0]);
-
-            playerStates[0].gameData.tilesChosen.Add(tileTouched);
+            if(!tileManager.isOccupied(tileTouched))
+                tileTouched.onSelected(playerStates[0]);
             return tileTouched;
         }
 

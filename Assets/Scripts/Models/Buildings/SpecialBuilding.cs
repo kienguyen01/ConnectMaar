@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class SpecialBuilding : Structure
 {
+    public override bool IsSpecial { get => true; }
+
     public SpecialBuilding()
     {
-        isSpecial = true;
+        
     }
 }
