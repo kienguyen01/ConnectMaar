@@ -99,7 +99,7 @@ public class PlayerState : MonoBehaviour
     {
         Debug.Log("clicked end button");
         this.gameData.tilesTaken.AddRange(this.gameData.tilesChosen);
-        this.gameData.tilesChosen = new List<Tile>();
+        this.gameData.tilesChosen = new Stack<Tile>();
         this.gameData.isTurn = false;
         foreach (Tile tile in this.gameData.tilesTaken)
         {
