@@ -73,6 +73,10 @@ public class GameState : MonoBehaviour
         {
             tileManager.endButtonOnClick(playerStates[0]);
         }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            tileManager.tiles[12][16].OwnedBy = playerStates[0];
+        }
     }
 
 
