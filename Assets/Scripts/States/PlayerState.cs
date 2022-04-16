@@ -27,7 +27,7 @@ public class PlayerGameData
     public bool hasSolarInNetwork;
     public bool hasHeatInNetwork;
     public List<Tile> tilesTaken;
-    public List<Tile> tilesChosen;
+    public Stack<Tile> tilesChosen;
     public List<Connection> connectionsDone;
 }
 
@@ -56,6 +56,7 @@ public class PlayerState : MonoBehaviour
     public void Awake()
     {
         gameData.isTurn = false;
+        gameData.tilesChosen = new Stack<Tile>();
         //Assert.IsNotNull(playerClass);
         //Assert.IsNotNull(cameraClass);
 

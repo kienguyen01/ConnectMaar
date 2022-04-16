@@ -75,9 +75,9 @@ public class Tile : MonoBehaviour
         }
         else
         {
-            if(this.Y%2 == 0)
+            if(this.Y%2 == 0 && X > 0)
             {
-                if (tm.tiles[X - 1][Y - 1].Structure.IsSpecial)
+                if (Y > 0 && tm.tiles[X - 1][Y - 1].Structure.IsSpecial)
                 {
                     return true;
                 }
@@ -87,24 +87,24 @@ public class Tile : MonoBehaviour
                     return true;
                 }
 
-                if (tm.tiles[X - 1][Y + 1].Structure.IsSpecial)
+                if (Y < (tm.tiles[0].Count - 1) && tm.tiles[X - 1][Y + 1].Structure.IsSpecial)
                 {
                     return true;
                 }
             }
             else
             {
-                if (tm.tiles[X][Y - 1].Structure.IsSpecial)
+                if (Y > 0 && tm.tiles[X][Y - 1].Structure.IsSpecial)
                 {
                     return true;
                 }
 
-                if (tm.tiles[X - 1][Y].Structure.IsSpecial)
+                if (X > 0 && tm.tiles[X - 1][Y].Structure.IsSpecial)
                 {
                     return true;
                 }
 
-                if (tm.tiles[X][Y + 1].Structure.IsSpecial)
+                if (Y < (tm.tiles[0].Count - 1) && tm.tiles[X][Y + 1].Structure.IsSpecial)
                 {
                     return true;
                 }

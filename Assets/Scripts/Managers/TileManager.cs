@@ -91,26 +91,42 @@ public class TileManager : MonoBehaviour
     public List<Tile> getNeigbours(Tile t)//TODO optimize
     {
         List<Tile> neighbours = new List<Tile>();
-
         if (t.Y % 2 != 0)
         {
-            neighbours.Add((tiles[t.X])[(t.Y - 1)]);
-            neighbours.Add((tiles[t.X + 1])[(t.Y - 1)]);
-            neighbours.Add((tiles[t.X + 1])[(t.Y)]);
-            neighbours.Add((tiles[t.X + 1])[(t.Y + 1)]);
-            neighbours.Add((tiles[t.X])[(t.Y + 1)]);
-            neighbours.Add((tiles[t.X - 1])[(t.Y)]);
+            if (t.Y != 0)
+            {
+                neighbours.Add((tiles[t.X])[(t.Y - 1)]);
+                if(t.X != tiles.Count - 1)
+                    neighbours.Add((tiles[t.X + 1])[(t.Y - 1)]);
+            }
+            if(t.X != tiles.Count - 1)
+            {
+                neighbours.Add((tiles[t.X + 1])[(t.Y)]);
+                if(t.Y != tiles[0].Count - 1)
+                    neighbours.Add((tiles[t.X + 1])[(t.Y + 1)]);
+            }
+            if(t.Y != tiles[0].Count - 1)
+                neighbours.Add((tiles[t.X])[(t.Y + 1)]);
+            if (t.X != 0)
+                neighbours.Add((tiles[t.X - 1])[(t.Y)]);
         }
         else
         {
-            neighbours.Add((tiles[t.X-1])[(t.Y - 1)]);
-            neighbours.Add((tiles[t.X])[(t.Y - 1)]);
-            neighbours.Add((tiles[t.X + 1])[(t.Y)]);
-            neighbours.Add((tiles[t.X])[(t.Y + 1)]);
-            neighbours.Add((tiles[t.X - 1])[(t.Y + 1)]);
-            neighbours.Add((tiles[t.X - 1])[(t.Y)]);
+            if(t.X != 0)
+            {
+                neighbours.Add((tiles[t.X - 1])[(t.Y)]);
+                if(t.Y != tiles[0].Count - 1)
+                    neighbours.Add((tiles[t.X - 1])[(t.Y - 1)]);
+                if (t.Y != 0)
+                    neighbours.Add((tiles[t.X - 1])[(t.Y + 1)]);
+            }
+            if (t.Y != tiles[0].Count - 1)
+                neighbours.Add((tiles[t.X])[(t.Y + 1)]);
+            if (t.X != tiles.Count - 1)
+                neighbours.Add((tiles[t.X + 1])[(t.Y)]);
+            if (t.Y != 0)
+                neighbours.Add((tiles[t.X])[(t.Y - 1)]);
         }
-
         return neighbours;
     }
 
@@ -279,15 +295,29 @@ public class TileManager : MonoBehaviour
         //};
         tile.onSelected += (PlayerState Instigator) =>
         {
-            if (!Instigator.gameData.tilesChosen.Contains(tile))
+            List<Tile> neighbours = getNeigbours(tile);
+
+            if (neighbours.Find( x => x.OwnedBy == Instigator || x.SelectedBy == Instigator))
             {
-                Instigator.gameData.tilesChosen.Add(tile);
-                tile.SelectedBy = Instigator;
+                if (tile.OwnedBy == null && tile.SelectedBy == null && ((Instigator.gameData.tilesChosen.Count > 0) ? neighbours.Contains(Instigator.gameData.tilesChosen.Peek()) : true))
+                {
+                    Instigator.gameData.tilesChosen.Push(tile);
+                    tile.SelectedBy = Instigator;
+                }
+                else if (tile.SelectedBy == Instigator && ((Instigator.gameData.tilesChosen.Count > 0) ? (Instigator.gameData.tilesChosen.Peek() == tile) : false))
+                {
+                    Instigator.gameData.tilesChosen.Pop();
+                    tile.SelectedBy = null;
+                }
             }
             else
             {
-                Instigator.gameData.tilesChosen.Remove(tile);
-                tile.SelectedBy = null;
+                Debug.LogWarning(Instigator.gameData.tilesChosen.Peek());
+                Debug.LogWarning(tile);
+                foreach (Tile t in getNeigbours(tile))
+                {
+                    Debug.Log(t.X + "   " + t.Y);
+                }
             }
         };
 
