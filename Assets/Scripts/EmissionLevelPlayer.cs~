@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class EmissionLevel : MonoBehaviour
+public class EmissionLevelPlayer : MonoBehaviour
 {
     public TMP_Text playerText;
     public Image emissionBar;
     float lerpSpeed; //making sure increase and decrease is smooth
-    float currentEmission, maxEmission = 100; //setting it to 100
+    float currentEmission, maxEmission = 50; //setting it to 100
 
     private void Start()
     {
