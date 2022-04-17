@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 6080684032
-    m_Localized: "       STOP SPEL\t\t"
+    m_Localized: "      STOP SPEL\t\t"
     m_Metadata:
       m_Items: []
   references:
