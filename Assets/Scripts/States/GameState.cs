@@ -40,9 +40,15 @@ public class GameState : MonoBehaviour
 
         createPlayer();
 
-        playerStates[0].RefillHand();
     }
 
+
+
+    bool onePressed = false;
+    bool twoPressed = false;
+    bool threePressed = false;
+
+    int numOfPress = 0;
     private void createPlayer()
     {
         playerStates.Add(Instantiate(config.PlayerStateClass));
@@ -51,24 +57,62 @@ public class GameState : MonoBehaviour
 
     private void Update()
     {
+
+
+
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("isTurn" + playerStates[0].gameData.isTurn.ToString());
             if (playerStates[0].gameData.isTurn)
             {
+                playerStates[0].RefillHand();
                 playerStates[0].gameData.isTurn = false;
             }
             else
             {
                 playerStates[0].gameData.isTurn = true;
             }
+            Debug.Log("isTurn" + playerStates[0].gameData.isTurn.ToString());
         }
         if (playerStates[0].gameData.isTurn)
         {
-            if (Input.GetMouseButtonDown(0))
+
+            if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                chooseTile();
+                onePressed = !onePressed;
+                twoPressed = false;
+                threePressed = false;
+                Debug.Log("1 pressed " + onePressed);
+                numOfPress = 1;
             }
+            
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                onePressed = false;
+                twoPressed = true;
+                threePressed = false;
+                Debug.Log("2 pressed " + twoPressed);
+                numOfPress = 2;
+
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                onePressed = false;
+                twoPressed = false;
+                threePressed = true;
+                Debug.Log("2 pressed " + threePressed);
+                numOfPress = 1;
+            }
+
+            for (int i = 0; i < numOfPress; i++)
+            {
+                if ((onePressed || twoPressed || threePressed) && Input.GetMouseButtonDown(0))
+                {
+                    chooseTile();
+                }
+
+            }
+            //pressed = false;
         }
 
         if (Input.GetKeyDown(KeyCode.Backspace))
@@ -79,23 +123,24 @@ public class GameState : MonoBehaviour
         {
             tileManager.tiles[12][16].OwnedBy = playerStates[0];
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            selectConnector(1);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            selectConnector(2);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            selectConnector(3);
-        }
+        
     }
 
     void selectConnector(int Length)
     {
-
+        //switch (Length)
+        //{
+        //    case 1:
+        //        chooseTile(1);
+        //        break;
+        //    case 2:
+        //        chooseTile(2);
+        //        break;
+        //    case 3:
+        //        chooseTile(3);
+        //        break;
+        //    default: break;
+        //}
     }
 
 
@@ -105,6 +150,7 @@ public class GameState : MonoBehaviour
     /// <returns></returns>
     Tile chooseTile()
     {
+        
         Tile tileTouched;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -118,10 +164,12 @@ public class GameState : MonoBehaviour
             GameObject tileObjectTouched = hitInfo.collider.transform.gameObject;
             tileTouched = tileObjectTouched.GetComponent<Tile>();
 
-            if(!tileManager.isOccupied(tileTouched))
+            if (!tileManager.isOccupied(tileTouched))
                 tileTouched.onSelected(playerStates[0]);
             return tileTouched;
         }
+        
+       
 
         return null;
     }

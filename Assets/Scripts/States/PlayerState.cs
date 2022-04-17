@@ -22,7 +22,7 @@ public class PlayerGameData
 {
     public bool isTurn;
     public int pointGranted;
-    public int handSize/* = 1231241245*/;
+    public int handSize;
     public int numNode;
     public bool hasSolarInNetwork;
     public bool hasHeatInNetwork;
@@ -73,6 +73,8 @@ public class PlayerState : MonoBehaviour
         {
             connectorManager = Instantiate(config.ConnectorManagerClass);
         }
+        gameData.handSize = 4;
+
     }
 
     /*private Player CreatePlayer()
@@ -112,7 +114,6 @@ public class PlayerState : MonoBehaviour
 
     public void RefillHand()
     {
-        //gameData.handSize = 4;
         for (int i = gameData.Inventory.Count; i < gameData.handSize; i++)
         {
             switch (Random.Range(1, 4))
