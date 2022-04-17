@@ -5,7 +5,7 @@ using UnityEngine;
 public class StandardConnector2 : StandardConnector
 {
     public override bool IsSpecial { get => false; }
-    public override int Length { get => 2; }
+    public override int MaxLength { get => 2; }
 
     // Start is called before the first frame update
     void Start()

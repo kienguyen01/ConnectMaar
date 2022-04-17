@@ -134,4 +134,25 @@ public class PlayerState : MonoBehaviour
             }
         }
     }
+
+    public Connection StartConnection()
+    {
+        Connection c = new Connection();
+        //Connection c = ;
+        //gameData.connectionsDone.Add(c);
+        return c;
+    }
+
+    public PlayerState AbortConnection(Connection conn)
+    {
+        Destroy(conn);
+        //gameData.connectionsDone.Remove(conn);
+        return this;
+    }
+
+    public PlayerState FinalizeConnection(Connection conn)
+    {
+        gameData.connectionsDone.Add(conn);
+        return this;
+    }
 }

@@ -5,20 +5,43 @@ using UnityEngine;
 
 public abstract class Connector : Structure
 {
-    public virtual int Length { get => 1; }
+    public virtual int MaxLength { get => 1; }
 
     protected List<Tile> tiles;
+
+    private void Awake()
+    {
+        tiles = new List<Tile>();
+    }
+
     public int getLength()
     {
         return tiles.Count;
-    } 
+    }
+
+    public Connector AddTile(Tile t)
+    {
+        tiles.Add(t);
+        return this;
+    }
+
+    public List<Tile> GetTiles()
+    {
+        return tiles;
+    }
 }
 
-public abstract class Connection : MonoBehaviour
+[System.Serializable]
+public class Connection : ScriptableObject
 {
-    List<Connector> tiles = new List<Connector>();
+    public List<Connector> Connectors;
     int length;
     Player ownedPlayer;
+
+    private void Awake()
+    {
+        Connectors = new List<Connector>();
+    }
 }
 public class ConnectorManager : MonoBehaviour
 {

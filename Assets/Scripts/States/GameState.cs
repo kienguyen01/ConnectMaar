@@ -44,32 +44,31 @@ public class GameState : MonoBehaviour
 
 
 
-    bool onePressed = false;
-    bool twoPressed = false;
-    bool threePressed = false;
+    Connector selectedConnector;
+    Connection currentConnection;
 
-    int numOfPress = 0;
     private void createPlayer()
     {
         playerStates.Add(Instantiate(config.PlayerStateClass));
         playerStates.Add(Instantiate(config.PlayerStateClass));
+        playerStates[0].RefillHand();
     }
 
     private void Update()
     {
-
-
-
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (playerStates[0].gameData.isTurn)
             {
-                playerStates[0].RefillHand();
                 playerStates[0].gameData.isTurn = false;
+                playerStates[0].EndTurn();
+
+                playerStates[0].FinalizeConnection(currentConnection);
+                currentConnection = null;
             }
             else
             {
+                playerStates[0].RefillHand();
                 playerStates[0].gameData.isTurn = true;
             }
             Debug.Log("isTurn" + playerStates[0].gameData.isTurn.ToString());
@@ -79,46 +78,67 @@ public class GameState : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                onePressed = !onePressed;
-                twoPressed = false;
-                threePressed = false;
-                Debug.Log("1 pressed " + onePressed);
-                numOfPress = 1;
+                if (selectedConnector != null)
+                {
+                    playerStates[0].gameData.Inventory.Add(selectedConnector);
+                    foreach (Tile t in selectedConnector.GetTiles())
+                    {
+                        t.SelectedBy = null;
+                    }
+                    playerStates[0].gameData.tilesChosen.Clear();
+                    playerStates[0].AbortConnection(currentConnection);
+                }
+                selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 1);
+                playerStates[0].gameData.Inventory.Remove(selectedConnector);
             }
             
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                onePressed = false;
-                twoPressed = true;
-                threePressed = false;
-                Debug.Log("2 pressed " + twoPressed);
-                numOfPress = 2;
-
+                if (selectedConnector != null)
+                {
+                    playerStates[0].gameData.Inventory.Add(selectedConnector);
+                    foreach (Tile t in selectedConnector.GetTiles())
+                    {
+                        t.SelectedBy = null;
+                    }
+                    playerStates[0].gameData.tilesChosen.Clear();
+                    playerStates[0].AbortConnection(currentConnection);
+                }
+                selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 2);
+                playerStates[0].gameData.Inventory.Remove(selectedConnector);
             }
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                onePressed = false;
-                twoPressed = false;
-                threePressed = true;
-                Debug.Log("2 pressed " + threePressed);
-                numOfPress = 1;
+                if(selectedConnector != null)
+                {
+                    playerStates[0].gameData.Inventory.Add(selectedConnector);
+                    foreach (Tile t in selectedConnector.GetTiles())
+                    {
+                        t.SelectedBy = null;
+                    }
+                    playerStates[0].gameData.tilesChosen.Clear();
+                    playerStates[0].AbortConnection(currentConnection);
+                }
+                selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 3);
+                playerStates[0].gameData.Inventory.Remove(selectedConnector);
             }
 
-            for (int i = 0; i < numOfPress; i++)
+            if (Input.GetMouseButtonDown(0) && selectedConnector.MaxLength > selectedConnector.getLength())
             {
-                if ((onePressed || twoPressed || threePressed) && Input.GetMouseButtonDown(0))
-                {
-                    chooseTile();
-                }
-
+               selectedConnector.AddTile(chooseTile());
+               if(selectedConnector.MaxLength == selectedConnector.getLength())
+               {
+                   if(currentConnection == null)
+                   {
+                       currentConnection = playerStates[0].StartConnection();
+                   }
+                   currentConnection.Connectors.Add(selectedConnector);
+                   selectedConnector = null;
+               }
             }
             //pressed = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            playerStates[0].EndTurn();
-        }
         if (Input.GetKeyDown(KeyCode.A))
         {
             tileManager.tiles[12][16].OwnedBy = playerStates[0];
@@ -126,7 +146,7 @@ public class GameState : MonoBehaviour
         
     }
 
-    void selectConnector(int Length)
+    /*void selectConnector(int Length)
     {
         //switch (Length)
         //{
@@ -141,7 +161,7 @@ public class GameState : MonoBehaviour
         //        break;
         //    default: break;
         //}
-    }
+    }*/
 
 
     /// <summary>
@@ -150,13 +170,10 @@ public class GameState : MonoBehaviour
     /// <returns></returns>
     Tile chooseTile()
     {
-        
         Tile tileTouched;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-
         RaycastHit hitInfo;
-
 
         if (Physics.Raycast(ray, out hitInfo))
         {
@@ -169,8 +186,6 @@ public class GameState : MonoBehaviour
             return tileTouched;
         }
         
-       
-
         return null;
     }
 }
