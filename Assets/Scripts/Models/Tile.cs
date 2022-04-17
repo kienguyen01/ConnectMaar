@@ -10,7 +10,8 @@ public class Tile : MonoBehaviour
     private int y;
 
     private PlayerState selectedBy;
-    private PlayerState ownedBy;    
+    private PlayerState ownedBy;
+    private Tile specialOriginTile;
 
     public Structure Structure;
 
@@ -61,6 +62,7 @@ public class Tile : MonoBehaviour
     {
         if (this.Structure.IsSpecial)
         {
+            specialOriginTile = this;
             return true;
         }
         else
@@ -69,16 +71,19 @@ public class Tile : MonoBehaviour
             {
                 if (Y > 0 && tm.tiles[X - 1][Y - 1].Structure.IsSpecial)
                 {
+                    specialOriginTile = tm.tiles[X - 1][Y - 1];
                     return true;
                 }
                 
                 if (tm.tiles[X - 1][Y].Structure.IsSpecial)
                 {
+                    specialOriginTile = tm.tiles[X - 1][Y];
                     return true;
                 }
 
                 if (Y < (tm.tiles[0].Count - 1) && tm.tiles[X - 1][Y + 1].Structure.IsSpecial)
                 {
+                    specialOriginTile = tm.tiles[X - 1][Y + 1];
                     return true;
                 }
             }
@@ -86,21 +91,32 @@ public class Tile : MonoBehaviour
             {
                 if (Y > 0 && tm.tiles[X][Y - 1].Structure.IsSpecial)
                 {
+                    specialOriginTile = tm.tiles[X][Y - 1];
                     return true;
                 }
 
                 if (X > 0 && tm.tiles[X - 1][Y].Structure.IsSpecial)
                 {
+                    specialOriginTile = tm.tiles[X - 1][Y];
                     return true;
                 }
 
                 if (Y < (tm.tiles[0].Count - 1) && tm.tiles[X][Y + 1].Structure.IsSpecial)
                 {
+                    specialOriginTile = tm.tiles[X][Y + 1];
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    public Tile GetSpecialOriginTile(TileManager tm)
+    {
+        if (this.IsSpecial(tm))
+            return specialOriginTile;
+        else
+            return null;
     }
 
     public Tile AddStructure<T>()

@@ -137,7 +137,7 @@ public class PlayerState : MonoBehaviour
 
     public Connection StartConnection()
     {
-        Connection c = new Connection();
+        Connection c = (Connection)ScriptableObject.CreateInstance("Connection");
         //Connection c = ;
         //gameData.connectionsDone.Add(c);
         return c;

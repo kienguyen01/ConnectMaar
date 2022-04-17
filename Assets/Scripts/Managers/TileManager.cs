@@ -297,6 +297,14 @@ public class TileManager : MonoBehaviour
         {
             List<Tile> neighbours = getNeigbours(tile);
 
+            if (tile.IsSpecial(this))
+            {
+                foreach (Tile t in getSpecialNeighbours(tile))
+                {
+                    t.onSelected(Instigator);
+                }
+            }
+
             if (neighbours.Find( x => x.OwnedBy == Instigator || x.SelectedBy == Instigator))
             {
                 if (tile.OwnedBy == null && tile.SelectedBy == null && ((Instigator.gameData.tilesChosen.Count > 0) ? neighbours.Contains(Instigator.gameData.tilesChosen.Peek()) : true))
@@ -322,6 +330,27 @@ public class TileManager : MonoBehaviour
         };
 
         tile.transform.SetParent(this.transform);
+    }
+
+    private List<Tile> getSpecialNeighbours(Tile tile)
+    {
+        List<Tile> neighbours = new List<Tile>();
+        Tile origin = tile.GetSpecialOriginTile(this);
+
+        if (origin.Y % 2 == 0)
+        {
+            neighbours.Add(tiles[origin.X][origin.Y + 1]);
+            neighbours.Add(tiles[origin.X + 1][origin.Y]);
+            neighbours.Add(tiles[origin.X + 1][origin.Y - 1]);
+        }
+        else
+        {
+            neighbours.Add(tiles[origin.X + 1][origin.Y + 1]);
+            neighbours.Add(tiles[origin.X + 1][origin.Y]);
+            neighbours.Add(tiles[origin.X][origin.Y - 1]);
+        }
+
+        return neighbours;
     }
 
     private bool isOccupiedBySamePlayer(Tile tile, PlayerState Instigator)

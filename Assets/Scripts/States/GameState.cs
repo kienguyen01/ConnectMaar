@@ -75,7 +75,6 @@ public class GameState : MonoBehaviour
         }
         if (playerStates[0].gameData.isTurn)
         {
-
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 if (selectedConnector != null)
