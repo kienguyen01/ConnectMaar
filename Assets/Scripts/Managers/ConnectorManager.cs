@@ -59,6 +59,7 @@ public class Connection : ScriptableObject
 }
 public class ConnectorManager : MonoBehaviour
 {
+
     List<Connector> tempConnectors = new List<Connector>();
     List<Connector> takenConnectors = new List<Connector>();
 

@@ -62,6 +62,9 @@ public class PlayerState : MonoBehaviour
         //Assert.IsNotNull(playerClass);
         //Assert.IsNotNull(cameraClass);
 
+         //player = CreatePlayer(); 
+         //camera = CreateCamera(player.gameObject);
+
         //player = CreatePlayer();
         //camera = CreateCamera(player.gameObject);
 
@@ -83,6 +86,7 @@ public class PlayerState : MonoBehaviour
         Player.Owner = this;
 
         return Player;
+
     }*/
 
     /*
@@ -93,6 +97,8 @@ public class PlayerState : MonoBehaviour
 
         return Camera;
     }*/
+
+
 
     private void Update()
     {
