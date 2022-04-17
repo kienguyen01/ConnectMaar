@@ -22,13 +22,15 @@ public class PlayerGameData
 {
     public bool isTurn;
     public int pointGranted;
-    public int handSize;
+    public int handSize/* = 1231241245*/;
     public int numNode;
     public bool hasSolarInNetwork;
     public bool hasHeatInNetwork;
     public List<Tile> tilesTaken;
     public Stack<Tile> tilesChosen;
     public List<Connection> connectionsDone;
+    public List<Connector> Inventory;
+    public Connector SelectedConnector;
 }
 
 public class PlayerState : MonoBehaviour
@@ -105,6 +107,30 @@ public class PlayerState : MonoBehaviour
         {
             tile.OwnedBy = this;
             tile.SelectedBy = null;
+        }
+    }
+
+    public void RefillHand()
+    {
+        //gameData.handSize = 4;
+        for (int i = gameData.Inventory.Count; i < gameData.handSize; i++)
+        {
+            switch (Random.Range(1, 4))
+            {
+                case 1:
+                    gameData.Inventory.Add(this.gameObject.AddComponent<StandardConnector>());
+                    Debug.Log("---1---");
+                    break;
+                case 2:
+                    gameData.Inventory.Add(this.gameObject.AddComponent<StandardConnector2>());
+                    Debug.Log("---2---");
+                    break;
+                case 3:
+                    gameData.Inventory.Add(this.gameObject.AddComponent<StandardConnector3>());
+                    Debug.Log("---3---");
+                    break;
+                default: break;
+            }
         }
     }
 }

@@ -39,6 +39,8 @@ public class GameState : MonoBehaviour
         }
 
         createPlayer();
+
+        playerStates[0].RefillHand();
     }
 
     private void createPlayer()
@@ -77,6 +79,23 @@ public class GameState : MonoBehaviour
         {
             tileManager.tiles[12][16].OwnedBy = playerStates[0];
         }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            selectConnector(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            selectConnector(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            selectConnector(3);
+        }
+    }
+
+    void selectConnector(int Length)
+    {
+
     }
 
 
