@@ -39,21 +39,136 @@ public class GameState : MonoBehaviour
         }
 
         createPlayer();
+
     }
+
+
+
+    Connector selectedConnector;
+    Connection currentConnection;
 
     private void createPlayer()
     {
         playerStates.Add(Instantiate(config.PlayerStateClass));
         playerStates.Add(Instantiate(config.PlayerStateClass));
+        playerStates[0].RefillHand();
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            chooseTile();
+            if (playerStates[0].gameData.isTurn)
+            {
+                playerStates[0].gameData.isTurn = false;
+                playerStates[0].EndTurn();
+
+                playerStates[0].FinalizeConnection(currentConnection);
+                currentConnection = null;
+            }
+            else
+            {
+                playerStates[0].RefillHand();
+                playerStates[0].gameData.isTurn = true;
+            }
+            Debug.Log("isTurn" + playerStates[0].gameData.isTurn.ToString());
         }
+        if (playerStates[0].gameData.isTurn)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                if (selectedConnector != null)
+                {
+                    playerStates[0].gameData.Inventory.Add(selectedConnector);
+                    foreach (Tile t in selectedConnector.GetTiles())
+                    {
+                        t.SelectedBy = null;
+                    }
+                    playerStates[0].gameData.tilesChosen.Clear();
+                    playerStates[0].AbortConnection(currentConnection);
+                }
+                selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 1);
+                playerStates[0].gameData.Inventory.Remove(selectedConnector);
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                if (selectedConnector != null)
+                {
+                    playerStates[0].gameData.Inventory.Add(selectedConnector);
+                    foreach (Tile t in selectedConnector.GetTiles())
+                    {
+                        t.SelectedBy = null;
+                    }
+                    playerStates[0].gameData.tilesChosen.Clear();
+                    playerStates[0].AbortConnection(currentConnection);
+                }
+                selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 2);
+                playerStates[0].gameData.Inventory.Remove(selectedConnector);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                if(selectedConnector != null)
+                {
+                    playerStates[0].gameData.Inventory.Add(selectedConnector);
+                    foreach (Tile t in selectedConnector.GetTiles())
+                    {
+                        t.SelectedBy = null;
+                    }
+                    playerStates[0].gameData.tilesChosen.Clear();
+                    playerStates[0].AbortConnection(currentConnection);
+                }
+                selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 3);
+                playerStates[0].gameData.Inventory.Remove(selectedConnector);
+            }
+
+            if (Input.GetMouseButtonDown(0) && selectedConnector.MaxLength > selectedConnector.getLength())
+            {
+                Tile t = chooseTile();
+                if (t.SelectedBy != null && !(t == selectedConnector.GetLastTile()))
+                {
+                    selectedConnector.AddTile(t);
+                    if (selectedConnector.MaxLength == selectedConnector.getLength())
+                    {
+                        if (currentConnection == null)
+                        {
+                            currentConnection = playerStates[0].StartConnection();
+                        }
+                        currentConnection.Connectors.Add(selectedConnector);
+                        selectedConnector = null;
+                    }
+                }
+                else
+                {
+                    selectedConnector.RemoveTile(t);
+                }
+            }
+            //pressed = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            tileManager.tiles[12][16].OwnedBy = playerStates[0];
+        }
+        
     }
+
+    /*void selectConnector(int Length)
+    {
+        //switch (Length)
+        //{
+        //    case 1:
+        //        chooseTile(1);
+        //        break;
+        //    case 2:
+        //        chooseTile(2);
+        //        break;
+        //    case 3:
+        //        chooseTile(3);
+        //        break;
+        //    default: break;
+        //}
+    }*/
 
 
     /// <summary>
@@ -65,9 +180,7 @@ public class GameState : MonoBehaviour
         Tile tileTouched;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-
         RaycastHit hitInfo;
-
 
         if (Physics.Raycast(ray, out hitInfo))
         {
@@ -75,12 +188,11 @@ public class GameState : MonoBehaviour
             GameObject tileObjectTouched = hitInfo.collider.transform.gameObject;
             tileTouched = tileObjectTouched.GetComponent<Tile>();
 
-            tileTouched.onSelected(playerStates[0]);
-
-            playerStates[0].gameData.tilesChosen.Add(tileTouched);
+            if (!tileManager.isOccupied(tileTouched))
+                tileTouched.onSelected(playerStates[0]);
             return tileTouched;
         }
-
+        
         return null;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,8 @@ public class TileManager : MonoBehaviour
     public Tile hexPrefab;
     public House housePrefab;
     public SolarPanel solarPrefab;
-    public SpecialBuildings church;
-    public SpecialBuildings stadium;
+    public SpecialBuilding church;
+    public SpecialBuilding stadium;
 
     List<List<Tile>> specialBuildings = new List<List<Tile>>();
 
@@ -38,7 +39,7 @@ public class TileManager : MonoBehaviour
 
     //todo discuss if this approach is doable and how to make sure these tiles having special buildings
     void InitSpecialBuildings()
-    {
+    {/*
         List<Tile> stadium = new List<Tile>();
         //Add specialbuilding tiles
         stadium.Add((tiles[10])[(18)]);
@@ -46,7 +47,7 @@ public class TileManager : MonoBehaviour
         stadium.Add((tiles[10])[(16)]);
         stadium.Add((tiles[9])[(17)]);
 
-        specialBuildings.Add(stadium);
+        specialBuildings.Add(stadium);*/
     }
 
     public List<Tile> getSpecialBuildingChosen(Tile t)
@@ -90,26 +91,42 @@ public class TileManager : MonoBehaviour
     public List<Tile> getNeigbours(Tile t)//TODO optimize
     {
         List<Tile> neighbours = new List<Tile>();
-
         if (t.Y % 2 != 0)
         {
-            neighbours.Add((tiles[t.X])[(t.Y - 1)]);
-            neighbours.Add((tiles[t.X + 1])[(t.Y - 1)]);
-            neighbours.Add((tiles[t.X + 1])[(t.Y)]);
-            neighbours.Add((tiles[t.X + 1])[(t.Y + 1)]);
-            neighbours.Add((tiles[t.X])[(t.Y + 1)]);
-            neighbours.Add((tiles[t.X - 1])[(t.Y)]);
+            if (t.Y != 0)
+            {
+                neighbours.Add((tiles[t.X])[(t.Y - 1)]);
+                if(t.X != tiles.Count - 1)
+                    neighbours.Add((tiles[t.X + 1])[(t.Y - 1)]);
+            }
+            if(t.X != tiles.Count - 1)
+            {
+                neighbours.Add((tiles[t.X + 1])[(t.Y)]);
+                if(t.Y != tiles[0].Count - 1)
+                    neighbours.Add((tiles[t.X + 1])[(t.Y + 1)]);
+            }
+            if(t.Y != tiles[0].Count - 1)
+                neighbours.Add((tiles[t.X])[(t.Y + 1)]);
+            if (t.X != 0)
+                neighbours.Add((tiles[t.X - 1])[(t.Y)]);
         }
         else
         {
-            neighbours.Add((tiles[t.X-1])[(t.Y - 1)]);
-            neighbours.Add((tiles[t.X])[(t.Y - 1)]);
-            neighbours.Add((tiles[t.X + 1])[(t.Y)]);
-            neighbours.Add((tiles[t.X])[(t.Y + 1)]);
-            neighbours.Add((tiles[t.X - 1])[(t.Y + 1)]);
-            neighbours.Add((tiles[t.X - 1])[(t.Y)]);
+            if(t.X != 0)
+            {
+                neighbours.Add((tiles[t.X - 1])[(t.Y)]);
+                if(t.Y != tiles[0].Count - 1)
+                    neighbours.Add((tiles[t.X - 1])[(t.Y - 1)]);
+                if (t.Y != 0)
+                    neighbours.Add((tiles[t.X - 1])[(t.Y + 1)]);
+            }
+            if (t.Y != tiles[0].Count - 1)
+                neighbours.Add((tiles[t.X])[(t.Y + 1)]);
+            if (t.X != tiles.Count - 1)
+                neighbours.Add((tiles[t.X + 1])[(t.Y)]);
+            if (t.Y != 0)
+                neighbours.Add((tiles[t.X])[(t.Y - 1)]);
         }
-
         return neighbours;
     }
 
@@ -140,9 +157,6 @@ public class TileManager : MonoBehaviour
         }
         return touchedTiles; 
     }
-
-
-
 
     public List<Tile> getPossibleStepBy3(Tile t)
     {
@@ -195,15 +209,12 @@ public class TileManager : MonoBehaviour
         hex_cell.name = "Hex_" + x + "_" + y;
         hex_cell.X = x;
         hex_cell.Y = y;
-
-        addMethods(hex_cell);
         
-
         if ((x == 3 && y == 12) || (x == 5 && y == 10) || (x == 7 && y == 15) || (x == 2 && y == 19))
         {
             House house_cell = (House)Instantiate(housePrefab, new Vector3(xPos, 0.2f, y * zOffset), Quaternion.identity);
-            house_cell.transform.SetParent(hex_cell.transform);
             house_cell.name = "house_" + x + "_" + y;
+            hex_cell.AddStructure<House>(house_cell);
         }
 
         if ((x == 2 && y == 12) || (x == 3 && y == 19) || (x == 5 && y == 19) || (x == 3 && y == 16))
@@ -211,50 +222,160 @@ public class TileManager : MonoBehaviour
             SolarPanel solar_cell = (SolarPanel)Instantiate(solarPrefab, new Vector3(xPos, 0.2f, y * zOffset), Quaternion.Euler(0, -90, 0));
             solar_cell.transform.SetParent(hex_cell.transform);
             solar_cell.name = "solar_" + x + "_" + y;
+            hex_cell.AddStructure<House>(solar_cell);
         }
 
         if (x == 5 && y == 14)
         {
-            SpecialBuildings church_cell = (SpecialBuildings)Instantiate(church, new Vector3(xPos, 0.35f, y * zOffset + 0.45f), Quaternion.Euler(-90, 90, 0));
+            SpecialBuilding church_cell = (SpecialBuilding)Instantiate(church, new Vector3(xPos + 0.512f, 0.35f, y * zOffset - 0.636f), Quaternion.Euler(-90, 90, 0));
             church_cell.transform.localScale = new Vector3(15.0f, 15.0f, 15.0f);
-            church_cell.transform.SetParent(hex_cell.transform);
             church_cell.name = "church_" + x + "_" + y;
+            hex_cell.AddStructure<House>(church_cell);
         }
 
-        if (x == 10 && y == 18)
+        if (x == 9 && y == 17)
         {
-            SpecialBuildings stadium_cell = (SpecialBuildings)Instantiate(stadium, new Vector3(xPos, 0.205f, y * zOffset - 0.923f), Quaternion.Euler(-90, 0, 0));
+            SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(stadium, new Vector3(xPos + 0.5f, 0.205f, y * zOffset), Quaternion.Euler(-90, 0, 0));
             stadium_cell.transform.localScale = new Vector3(0.15f, 0.15f, 0.3f);
-            stadium_cell.transform.SetParent(hex_cell.transform);
             stadium_cell.name = "stadium_" + x + "_" + y;
+            hex_cell.AddStructure<House>(stadium_cell);
         }
+
+        addMethods(hex_cell);
+        addSpecialBuilding(hex_cell);
+
+        setEmpties(hex_cell);
+
         return hex_cell;
+    }
+
+    private void setEmpties(Tile hex_cell)
+    {
+        if(hex_cell.Structure == null)
+        {
+            hex_cell.AddStructure<EmptyStructure>();
+        }
+    }
+    
+    private void addSpecialBuilding(Tile hex_cell)
+    {
+        string tileCoords = hex_cell.X.ToString().PadLeft(3, '0') + "|" + hex_cell.Y.ToString().PadLeft(3, '0');
+
+        switch (tileCoords)
+        {
+            case "009|017":
+                hex_cell.AddStructure<SpecialBuilding>();
+                break;
+            case "005|014":
+                hex_cell.AddStructure<SpecialBuilding>();
+                break;
+            default:
+                break;
+        }
+    }
+
+    public bool isOccupied(Tile tile) {
+        if (tile.occupied)
+        {
+            return true;
+        }
+        else if (tile.IsSpecial(this))
+        {
+            return true;
+        }
+        return false;
     }
 
     private void addMethods(Tile tile)
     {
-        tile.onTaken += (PlayerState Instigator) =>
-        {
-            tile.OwnedBy = Instigator;
-            List<Tile> temp = getNeigbours(tile);
-        };
+        //tile.onTaken += (PlayerState Instigator) =>
+        //{
+        //    tile.OwnedBy = Instigator;
+        //    List<Tile> temp = getNeigbours(tile);
+        //};
         tile.onSelected += (PlayerState Instigator) =>
         {
-            List<Tile> temp = getSpecialBuildingChosen(tile);
-                                                                                                                                                 
+            List<Tile> neighbours = getNeigbours(tile);
 
-            foreach(Tile t in temp)
+            if (tile.IsSpecial(this))
             {
-                t.SelectedBy = Instigator;
-                //Instigator.gameData.tilesChosen.Add(t);
+                foreach (Tile t in getSpecialNeighbours(tile))
+                {
+                    t.onSelected(Instigator);
+                }
             }
-            tile.SelectedBy = Instigator;
+
+            if (neighbours.Find( x => x.OwnedBy == Instigator || x.SelectedBy == Instigator))
+            {
+                if (tile.OwnedBy == null && tile.SelectedBy == null && ((Instigator.gameData.tilesChosen.Count > 0) ? neighbours.Contains(Instigator.gameData.tilesChosen.Peek()) : true))
+                {
+                    Instigator.gameData.tilesChosen.Push(tile);
+                    tile.SelectedBy = Instigator;
+                }
+                else if (tile.SelectedBy == Instigator && ((Instigator.gameData.tilesChosen.Count > 0) ? (Instigator.gameData.tilesChosen.Peek() == tile) : false))
+                {
+                    Instigator.gameData.tilesChosen.Pop();
+                    tile.SelectedBy = null;
+                }
+            }
+            else
+            {
+                Debug.LogWarning(Instigator.gameData.tilesChosen.Peek());
+                Debug.LogWarning(tile);
+                foreach (Tile t in getNeigbours(tile))
+                {
+                    Debug.Log(t.X + "   " + t.Y);
+                }
+            }
         };
 
         tile.transform.SetParent(this.transform);
     }
 
+    private List<Tile> getSpecialNeighbours(Tile tile)
+    {
+        List<Tile> neighbours = new List<Tile>();
+        Tile origin = tile.GetSpecialOriginTile(this);
 
+        if (origin.Y % 2 == 0)
+        {
+            neighbours.Add(tiles[origin.X][origin.Y + 1]);
+            neighbours.Add(tiles[origin.X + 1][origin.Y]);
+            neighbours.Add(tiles[origin.X + 1][origin.Y - 1]);
+        }
+        else
+        {
+            neighbours.Add(tiles[origin.X + 1][origin.Y + 1]);
+            neighbours.Add(tiles[origin.X + 1][origin.Y]);
+            neighbours.Add(tiles[origin.X][origin.Y - 1]);
+        }
+
+        return neighbours;
+    }
+
+    private bool isOccupiedBySamePlayer(Tile tile, PlayerState Instigator)
+    {
+        if (tile.occupied && (tile.OwnedBy == Instigator || tile.SelectedBy == Instigator))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    bool isValidTileToChoose(Tile t, PlayerState playerState)
+    {
+        foreach (Tile tile in getNeigbours(t))
+        {
+            if (isOccupiedBySamePlayer(tile, playerState))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    
 }
 
 //TODO TODAY AND TOMORROW:
