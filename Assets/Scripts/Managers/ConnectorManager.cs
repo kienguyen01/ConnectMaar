@@ -25,9 +25,23 @@ public abstract class Connector : Structure
         return this;
     }
 
+    public Connector RemoveTile(Tile t)
+    {
+        tiles.Remove(t);
+        return this;
+    }
+
     public List<Tile> GetTiles()
     {
         return tiles;
+    }
+
+    public Tile GetLastTile()
+    {
+        if (tiles.Count > 0)
+            return tiles[^1];
+        else
+            return null;
     }
 }
 

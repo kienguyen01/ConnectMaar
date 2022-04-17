@@ -124,16 +124,24 @@ public class GameState : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0) && selectedConnector.MaxLength > selectedConnector.getLength())
             {
-               selectedConnector.AddTile(chooseTile());
-               if(selectedConnector.MaxLength == selectedConnector.getLength())
-               {
-                   if(currentConnection == null)
-                   {
-                       currentConnection = playerStates[0].StartConnection();
-                   }
-                   currentConnection.Connectors.Add(selectedConnector);
-                   selectedConnector = null;
-               }
+                Tile t = chooseTile();
+                if (t.SelectedBy != null && !(t == selectedConnector.GetLastTile()))
+                {
+                    selectedConnector.AddTile(t);
+                    if (selectedConnector.MaxLength == selectedConnector.getLength())
+                    {
+                        if (currentConnection == null)
+                        {
+                            currentConnection = playerStates[0].StartConnection();
+                        }
+                        currentConnection.Connectors.Add(selectedConnector);
+                        selectedConnector = null;
+                    }
+                }
+                else
+                {
+                    selectedConnector.RemoveTile(t);
+                }
             }
             //pressed = false;
         }
