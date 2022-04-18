@@ -120,6 +120,7 @@ public class GameState : MonoBehaviour
                     playerStates[0].AbortConnection(currentConnection);
                 }
                 selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 3);
+                //selectedConnector.isValidLengthThree go here
                 playerStates[0].gameData.Inventory.Remove(selectedConnector);
             }
 
@@ -131,6 +132,11 @@ public class GameState : MonoBehaviour
                     selectedConnector.AddTile(t);
                     if (selectedConnector.MaxLength == selectedConnector.getLength())
                     {
+                        if(selectedConnector.getLength() == 3)
+                        {
+                                    
+                            //selectedConnector.IsValidLengthThree()
+                        }
                         if (currentConnection == null)
                         {
                             currentConnection = playerStates[0].StartConnection();

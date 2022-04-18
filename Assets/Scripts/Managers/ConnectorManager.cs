@@ -43,27 +43,8 @@ public abstract class Connector : Structure
         else
             return null;
     }
-}
 
-[System.Serializable]
-public class Connection : ScriptableObject
-{
-    public List<Connector> Connectors;
-    int length;
-    Player ownedPlayer;
-
-    private void Awake()
-    {
-        Connectors = new List<Connector>();
-    }
-}
-public class ConnectorManager : MonoBehaviour
-{
-
-    List<Connector> tempConnectors = new List<Connector>();
-    List<Connector> takenConnectors = new List<Connector>();
-
-    bool isValidLengthThree(Tile firstTile, Tile secondTile, Tile thirdTile)
+    public bool IsValidLengthThree(Tile firstTile, Tile secondTile, Tile thirdTile)
     {
         int x = firstTile.X;
         int y = firstTile.Y;
@@ -143,5 +124,26 @@ public class ConnectorManager : MonoBehaviour
 
         return false;
     }
+}
+
+[System.Serializable]
+public class Connection : ScriptableObject
+{
+    public List<Connector> Connectors;
+    int length;
+    Player ownedPlayer;
+
+    private void Awake()
+    {
+        Connectors = new List<Connector>();
+    }
+}
+public class ConnectorManager : MonoBehaviour
+{
+
+    List<Connector> tempConnectors = new List<Connector>();
+    List<Connector> takenConnectors = new List<Connector>();
+
+    
 
 }
