@@ -23,7 +23,7 @@ public class KeyActionsPopUp : MonoBehaviour
         //}
 
 
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             Debug.Log("entered");
         }
