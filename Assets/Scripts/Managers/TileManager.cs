@@ -130,73 +130,6 @@ public class TileManager : MonoBehaviour
         return neighbours;
     }
 
-    public List<Tile> getSpecialBuildings(Tile t)
-    {
-        List<Tile> specialbuildings = new List<Tile> ();
-
-        specialbuildings.Add((tiles[t.X])[(t.Y)]);
-        specialbuildings.Add((tiles[t.X-1])[(t.Y-1)]);
-        specialbuildings.Add((tiles[t.X])[(t.Y-1)]);
-        specialbuildings.Add((tiles[t.X])[(t.Y-2)]);
-
-
-        return specialbuildings;
-    }
-
-    /// <summary>
-    /// Get all tiles that are touched, passing List<Tile> because of special buildings will be a list of tiles
-    /// </summary>
-    /// <param name="tiles"></param>
-    /// <returns></returns>
-    public List<Tile> getTilesTouched(List<Tile> tiles)
-    {
-        List<Tile> touchedTiles = new List<Tile>();
-        foreach(Tile t in tiles)
-        {
-            touchedTiles.Add(t);
-        }
-        return touchedTiles; 
-    }
-
-    public List<Tile> getPossibleStepBy3(Tile t)
-    {
-        List<Tile> possibleTilesStepBy3 = new List<Tile>();
-
-        if(t.X < 2 && t.Y > 2)
-        {
-            possibleTilesStepBy3.Add((tiles[t.X + 2])[t.Y]);
-            possibleTilesStepBy3.Add((tiles[t.X - 1])[t.Y + 2]);
-            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y + 2]);
-            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y - 2]);
-            possibleTilesStepBy3.Add((tiles[t.X - 1])[t.Y - 2]);
-        }
-        if(t.X < 1 && t.Y > 2)
-        {
-            possibleTilesStepBy3.Add((tiles[t.X + 2])[t.Y]);
-            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y + 2]);
-            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y - 2]);
-        }
-        if (t.Y < 2 && t.X > 2)
-        {
-            possibleTilesStepBy3.Add((tiles[t.X - 2])[t.Y]);
-            possibleTilesStepBy3.Add((tiles[t.X + 2])[t.Y]);
-            possibleTilesStepBy3.Add((tiles[t.X - 1])[t.Y + 2]);
-            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y + 2]);
-        }
-        else
-        {
-            possibleTilesStepBy3.Add((tiles[t.X - 2])[t.Y]);
-            possibleTilesStepBy3.Add((tiles[t.X + 2])[t.Y]);
-            possibleTilesStepBy3.Add((tiles[t.X - 1])[t.Y + 2]);
-            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y + 2]);
-            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y - 2]);
-            possibleTilesStepBy3.Add((tiles[t.X - 1])[t.Y - 2]);
-        }
-        
-
-        return possibleTilesStepBy3;
-    }
-
     Tile GenerateTilesMap(int x, int y)
     {
         float xPos = x * xOffset;
@@ -238,6 +171,7 @@ public class TileManager : MonoBehaviour
             SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(stadium, new Vector3(xPos + 0.5f, 0.205f, y * zOffset), Quaternion.Euler(-90, 0, 0));
             stadium_cell.transform.localScale = new Vector3(0.15f, 0.15f, 0.3f);
             stadium_cell.name = "stadium_" + x + "_" + y;
+            stadium_cell.SolarRequired = true;
             hex_cell.AddStructure<SpecialBuilding>(stadium_cell);
         }
 
@@ -273,6 +207,12 @@ public class TileManager : MonoBehaviour
                 House house_cell = (House)Instantiate(housePrefab, new Vector3(hex_cell.X, 0.2f, hex_cell.Y * zOffset), Quaternion.identity);
                 hex_cell.AddStructure<House>(house_cell);
                 break;
+            case "009|015":
+                hex_cell.IsScrambleForHeat = true;
+                break;
+            case "012|015":
+                hex_cell.IsScrambleForSolar = true;
+                break;
             default:
                 break;
         }
@@ -284,6 +224,23 @@ public class TileManager : MonoBehaviour
             return true;
         }
         else if (tile.IsSpecial(this))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool IsSolarPanel(Tile tile)
+    {
+        if (tile.Structure.IsSolar)
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool IsHeatPipe(Tile tile)
+    {
+        if (tile.Structure.IsHeat)
         {
             return true;
         }

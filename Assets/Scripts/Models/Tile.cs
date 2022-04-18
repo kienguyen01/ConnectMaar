@@ -12,6 +12,8 @@ public class Tile : MonoBehaviour
     private PlayerState selectedBy;
     private PlayerState ownedBy;
     private Tile specialOriginTile;
+    public bool IsScrambleForSolar;
+    public bool IsScrambleForHeat;
 
     public Structure Structure;
 
@@ -54,7 +56,7 @@ public class Tile : MonoBehaviour
     private Tile SetStructure(Structure structure)
     {
         Structure = structure;
-        occupied = structure.IsBuilding || structure.IsConnector;
+        occupied = structure.IsBuilding || structure.IsConnector || structure.IsSolar || structure.IsHeat;
         return this;
     }
 

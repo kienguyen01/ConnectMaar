@@ -30,6 +30,7 @@ public class PlayerGameData
     public Stack<Tile> tilesChosen;
     public List<Connection> connectionsDone;
     public List<Connector> Inventory;
+    public List<Connector> SpecialConnector;
     public Connector SelectedConnector;
 }
 
@@ -116,6 +117,7 @@ public class PlayerState : MonoBehaviour
         }
     }
 
+
     public void RefillHand()
     {
         for (int i = gameData.Inventory.Count; i < gameData.handSize; i++)
@@ -137,6 +139,21 @@ public class PlayerState : MonoBehaviour
                 default: break;
             }
         }
+    }
+
+    public void AddSolarConnector()
+    {
+        gameData.SpecialConnector.Add(this.gameObject.AddComponent<SolarPanelConnector>());
+        gameData.SpecialConnector.Add(this.gameObject.AddComponent<SolarPanelConnector>());
+        gameData.SpecialConnector.Add(this.gameObject.AddComponent<SolarPanelConnector>());
+        gameData.SpecialConnector.Add(this.gameObject.AddComponent<SolarPanelConnector>());
+        Debug.Log("---solar---");
+    }
+
+    public void AddHeatPipeConnector()
+    {
+        gameData.SpecialConnector.Add(this.gameObject.AddComponent<HeatPipeConnector>());
+        Debug.Log("---heatpipe---");
     }
 
     public Connection StartConnection()

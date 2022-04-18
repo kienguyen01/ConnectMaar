@@ -11,6 +11,10 @@ public abstract class Connector : Structure
 
     public override bool IsConnector { get => true; }
 
+    public override bool IsHeat { get => false; }
+
+    public override bool IsSolar { get => false; }
+
     protected List<Tile> tiles;
 
     private void Awake()
@@ -125,7 +129,6 @@ public abstract class Connector : Structure
             }
 
         }
-
         return false;
     }
 }

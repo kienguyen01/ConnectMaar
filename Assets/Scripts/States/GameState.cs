@@ -21,7 +21,11 @@ public class GameState : MonoBehaviour
     public TileManager tileManager;
 
     public static GameState instance { get; private set; }
-
+    bool allSolar = true;
+    bool allHeat = true;
+    bool hasStandard = false;
+    bool hasHeat = false;
+    bool hasSolar = false;
     public void Awake()
     {
         Assert.IsNull(instance);
@@ -60,15 +64,52 @@ public class GameState : MonoBehaviour
         {
             if (selectedConnector == null || selectedConnector.getLength() == selectedConnector.MaxLength)
             {
-                if (playerStates[0].gameData.isTurn && isConnectionEnd)
+                if (playerStates[0].gameData.isTurn)
                 {
-                    playerStates[0].RefillHand();
-                    playerStates[0].gameData.isTurn = false;
-                    playerStates[0].EndTurn();
+                    foreach (Connector connector in currentConnection.Connectors)
+                    {
+                        if (!connector.GetType().Equals(typeof(SolarPanelConnector)))
+                        {
+                            allSolar = false;
+                        }
+                        if (!connector.GetType().Equals(typeof(HeatPipeConnector)))
+                        {
+                            allHeat = false;
+                        }
+                        foreach (Tile t in connector.GetTiles())
+                        {
+                            if (t.IsScrambleForHeat)
+                                playerStates[0].AddHeatPipeConnector();
 
-                    playerStates[0].FinalizeConnection(currentConnection);
+                            if (t.IsScrambleForSolar)
+                                playerStates[0].AddSolarConnector();
+                        }
+                    }
+                    if ((isSolarConnectionEnd && allSolar) || (isHeatConnectionEnd && allHeat) || (hasStandard && !hasHeat && !hasSolar && isNormalConnectionEnd))
+                    {
+                        playerStates[0].RefillHand();
+                        playerStates[0].gameData.isTurn = false;
+                        playerStates[0].EndTurn();
+
+                        playerStates[0].FinalizeConnection(currentConnection);
+                        if(isSolarConnectionEnd && allSolar)
+                        {
+                            playerStates[0].gameData.hasSolarInNetwork = true;
+                        }
+                        if(isHeatConnectionEnd && allHeat)
+                        {
+                            playerStates[0].gameData.hasHeatInNetwork = true;
+                        }
+                    }
+                    hasHeat = false;
+                    hasSolar = false;
+                    allSolar = true;
+                    allHeat = true;
+                    hasStandard = false;
+                    isHeatConnectionEnd = false;
+                    isSolarConnectionEnd = false;
                     currentConnection = null;
-                    isConnectionEnd = false;
+                    isNormalConnectionEnd = false;
                 }
                 else
                 {
@@ -93,8 +134,8 @@ public class GameState : MonoBehaviour
                 }
                 selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 1);
                 playerStates[0].gameData.Inventory.Remove(selectedConnector);
+                hasStandard = true;
             }
-            
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 if (selectedConnector != null)
@@ -109,6 +150,8 @@ public class GameState : MonoBehaviour
                 }
                 selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 2);
                 playerStates[0].gameData.Inventory.Remove(selectedConnector);
+                hasStandard = true;
+
             }
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
@@ -123,10 +166,42 @@ public class GameState : MonoBehaviour
                     playerStates[0].AbortConnection(currentConnection);
                 }
                 selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 3);
-                
                 playerStates[0].gameData.Inventory.Remove(selectedConnector);
-            }
+                hasStandard = true;
 
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                if(selectedConnector != null)
+                {
+                    playerStates[0].gameData.SpecialConnector.Add(selectedConnector);
+                    foreach(Tile t in selectedConnector.GetTiles())
+                    {
+                        t.SelectedBy = null;
+                    }
+                    playerStates[0].gameData.tilesChosen.Clear();
+                    playerStates[0].AbortConnection(currentConnection);
+                }
+                selectedConnector = playerStates[0].gameData.SpecialConnector.Find(x => x.IsSolar);
+                hasSolar = true;
+                playerStates[0].gameData.SpecialConnector.Remove(selectedConnector);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                if (selectedConnector != null)
+                {
+                    playerStates[0].gameData.SpecialConnector.Add(selectedConnector);
+                    foreach (Tile t in selectedConnector.GetTiles())
+                    {
+                        t.SelectedBy = null;
+                    }
+                    playerStates[0].gameData.tilesChosen.Clear();
+                    playerStates[0].AbortConnection(currentConnection);
+                }
+                selectedConnector = playerStates[0].gameData.SpecialConnector.Find(x => x.IsHeat);
+                hasHeat = true;
+                playerStates[0].gameData.SpecialConnector.Remove(selectedConnector);
+            }
             if (Input.GetMouseButtonDown(0) && selectedConnector.MaxLength > selectedConnector.getLength())
             {
                 Tile t = chooseTile();
@@ -135,11 +210,6 @@ public class GameState : MonoBehaviour
                     selectedConnector.AddTile(t);
                     if (selectedConnector.MaxLength == selectedConnector.getLength())
                     {
-                        if(selectedConnector.getLength() == 3)
-                        {
-                                    
-                            //selectedConnector.IsValidLengthThree()
-                        }
                         if (currentConnection == null)
                         {
                             currentConnection = playerStates[0].StartConnection();
@@ -180,8 +250,9 @@ public class GameState : MonoBehaviour
         //}
     }*/
 
-    bool isConnectionEnd = false;
-
+    bool isNormalConnectionEnd = false;
+    bool isHeatConnectionEnd = false;
+    bool isSolarConnectionEnd = false;
     /// <summary>
     /// Function that selects one tile when tapped
     /// </summary>
@@ -200,13 +271,21 @@ public class GameState : MonoBehaviour
 
             if (selectedConnector.getLength() < 2 || Connector.IsValidLengthThree(selectedConnector.GetTiles()[0], selectedConnector.GetTiles()[1], tileTouched))
             {
-                if (tileManager.isOccupied(tileTouched))
+                if (tileManager.isOccupied(tileTouched) && !tileManager.IsHeatPipe(tileTouched) && !tileManager.IsSolarPanel(tileTouched))
+                { 
+                    isNormalConnectionEnd = true;
+                }
+                else if (tileManager.IsHeatPipe(tileTouched))
                 {
-                    isConnectionEnd = true;
+                    isHeatConnectionEnd = true;
+                }
+                else if (tileManager.IsSolarPanel(tileTouched))
+                {
+                    isSolarConnectionEnd = true;
                 }
                 else if (!tileManager.isOccupied(tileTouched))
                 {
-                    isConnectionEnd = false;
+                    isNormalConnectionEnd = false;
                 }
                 if (tileTouched.OwnedBy == null)
                     tileTouched.onSelected(playerStates[0]);
