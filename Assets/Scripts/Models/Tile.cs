@@ -54,8 +54,13 @@ public class Tile : MonoBehaviour
     private Tile SetStructure(Structure structure)
     {
         Structure = structure;
-        occupied = structure.IsBuilding;
+        occupied = structure.IsBuilding || structure.IsConnector;
         return this;
+    }
+
+    public bool HasBuilding()
+    {
+        return this.Structure.IsBuilding;
     }
 
     public bool IsSpecial(TileManager tm)

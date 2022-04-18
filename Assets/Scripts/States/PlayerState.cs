@@ -74,7 +74,7 @@ public class PlayerState : MonoBehaviour
         Debug.Log($"ConnectorManager - {(config.ConnectorManagerClass ? "true" : "false")}");
         if (config.ConnectorManagerClass)
         {
-            connectorManager = Instantiate(config.ConnectorManagerClass);
+            connectorManager = this.gameObject.AddComponent<ConnectorManager>();
         }
         gameData.handSize = 4;
 
@@ -97,8 +97,6 @@ public class PlayerState : MonoBehaviour
 
         return Camera;
     }*/
-
-
 
     private void Update()
     {

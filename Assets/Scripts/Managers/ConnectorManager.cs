@@ -7,6 +7,10 @@ public abstract class Connector : Structure
 {
     public virtual int MaxLength { get => 1; }
 
+    public override bool IsBuilding { get => false; }
+
+    public override bool IsConnector { get => true; }
+
     protected List<Tile> tiles;
 
     private void Awake()
@@ -44,7 +48,7 @@ public abstract class Connector : Structure
             return null;
     }
 
-    public bool IsValidLengthThree(Tile firstTile, Tile secondTile, Tile thirdTile)
+    public static bool IsValidLengthThree(Tile firstTile, Tile secondTile, Tile thirdTile)
     {
         int x = firstTile.X;
         int y = firstTile.Y;
@@ -144,6 +148,7 @@ public class ConnectorManager : MonoBehaviour
     List<Connector> tempConnectors = new List<Connector>();
     List<Connector> takenConnectors = new List<Connector>();
 
-    
 
+
+    
 }

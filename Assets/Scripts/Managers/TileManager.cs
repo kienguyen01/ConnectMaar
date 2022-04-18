@@ -269,6 +269,10 @@ public class TileManager : MonoBehaviour
             case "005|014":
                 hex_cell.AddStructure<SpecialBuilding>();
                 break;
+            case "012|016":
+                House house_cell = (House)Instantiate(housePrefab, new Vector3(hex_cell.X, 0.2f, hex_cell.Y * zOffset), Quaternion.identity);
+                hex_cell.AddStructure<House>(house_cell);
+                break;
             default:
                 break;
         }
@@ -305,7 +309,7 @@ public class TileManager : MonoBehaviour
                 }
             }
 
-            if (neighbours.Find( x => x.OwnedBy == Instigator || x.SelectedBy == Instigator))
+            if (isValidTileToChoose(tile, Instigator))
             {
                 if (tile.OwnedBy == null && tile.SelectedBy == null && ((Instigator.gameData.tilesChosen.Count > 0) ? neighbours.Contains(Instigator.gameData.tilesChosen.Peek()) : true))
                 {
@@ -320,12 +324,12 @@ public class TileManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning(Instigator.gameData.tilesChosen.Peek());
+                /*Debug.LogWarning(Instigator.gameData.tilesChosen.Peek());
                 Debug.LogWarning(tile);
                 foreach (Tile t in getNeigbours(tile))
                 {
                     Debug.Log(t.X + "   " + t.Y);
-                }
+                }*/
             }
         };
 
@@ -355,7 +359,7 @@ public class TileManager : MonoBehaviour
 
     private bool isOccupiedBySamePlayer(Tile tile, PlayerState Instigator)
     {
-        if (tile.occupied && (tile.OwnedBy == Instigator || tile.SelectedBy == Instigator))
+        if (tile.OwnedBy == Instigator || tile.SelectedBy == Instigator)
         {
             return true;
         }
@@ -367,15 +371,13 @@ public class TileManager : MonoBehaviour
     {
         foreach (Tile tile in getNeigbours(t))
         {
-            if (isOccupiedBySamePlayer(tile, playerState))
+            if (isOccupiedBySamePlayer(tile, playerState) && (tile.HasBuilding() || tile.SelectedBy != null))
             {
                 return true;
             }
         }
         return false;
     }
-
-    
 }
 
 //TODO TODAY AND TOMORROW:

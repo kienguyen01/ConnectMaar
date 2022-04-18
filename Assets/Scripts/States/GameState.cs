@@ -58,21 +58,24 @@ public class GameState : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (playerStates[0].gameData.isTurn && isConnectionEnd)
+            if (selectedConnector == null || selectedConnector.getLength() == selectedConnector.MaxLength)
             {
-                playerStates[0].RefillHand();
-                playerStates[0].gameData.isTurn = false;
-                playerStates[0].EndTurn();
+                if (playerStates[0].gameData.isTurn && isConnectionEnd)
+                {
+                    playerStates[0].RefillHand();
+                    playerStates[0].gameData.isTurn = false;
+                    playerStates[0].EndTurn();
 
-                playerStates[0].FinalizeConnection(currentConnection);
-                currentConnection = null;
-                isConnectionEnd = false;
+                    playerStates[0].FinalizeConnection(currentConnection);
+                    currentConnection = null;
+                    isConnectionEnd = false;
+                }
+                else
+                {
+                    playerStates[0].gameData.isTurn = true;
+                }
+                Debug.Log("isTurn" + playerStates[0].gameData.isTurn.ToString());
             }
-            else
-            {
-                playerStates[0].gameData.isTurn = true;
-            }
-            Debug.Log("isTurn" + playerStates[0].gameData.isTurn.ToString());
         }
         if (playerStates[0].gameData.isTurn)
         {
@@ -120,7 +123,7 @@ public class GameState : MonoBehaviour
                     playerStates[0].AbortConnection(currentConnection);
                 }
                 selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 3);
-                //selectedConnector.isValidLengthThree go here
+                
                 playerStates[0].gameData.Inventory.Remove(selectedConnector);
             }
 
@@ -192,19 +195,22 @@ public class GameState : MonoBehaviour
 
         if (Physics.Raycast(ray, out hitInfo))
         {
-
             GameObject tileObjectTouched = hitInfo.collider.transform.gameObject;
             tileTouched = tileObjectTouched.GetComponent<Tile>();
-            if (tileManager.isOccupied(tileTouched))
+
+            if (selectedConnector.getLength() < 2 || Connector.IsValidLengthThree(selectedConnector.GetTiles()[0], selectedConnector.GetTiles()[1], tileTouched))
             {
-                isConnectionEnd = true;
+                if (tileManager.isOccupied(tileTouched))
+                {
+                    isConnectionEnd = true;
+                }
+                else if (!tileManager.isOccupied(tileTouched))
+                {
+                    isConnectionEnd = false;
+                }
+                if (tileTouched.OwnedBy == null)
+                    tileTouched.onSelected(playerStates[0]);
             }
-            else if(!tileManager.isOccupied(tileTouched))
-            {
-                isConnectionEnd = false;
-            }
-            if (tileTouched.OwnedBy == null)
-                tileTouched.onSelected(playerStates[0]);
             return tileTouched;
         }
         
