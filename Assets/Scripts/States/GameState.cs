@@ -58,17 +58,18 @@ public class GameState : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (playerStates[0].gameData.isTurn)
+            if (playerStates[0].gameData.isTurn && isConnectionEnd)
             {
+                playerStates[0].RefillHand();
                 playerStates[0].gameData.isTurn = false;
                 playerStates[0].EndTurn();
 
                 playerStates[0].FinalizeConnection(currentConnection);
                 currentConnection = null;
+                isConnectionEnd = false;
             }
             else
             {
-                playerStates[0].RefillHand();
                 playerStates[0].gameData.isTurn = true;
             }
             Debug.Log("isTurn" + playerStates[0].gameData.isTurn.ToString());
@@ -170,6 +171,7 @@ public class GameState : MonoBehaviour
         //}
     }*/
 
+    bool isConnectionEnd = false;
 
     /// <summary>
     /// Function that selects one tile when tapped
@@ -187,8 +189,15 @@ public class GameState : MonoBehaviour
 
             GameObject tileObjectTouched = hitInfo.collider.transform.gameObject;
             tileTouched = tileObjectTouched.GetComponent<Tile>();
-
-            if (!tileManager.isOccupied(tileTouched))
+            if (tileManager.isOccupied(tileTouched))
+            {
+                isConnectionEnd = true;
+            }
+            else if(!tileManager.isOccupied(tileTouched))
+            {
+                isConnectionEnd = false;
+            }
+            if (tileTouched.OwnedBy == null)
                 tileTouched.onSelected(playerStates[0]);
             return tileTouched;
         }
@@ -196,3 +205,12 @@ public class GameState : MonoBehaviour
         return null;
     }
 }
+
+//insufficient length of connector used but still can end turn
+
+//choose a random tiles next to one in the connection is allowed
+
+//if you choose 3, after you placed all 3 you can't undo no more, not sure if it is a problem 
+//at all
+
+
