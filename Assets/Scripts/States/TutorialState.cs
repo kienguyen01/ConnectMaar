@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 [System.Serializable]
-public struct GameStateConfig
+public struct TutorialStateConfig
 {
     public PlayerState PlayerStateClass;
     public TileManager TileManagerClass;
 }
 
-public class GameState : MonoBehaviour
+
+public class TutorialState : MonoBehaviour
 {
-    public GameStateConfig config;
+    public TutorialStateConfig config;
 
     [HideInInspector]
     public List<PlayerState> playerStates;
@@ -20,7 +24,13 @@ public class GameState : MonoBehaviour
     [HideInInspector]
     public TileManager tileManager;
 
-    public static GameState instance { get; private set; }
+    public static TutorialState instance { get; private set; }
+
+    bool firstPipeCheck = false;
+
+
+    Button button1;
+
 
     public void Awake()
     {
@@ -30,9 +40,9 @@ public class GameState : MonoBehaviour
         //Assert.IsNotNull(config.PlayerStateClass);
         //Assert.IsTrue(PlayerStarts.Length > 0);
 
-        Debug.Log($"TileManager - {(config.TileManagerClass ? "true" : "false")}");
-        Debug.Log($"PlayerState in GameState - {(config.PlayerStateClass ? "true" : "false")}");
-
+        //Debug.Log($"TileManager - {(config.TileManagerClass ? "true" : "false")}");
+        //Debug.Log($"PlayerState in GameState - {(config.PlayerStateClass ? "true" : "false")}");
+        Debug.Log($"Welcome to the ConnectMarr Tutorial. To begin please press on the start turn key");
         if (config.TileManagerClass)
         {
             tileManager = Instantiate(config.TileManagerClass);
@@ -44,12 +54,13 @@ public class GameState : MonoBehaviour
 
 
 
+
+
     Connector selectedConnector;
     Connection currentConnection;
 
     private void createPlayer()
     {
-        playerStates.Add(Instantiate(config.PlayerStateClass));
         playerStates.Add(Instantiate(config.PlayerStateClass));
         playerStates[0].RefillHand();
     }
@@ -90,7 +101,7 @@ public class GameState : MonoBehaviour
                 selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 1);
                 playerStates[0].gameData.Inventory.Remove(selectedConnector);
             }
-            
+
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 if (selectedConnector != null)
@@ -108,7 +119,7 @@ public class GameState : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                if(selectedConnector != null)
+                if (selectedConnector != null)
                 {
                     playerStates[0].gameData.Inventory.Add(selectedConnector);
                     foreach (Tile t in selectedConnector.GetTiles())
@@ -122,26 +133,33 @@ public class GameState : MonoBehaviour
                 playerStates[0].gameData.Inventory.Remove(selectedConnector);
             }
 
-            if (Input.GetMouseButtonDown(0) && selectedConnector.MaxLength > selectedConnector.getLength())
+            if (Input.GetMouseButtonDown(0) && selectedConnector.MaxLength > selectedConnector.getLength() && !EventSystem.current.IsPointerOverGameObject())
             {
-                Tile t = chooseTile();
-                if (t.SelectedBy != null && !(t == selectedConnector.GetLastTile()))
+                if (EventSystem.current.IsPointerOverGameObject())
                 {
-                    selectedConnector.AddTile(t);
-                    if (selectedConnector.MaxLength == selectedConnector.getLength())
+                    Debug.Log("Clicked on the UI");
+                } else
+                {
+                    Tile t = chooseTile();
+                    if (t.SelectedBy != null && !(t == selectedConnector.GetLastTile()))
                     {
-                        if (currentConnection == null)
+                        selectedConnector.AddTile(t);
+                        if (selectedConnector.MaxLength == selectedConnector.getLength())
                         {
-                            currentConnection = playerStates[0].StartConnection();
+                            if (currentConnection == null)
+                            {
+                                currentConnection = playerStates[0].StartConnection();
+                            }
+                            currentConnection.Connectors.Add(selectedConnector);
+                            selectedConnector = null;
                         }
-                        currentConnection.Connectors.Add(selectedConnector);
-                        selectedConnector = null;
+                    }
+                    else
+                    {
+                        selectedConnector.RemoveTile(t);
                     }
                 }
-                else
-                {
-                    selectedConnector.RemoveTile(t);
-                }
+                
             }
             //pressed = false;
         }
@@ -150,26 +168,10 @@ public class GameState : MonoBehaviour
         {
             tileManager.tiles[0][0].OwnedBy = playerStates[0];
         }
-        
+
+
+
     }
-
-    /*void selectConnector(int Length)
-    {
-        //switch (Length)
-        //{
-        //    case 1:
-        //        chooseTile(1);
-        //        break;
-        //    case 2:
-        //        chooseTile(2);
-        //        break;
-        //    case 3:
-        //        chooseTile(3);
-        //        break;
-        //    default: break;
-        //}
-    }*/
-
 
     /// <summary>
     /// Function that selects one tile when tapped
@@ -192,7 +194,7 @@ public class GameState : MonoBehaviour
                 tileTouched.onSelected(playerStates[0]);
             return tileTouched;
         }
-        
+
         return null;
     }
 }

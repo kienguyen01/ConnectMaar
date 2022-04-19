@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
@@ -139,6 +140,35 @@ public class PlayerState : MonoBehaviour
                 default: break;
             }
         }
+        updateInventoryUI();
+    }
+
+    public void updateInventoryUI()
+    {
+        int firstPipeCount = 0;
+        int secondPipeCount = 0;
+        int thirdPipeCount = 0;
+        foreach (StandardConnector item in gameData.Inventory)
+        {
+            if (item.GetType().Equals(typeof(StandardConnector)))
+            {
+                firstPipeCount++;
+            }
+            if (item.GetType().Equals(typeof(StandardConnector2)))
+            {
+                secondPipeCount++;
+            }
+            if (item.GetType().Equals(typeof(StandardConnector3)))
+            {
+                thirdPipeCount++;
+            }
+        }
+        TMP_Text firstPipe = GameObject.Find("firstBtn(X3)").GetComponent<TMP_Text>();
+        firstPipe.text = ("x" + firstPipeCount);
+        TMP_Text secondPipe = GameObject.Find("secondBtn(X1)").GetComponent<TMP_Text>();
+        secondPipe.text = ("x" + secondPipeCount);
+        TMP_Text thirdPipe = GameObject.Find("thirdBtn(X1)").GetComponent<TMP_Text>();
+        thirdPipe.text = ("x" + thirdPipeCount);
     }
 
     public Connection StartConnection()
