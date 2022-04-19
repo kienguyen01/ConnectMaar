@@ -111,7 +111,7 @@ public abstract class Connector : Structure
                 {
                     return true;
                 }
-                else if (secondTile.Y == y - 1 && thirdTile.X == x + 1 && thirdTile.Y == y - 1)
+                else if (secondTile.Y == y - 1 && thirdTile.X == x + 1 && thirdTile.Y == y - 2)
                 {
                     return true;
                 }

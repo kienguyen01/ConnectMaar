@@ -13,4 +13,6 @@ public abstract class Structure : MonoBehaviour
     public virtual bool IsSolar { get => false; }
 
     public virtual bool IsHeat { get => false; }
+
+    public virtual bool IsPlacable { get => false; }
 }

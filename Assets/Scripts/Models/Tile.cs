@@ -56,7 +56,7 @@ public class Tile : MonoBehaviour
     private Tile SetStructure(Structure structure)
     {
         Structure = structure;
-        occupied = structure.IsBuilding || structure.IsConnector || structure.IsSolar || structure.IsHeat;
+        occupied = structure.IsBuilding || structure.IsConnector || structure.IsSolar || structure.IsHeat || structure.IsPlacable;
         return this;
     }
 
