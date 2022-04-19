@@ -6,6 +6,8 @@ public abstract class Structure : MonoBehaviour
 {
     public virtual bool IsBuilding { get => true;  }
 
+    public virtual bool IsNode { get => false; }
+
     public virtual bool IsConnector { get => false; }
 
     public virtual bool IsSpecial  { get => false; }
@@ -14,5 +16,5 @@ public abstract class Structure : MonoBehaviour
 
     public virtual bool IsHeat { get => false; }
 
-    public virtual bool IsPlacable { get => false; }
+    public virtual bool IsPlaceable { get => false; }
 }

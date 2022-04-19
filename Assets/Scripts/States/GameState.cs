@@ -223,7 +223,7 @@ public class GameState : MonoBehaviour
                     }
                 }
             }
-            if (Input.GetMouseButtonDown(0) && (selectedConnector == null || selectedConnector.MaxLength > selectedConnector.getLength()) && !(EventSystem.current.IsPointerOverGameObject()))
+            if (!placingNode && Input.GetMouseButtonDown(0) && (selectedConnector == null || selectedConnector.MaxLength > selectedConnector.getLength()) && !(EventSystem.current.IsPointerOverGameObject()))
             {
                 Tile t = chooseTile();
                 if (t != null)
@@ -241,23 +241,20 @@ public class GameState : MonoBehaviour
                             selectedConnector = null;
                         }
                     }
-                    else if(t.SelectedBy != null && playerNode != null && isPlaceable)
-                    {
-                        playerNode.AddTile(t);
-                        
-                        playerNode = null;
-                    }
                     else
                     {
                         selectedConnector.RemoveTile(t);
                     }
                 }
             }
-            if(Input.GetMouseButtonDown(0) && playerNode != null)
+            if(Input.GetMouseButtonDown(0) && placingNode)
             {
                 Tile t = PlaceNode();
-                playerNode.AddTile(t);
 
+                if(!(t == null))
+                {
+                    placingNode = false;
+                }
             }
         }
 
@@ -340,7 +337,6 @@ public class GameState : MonoBehaviour
     {
         Tile tileTouched;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
         RaycastHit hitInfo;
 
         if (Physics.Raycast(ray, out hitInfo))
@@ -352,10 +348,18 @@ public class GameState : MonoBehaviour
             {
                 if(t.Structure.GetType() != typeof(EmptyStructure))
                 {
-                    isPlaceable = false;
+                    return null;
                 }
             }
             
+            if(tileTouched.SelectedBy != null || tileTouched.OwnedBy != null || tileTouched.occupied || tileTouched.IsSpecial())
+            {
+                return null;
+            }
+
+            Node nodeP = Instantiate(tileManager.nodePrefab, new Vector3(tileTouched.X, 0.2f, tileTouched.Y), Quaternion.identity);
+            tileTouched.AddStructure<Tile>(nodeP);
+            playerNode = null;
             return tileTouched;
         }
         return null;

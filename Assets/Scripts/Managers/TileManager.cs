@@ -12,6 +12,7 @@ public class TileManager : MonoBehaviour
     public SolarPanel solarPrefab;
     public SpecialBuilding church;
     public SpecialBuilding stadium;
+    public Node nodePrefab;
 
     public List<SpecialBuilding> specialBuildingList;
 
@@ -298,7 +299,7 @@ public class TileManager : MonoBehaviour
         {
             return true;
         }
-        else if (tile.IsSpecial(this))
+        else if (tile.IsSpecial())
         {
             return true;
         }
@@ -333,7 +334,7 @@ public class TileManager : MonoBehaviour
         {
             List<Tile> neighbours = getNeigbours(tile);
 
-            if (tile.IsSpecial(this))
+            if (tile.IsSpecial())
             {
                 foreach (Tile t in getSpecialNeighbours(tile))
                 {
@@ -371,7 +372,7 @@ public class TileManager : MonoBehaviour
     private List<Tile> getSpecialNeighbours(Tile tile)
     {
         List<Tile> neighbours = new List<Tile>();
-        Tile origin = tile.GetSpecialOriginTile(this);
+        Tile origin = tile.GetSpecialOriginTile();
 
         if (origin.Y % 2 == 0)
         {
@@ -403,7 +404,7 @@ public class TileManager : MonoBehaviour
     {
         foreach (Tile tile in getNeigbours(t))
         {
-            if (isOccupiedBySamePlayer(tile, playerState) && (tile.HasBuilding() || tile.SelectedBy != null))
+            if (tile.Structure.IsNode || isOccupiedBySamePlayer(tile, playerState) && (tile.HasBuilding() || tile.SelectedBy != null))
             {
                 return true;
             }

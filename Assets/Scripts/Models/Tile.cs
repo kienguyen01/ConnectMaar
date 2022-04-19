@@ -56,7 +56,7 @@ public class Tile : MonoBehaviour
     private Tile SetStructure(Structure structure)
     {
         Structure = structure;
-        occupied = structure.IsBuilding || structure.IsConnector || structure.IsSolar || structure.IsHeat || structure.IsPlacable;
+        occupied = structure.IsBuilding || structure.IsConnector || structure.IsSolar || structure.IsHeat || structure.IsPlaceable;
         return this;
     }
 
@@ -65,7 +65,7 @@ public class Tile : MonoBehaviour
         return this.Structure.IsBuilding;
     }
 
-    public bool IsSpecial(TileManager tm)
+    public bool IsSpecial()
     {
         if (this.Structure.IsSpecial)
         {
@@ -130,9 +130,9 @@ public class Tile : MonoBehaviour
         return false;
     }
 
-    public Tile GetSpecialOriginTile(TileManager tm)
+    public Tile GetSpecialOriginTile()
     {
-        if (this.IsSpecial(tm))
+        if (this.IsSpecial())
             return specialOriginTile;
         else
             return null;
