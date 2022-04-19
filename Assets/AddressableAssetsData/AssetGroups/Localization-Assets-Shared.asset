@@ -57,6 +57,10 @@ MonoBehaviour:
     m_Address: Assets/Localization/Tables/YouEarn Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
+  - m_GUID: c82c9ad3f10fe461ba32cabde7842482
+    m_Address: Assets/Localization/Tables/DidYouKnow Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 47fe1e794f5af47abbbe831c258f4d60, type: 2}
   m_SchemaSet:
