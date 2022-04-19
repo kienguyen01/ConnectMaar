@@ -48,7 +48,9 @@ public class GameState : MonoBehaviour
     }
 
 
-    Node selectedNode;
+    Node playerNode;
+    bool placingNode;
+
     Connector selectedConnector;
     Connection currentConnection;
 
@@ -205,10 +207,20 @@ public class GameState : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Alpha6))
             {
-                if(playerStates[0].gameData.nodeOwned.Count > 0)
+                if (placingNode)
                 {
-                    selectedNode = playerStates[0].gameData.nodeOwned[0];
-                    playerStates[0].gameData.nodeOwned.Remove(selectedNode);
+                    playerStates[0].gameData.nodesOwned.Add(playerNode);
+                    playerNode = null;
+                    placingNode = false;
+                }
+                else
+                {
+                    if (playerStates[0].gameData.nodesOwned.Count > 0)
+                    {
+                        playerNode = playerStates[0].gameData.nodesOwned[0];
+                        playerStates[0].gameData.nodesOwned.Remove(playerNode);
+                        placingNode = true;
+                    }
                 }
             }
             if (Input.GetMouseButtonDown(0) && (selectedConnector == null || selectedConnector.MaxLength > selectedConnector.getLength()) && !(EventSystem.current.IsPointerOverGameObject()))
@@ -229,11 +241,11 @@ public class GameState : MonoBehaviour
                             selectedConnector = null;
                         }
                     }
-                    else if(t.SelectedBy != null && selectedNode != null && isPlacable)
+                    else if(t.SelectedBy != null && playerNode != null && isPlaceable)
                     {
-                        selectedNode.AddTile(t);
+                        playerNode.AddTile(t);
                         
-                        selectedNode = null;
+                        playerNode = null;
                     }
                     else
                     {
@@ -241,10 +253,10 @@ public class GameState : MonoBehaviour
                     }
                 }
             }
-            if(Input.GetMouseButtonDown(0) && selectedNode != null)
+            if(Input.GetMouseButtonDown(0) && playerNode != null)
             {
                 Tile t = PlaceNode();
-                selectedNode.AddTile(t);
+                playerNode.AddTile(t);
 
             }
         }
@@ -275,7 +287,7 @@ public class GameState : MonoBehaviour
 
     bool isNormalConnectionEnd = false;
     bool isHeatConnectionEnd = false;
-    bool isPlacable = true;
+    bool isPlaceable = true;
     bool isSolarConnectionEnd = false;
     /// <summary>
     /// Function that selects one tile when tapped
@@ -340,7 +352,7 @@ public class GameState : MonoBehaviour
             {
                 if(t.Structure.GetType() != typeof(EmptyStructure))
                 {
-                    isPlacable = false;
+                    isPlaceable = false;
                 }
             }
             

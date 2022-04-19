@@ -32,7 +32,7 @@ public class PlayerGameData
     public List<Connector> Inventory;
     public List<Connector> SpecialConnector;
     public Connector SelectedConnector;
-    public List<Node> nodeOwned;
+    public List<Node> nodesOwned;
 }
 
 public class PlayerState : MonoBehaviour
@@ -79,7 +79,7 @@ public class PlayerState : MonoBehaviour
             connectorManager = this.gameObject.AddComponent<ConnectorManager>();
         }
         gameData.handSize = 4;
-        gameData.nodeOwned.Add(this.gameObject.AddComponent<Node>());
+        gameData.nodesOwned.Add(this.gameObject.AddComponent<Node>());
 
     }
 
