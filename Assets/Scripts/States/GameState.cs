@@ -48,7 +48,7 @@ public class GameState : MonoBehaviour
     }
 
 
-
+    Node selectedNode;
     Connector selectedConnector;
     Connection currentConnection;
 
@@ -203,12 +203,20 @@ public class GameState : MonoBehaviour
                 hasHeat = true;
                 playerStates[0].gameData.SpecialConnector.Remove(selectedConnector);
             }
+            if (Input.GetKeyDown(KeyCode.Alpha6))
+            {
+                if(playerStates[0].gameData.nodeOwned.Count > 0)
+                {
+                    selectedNode = playerStates[0].gameData.nodeOwned[0];
+                    playerStates[0].gameData.nodeOwned.Remove(selectedNode);
+                }
+            }
             if (Input.GetMouseButtonDown(0) && (selectedConnector == null || selectedConnector.MaxLength > selectedConnector.getLength()) && !(EventSystem.current.IsPointerOverGameObject()))
             {
                 Tile t = chooseTile();
                 if (t != null)
                 {
-                    if (t.SelectedBy != null && !(t == selectedConnector.GetLastTile()))
+                    if (t.SelectedBy != null && selectedConnector != null && !(t == selectedConnector.GetLastTile()))
                     {
                         selectedConnector.AddTile(t);
                         if (selectedConnector.MaxLength == selectedConnector.getLength())
@@ -221,13 +229,24 @@ public class GameState : MonoBehaviour
                             selectedConnector = null;
                         }
                     }
+                    else if(t.SelectedBy != null && selectedNode != null && isPlacable)
+                    {
+                        selectedNode.AddTile(t);
+                        
+                        selectedNode = null;
+                    }
                     else
                     {
                         selectedConnector.RemoveTile(t);
                     }
                 }
             }
-            //pressed = false;
+            if(Input.GetMouseButtonDown(0) && selectedNode != null)
+            {
+                Tile t = PlaceNode();
+                selectedNode.AddTile(t);
+
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.A))
@@ -256,6 +275,7 @@ public class GameState : MonoBehaviour
 
     bool isNormalConnectionEnd = false;
     bool isHeatConnectionEnd = false;
+    bool isPlacable = true;
     bool isSolarConnectionEnd = false;
     /// <summary>
     /// Function that selects one tile when tapped
@@ -301,6 +321,31 @@ public class GameState : MonoBehaviour
             return tileTouched;
         }
         
+        return null;
+    }
+
+    Tile PlaceNode()
+    {
+        Tile tileTouched;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        RaycastHit hitInfo;
+
+        if (Physics.Raycast(ray, out hitInfo))
+        {
+            GameObject tileObjectTouched = hitInfo.collider.transform.gameObject;
+            tileTouched = tileObjectTouched.GetComponent<Tile>();
+
+            foreach(Tile t in tileManager.getNeigbours(tileTouched))
+            {
+                if(t.Structure.GetType() != typeof(EmptyStructure))
+                {
+                    isPlacable = false;
+                }
+            }
+            
+            return tileTouched;
+        }
         return null;
     }
 }

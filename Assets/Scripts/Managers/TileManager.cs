@@ -13,6 +13,8 @@ public class TileManager : MonoBehaviour
     public SpecialBuilding church;
     public SpecialBuilding stadium;
 
+    public List<SpecialBuilding> specialBuildingList;
+
     List<List<Tile>> specialBuildings = new List<List<Tile>>();
 
 
