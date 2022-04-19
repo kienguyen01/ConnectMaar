@@ -337,7 +337,7 @@ public class TileManager : MonoBehaviour
 
 
 
-            if (tile.IsSpecial() && (!(((SpecialBuilding)tile.Structure).SolarRequired && !Instigator.gameData.hasSolarInNetwork)) || (!(((SpecialBuilding)tile.Structure).HeatRequired && !Instigator.gameData.hasHeatInNetwork)))
+            if (tile.IsSpecial() && ((tile.Structure.SolarRequired && Instigator.gameData.hasSolarInNetwork) || (tile.Structure.HeatRequired && Instigator.gameData.hasHeatInNetwork)))
             {
                 foreach (Tile t in getSpecialNeighbours(tile))
                 {
@@ -345,7 +345,7 @@ public class TileManager : MonoBehaviour
                 }
             }
 
-            if (isValidTileToChoose(tile, Instigator))
+            if (isValidTileToChoose(tile, Instigator) && !tile.IsSpecial())
             {
                 if (tile.OwnedBy == null && tile.SelectedBy == null && ((Instigator.gameData.tilesChosen.Count > 0) ? neighbours.Contains(Instigator.gameData.tilesChosen.Peek()) : true))
                 {
