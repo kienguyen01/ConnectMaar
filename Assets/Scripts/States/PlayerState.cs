@@ -150,15 +150,15 @@ public class PlayerState : MonoBehaviour
         int thirdPipeCount = 0;
         foreach (StandardConnector item in gameData.Inventory)
         {
-            if (item.GetType().Equals(typeof(StandardConnector)))
+            if (item.MaxLength == 1)
             {
                 firstPipeCount++;
             }
-            if (item.GetType().Equals(typeof(StandardConnector2)))
+            if (item.MaxLength == 2)
             {
                 secondPipeCount++;
             }
-            if (item.GetType().Equals(typeof(StandardConnector3)))
+            if (item.MaxLength == 3)
             {
                 thirdPipeCount++;
             }

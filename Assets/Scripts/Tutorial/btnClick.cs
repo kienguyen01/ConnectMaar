@@ -2,49 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class btnClick : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
+public class btnClick : MonoBehaviour
 {
     // Start is called before the first frame update
-    public bool buttonPressed;
+    //public bool buttonPressed;
 
-    public void OnPointerDown(PointerEventData eventData)
+    [SerializeField]
+    public GameObject FirstPipe;
+
+    public bool FirstPipeActive;
+
+    private void Start()
     {
-        buttonPressed = true;
-        Debug.Log("I can finallyu go to sleep");
+        Button button = GameObject.Find("firstBtn").GetComponent<Button>();
+
+        gameObject.GetComponent<Button>().onClick.AddListener(setActive);
+        FirstPipeActive = true;
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    private void setActive()
     {
-        buttonPressed = false;
-    }
-
-    public void Update()
-    {
-        /*if (Input.GetMouseButtonDown(0))
-        {
-            // Check if the mouse was clicked over a UI element
-            if (EventSystem.current.IsPointerOverGameObject())
-            {
-                Debug.Log("KILL ME NOW");
-            }
-        }*/
+        FirstPipeActive ^= true;
     }
 
 
-    public void BTN()
+    public void onItemClicked()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            // This line prevents the Code from activating UI
-            if (EventSystem.current.IsPointerOverGameObject())
-                return;
-            Debug.Log("THIS WORKS");    
-        }
-    }
+        Button button = GameObject.Find("firstBtn").GetComponent<Button>();
+        Debug.Log("FUCK THIS IT WORKS" + button.name);
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        throw new System.NotImplementedException();
     }
 }
+ 

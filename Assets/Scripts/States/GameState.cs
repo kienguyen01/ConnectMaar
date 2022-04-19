@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 [System.Serializable]
 public struct GameStateConfig
@@ -27,10 +28,23 @@ public class GameState : MonoBehaviour
     bool hasStandard = false;
     bool hasHeat = false;
     bool hasSolar = false;
+
+    Button Pipe1;
+    Button Pipe2;
+    Button Pipe3;
+
+    bool p1;
+    bool p2;
+    bool p3;
+
+
     public void Awake()
     {
         Assert.IsNull(instance);
         instance = this;
+
+
+        addEventHandlers();
 
         //Assert.IsNotNull(config.PlayerStateClass);
         //Assert.IsTrue(PlayerStarts.Length > 0);
@@ -47,6 +61,33 @@ public class GameState : MonoBehaviour
 
     }
 
+    private void addEventHandlers()
+    {
+        Pipe1 = GameObject.Find("firstBtn").GetComponent<Button>();
+        Pipe2 = GameObject.Find("secondBtn").GetComponent<Button>();
+        Pipe3 = GameObject.Find("thirdBtn").GetComponent<Button>();
+
+        Pipe1.onClick.AddListener(FirstpipeCheck);
+        Pipe2.onClick.AddListener(SecondpipeCheck);
+        Pipe3.onClick.AddListener(ThirdpipeCheck);
+    }
+
+
+
+    public void FirstpipeCheck()
+    {
+        p1 ^= true;
+    }
+
+    public void SecondpipeCheck()
+    {
+        p2 ^= true;
+    }
+    public void ThirdpipeCheck()
+    {
+        p3 ^= true;
+    }
+
 
 
     Connector selectedConnector;
@@ -61,7 +102,7 @@ public class GameState : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(1))
         {
             if (selectedConnector == null || selectedConnector.getLength() == selectedConnector.MaxLength)
             {
@@ -121,8 +162,10 @@ public class GameState : MonoBehaviour
         }
         if (playerStates[0].gameData.isTurn)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            if (Input.GetKeyDown(KeyCode.Alpha1) || p1)
             {
+                p1= false;
+                Debug.Log("Loop");
                 if (selectedConnector != null)
                 {
                     playerStates[0].gameData.Inventory.Add(selectedConnector);
@@ -137,8 +180,9 @@ public class GameState : MonoBehaviour
                 playerStates[0].gameData.Inventory.Remove(selectedConnector);
                 hasStandard = true;
             }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+            if (Input.GetKeyDown(KeyCode.Alpha2) || p2)
             {
+                p2= false;
                 if (selectedConnector != null)
                 {
                     playerStates[0].gameData.Inventory.Add(selectedConnector);
@@ -154,8 +198,9 @@ public class GameState : MonoBehaviour
                 hasStandard = true;
 
             }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
+            if (Input.GetKeyDown(KeyCode.Alpha3) || p3)
             {
+                p3 = false;
                 if(selectedConnector != null)
                 {
                     playerStates[0].gameData.Inventory.Add(selectedConnector);
@@ -230,11 +275,17 @@ public class GameState : MonoBehaviour
             //pressed = false;
         }
 
+        startPoint();
+        
+    }
+
+
+    public virtual void startPoint()
+    {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            tileManager.tiles[0][0].OwnedBy = playerStates[0];
+            tileManager.tiles[12][16].OwnedBy = playerStates[0];
         }
-        
     }
 
     /*void selectConnector(int Length)
