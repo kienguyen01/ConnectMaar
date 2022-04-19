@@ -234,9 +234,8 @@ public class TutorialState : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            tileManager.tiles[10][10].OwnedBy = playerStates[0];
+            TileManager.tiles[10][10].OwnedBy = playerStates[0];
         }
-
     }
 
     /*void selectConnector(int Length)
