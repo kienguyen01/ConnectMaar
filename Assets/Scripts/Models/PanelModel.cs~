@@ -1,0 +1,10 @@
+  using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PanelModel{
+    //id of panel
+    public string panelID;
+    //panel prefab
+    public GameObject panelPrefab;
+}

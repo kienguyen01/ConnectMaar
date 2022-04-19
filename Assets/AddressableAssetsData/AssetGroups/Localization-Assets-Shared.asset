@@ -49,6 +49,14 @@ MonoBehaviour:
     m_Address: Assets/Localization/Tables/EndTurnBtn Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
+  - m_GUID: cab44c427388a46e1b5a6953d46ac6c4
+    m_Address: Assets/Localization/Tables/RequiredHeading Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 75ddef929dbb84c4ea51624cf0728337
+    m_Address: Assets/Localization/Tables/YouEarn Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 47fe1e794f5af47abbbe831c258f4d60, type: 2}
   m_SchemaSet:
