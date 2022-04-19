@@ -285,6 +285,9 @@ public class TileManager : MonoBehaviour
             case "012|015":
                 hex_cell.IsScrambleForSolar = true;
                 break;
+            case "004|002":
+                hex_cell.IsScrambleForSolar = true;
+                break;
             default:
                 break;
         }

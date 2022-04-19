@@ -81,25 +81,6 @@ public class PlayerState : MonoBehaviour
         gameData.handSize = 4;
 
     }
-
-    /*private Player CreatePlayer()
-    {
-        Player Player = Instantiate(playerClass);
-        Player.Owner = this;
-
-        return Player;
-
-    }*/
-
-    /*
-    private PlayerCamera CreateCamera(GameObject Target)
-    {
-        PlayerCamera Camera = Instantiate(cameraClass, TODO);
-        Camera.Target = Target;
-
-        return Camera;
-    }*/
-
     private void Update()
     {
 
@@ -142,12 +123,47 @@ public class PlayerState : MonoBehaviour
         }
         updateInventoryUI();
     }
+    
+    public void refilSpecificHand(int one,int two, int three)
+    {
+        if (gameData.Inventory.Count < gameData.handSize)
+        {
+            for (int i = 0; i < one; i++)
+            {
+                gameData.Inventory.Add(this.gameObject.AddComponent<StandardConnector>());
+            }
+            for (int i = 0; i < two; i++)
+            {
+                gameData.Inventory.Add(this.gameObject.AddComponent<StandardConnector2>());
+            }
+            for (int i = 0; i < three; i++)
+            {
+                gameData.Inventory.Add(this.gameObject.AddComponent<StandardConnector3>());
+            }
+        }
+
+
+        updateInventoryUI();
+
+    }
+
+    public void clearHand()
+    {
+        gameData.Inventory.RemoveAll(x => x.MaxLength == 1);
+        gameData.Inventory.RemoveAll(x => x.MaxLength == 2);
+        gameData.Inventory.RemoveAll(x => x.MaxLength == 3);
+
+        updateInventoryUI();
+
+    }
 
     public void updateInventoryUI()
     {
         int firstPipeCount = 0;
         int secondPipeCount = 0;
         int thirdPipeCount = 0;
+        int solarCount = 0;
+        int heatCount = 0;
         foreach (StandardConnector item in gameData.Inventory)
         {
             if (item.MaxLength == 1)
@@ -163,12 +179,28 @@ public class PlayerState : MonoBehaviour
                 thirdPipeCount++;
             }
         }
+
+        foreach (Connector x in gameData.SpecialConnector)
+        {
+            if (x.IsHeat)
+            {
+                heatCount++;
+            }
+            if (x.IsSolar)
+            {
+                solarCount++;   
+            }
+        }
         TMP_Text firstPipe = GameObject.Find("firstBtn(X3)").GetComponent<TMP_Text>();
         firstPipe.text = ("x" + firstPipeCount);
         TMP_Text secondPipe = GameObject.Find("secondBtn(X1)").GetComponent<TMP_Text>();
         secondPipe.text = ("x" + secondPipeCount);
         TMP_Text thirdPipe = GameObject.Find("thirdBtn(X1)").GetComponent<TMP_Text>();
         thirdPipe.text = ("x" + thirdPipeCount);
+        TMP_Text heatPipe = GameObject.Find("fifthBtn(X3)").GetComponent<TMP_Text>();
+        heatPipe.text = ("x" + heatCount);
+        TMP_Text solarPipe = GameObject.Find("fourthBtn(X1)").GetComponent<TMP_Text>();
+        solarPipe.text = ("x" + solarCount);
     }
 
     public void AddSolarConnector()

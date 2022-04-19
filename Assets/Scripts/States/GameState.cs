@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
@@ -32,10 +33,19 @@ public class GameState : MonoBehaviour
     Button Pipe1;
     Button Pipe2;
     Button Pipe3;
+    Button solarB;
+    Button heatB;
+    Button EndTurn;
 
     bool p1;
     bool p2;
     bool p3;
+    public bool turnCheck;
+    bool solarCheck;
+    bool heatCheck;
+
+    [HideInInspector]
+    public TextMeshProUGUI text;
 
 
     public void Awake()
@@ -56,9 +66,12 @@ public class GameState : MonoBehaviour
         {
             tileManager = Instantiate(config.TileManagerClass);
         }
-
         createPlayer();
 
+    }
+
+    public virtual void TutorialStart()
+    {
     }
 
     private void addEventHandlers()
@@ -66,10 +79,17 @@ public class GameState : MonoBehaviour
         Pipe1 = GameObject.Find("firstBtn").GetComponent<Button>();
         Pipe2 = GameObject.Find("secondBtn").GetComponent<Button>();
         Pipe3 = GameObject.Find("thirdBtn").GetComponent<Button>();
+        EndTurn = GameObject.Find("endTurnBtn").GetComponent<Button>();
+        solarB = GameObject.Find("fourthBtn").GetComponent<Button>();
+        heatB = GameObject.Find("fifthBtn").GetComponent<Button>();
 
         Pipe1.onClick.AddListener(FirstpipeCheck);
         Pipe2.onClick.AddListener(SecondpipeCheck);
         Pipe3.onClick.AddListener(ThirdpipeCheck);
+        EndTurn.onClick.AddListener(endTurnCheck);
+        solarB.onClick.AddListener(SolarCheck);
+        heatB.onClick.AddListener(HeatCheck);
+
     }
 
 
@@ -87,6 +107,18 @@ public class GameState : MonoBehaviour
     {
         p3 ^= true;
     }
+    public void endTurnCheck()
+    {
+        turnCheck ^= true;
+    }
+    public void SolarCheck()
+    {
+        solarCheck ^= true;
+    }
+    public void HeatCheck()
+    {
+        heatCheck ^= true;
+    }
 
 
 
@@ -102,8 +134,9 @@ public class GameState : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown(KeyCode.Space) || turnCheck)
         {
+            turnCheck = false;
             if (selectedConnector == null || selectedConnector.getLength() == selectedConnector.MaxLength)
             {
                 if (playerStates[0].gameData.isTurn)
@@ -134,11 +167,11 @@ public class GameState : MonoBehaviour
                         playerStates[0].EndTurn();
 
                         playerStates[0].FinalizeConnection(currentConnection);
-                        if(isSolarConnectionEnd && allSolar)
+                        if (isSolarConnectionEnd && allSolar)
                         {
                             playerStates[0].gameData.hasSolarInNetwork = true;
                         }
-                        if(isHeatConnectionEnd && allHeat)
+                        if (isHeatConnectionEnd && allHeat)
                         {
                             playerStates[0].gameData.hasHeatInNetwork = true;
                         }
@@ -164,8 +197,7 @@ public class GameState : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha1) || p1)
             {
-                p1= false;
-                Debug.Log("Loop");
+                p1 = false;
                 if (selectedConnector != null)
                 {
                     playerStates[0].gameData.Inventory.Add(selectedConnector);
@@ -182,7 +214,7 @@ public class GameState : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Alpha2) || p2)
             {
-                p2= false;
+                p2 = false;
                 if (selectedConnector != null)
                 {
                     playerStates[0].gameData.Inventory.Add(selectedConnector);
@@ -201,7 +233,7 @@ public class GameState : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha3) || p3)
             {
                 p3 = false;
-                if(selectedConnector != null)
+                if (selectedConnector != null)
                 {
                     playerStates[0].gameData.Inventory.Add(selectedConnector);
                     foreach (Tile t in selectedConnector.GetTiles())
@@ -216,12 +248,13 @@ public class GameState : MonoBehaviour
                 hasStandard = true;
 
             }
-            if (Input.GetKeyDown(KeyCode.Alpha4))
+            if (Input.GetKeyDown(KeyCode.Alpha4) || solarCheck)
             {
-                if(selectedConnector != null)
+                solarCheck = false;
+                if (selectedConnector != null)
                 {
                     playerStates[0].gameData.SpecialConnector.Add(selectedConnector);
-                    foreach(Tile t in selectedConnector.GetTiles())
+                    foreach (Tile t in selectedConnector.GetTiles())
                     {
                         t.SelectedBy = null;
                     }
@@ -232,8 +265,9 @@ public class GameState : MonoBehaviour
                 hasSolar = true;
                 playerStates[0].gameData.SpecialConnector.Remove(selectedConnector);
             }
-            if (Input.GetKeyDown(KeyCode.Alpha5))
+            if (Input.GetKeyDown(KeyCode.Alpha5) || heatCheck)
             {
+                heatCheck = false;
                 if (selectedConnector != null)
                 {
                     playerStates[0].gameData.SpecialConnector.Add(selectedConnector);
@@ -274,9 +308,9 @@ public class GameState : MonoBehaviour
             }
             //pressed = false;
         }
-
+        TutorialStart();
         startPoint();
-        
+
     }
 
 
