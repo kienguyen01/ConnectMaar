@@ -24,7 +24,7 @@ public class TileManager : MonoBehaviour
 
     //public Tile[,] tiles;
 
-    public List<List<Tile>> tiles = new List<List<Tile>>();
+    public static List<List<Tile>> tiles = new List<List<Tile>>();
 
     public UnityAction<PlayerState> OnTileChosen;
 
@@ -81,7 +81,8 @@ public class TileManager : MonoBehaviour
 
                 tiles.Add(tileRow);
             }
-        }else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("SampleScene"))
+        }
+        else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("SampleScene"))
         {
             for (int x = 0; x < WIDTH_MAP; x++)
             {
@@ -135,9 +136,9 @@ public class TileManager : MonoBehaviour
             {
                 neighbours.Add((tiles[t.X - 1])[(t.Y)]);
                 if(t.Y != tiles[0].Count - 1)
-                    neighbours.Add((tiles[t.X - 1])[(t.Y - 1)]);
-                if (t.Y != 0)
                     neighbours.Add((tiles[t.X - 1])[(t.Y + 1)]);
+                if (t.Y != 0)
+                    neighbours.Add((tiles[t.X - 1])[(t.Y - 1)]);
             }
             if (t.Y != tiles[0].Count - 1)
                 neighbours.Add((tiles[t.X])[(t.Y + 1)]);
