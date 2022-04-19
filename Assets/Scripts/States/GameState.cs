@@ -232,7 +232,7 @@ public class GameState : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            tileManager.tiles[12][16].OwnedBy = playerStates[0];
+            tileManager.tiles[0][0].OwnedBy = playerStates[0];
         }
         
     }
