@@ -149,72 +149,6 @@ public class TileManager : MonoBehaviour
         return neighbours;
     }
 
-    public List<Tile> getSpecialBuildings(Tile t)
-    {
-        List<Tile> specialbuildings = new List<Tile> ();
-
-        specialbuildings.Add((tiles[t.X])[(t.Y)]);
-        specialbuildings.Add((tiles[t.X-1])[(t.Y-1)]);
-        specialbuildings.Add((tiles[t.X])[(t.Y-1)]);
-        specialbuildings.Add((tiles[t.X])[(t.Y-2)]);
-
-
-        return specialbuildings;
-    }
-
-    /// <summary>
-    /// Get all tiles that are touched, passing List<Tile> because of special buildings will be a list of tiles
-    /// </summary>
-    /// <param name="tiles"></param>
-    /// <returns></returns>
-    public List<Tile> getTilesTouched(List<Tile> tiles)
-    {
-        List<Tile> touchedTiles = new List<Tile>();
-        foreach(Tile t in tiles)
-        {
-            touchedTiles.Add(t);
-        }
-        return touchedTiles; 
-    }
-
-    public List<Tile> getPossibleStepBy3(Tile t)
-    {
-        List<Tile> possibleTilesStepBy3 = new List<Tile>();
-
-        if(t.X < 2 && t.Y > 2)
-        {
-            possibleTilesStepBy3.Add((tiles[t.X + 2])[t.Y]);
-            possibleTilesStepBy3.Add((tiles[t.X - 1])[t.Y + 2]);
-            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y + 2]);
-            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y - 2]);
-            possibleTilesStepBy3.Add((tiles[t.X - 1])[t.Y - 2]);
-        }
-        if(t.X < 1 && t.Y > 2)
-        {
-            possibleTilesStepBy3.Add((tiles[t.X + 2])[t.Y]);
-            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y + 2]);
-            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y - 2]);
-        }
-        if (t.Y < 2 && t.X > 2)
-        {
-            possibleTilesStepBy3.Add((tiles[t.X - 2])[t.Y]);
-            possibleTilesStepBy3.Add((tiles[t.X + 2])[t.Y]);
-            possibleTilesStepBy3.Add((tiles[t.X - 1])[t.Y + 2]);
-            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y + 2]);
-        }
-        else
-        {
-            possibleTilesStepBy3.Add((tiles[t.X - 2])[t.Y]);
-            possibleTilesStepBy3.Add((tiles[t.X + 2])[t.Y]);
-            possibleTilesStepBy3.Add((tiles[t.X - 1])[t.Y + 2]);
-            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y + 2]);
-            possibleTilesStepBy3.Add((tiles[t.X + 1])[t.Y - 2]);
-            possibleTilesStepBy3.Add((tiles[t.X - 1])[t.Y - 2]);
-        }
-        
-
-        return possibleTilesStepBy3;
-    }
 
     Tile GenerateTutorialMap(int x, int y)
     {
@@ -268,12 +202,6 @@ public class TileManager : MonoBehaviour
 
         return hex_cell;
     }
-
-
-
-
-
-
     Tile GenerateTilesMap(int x, int y)
     {
         float xPos = x * xOffset;
@@ -299,7 +227,7 @@ public class TileManager : MonoBehaviour
             SolarPanel solar_cell = (SolarPanel)Instantiate(solarPrefab, new Vector3(xPos, 0.2f, y * zOffset), Quaternion.Euler(0, -90, 0));
             solar_cell.transform.SetParent(hex_cell.transform);
             solar_cell.name = "solar_" + x + "_" + y;
-            hex_cell.AddStructure<House>(solar_cell);
+            hex_cell.AddStructure<SolarPanel>(solar_cell);
         }
 
         if (x == 5 && y == 14)
@@ -307,7 +235,7 @@ public class TileManager : MonoBehaviour
             SpecialBuilding church_cell = (SpecialBuilding)Instantiate(church, new Vector3(xPos + 0.512f, 0.35f, y * zOffset - 0.636f), Quaternion.Euler(-90, 90, 0));
             church_cell.transform.localScale = new Vector3(15.0f, 15.0f, 15.0f);
             church_cell.name = "church_" + x + "_" + y;
-            hex_cell.AddStructure<House>(church_cell);
+            hex_cell.AddStructure<SpecialBuilding>(church_cell);
         }
 
         if (x == 9 && y == 17)
@@ -315,7 +243,8 @@ public class TileManager : MonoBehaviour
             SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(stadium, new Vector3(xPos + 0.5f, 0.205f, y * zOffset), Quaternion.Euler(-90, 0, 0));
             stadium_cell.transform.localScale = new Vector3(0.15f, 0.15f, 0.3f);
             stadium_cell.name = "stadium_" + x + "_" + y;
-            hex_cell.AddStructure<House>(stadium_cell);
+            stadium_cell.SolarRequired = true;
+            hex_cell.AddStructure<SpecialBuilding>(stadium_cell);
         }
 
         addMethods(hex_cell);
@@ -346,6 +275,16 @@ public class TileManager : MonoBehaviour
             case "005|014":
                 hex_cell.AddStructure<SpecialBuilding>();
                 break;
+            case "012|016":
+                House house_cell = (House)Instantiate(housePrefab, new Vector3(hex_cell.X, 0.2f, hex_cell.Y * zOffset), Quaternion.identity);
+                hex_cell.AddStructure<House>(house_cell);
+                break;
+            case "009|015":
+                hex_cell.IsScrambleForHeat = true;
+                break;
+            case "012|015":
+                hex_cell.IsScrambleForSolar = true;
+                break;
             default:
                 break;
         }
@@ -357,6 +296,23 @@ public class TileManager : MonoBehaviour
             return true;
         }
         else if (tile.IsSpecial(this))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool IsSolarPanel(Tile tile)
+    {
+        if (tile.Structure.IsSolar)
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool IsHeatPipe(Tile tile)
+    {
+        if (tile.Structure.IsHeat)
         {
             return true;
         }
@@ -382,7 +338,7 @@ public class TileManager : MonoBehaviour
                 }
             }
 
-            if (neighbours.Find( x => x.OwnedBy == Instigator || x.SelectedBy == Instigator))
+            if (isValidTileToChoose(tile, Instigator))
             {
                 if (tile.OwnedBy == null && tile.SelectedBy == null && ((Instigator.gameData.tilesChosen.Count > 0) ? neighbours.Contains(Instigator.gameData.tilesChosen.Peek()) : true))
                 {
@@ -397,12 +353,12 @@ public class TileManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning(Instigator.gameData.tilesChosen.Peek());
+                /*Debug.LogWarning(Instigator.gameData.tilesChosen.Peek());
                 Debug.LogWarning(tile);
                 foreach (Tile t in getNeigbours(tile))
                 {
                     Debug.Log(t.X + "   " + t.Y);
-                }
+                }*/
             }
         };
 
@@ -432,7 +388,7 @@ public class TileManager : MonoBehaviour
 
     private bool isOccupiedBySamePlayer(Tile tile, PlayerState Instigator)
     {
-        if (tile.occupied && (tile.OwnedBy == Instigator || tile.SelectedBy == Instigator))
+        if (tile.OwnedBy == Instigator || tile.SelectedBy == Instigator)
         {
             return true;
         }
@@ -444,15 +400,13 @@ public class TileManager : MonoBehaviour
     {
         foreach (Tile tile in getNeigbours(t))
         {
-            if (isOccupiedBySamePlayer(tile, playerState))
+            if (isOccupiedBySamePlayer(tile, playerState) && (tile.HasBuilding() || tile.SelectedBy != null))
             {
                 return true;
             }
         }
         return false;
     }
-
-    
 }
 
 //TODO TODAY AND TOMORROW:

@@ -31,6 +31,7 @@ public class PlayerGameData
     public Stack<Tile> tilesChosen;
     public List<Connection> connectionsDone;
     public List<Connector> Inventory;
+    public List<Connector> SpecialConnector;
     public Connector SelectedConnector;
 }
 
@@ -75,7 +76,7 @@ public class PlayerState : MonoBehaviour
         Debug.Log($"ConnectorManager - {(config.ConnectorManagerClass ? "true" : "false")}");
         if (config.ConnectorManagerClass)
         {
-            connectorManager = Instantiate(config.ConnectorManagerClass);
+            connectorManager = this.gameObject.AddComponent<ConnectorManager>();
         }
         gameData.handSize = 4;
 
@@ -99,8 +100,6 @@ public class PlayerState : MonoBehaviour
         return Camera;
     }*/
 
-
-
     private void Update()
     {
 
@@ -118,6 +117,7 @@ public class PlayerState : MonoBehaviour
             tile.SelectedBy = null;
         }
     }
+
 
     public void RefillHand()
     {
@@ -169,6 +169,21 @@ public class PlayerState : MonoBehaviour
         secondPipe.text = ("x" + secondPipeCount);
         TMP_Text thirdPipe = GameObject.Find("thirdBtn(X1)").GetComponent<TMP_Text>();
         thirdPipe.text = ("x" + thirdPipeCount);
+    }
+
+    public void AddSolarConnector()
+    {
+        gameData.SpecialConnector.Add(this.gameObject.AddComponent<SolarPanelConnector>());
+        gameData.SpecialConnector.Add(this.gameObject.AddComponent<SolarPanelConnector>());
+        gameData.SpecialConnector.Add(this.gameObject.AddComponent<SolarPanelConnector>());
+        gameData.SpecialConnector.Add(this.gameObject.AddComponent<SolarPanelConnector>());
+        Debug.Log("---solar---");
+    }
+
+    public void AddHeatPipeConnector()
+    {
+        gameData.SpecialConnector.Add(this.gameObject.AddComponent<HeatPipeConnector>());
+        Debug.Log("---heatpipe---");
     }
 
     public Connection StartConnection()
