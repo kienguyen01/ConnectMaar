@@ -284,10 +284,10 @@ public class TileManager : MonoBehaviour
                 hex_cell.AddStructure<House>(house_cell);
                 break;
             case "009|015":
-                hex_cell.IsScrambleForHeat = true;
+                hex_cell.IsScrabbleForHeat = true;
                 break;
             case "012|015":
-                hex_cell.IsScrambleForSolar = true;
+                hex_cell.IsScrabbleForSolar = true;
                 break;
             default:
                 break;
@@ -314,6 +314,7 @@ public class TileManager : MonoBehaviour
         }
         return false;
     }
+
     public bool IsHeatPipe(Tile tile)
     {
         if (tile.Structure.IsHeat)
@@ -334,11 +335,13 @@ public class TileManager : MonoBehaviour
         {
             List<Tile> neighbours = getNeigbours(tile);
 
-            if (tile.IsSpecial())
+
+
+            if (tile.IsSpecial() && (!(((SpecialBuilding)tile.Structure).SolarRequired && !Instigator.gameData.hasSolarInNetwork)) || (!(((SpecialBuilding)tile.Structure).HeatRequired && !Instigator.gameData.hasHeatInNetwork)))
             {
                 foreach (Tile t in getSpecialNeighbours(tile))
                 {
-                    t.onSelected(Instigator);
+                    t.SelectedBy = Instigator;
                 }
             }
 
@@ -372,21 +375,21 @@ public class TileManager : MonoBehaviour
     private List<Tile> getSpecialNeighbours(Tile tile)
     {
         List<Tile> neighbours = new List<Tile>();
-        Tile origin = tile.GetSpecialOriginTile();
+        Tile origin = tile.GetSpecialOriginTile();//left = 10,15 | origin = 10,16 | right = 11,16 | top = 10,17
 
         if (origin.Y % 2 == 0)
         {
-            neighbours.Add(tiles[origin.X][origin.Y + 1]);
+            neighbours.Add(tiles[origin.X][origin.Y - 1]);
             neighbours.Add(tiles[origin.X + 1][origin.Y]);
-            neighbours.Add(tiles[origin.X + 1][origin.Y - 1]);
+            neighbours.Add(tiles[origin.X][origin.Y + 1]);
         }
         else
         {
-            neighbours.Add(tiles[origin.X + 1][origin.Y + 1]);
+            neighbours.Add(tiles[origin.X + 1][origin.Y -1]);
             neighbours.Add(tiles[origin.X + 1][origin.Y]);
-            neighbours.Add(tiles[origin.X][origin.Y - 1]);
+            neighbours.Add(tiles[origin.X + 1][origin.Y + 1]);
         }
-
+        neighbours.Add(origin);
         return neighbours;
     }
 

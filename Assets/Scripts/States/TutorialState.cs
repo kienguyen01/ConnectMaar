@@ -78,10 +78,10 @@ public class TutorialState : MonoBehaviour
                         }
                         foreach (Tile t in connector.GetTiles())
                         {
-                            if (t.IsScrambleForHeat)
+                            if (t.IsScrabbleForHeat)
                                 playerStates[0].AddHeatPipeConnector();
 
-                            if (t.IsScrambleForSolar)
+                            if (t.IsScrabbleForSolar)
                                 playerStates[0].AddSolarConnector();
                         }
                     }
