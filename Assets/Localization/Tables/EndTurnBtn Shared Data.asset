@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: EndTurnBtn Shared Data
   m_EditorClassIdentifier: 
   m_TableCollectionName: EndTurnBtn
-  m_TableCollectionNameGuidString: 00000000000000000000000000000000
-  m_Entries: []
+  m_TableCollectionNameGuidString: f890f6f53e55744338f4b84dea1bac82
+  m_Entries:
+  - m_Id: 8056201216
+    m_Key: EndTurnText
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

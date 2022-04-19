@@ -45,6 +45,10 @@ MonoBehaviour:
     m_Address: Assets/Localization/Tables/EmissionBarPlayer Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
+  - m_GUID: f890f6f53e55744338f4b84dea1bac82
+    m_Address: Assets/Localization/Tables/EndTurnBtn Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 47fe1e794f5af47abbbe831c258f4d60, type: 2}
   m_SchemaSet:
