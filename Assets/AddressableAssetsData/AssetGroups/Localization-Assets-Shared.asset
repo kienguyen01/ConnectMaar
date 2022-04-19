@@ -29,6 +29,22 @@ MonoBehaviour:
     m_Address: Assets/Localization/Tables/QuitGame Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
+  - m_GUID: 34b423632856940d89c8cc4713e75ed3
+    m_Address: Assets/Localization/Tables/TutorialBtn Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 070d618efbd6744809098ba066ab76cf
+    m_Address: Assets/Localization/Tables/ItemsHeading Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 324ea306fe0f54eb7be078f674515b22
+    m_Address: Assets/Localization/Tables/ArticlesText Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 5b8bd3dc4c94843d29a8d971cc8037aa
+    m_Address: Assets/Localization/Tables/EmissionBarPlayer Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 47fe1e794f5af47abbbe831c258f4d60, type: 2}
   m_SchemaSet:
