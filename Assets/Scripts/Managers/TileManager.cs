@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class TileManager : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class TileManager : MonoBehaviour
 
     //public Tile[,] tiles;
 
-    public List<List<Tile>> tiles = new List<List<Tile>>();
+    public static List<List<Tile>> tiles = new List<List<Tile>>();
 
     public UnityAction<PlayerState> OnTileChosen;
 
@@ -67,18 +68,37 @@ public class TileManager : MonoBehaviour
 
     private void Start()
     {
-        
-        for (int x = 0; x < WIDTH_MAP; x++)
+        if(SceneManager.GetActiveScene() ==  SceneManager.GetSceneByName("Tutorial"))
         {
-            List<Tile> tileRow = new List<Tile>();
-
-            for (int y = 0; y < HEIGHT_MAP; y++)
+            for (int x = 0; x < 15; x++)
             {
-                tileRow.Add((GenerateTilesMap(x, y)));
-            }
+                List<Tile> tileRow = new List<Tile>();
 
-            tiles.Add(tileRow);
+                for (int y = 0; y < 15; y++)
+                {
+                    tileRow.Add((GenerateTutorialMap(x, y)));
+                }
+
+                tiles.Add(tileRow);
+            }
         }
+        else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("SampleScene"))
+        {
+            for (int x = 0; x < WIDTH_MAP; x++)
+            {
+                List<Tile> tileRow = new List<Tile>();
+
+                for (int y = 0; y < HEIGHT_MAP; y++)
+                {
+                    tileRow.Add((GenerateTilesMap(x, y)));
+                }
+
+                tiles.Add(tileRow);
+            }
+        }
+
+        
+        
 
         InitSpecialBuildings();
     }
@@ -116,9 +136,9 @@ public class TileManager : MonoBehaviour
             {
                 neighbours.Add((tiles[t.X - 1])[(t.Y)]);
                 if(t.Y != tiles[0].Count - 1)
-                    neighbours.Add((tiles[t.X - 1])[(t.Y - 1)]);
-                if (t.Y != 0)
                     neighbours.Add((tiles[t.X - 1])[(t.Y + 1)]);
+                if (t.Y != 0)
+                    neighbours.Add((tiles[t.X - 1])[(t.Y - 1)]);
             }
             if (t.Y != tiles[0].Count - 1)
                 neighbours.Add((tiles[t.X])[(t.Y + 1)]);
@@ -130,6 +150,59 @@ public class TileManager : MonoBehaviour
         return neighbours;
     }
 
+
+    Tile GenerateTutorialMap(int x, int y)
+    {
+        float xPos = x * xOffset;
+        // check odd row => go inside
+        if (y % 2 != 0)
+        {
+            xPos += xOffset / 2f;
+        }
+        Tile hex_cell = (Tile)Instantiate(hexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
+        hex_cell.name = "Hex_" + x + "_" + y;
+        hex_cell.X = x;
+        hex_cell.Y = y;
+
+        if ((x == 2 && y == 1) || (x == 6 && y == 2) || (x == 10 && y == 0) || (x == 8 && y == 5) || (x == 8 && y == 8) || (x == 8 && y == 5) 
+            || (x == 13 && y == 10) || (x == 6 && y == 10) || (x == 4 && y == 13) || (x == 2 && y == 13))
+        {
+            House house_cell = (House)Instantiate(housePrefab, new Vector3(xPos, 0.2f, y * zOffset), Quaternion.identity);
+            house_cell.name = "house_" + x + "_" + y;
+            hex_cell.AddStructure<House>(house_cell);
+        }
+
+        if ((x == 2 && y == 12) || (x == 3 && y == 19) || (x == 5 && y == 19) || (x == 3 && y == 16))
+        {
+            SolarPanel solar_cell = (SolarPanel)Instantiate(solarPrefab, new Vector3(xPos, 0.2f, y * zOffset), Quaternion.Euler(0, -90, 0));
+            solar_cell.transform.SetParent(hex_cell.transform);
+            solar_cell.name = "solar_" + x + "_" + y;
+            hex_cell.AddStructure<House>(solar_cell);
+        }
+
+        if (x == 5 && y == 14)
+        {
+            SpecialBuilding church_cell = (SpecialBuilding)Instantiate(church, new Vector3(xPos + 0.512f, 0.35f, y * zOffset - 0.636f), Quaternion.Euler(-90, 90, 0));
+            church_cell.transform.localScale = new Vector3(15.0f, 15.0f, 15.0f);
+            church_cell.name = "church_" + x + "_" + y;
+            hex_cell.AddStructure<House>(church_cell);
+        }
+
+        if (x == 9 && y == 17)
+        {
+            SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(stadium, new Vector3(xPos + 0.5f, 0.205f, y * zOffset), Quaternion.Euler(-90, 0, 0));
+            stadium_cell.transform.localScale = new Vector3(0.15f, 0.15f, 0.3f);
+            stadium_cell.name = "stadium_" + x + "_" + y;
+            hex_cell.AddStructure<House>(stadium_cell);
+        }
+
+        addMethods(hex_cell);
+        addSpecialBuilding(hex_cell);
+
+        setEmpties(hex_cell);
+
+        return hex_cell;
+    }
     Tile GenerateTilesMap(int x, int y)
     {
         float xPos = x * xOffset;

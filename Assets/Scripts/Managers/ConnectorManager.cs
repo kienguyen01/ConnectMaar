@@ -107,11 +107,11 @@ public abstract class Connector : Structure
             }
             else if (secondTile.X == x)
             {
-                if (secondTile.Y == y + 1 && thirdTile.X == x + 1 && thirdTile.Y == y + 1)
+                if (secondTile.Y == y + 1 && thirdTile.X == x + 1 && thirdTile.Y == y + 2)
                 {
                     return true;
                 }
-                else if (secondTile.Y == y - 1 && thirdTile.X == x + 1 && thirdTile.Y == y - 1)
+                else if (secondTile.Y == y - 1 && thirdTile.X == x + 1 && thirdTile.Y == y - 2)
                 {
                     return true;
                 }
@@ -145,13 +145,9 @@ public class Connection : ScriptableObject
         Connectors = new List<Connector>();
     }
 }
+
 public class ConnectorManager : MonoBehaviour
 {
-
     List<Connector> tempConnectors = new List<Connector>();
     List<Connector> takenConnectors = new List<Connector>();
-
-
-
-    
 }
