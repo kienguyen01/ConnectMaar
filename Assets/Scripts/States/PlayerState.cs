@@ -200,8 +200,23 @@ public class PlayerState : MonoBehaviour
 
     public PlayerState AbortConnection(Connection conn)
     {
+        AbortConnector(conn, true);
+
+        return this;
+    }
+
+    public PlayerState AbortConnector(Connection conn, bool Hard = false)
+    {
+        foreach (Connector c in conn.Connectors)
+        {
+            if (Hard || c.MaxLength > c.getLength())
+            {
+                this.gameData.Inventory.Add(c.ResetConnector());
+
+            }
+        }
         Destroy(conn);
-        //gameData.connectionsDone.Remove(conn);
+
         return this;
     }
 
