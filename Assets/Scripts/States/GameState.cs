@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 
 [System.Serializable]
 public struct GameStateConfig
@@ -202,25 +203,28 @@ public class GameState : MonoBehaviour
                 hasHeat = true;
                 playerStates[0].gameData.SpecialConnector.Remove(selectedConnector);
             }
-            if (Input.GetMouseButtonDown(0) && selectedConnector.MaxLength > selectedConnector.getLength())
+            if (Input.GetMouseButtonDown(0) && (selectedConnector == null || selectedConnector.MaxLength > selectedConnector.getLength()) && !(EventSystem.current.IsPointerOverGameObject()))
             {
                 Tile t = chooseTile();
-                if (t.SelectedBy != null && !(t == selectedConnector.GetLastTile()))
+                if (t != null)
                 {
-                    selectedConnector.AddTile(t);
-                    if (selectedConnector.MaxLength == selectedConnector.getLength())
+                    if (t.SelectedBy != null && !(t == selectedConnector.GetLastTile()))
                     {
-                        if (currentConnection == null)
+                        selectedConnector.AddTile(t);
+                        if (selectedConnector.MaxLength == selectedConnector.getLength())
                         {
-                            currentConnection = playerStates[0].StartConnection();
+                            if (currentConnection == null)
+                            {
+                                currentConnection = playerStates[0].StartConnection();
+                            }
+                            currentConnection.Connectors.Add(selectedConnector);
+                            selectedConnector = null;
                         }
-                        currentConnection.Connectors.Add(selectedConnector);
-                        selectedConnector = null;
                     }
-                }
-                else
-                {
-                    selectedConnector.RemoveTile(t);
+                    else
+                    {
+                        selectedConnector.RemoveTile(t);
+                    }
                 }
             }
             //pressed = false;
@@ -268,6 +272,10 @@ public class GameState : MonoBehaviour
         {
             GameObject tileObjectTouched = hitInfo.collider.transform.gameObject;
             tileTouched = tileObjectTouched.GetComponent<Tile>();
+            if(tileTouched == null)
+            {
+                return null;
+            }
 
             if (selectedConnector.getLength() < 2 || Connector.IsValidLengthThree(selectedConnector.GetTiles()[0], selectedConnector.GetTiles()[1], tileTouched))
             {
