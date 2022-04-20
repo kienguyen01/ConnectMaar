@@ -410,7 +410,11 @@ public class GameState : MonoBehaviour
             tileTouched = tileObjectTouched.GetComponent<Tile>();
             if(tileTouched == null)
             {
-                return null;
+                tileTouched = tileObjectTouched.GetComponentInParent<Tile>();
+                if (tileTouched == null)
+                {
+                    return null;
+                }
             }
 
             if (selectedConnector.getLength() < 2 || (selectedConnector.GetTiles().Contains(tileTouched)) || Connector.IsValidLengthThree(selectedConnector.GetTiles()[0], selectedConnector.GetTiles()[1], tileTouched))
