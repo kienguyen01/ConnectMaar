@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
@@ -23,14 +24,15 @@ public class PlayerGameData
     public bool isTurn;
     public int pointGranted;
     public int handSize;
-    public int numNode;
     public bool hasSolarInNetwork;
     public bool hasHeatInNetwork;
     public List<Tile> tilesTaken;
     public Stack<Tile> tilesChosen;
     public List<Connection> connectionsDone;
     public List<Connector> Inventory;
+    public List<Connector> SpecialConnector;
     public Connector SelectedConnector;
+    public List<Node> nodesOwned;
 }
 
 public class PlayerState : MonoBehaviour
@@ -74,9 +76,10 @@ public class PlayerState : MonoBehaviour
         Debug.Log($"ConnectorManager - {(config.ConnectorManagerClass ? "true" : "false")}");
         if (config.ConnectorManagerClass)
         {
-            connectorManager = Instantiate(config.ConnectorManagerClass);
+            connectorManager = this.gameObject.AddComponent<ConnectorManager>();
         }
         gameData.handSize = 4;
+        gameData.nodesOwned.Add(this.gameObject.AddComponent<Node>());
 
     }
 
@@ -98,8 +101,6 @@ public class PlayerState : MonoBehaviour
         return Camera;
     }*/
 
-
-
     private void Update()
     {
 
@@ -113,10 +114,14 @@ public class PlayerState : MonoBehaviour
         this.gameData.isTurn = false;
         foreach (Tile tile in this.gameData.tilesTaken)
         {
-            tile.OwnedBy = this;
+            if(!(tile.Structure.GetType() == typeof(Node)))
+            {
+                tile.OwnedBy = this;
+            }
             tile.SelectedBy = null;
         }
     }
+
 
     public void RefillHand()
     {
@@ -139,6 +144,50 @@ public class PlayerState : MonoBehaviour
                 default: break;
             }
         }
+        updateInventoryUI();
+    }
+
+    public void updateInventoryUI()
+    {
+        int firstPipeCount = 0;
+        int secondPipeCount = 0;
+        int thirdPipeCount = 0;
+        foreach (StandardConnector item in gameData.Inventory)
+        {
+            if (item.GetType().Equals(typeof(StandardConnector)))
+            {
+                firstPipeCount++;
+            }
+            if (item.GetType().Equals(typeof(StandardConnector2)))
+            {
+                secondPipeCount++;
+            }
+            if (item.GetType().Equals(typeof(StandardConnector3)))
+            {
+                thirdPipeCount++;
+            }
+        }
+        TMP_Text firstPipe = GameObject.Find("firstBtn(X3)").GetComponent<TMP_Text>();
+        firstPipe.text = ("x" + firstPipeCount);
+        TMP_Text secondPipe = GameObject.Find("secondBtn(X1)").GetComponent<TMP_Text>();
+        secondPipe.text = ("x" + secondPipeCount);
+        TMP_Text thirdPipe = GameObject.Find("thirdBtn(X1)").GetComponent<TMP_Text>();
+        thirdPipe.text = ("x" + thirdPipeCount);
+    }
+
+    public void AddSolarConnector()
+    {
+        gameData.SpecialConnector.Add(this.gameObject.AddComponent<SolarPanelConnector>());
+        gameData.SpecialConnector.Add(this.gameObject.AddComponent<SolarPanelConnector>());
+        gameData.SpecialConnector.Add(this.gameObject.AddComponent<SolarPanelConnector>());
+        gameData.SpecialConnector.Add(this.gameObject.AddComponent<SolarPanelConnector>());
+        Debug.Log("---solar---");
+    }
+
+    public void AddHeatPipeConnector()
+    {
+        gameData.SpecialConnector.Add(this.gameObject.AddComponent<HeatPipeConnector>());
+        Debug.Log("---heatpipe---");
     }
 
     public Connection StartConnection()

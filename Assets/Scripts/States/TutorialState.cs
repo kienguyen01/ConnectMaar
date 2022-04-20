@@ -5,15 +5,15 @@ using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
 [System.Serializable]
-public struct GameStateConfig
+public struct TutorialStateConfig
 {
     public PlayerState PlayerStateClass;
     public TileManager TileManagerClass;
 }
 
-public class GameState : MonoBehaviour
+public class TutorialState : MonoBehaviour
 {
-    public GameStateConfig config;
+    public TutorialStateConfig config;
 
     [HideInInspector]
     public List<PlayerState> playerStates;
@@ -21,7 +21,7 @@ public class GameState : MonoBehaviour
     [HideInInspector]
     public TileManager tileManager;
 
-    public static GameState instance { get; private set; }
+    public static TutorialState instance { get; private set; }
     bool allSolar = true;
     bool allHeat = true;
     bool hasStandard = false;
@@ -48,15 +48,12 @@ public class GameState : MonoBehaviour
     }
 
 
-    Node playerNode;
-    bool placingNode;
 
     Connector selectedConnector;
     Connection currentConnection;
 
     private void createPlayer()
     {
-        playerStates.Add(Instantiate(config.PlayerStateClass));
         playerStates.Add(Instantiate(config.PlayerStateClass));
         playerStates[0].RefillHand();
     }
@@ -95,11 +92,11 @@ public class GameState : MonoBehaviour
                         playerStates[0].EndTurn();
 
                         playerStates[0].FinalizeConnection(currentConnection);
-                        if(isSolarConnectionEnd && allSolar)
+                        if (isSolarConnectionEnd && allSolar)
                         {
                             playerStates[0].gameData.hasSolarInNetwork = true;
                         }
-                        if(isHeatConnectionEnd && allHeat)
+                        if (isHeatConnectionEnd && allHeat)
                         {
                             playerStates[0].gameData.hasHeatInNetwork = true;
                         }
@@ -141,6 +138,7 @@ public class GameState : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
+                Debug.Log("2 chosen");
                 if (selectedConnector != null)
                 {
                     playerStates[0].gameData.Inventory.Add(selectedConnector);
@@ -158,7 +156,8 @@ public class GameState : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                if(selectedConnector != null)
+               
+                if (selectedConnector != null)
                 {
                     playerStates[0].gameData.Inventory.Add(selectedConnector);
                     foreach (Tile t in selectedConnector.GetTiles())
@@ -168,6 +167,7 @@ public class GameState : MonoBehaviour
                     playerStates[0].gameData.tilesChosen.Clear();
                     playerStates[0].AbortConnection(currentConnection);
                 }
+                Debug.Log("3 chosen");
                 selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 3);
                 playerStates[0].gameData.Inventory.Remove(selectedConnector);
                 hasStandard = true;
@@ -175,10 +175,10 @@ public class GameState : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Alpha4))
             {
-                if(selectedConnector != null)
+                if (selectedConnector != null)
                 {
                     playerStates[0].gameData.SpecialConnector.Add(selectedConnector);
-                    foreach(Tile t in selectedConnector.GetTiles())
+                    foreach (Tile t in selectedConnector.GetTiles())
                     {
                         t.SelectedBy = null;
                     }
@@ -205,30 +205,12 @@ public class GameState : MonoBehaviour
                 hasHeat = true;
                 playerStates[0].gameData.SpecialConnector.Remove(selectedConnector);
             }
-            if (Input.GetKeyDown(KeyCode.Alpha6))
-            {
-                if (placingNode)
-                {
-                    playerStates[0].gameData.nodesOwned.Add(playerNode);
-                    playerNode = null;
-                    placingNode = false;
-                }
-                else
-                {
-                    if (playerStates[0].gameData.nodesOwned.Count > 0)
-                    {
-                        playerNode = playerStates[0].gameData.nodesOwned[0];
-                        playerStates[0].gameData.nodesOwned.Remove(playerNode);
-                        placingNode = true;
-                    }
-                }
-            }
-            if (!placingNode && Input.GetMouseButtonDown(0) && (selectedConnector == null || selectedConnector.MaxLength > selectedConnector.getLength()) && !(EventSystem.current.IsPointerOverGameObject()))
+            if (Input.GetMouseButtonDown(0) && (selectedConnector == null || selectedConnector.MaxLength > selectedConnector.getLength()) && !(EventSystem.current.IsPointerOverGameObject()))
             {
                 Tile t = chooseTile();
                 if (t != null)
                 {
-                    if (t.SelectedBy != null && selectedConnector != null && !(t == selectedConnector.GetLastTile()))
+                    if (t.SelectedBy != null && !(t == selectedConnector.GetLastTile()))
                     {
                         selectedConnector.AddTile(t);
                         if (selectedConnector.MaxLength == selectedConnector.getLength())
@@ -247,22 +229,13 @@ public class GameState : MonoBehaviour
                     }
                 }
             }
-            if(Input.GetMouseButtonDown(0) && placingNode)
-            {
-                Tile t = PlaceNode();
-
-                if(!(t == null))
-                {
-                    placingNode = false;
-                }
-            }
+            //pressed = false;
         }
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            TileManager.tiles[12][16].OwnedBy = playerStates[0];
+            TileManager.tiles[10][10].OwnedBy = playerStates[0];
         }
-        
     }
 
     /*void selectConnector(int Length)
@@ -300,7 +273,7 @@ public class GameState : MonoBehaviour
         {
             GameObject tileObjectTouched = hitInfo.collider.transform.gameObject;
             tileTouched = tileObjectTouched.GetComponent<Tile>();
-            if(tileTouched == null)
+            if (tileTouched == null)
             {
                 return null;
             }
@@ -308,7 +281,7 @@ public class GameState : MonoBehaviour
             if (selectedConnector.getLength() < 2 || Connector.IsValidLengthThree(selectedConnector.GetTiles()[0], selectedConnector.GetTiles()[1], tileTouched))
             {
                 if (tileManager.isOccupied(tileTouched) && !tileManager.IsHeatPipe(tileTouched) && !tileManager.IsSolarPanel(tileTouched))
-                { 
+                {
                     isNormalConnectionEnd = true;
                 }
                 else if (tileManager.IsHeatPipe(tileTouched))
@@ -328,39 +301,7 @@ public class GameState : MonoBehaviour
             }
             return tileTouched;
         }
-        
-        return null;
-    }
 
-    Tile PlaceNode()
-    {
-        Tile tileTouched;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hitInfo;
-
-        if (Physics.Raycast(ray, out hitInfo))
-        {
-            GameObject tileObjectTouched = hitInfo.collider.transform.gameObject;
-            tileTouched = tileObjectTouched.GetComponent<Tile>();
-
-            foreach(Tile t in tileManager.getNeigbours(tileTouched))
-            {
-                if(t.Structure.GetType() != typeof(EmptyStructure))
-                {
-                    return null;
-                }
-            }
-            
-            if(tileTouched.SelectedBy != null || tileTouched.OwnedBy != null || tileTouched.occupied || tileTouched.IsSpecial())
-            {
-                return null;
-            }
-
-            Node nodeP = Instantiate(tileManager.nodePrefab, (tileTouched.Y % 2 == 0) ? new Vector3(tileTouched.X * 1.04f, 0.2f, tileTouched.Y * 0.9f) : new Vector3(tileTouched.X * 1.04f + 0.498f, 0.2f, tileTouched.Y * 0.9f - 0.084f), Quaternion.identity);
-            tileTouched.AddStructure<Tile>(nodeP);
-            playerNode = null;
-            return tileTouched;
-        }
         return null;
     }
 }
