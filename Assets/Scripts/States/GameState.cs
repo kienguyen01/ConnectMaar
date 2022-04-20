@@ -77,12 +77,13 @@ public class GameState : MonoBehaviour
 
     private void addEventHandlers()
     {
-        Pipe1 = GameObject.Find("firstBtn").GetComponent<Button>();
-        Pipe2 = GameObject.Find("secondBtn").GetComponent<Button>();
-        Pipe3 = GameObject.Find("thirdBtn").GetComponent<Button>();
-        EndTurn = GameObject.Find("endTurnBtn").GetComponent<Button>();
-        solarB = GameObject.Find("fourthBtn").GetComponent<Button>();
-        heatB = GameObject.Find("fifthBtn").GetComponent<Button>();
+        Pipe1 = GameObject.Find("FirstBtn").GetComponent<Button>();
+        Pipe2 = GameObject.Find("SecondBtn").GetComponent<Button>();
+        Pipe3 = GameObject.Find("ThirdBtn").GetComponent<Button>();
+        solarB = GameObject.Find("FourthBtn").GetComponent<Button>();
+        heatB = GameObject.Find("FifthBtn").GetComponent<Button>();
+
+        EndTurn = GameObject.Find("EndTurnBtn").GetComponent<Button>();
 
         Pipe1.onClick.AddListener(FirstpipeCheck);
         Pipe2.onClick.AddListener(SecondpipeCheck);

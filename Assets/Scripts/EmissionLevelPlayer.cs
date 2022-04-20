@@ -17,22 +17,27 @@ public class EmissionLevelPlayer : MonoBehaviour
     }
     private void Update()
     {
-        currentEmission = GameState.instance.playerStates[0].gameData.totalPoint;
-        playerText.text = currentEmission + "%"; //displaying the percentage
-        //check if currentEmission > maxEmission, then currentemission = maxEmission (currentEmission !> 100)
-        if (currentEmission > maxEmission) 
+        if (GameState.instance.playerStates.Count > 0)
         {
-            currentEmission = maxEmission;
+            currentEmission = GameState.instance.playerStates[0].gameData.totalPoint;
+            playerText.text = currentEmission + "%"; //displaying the percentage
+                                                     //check if currentEmission > maxEmission, then currentemission = maxEmission (currentEmission !> 100)
+            if (currentEmission > maxEmission)
+            {
+                currentEmission = maxEmission;
+            }
+
+            lerpSpeed = 3f * Time.deltaTime; //can be changed to increase or decrease lerp speed
+                                             /*
+            Debug.Log(playerEmissionbar.fillAmount);
+            Debug.Log(currentEmission);
+            Debug.Log(maxEmission);*/
+            playerEmissionbar.fillAmount = Mathf.Lerp(playerEmissionbar.fillAmount, currentEmission / maxEmission, lerpSpeed);
+            /*
+            Debug.Log(playerEmissionbar.fillAmount);
+            Debug.Log(currentEmission);
+            Debug.Log(maxEmission);*/// should be between 0 and 1 
         }
-       
-        lerpSpeed = 3f * Time.deltaTime; //can be changed to increase or decrease lerp speed
-        Debug.Log(playerEmissionbar.fillAmount);
-        Debug.Log(currentEmission);
-        Debug.Log(maxEmission);
-        playerEmissionbar.fillAmount = Mathf.Lerp(playerEmissionbar.fillAmount, currentEmission / maxEmission, lerpSpeed);
-        Debug.Log(playerEmissionbar.fillAmount);
-        Debug.Log(currentEmission);
-        Debug.Log(maxEmission);// should be between 0 and 1 
     }
     void EmissionLevelFiller()
     {
