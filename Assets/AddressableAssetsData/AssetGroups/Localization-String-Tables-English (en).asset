@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Localization-String-Tables-English (en)
+  m_EditorClassIdentifier: 
+  m_GroupName: Localization-String-Tables-English (en)
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 1dadaf919b59a48cc9a8b5a2ffa195e4
+  m_SerializeEntries:
+  - m_GUID: 38f5ae2eb947a4da4ae5fac67b17447b
+    m_Address: StartGameText_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: 0df1c4862e8974f21a8f609e82a84733
+    m_Address: SettingsText_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: ab317286862c74d5e92d9a3de4433e50
+    m_Address: QuitGame_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: 0f2d0653c89654c5fadcf56a944e6d2c
+    m_Address: TutorialBtn_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: ed7f294a9a5e042babd54112156936e9
+    m_Address: ItemsHeading_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: 9f6b93620e5a746feb82f728909b5cc8
+    m_Address: ArticlesText_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: baee06790054e4842b192d8bba6b86cd
+    m_Address: EmissionBarPlayer_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: b4f84f9970b0e43a9a34f4efe9866ddb
+    m_Address: EndTurnBtn_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: f87a72f5a075848f9b49e0296414286d
+    m_Address: RequiredHeading_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: b26676b6be6954ff1b6d2dfc483e0363
+    m_Address: YouEarn_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: 49cdcdb1a08ac41568f98c8b13b10351
+    m_Address: DidYouKnow_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: 993e19f5c679d4190aba77449a502fef
+    m_Address: clearBtn_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  m_ReadOnly: 1
+  m_Settings: {fileID: 11400000, guid: 47fe1e794f5af47abbbe831c258f4d60, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: f9b03f988688b44fcb2c20d025817f7a, type: 2}
+    - {fileID: 11400000, guid: 92548b7771592437d82da5f954d9673b, type: 2}
