@@ -13,7 +13,7 @@ public class PopupHandler : MonoBehaviour
             isCanvasOpen = true;
             canvas.enabled = true;
         }
-        else if (isCanvasOpen == true)
+        else
         {
             isCanvasOpen = false;
             canvas.enabled = false;
