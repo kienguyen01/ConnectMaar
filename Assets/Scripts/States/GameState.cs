@@ -67,7 +67,7 @@ public class GameState : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (selectedConnector == null || selectedConnector.getLength() == selectedConnector.MaxLength)
+            if (selectedConnector == null || selectedConnector.getLength() >= selectedConnector.MaxLength)
             {
                 if (playerStates[0].gameData.isTurn)
                 {
@@ -75,21 +75,31 @@ public class GameState : MonoBehaviour
                     {
                         foreach (Connector connector in conn.Connectors)
                         {
-                            if (!connector.GetType().Equals(typeof(SolarPanelConnector)))
+                            if (conn == SolarConnection && !connector.GetType().Equals(typeof(SolarPanelConnector)))
                             {
                                 allSolar = false;
                             }
-                            if (!connector.GetType().Equals(typeof(HeatPipeConnector)))
+                            if (conn == HeatConnection && !connector.GetType().Equals(typeof(HeatPipeConnector)))
                             {
                                 allHeat = false;
                             }
                             foreach (Tile t in connector.GetTiles())
                             {
-                                if (t.IsScrabbleForHeat)
-                                    playerStates[0].AddHeatPipeConnector();
+                                if (t.IsScrabbleForHeat || t.IsScrabbleForSolar)
+                                {
+                                    playerStates[0]
+                                        .AddHeatPipeConnector()
+                                        .AddHeatPipeConnector()
+                                        .AddHeatPipeConnector()
+                                        .AddHeatPipeConnector();
 
-                                if (t.IsScrabbleForSolar)
-                                    playerStates[0].AddSolarConnector();
+                                    //if (t.IsScrabbleForSolar)
+                                    playerStates[0]
+                                        .AddSolarConnector()
+                                        .AddSolarConnector()
+                                        .AddSolarConnector()
+                                        .AddSolarConnector();
+                                }
                             }
                         }
                         if ((isSolarConnectionEnd && allSolar) || (isHeatConnectionEnd && allHeat) || (hasStandard && !hasHeat && !hasSolar && isNormalConnectionEnd))
@@ -135,7 +145,6 @@ public class GameState : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha0))
             {
-
                 playerStates[0].AbortConnection(currentConnection);
             }
             
@@ -221,9 +230,12 @@ public class GameState : MonoBehaviour
                 {
                     if (t.SelectedBy != null && selectedConnector != null && !(t == selectedConnector.GetLastTile()))
                     {
-                        selectedConnector.AddTile(t);
-                        if (selectedConnector.MaxLength == selectedConnector.getLength())
+                        if (t.IsSpecial() && isNormalConnectionEnd)
                         {
+                            foreach (Tile tile in tileManager.getSpecialNeighbours(t))
+                            {
+                                selectedConnector.AddTile(t);
+                            }
                             if (currentConnection == null)
                             {
                                 currentConnection = playerStates[0].StartConnection();
@@ -231,6 +243,21 @@ public class GameState : MonoBehaviour
                             }
                             currentConnection.Connectors.Add(selectedConnector);
                             selectedConnector = null;
+                        }
+                        else
+                        {
+                            selectedConnector.AddTile(t);
+
+                            if (selectedConnector.MaxLength == selectedConnector.getLength())
+                            {
+                                if (currentConnection == null)
+                                {
+                                    currentConnection = playerStates[0].StartConnection();
+                                    turnConnections.Add(currentConnection);
+                                }
+                                currentConnection.Connectors.Add(selectedConnector);
+                                selectedConnector = null;
+                            }
                         }
                     }
                     else
@@ -274,6 +301,9 @@ public class GameState : MonoBehaviour
         //}
     }*/
 
+
+    Connection SolarConnection;
+    Connection HeatConnection;
     bool isNormalConnectionEnd = false;
     bool isHeatConnectionEnd = false;
     bool isSolarConnectionEnd = false;
@@ -297,19 +327,25 @@ public class GameState : MonoBehaviour
                 return null;
             }
 
-            if (selectedConnector.MaxLength < 3 || selectedConnector.getLength() < 2 || (selectedConnector.GetTiles().Contains(tileTouched)) || Connector.IsValidLengthThree(selectedConnector.GetTiles()[0], selectedConnector.GetTiles()[1], tileTouched))
+            if (selectedConnector.getLength() < 2 || (selectedConnector.GetTiles().Contains(tileTouched)) || Connector.IsValidLengthThree(selectedConnector.GetTiles()[0], selectedConnector.GetTiles()[1], tileTouched))
             {
-                if (selectedConnector.MaxLength == selectedConnector.getLength() && tileManager.isOccupied(tileTouched) && !tileManager.IsHeatPipe(tileTouched) && !tileManager.IsSolarPanel(tileTouched))
+                if (selectedConnector.MaxLength == (selectedConnector.getLength() + 1) && tileManager.isOccupied(tileTouched) && !tileManager.IsHeatPipe(tileTouched) && !tileManager.IsSolarPanel(tileTouched))
                 { 
                     isNormalConnectionEnd = true;
+                    currentConnection = new Connection();
+                    turnConnections.Add(currentConnection);
                 }
                 else if (tileManager.IsHeatPipe(tileTouched))
                 {
                     isHeatConnectionEnd = true;
+                    HeatConnection = currentConnection;
                 }
                 else if (tileManager.IsSolarPanel(tileTouched))
                 {
                     isSolarConnectionEnd = true;
+                    SolarConnection = currentConnection;
+                    currentConnection = new Connection();
+                    turnConnections.Add(currentConnection);
                 }
                 else if (!tileManager.isOccupied(tileTouched))
                 {

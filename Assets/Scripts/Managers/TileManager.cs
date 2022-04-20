@@ -242,15 +242,6 @@ public class TileManager : MonoBehaviour
             hex_cell.AddStructure<SpecialBuilding>(church_cell);
         }
 
-        if (x == 9 && y == 17)
-        {
-            SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(stadium, new Vector3(xPos + 0.5f, 0.205f, y * zOffset), Quaternion.Euler(-90, 0, 0));
-            stadium_cell.transform.localScale = new Vector3(0.15f, 0.15f, 0.3f);
-            stadium_cell.name = "stadium_" + x + "_" + y;
-            stadium_cell.SolarRequired = true;
-            hex_cell.AddStructure<SpecialBuilding>(stadium_cell);
-        }
-
         addMethods(hex_cell);
         addSpecialBuilding(hex_cell);
 
@@ -274,7 +265,11 @@ public class TileManager : MonoBehaviour
         switch (tileCoords)
         {
             case "009|017":
-                hex_cell.AddStructure<SpecialBuilding>();
+                SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(stadium, new Vector3(hex_cell.X*xOffset + 1f, 0.205f, hex_cell.Y * zOffset), Quaternion.Euler(-90, 0, 0));
+                stadium_cell.transform.localScale = new Vector3(0.15f, 0.15f, 0.3f);
+                stadium_cell.name = "stadium_" + hex_cell.X + "_" + hex_cell.Y;
+                stadium_cell.SolarRequired = true;
+                hex_cell.AddStructure<SpecialBuilding>(stadium_cell);
                 break;
             case "005|014":
                 hex_cell.AddStructure<SpecialBuilding>();
@@ -337,17 +332,18 @@ public class TileManager : MonoBehaviour
 
 
 
-            if (tile.IsSpecial() && ((tile.Structure.SolarRequired && Instigator.gameData.hasSolarInNetwork) || (tile.Structure.HeatRequired && Instigator.gameData.hasHeatInNetwork)))
+            if (tile.IsSpecial() && ((tile.GetSpecialOriginTile().Structure.SolarRequired && Instigator.gameData.hasSolarInNetwork) || (tile.GetSpecialOriginTile().Structure.HeatRequired && Instigator.gameData.hasHeatInNetwork)))
             {
                 foreach (Tile t in getSpecialNeighbours(tile))
                 {
+                    Instigator.gameData.tilesChosen.Push(t);
                     t.SelectedBy = Instigator;
                 }
             }
 
             if (isValidTileToChoose(tile, Instigator) && !tile.IsSpecial())
             {
-                if (tile.OwnedBy == null && tile.SelectedBy == null && ((Instigator.gameData.tilesChosen.Count > 0) ? neighbours.Contains(Instigator.gameData.tilesChosen.Peek()) : true))
+                if (tile.OwnedBy == null && tile.SelectedBy == null && ((Instigator.gameData.tilesChosen.Count > 0) ? (neighbours.Contains(Instigator.gameData.tilesChosen.Peek()) || neighbours.Exists(x=>x.OwnedBy == Instigator)) : true))
                 {
                     Instigator.gameData.tilesChosen.Push(tile);
                     tile.SelectedBy = Instigator;
@@ -372,7 +368,7 @@ public class TileManager : MonoBehaviour
         tile.transform.SetParent(this.transform);
     }
 
-    private List<Tile> getSpecialNeighbours(Tile tile)
+    public List<Tile> getSpecialNeighbours(Tile tile)
     {
         List<Tile> neighbours = new List<Tile>();
         Tile origin = tile.GetSpecialOriginTile();//left = 10,15 | origin = 10,16 | right = 11,16 | top = 10,17
