@@ -242,10 +242,17 @@ public class PlayerState : MonoBehaviour
         {
             if (Hard || c.MaxLength > c.getLength())
             {
+                foreach (Tile t in c.GetTiles())
+                {
+                    gameData.tilesChosen.Pop();
+                }
+
                 if (!c.IsSpecial)
                     this.gameData.Inventory.Add(c.ResetConnector());
                 else
                     this.gameData.SpecialConnector.Add(c.ResetConnector());
+
+                
             }
         }
         Destroy(conn);

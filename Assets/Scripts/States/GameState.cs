@@ -80,7 +80,7 @@ public class GameState : MonoBehaviour
         Pipe1 = GameObject.Find("firstBtn").GetComponent<Button>();
         Pipe2 = GameObject.Find("secondBtn").GetComponent<Button>();
         Pipe3 = GameObject.Find("thirdBtn").GetComponent<Button>();
-        EndTurn = GameObject.Find("endTurnBtn").GetComponent<Button>();
+        EndTurn = GameObject.Find("EndTurnBtn").GetComponent<Button>();
         solarB = GameObject.Find("fourthBtn").GetComponent<Button>();
         heatB = GameObject.Find("fifthBtn").GetComponent<Button>();
 
