@@ -90,6 +90,21 @@ public class GameState : MonoBehaviour
         EndBtnMsg = GameObject.Find("EndBtnMsg").GetComponent<TextMeshProUGUI>();
         ClearBtn = GameObject.Find("ClearBtn").GetComponent<Button>();
 
+        GameObject ExStadium = GameObject.Find("ExitBtnStadium");
+        ExStadium.GetComponent<Button>()
+            .onClick.AddListener(
+            () => {
+                TileManager.pH.canvas = ExStadium.transform.parent.parent.gameObject.GetComponent<Canvas>();
+                TileManager.pH.Popup();
+            });
+
+        GameObject ExChurch = GameObject.Find("ExitBtnChurch");
+        ExChurch.GetComponent<Button>().onClick.AddListener(
+            () => {
+                TileManager.pH.canvas = ExChurch.transform.parent.parent.gameObject.GetComponent<Canvas>();
+                TileManager.pH.Popup();
+            });
+
         EndTurn = GameObject.Find("EndTurnBtn").GetComponent<Button>();
 
         Pipe1.onClick.AddListener(FirstpipeCheck);
@@ -411,6 +426,7 @@ public class GameState : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && !selectedConnector)
             GetInfoCard();
+
         TutorialStart();
         startPoint();
     }
