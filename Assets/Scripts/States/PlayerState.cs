@@ -33,6 +33,7 @@ public class PlayerGameData
     public List<Connector> SpecialConnector;
     public Connector SelectedConnector;
     public List<Node> nodesOwned;
+    public Color PlayerColour;
 }
 
 public class PlayerState : MonoBehaviour
@@ -64,14 +65,16 @@ public class PlayerState : MonoBehaviour
         //Assert.IsNotNull(playerClass);
         //Assert.IsNotNull(cameraClass);
 
-         //player = CreatePlayer(); 
-         //camera = CreateCamera(player.gameObject);
+        //player = CreatePlayer(); 
+        //camera = CreateCamera(player.gameObject);
 
         //player = CreatePlayer();
         //camera = CreateCamera(player.gameObject);
 
         //Assert.IsNotNull(config.PlayerStateClass);
         //Assert.IsTrue(PlayerStarts.Length > 0);
+
+        gameData.PlayerColour = Color.red;
 
         Debug.Log($"ConnectorManager - {(config.ConnectorManagerClass ? "true" : "false")}");
         if (config.ConnectorManagerClass)
@@ -90,17 +93,32 @@ public class PlayerState : MonoBehaviour
     public void EndTurn()
     {
         Debug.Log("clicked end button");
-        this.gameData.tilesTaken.AddRange(this.gameData.tilesChosen);
-        this.gameData.tilesChosen = new Stack<Tile>();
         this.gameData.isTurn = false;
-        foreach (Tile tile in this.gameData.tilesTaken)
+        foreach (Tile tile in this.gameData.tilesChosen)
         {
             if(!(tile.Structure.GetType() == typeof(Node)))
             {
                 tile.OwnedBy = this;
             }
             tile.SelectedBy = null;
+            if (tile.IsScrabbleForHeat)
+            {
+                this.AddHeatPipeConnector()
+                    .AddHeatPipeConnector()
+                    .AddHeatPipeConnector()
+                    .AddHeatPipeConnector();
+            }
+            else if (tile.IsScrabbleForSolar)
+            {
+                this
+                    .AddSolarConnector()
+                    .AddSolarConnector()
+                    .AddSolarConnector()
+                    .AddSolarConnector();
+            }
         }
+        this.gameData.tilesTaken.AddRange(this.gameData.tilesChosen);
+        this.gameData.tilesChosen = new Stack<Tile>();
     }
 
 

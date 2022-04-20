@@ -275,11 +275,11 @@ public class TileManager : MonoBehaviour
                 hex_cell.AddStructure<SpecialBuilding>();
                 break;
             case "012|016":
-                House house_cell = (House)Instantiate(housePrefab, new Vector3(hex_cell.X, 0.2f, hex_cell.Y * zOffset), Quaternion.identity);
+                House house_cell = (House)Instantiate(housePrefab, new Vector3(hex_cell.X*xOffset, 0.2f, hex_cell.Y * zOffset), Quaternion.identity);
                 hex_cell.AddStructure<House>(house_cell);
                 break;
             case "009|015":
-                hex_cell.IsScrabbleForHeat = true;
+                hex_cell.IsScrabbleForSolar = true;
                 break;
             case "012|015":
                 hex_cell.IsScrabbleForSolar = true;

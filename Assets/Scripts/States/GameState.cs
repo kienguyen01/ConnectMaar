@@ -158,24 +158,6 @@ public class GameState : MonoBehaviour
                             {
                                 allHeat = false;
                             }
-                            foreach (Tile t in connector.GetTiles())
-                            {
-                                if (t.IsScrabbleForHeat || t.IsScrabbleForSolar)
-                                {
-                                    playerStates[0]
-                                        .AddHeatPipeConnector()
-                                        .AddHeatPipeConnector()
-                                        .AddHeatPipeConnector()
-                                        .AddHeatPipeConnector();
-
-                                    //if (t.IsScrabbleForSolar)
-                                    playerStates[0]
-                                        .AddSolarConnector()
-                                        .AddSolarConnector()
-                                        .AddSolarConnector()
-                                        .AddSolarConnector();
-                                }
-                            }
                         }
                         if ((isSolarConnectionEnd && allSolar) || (isHeatConnectionEnd && allHeat) || (hasStandard && !hasHeat && !hasSolar && isNormalConnectionEnd))
                         {

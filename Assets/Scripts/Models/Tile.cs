@@ -48,7 +48,7 @@ public class Tile : MonoBehaviour
         set
         {
             //todo add colours to playerstates so we can do playerstate.playercolour
-            this.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
+            this.GetComponentInChildren<MeshRenderer>().material.color = value.gameData.PlayerColour;
             ownedBy = value;
         }
     }
