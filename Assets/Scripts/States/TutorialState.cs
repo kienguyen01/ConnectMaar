@@ -11,299 +11,167 @@ public struct TutorialStateConfig
     public TileManager TileManagerClass;
 }
 
-public class TutorialState : MonoBehaviour
+
+
+public class TutorialState :  GameState
 {
-    public TutorialStateConfig config;
+    public TutorialManager TutorialManagerClass;
+    private TutorialManager TutorialManager;
 
-    [HideInInspector]
-    public List<PlayerState> playerStates;
+    public GameObject popups;
+    private int index;
 
-    [HideInInspector]
-    public TileManager tileManager;
+    private string[] tutorialMessage;
 
-    public static TutorialState instance { get; private set; }
-    bool allSolar = true;
-    bool allHeat = true;
-    bool hasStandard = false;
-    bool hasHeat = false;
-    bool hasSolar = false;
-    public void Awake()
+
+    public override void startPoint()
     {
-        Assert.IsNull(instance);
-        instance = this;
-
-        //Assert.IsNotNull(config.PlayerStateClass);
-        //Assert.IsTrue(PlayerStarts.Length > 0);
-
-        Debug.Log($"TileManager - {(config.TileManagerClass ? "true" : "false")}");
-        Debug.Log($"PlayerState in GameState - {(config.PlayerStateClass ? "true" : "false")}");
-
-        if (config.TileManagerClass)
+        if(tileManager.tiles[0][0].OwnedBy == null)
         {
-            tileManager = Instantiate(config.TileManagerClass);
-        }
-
-        createPlayer();
-
-    }
-
-
-
-    Connector selectedConnector;
-    Connection currentConnection;
-
-    private void createPlayer()
-    {
-        playerStates.Add(Instantiate(config.PlayerStateClass));
-        playerStates[0].RefillHand();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (selectedConnector == null || selectedConnector.getLength() == selectedConnector.MaxLength)
-            {
-                if (playerStates[0].gameData.isTurn)
-                {
-                    foreach (Connector connector in currentConnection.Connectors)
-                    {
-                        if (!connector.GetType().Equals(typeof(SolarPanelConnector)))
-                        {
-                            allSolar = false;
-                        }
-                        if (!connector.GetType().Equals(typeof(HeatPipeConnector)))
-                        {
-                            allHeat = false;
-                        }
-                        foreach (Tile t in connector.GetTiles())
-                        {
-                            if (t.IsScrabbleForHeat)
-                                playerStates[0].AddHeatPipeConnector();
-
-                            if (t.IsScrabbleForSolar)
-                                playerStates[0].AddSolarConnector();
-                        }
-                    }
-                    if ((isSolarConnectionEnd && allSolar) || (isHeatConnectionEnd && allHeat) || (hasStandard && !hasHeat && !hasSolar && isNormalConnectionEnd))
-                    {
-                        playerStates[0].RefillHand();
-                        playerStates[0].gameData.isTurn = false;
-                        playerStates[0].EndTurn();
-
-                        playerStates[0].FinalizeConnection(currentConnection);
-                        if (isSolarConnectionEnd && allSolar)
-                        {
-                            playerStates[0].gameData.hasSolarInNetwork = true;
-                        }
-                        if (isHeatConnectionEnd && allHeat)
-                        {
-                            playerStates[0].gameData.hasHeatInNetwork = true;
-                        }
-                    }
-                    hasHeat = false;
-                    hasSolar = false;
-                    allSolar = true;
-                    allHeat = true;
-                    hasStandard = false;
-                    isHeatConnectionEnd = false;
-                    isSolarConnectionEnd = false;
-                    currentConnection = null;
-                    isNormalConnectionEnd = false;
-                }
-                else
-                {
-                    playerStates[0].gameData.isTurn = true;
-                }
-                Debug.Log("isTurn" + playerStates[0].gameData.isTurn.ToString());
-            }
-        }
-        if (playerStates[0].gameData.isTurn)
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                if (selectedConnector != null)
-                {
-                    playerStates[0].gameData.Inventory.Add(selectedConnector);
-                    foreach (Tile t in selectedConnector.GetTiles())
-                    {
-                        t.SelectedBy = null;
-                    }
-                    playerStates[0].gameData.tilesChosen.Clear();
-                    playerStates[0].AbortConnection(currentConnection);
-                }
-                selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 1);
-                playerStates[0].gameData.Inventory.Remove(selectedConnector);
-                hasStandard = true;
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                Debug.Log("2 chosen");
-                if (selectedConnector != null)
-                {
-                    playerStates[0].gameData.Inventory.Add(selectedConnector);
-                    foreach (Tile t in selectedConnector.GetTiles())
-                    {
-                        t.SelectedBy = null;
-                    }
-                    playerStates[0].gameData.tilesChosen.Clear();
-                    playerStates[0].AbortConnection(currentConnection);
-                }
-                selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 2);
-                playerStates[0].gameData.Inventory.Remove(selectedConnector);
-                hasStandard = true;
-
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-               
-                if (selectedConnector != null)
-                {
-                    playerStates[0].gameData.Inventory.Add(selectedConnector);
-                    foreach (Tile t in selectedConnector.GetTiles())
-                    {
-                        t.SelectedBy = null;
-                    }
-                    playerStates[0].gameData.tilesChosen.Clear();
-                    playerStates[0].AbortConnection(currentConnection);
-                }
-                Debug.Log("3 chosen");
-                selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 3);
-                playerStates[0].gameData.Inventory.Remove(selectedConnector);
-                hasStandard = true;
-
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                if (selectedConnector != null)
-                {
-                    playerStates[0].gameData.SpecialConnector.Add(selectedConnector);
-                    foreach (Tile t in selectedConnector.GetTiles())
-                    {
-                        t.SelectedBy = null;
-                    }
-                    playerStates[0].gameData.tilesChosen.Clear();
-                    playerStates[0].AbortConnection(currentConnection);
-                }
-                selectedConnector = playerStates[0].gameData.SpecialConnector.Find(x => x.IsSolar);
-                hasSolar = true;
-                playerStates[0].gameData.SpecialConnector.Remove(selectedConnector);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha5))
-            {
-                if (selectedConnector != null)
-                {
-                    playerStates[0].gameData.SpecialConnector.Add(selectedConnector);
-                    foreach (Tile t in selectedConnector.GetTiles())
-                    {
-                        t.SelectedBy = null;
-                    }
-                    playerStates[0].gameData.tilesChosen.Clear();
-                    playerStates[0].AbortConnection(currentConnection);
-                }
-                selectedConnector = playerStates[0].gameData.SpecialConnector.Find(x => x.IsHeat);
-                hasHeat = true;
-                playerStates[0].gameData.SpecialConnector.Remove(selectedConnector);
-            }
-            if (Input.GetMouseButtonDown(0) && (selectedConnector == null || selectedConnector.MaxLength > selectedConnector.getLength()) && !(EventSystem.current.IsPointerOverGameObject()))
-            {
-                Tile t = chooseTile();
-                if (t != null)
-                {
-                    if (t.SelectedBy != null && !(t == selectedConnector.GetLastTile()))
-                    {
-                        selectedConnector.AddTile(t);
-                        if (selectedConnector.MaxLength == selectedConnector.getLength())
-                        {
-                            if (currentConnection == null)
-                            {
-                                currentConnection = playerStates[0].StartConnection();
-                            }
-                            currentConnection.Connectors.Add(selectedConnector);
-                            selectedConnector = null;
-                        }
-                    }
-                    else
-                    {
-                        selectedConnector.RemoveTile(t);
-                    }
-                }
-            }
-            //pressed = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            TileManager.tiles[10][10].OwnedBy = playerStates[0];
+            tileManager.tiles[0][0].OwnedBy = playerStates[0];
         }
     }
 
-    /*void selectConnector(int Length)
+
+
+    public override void TutorialStart()
     {
-        //switch (Length)
-        //{
-        //    case 1:
-        //        chooseTile(1);
-        //        break;
-        //    case 2:
-        //        chooseTile(2);
-        //        break;
-        //    case 3:
-        //        chooseTile(3);
-        //        break;
-        //    default: break;
-        //}
-    }*/
-
-    bool isNormalConnectionEnd = false;
-    bool isHeatConnectionEnd = false;
-    bool isSolarConnectionEnd = false;
-    /// <summary>
-    /// Function that selects one tile when tapped
-    /// </summary>
-    /// <returns></returns>
-    Tile chooseTile()
-    {
-        Tile tileTouched;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        RaycastHit hitInfo;
-
-        if (Physics.Raycast(ray, out hitInfo))
+        text = GameObject.Find("TutorialMessgae").GetComponent<TextMeshProUGUI>();
+        if (text != null)
         {
-            GameObject tileObjectTouched = hitInfo.collider.transform.gameObject;
-            tileTouched = tileObjectTouched.GetComponent<Tile>();
-            if (tileTouched == null)
+            if ( index == 0)
             {
-                return null;
+                text.text = "Welcome to the Tutorial Player 1. In this tutorial we will teach you how to play ConnectMaar. Tap on Screen to start.";
+                playerStates[0].clearHand();
+                playerStates[0].refilSpecificHand(1, 1, 2);
+                nextMsg();
             }
+            else if (index == 1)
+            {
+                text.text = "This is a tutorial to teach you the basic gameplay of our game. Tap for next.";
+                nextMsg();
+            }
+            else if(index == 2)
+            {
+                text.text = "On the left hand side of your screen you can see the inventory screen";
+                nextMsg();
+            }
+            else if (index == 3)
+            {
+                text.text = "In your inventory you have Items called connectors. They are your main tool in making Alkmaar a greener place";
+                nextMsg();
+            }
+            else if (index == 4)
+            {
+                text.text ="Right now in your inventory you have a single connector,a double connector and a tripple connector";
+                nextMsg();
 
-            if (selectedConnector.getLength() < 2 || Connector.IsValidLengthThree(selectedConnector.GetTiles()[0], selectedConnector.GetTiles()[1], tileTouched))
-            {
-                if (tileManager.isOccupied(tileTouched) && !tileManager.IsHeatPipe(tileTouched) && !tileManager.IsSolarPanel(tileTouched))
-                {
-                    isNormalConnectionEnd = true;
-                }
-                else if (tileManager.IsHeatPipe(tileTouched))
-                {
-                    isHeatConnectionEnd = true;
-                }
-                else if (tileManager.IsSolarPanel(tileTouched))
-                {
-                    isSolarConnectionEnd = true;
-                }
-                else if (!tileManager.isOccupied(tileTouched))
-                {
-                    isNormalConnectionEnd = false;
-                }
-                if (tileTouched.OwnedBy == null)
-                    tileTouched.onSelected(playerStates[0]);
             }
-            return tileTouched;
+            else if (index == 5)
+            {
+                text.text = "Depending on the length and number of connectors you use in your connection the amount your emmision bar decreses will change";
+                nextMsg();
+            }
+            else if (index == 6)
+            {
+                text.text = "Ok lets begin using renewable energy to make alkmaar a better place ";
+                nextMsg();
+            }
+            else if (index == 7)
+            {
+                text.text = "Start your turn by pressing the start turn button.";
+                if (playerStates[0].gameData.isTurn ==  true)
+                {
+                    index++;
+                }
+            }
+            else if(index == 8)
+            {
+                text.text = "Claim the house closest to you using the least amount of pipes and end your turn";
+                checkTileTaken(2, 1);
+            }
+            else if(index == 9)
+            {
+                text.text = "Congratulations you have started to make Alkmaar a greener place";
+                playerStates[0].clearHand();
+                playerStates[0].refilSpecificHand(1, 1, 2);
+
+                nextMsg();
+            }
+            else if (index == 10)
+            {
+                text.text = "Will you look at that. Your emmision bar has descressed by 3 points";
+
+                nextMsg();
+            }
+            else if(index == 11)
+            {
+                text.text = "1 connector == 1point,  2 Connectors ==  2 points,  3 Connectors = 3 points";
+                nextMsg();
+            }
+            else if (index == 12)
+            {
+                text.text = "At the end of each turn your hand size of pipes will be filled up again";
+                nextMsg();
+            }
+            else if (index == 13)
+            {
+                text.text = "Start your turn again to continue";
+                if (playerStates[0].gameData.isTurn == true)
+                {
+                    index++;
+                }
+            }
+            else if(index == 14)
+            {
+                text.text = "Use the newly aquired pipes to make a connection to the house nearby";
+                checkTileTaken(6,2);
+            }
+            else if (index == 15)
+            {
+                text.text = "It looks like you built over scrabble tiles and claimed " + playerStates[0].gameData.SpecialConnector.Count + " special connectors";
+                nextMsg();
+            }
+            else if (index == 16)
+            {
+                text.text = "Special connectors are used to add special renewable resource in your grid such as heatpumps and solar pannels";
+                nextMsg();
+            }
+            else if (index == 17)
+            {
+                text.text = "The special connector you have can only be used to connect to a solar pannel ";
+                nextMsg();
+            }
+            else if (index == 18)
+            {
+                text.text = "Please use the special solar connector to connect to the solar pannel ahead.";
+                //checkTileTaken(6, 2);
+            }
         }
-
-        return null;
     }
+
+    public IEnumerator Wait(float delayInSecs)
+    {
+        yield return new WaitForSeconds(delayInSecs);
+    }
+
+    private void nextMsg()
+    {
+        if (Input.GetMouseButtonDown(0) && !(EventSystem.current.IsPointerOverGameObject()))
+        {
+            index++;
+        }
+    }
+
+    private void checkTileTaken(int x, int y)
+    {
+        if (tileManager.tiles[x][y].OwnedBy == playerStates[0])
+        {
+            index++;
+        }
+    }
+
+
 }
 
 //insufficient length of connector used but still can end turn
