@@ -83,8 +83,23 @@ public class GameState : MonoBehaviour
         Pipe3 = GameObject.Find("cable3Btn").GetComponent<Button>();
         solarB = GameObject.Find("solar").GetComponent<Button>();
         heatB = GameObject.Find("rawpipe").GetComponent<Button>();
-        BtnClicked = GameObject.Find("BtnClicked").GetComponent<TextMeshProUGUI>();
+        //BtnClicked = GameObject.Find("BtnClicked").GetComponent<TextMeshProUGUI>();
 
+
+        GameObject ExStadium = GameObject.Find("ExitBtnStadium");
+        ExStadium.GetComponent<Button>()
+            .onClick.AddListener(
+            () => {
+                TileManager.pH.canvas = ExStadium.transform.parent.parent.gameObject.GetComponent<Canvas>();
+                TileManager.pH.Popup();
+            });
+
+        GameObject ExChurch = GameObject.Find("ExitBtnChurch");
+        ExChurch.GetComponent<Button>().onClick.AddListener(
+            () => {
+                TileManager.pH.canvas = ExChurch.transform.parent.parent.gameObject.GetComponent<Canvas>();
+                TileManager.pH.Popup();
+            });
 
         EndTurn = GameObject.Find("EndTurnBtn").GetComponent<Button>();
 
@@ -374,6 +389,7 @@ public class GameState : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && !selectedConnector)
             GetInfoCard();
+
         TutorialStart();
         startPoint();
     }

@@ -14,6 +14,9 @@ public class TileManager : MonoBehaviour
     public SpecialBuilding stadium;
     public Node nodePrefab;
 
+    
+    public static PopupHandler pH;
+
     public List<SpecialBuilding> specialBuildingList;
 
     List<List<Tile>> specialBuildings = new List<List<Tile>>();
@@ -30,6 +33,11 @@ public class TileManager : MonoBehaviour
     public static List<List<Tile>> tiles = new List<List<Tile>>();
 
     public UnityAction<PlayerState> OnTileChosen;
+
+    private void Awake()
+    {
+        pH = this.gameObject.AddComponent(typeof(PopupHandler)) as PopupHandler;
+    }
 
     public int tileAvailable
     {
@@ -175,37 +183,64 @@ public class TileManager : MonoBehaviour
             hex_cell.AddStructure<House>(house_cell);
         }
 
-        if ( (x == 7 && y == 0))
-        {
-            SolarPanel solar_cell = (SolarPanel)Instantiate(solarPrefab, new Vector3(xPos, 0.2f, y * zOffset), Quaternion.Euler(0, -90, 0));
-            solar_cell.transform.SetParent(hex_cell.transform);
-            solar_cell.name = "solar_" + x + "_" + y;
-            hex_cell.AddStructure<House>(solar_cell);
-        }
-
-        if (x == 11 && y == 6)
-        {
-            SpecialBuilding church_cell = (SpecialBuilding)Instantiate(church, new Vector3(xPos + 0.512f, 0.35f, y * zOffset - 0.636f), Quaternion.Euler(-90, 90, 0));
-            church_cell.transform.localScale = new Vector3(15.0f, 15.0f, 15.0f);
-            church_cell.name = "church_" + x + "_" + y;
-            hex_cell.AddStructure<House>(church_cell);
-        }
-
-        if (x == 9 && y == 17 || (x == 1 && y == 7))
-        {
-            SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(stadium, new Vector3(xPos + 0.5f, 0.205f, y * zOffset), Quaternion.Euler(-90, 0, 0));
-            stadium_cell.transform.localScale = new Vector3(0.15f, 0.15f, 0.3f);
-            stadium_cell.name = "stadium_" + x + "_" + y;
-            hex_cell.AddStructure<House>(stadium_cell);
-        }
 
         addMethods(hex_cell);
-        addSpecialBuilding(hex_cell);
+        addSpecialBuildingsTutorial(hex_cell);
 
         setEmpties(hex_cell);
 
         return hex_cell;
     }
+
+    private void addSpecialBuildingsTutorial(Tile hex_cell)
+    {
+        string tileCoords = hex_cell.X.ToString().PadLeft(3, '0') + "|" + hex_cell.Y.ToString().PadLeft(3, '0');
+
+        switch (tileCoords)
+        {
+            case "000|007":
+                SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(stadium, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset), Quaternion.Euler(-90, 0, 0));
+                stadium_cell.transform.localScale = new Vector3(0.15f, 0.15f, 0.3f);
+                stadium_cell.name = "stadium_" + hex_cell.X + "_" + hex_cell.Y;
+                stadium_cell.SolarRequired = true;
+                hex_cell.openInfoCard += (PlayerState player) =>
+                {
+                    pH.canvas = GameObject.Find("StadiumCard").GetComponent<Canvas>();
+                    pH.Popup();
+                    //Debug.Log("!!! OpenInfoCard !!!");
+                    //todo open infocard
+                };
+                hex_cell.AddStructure<SpecialBuilding>(stadium_cell);
+                break;
+            case "011|006":
+                SpecialBuilding church_cell = (SpecialBuilding)Instantiate(church, new Vector3(hex_cell.X * xOffset, 0.35f, hex_cell.Y * zOffset + 0.35f), Quaternion.Euler(-90, 90, 0));
+                church_cell.transform.localScale = new Vector3(15.0f, 15.0f, 15.0f);
+                church_cell.name = "church_" + hex_cell.X + "_" + hex_cell.Y;
+                church_cell.SolarRequired = true;
+                church_cell.HeatRequired = true;
+                hex_cell.openInfoCard += (PlayerState player) =>
+                {
+                    pH.canvas = GameObject.Find("ChurchCard").GetComponent<Canvas>();
+                    pH.Popup();
+                    //Debug.Log("!!! OpenInfoCard !!!");
+                    //todo open infocard
+                };
+                hex_cell.AddStructure<SpecialBuilding>(church_cell);
+                break;
+            case "004|002":
+                hex_cell.IsScrabbleForSolar = true;
+                break;
+            case "009|002":
+                hex_cell.IsScrabbleForSolar = true;
+                break;
+            case "010|009":
+                hex_cell.IsScrabbleForSolar = true;
+                break;
+            default:
+                break;
+        }
+    }
+
     Tile GenerateTilesMap(int x, int y)
     {
         float xPos = x * xOffset;
@@ -272,7 +307,9 @@ public class TileManager : MonoBehaviour
                 stadium_cell.SolarRequired = true;
                 hex_cell.openInfoCard += (PlayerState player) =>
                 {
-                    Debug.Log("!!! OpenInfoCard !!!");
+                    pH.canvas = GameObject.Find("StadiumCard").GetComponent<Canvas>();
+                    pH.Popup();
+                    //Debug.Log("!!! OpenInfoCard !!!");
                     //todo open infocard
                 };
                 hex_cell.AddStructure<SpecialBuilding>(stadium_cell);
