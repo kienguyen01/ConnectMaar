@@ -198,6 +198,12 @@ public class TileManager : MonoBehaviour
 
         switch (tileCoords)
         {
+            case "007|000":
+                SolarPanel solar_cell = (SolarPanel)Instantiate(solarPrefab, new Vector3(hex_cell.X * xOffset, 0.2f, hex_cell.Y * zOffset), Quaternion.Euler(0, -90, 0));
+                solar_cell.transform.SetParent(hex_cell.transform);
+                solar_cell.name = "solar_" + hex_cell.X + "_" + hex_cell.Y;
+                hex_cell.AddStructure<House>(solar_cell);
+                break;
             case "000|007":
                 SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(stadium, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset), Quaternion.Euler(-90, 0, 0));
                 stadium_cell.transform.localScale = new Vector3(0.15f, 0.15f, 0.3f);
