@@ -96,6 +96,7 @@ public class GameState : MonoBehaviour
 
     public void FirstpipeCheck()
     {
+        Debug.Log("FIRST PIPE HAS BEEN PICKED");
         p1 ^= true;
     }
 

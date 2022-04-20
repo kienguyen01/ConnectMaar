@@ -42,6 +42,8 @@ public class TutorialState :  GameState
         {
             if ( index == 0)
             {
+                GameObject varGameObject = GameObject.Find("Plane");
+                varGameObject.GetComponent<PhoneCameraMovement>().enabled = false;
                 text.text = "Welcome to the Tutorial Player 1. In this tutorial we will teach you how to play ConnectMaar. Tap on Screen to start.";
                 playerStates[0].clearHand();
                 playerStates[0].refilSpecificHand(1, 1, 2);
@@ -131,6 +133,7 @@ public class TutorialState :  GameState
             else if (index == 15)
             {
                 text.text = "It looks like you built over scrabble tiles and claimed " + playerStates[0].gameData.SpecialConnector.Count + " special connectors";
+                playerStates[0].clearHand();
                 nextMsg();
             }
             else if (index == 16)
@@ -146,9 +149,81 @@ public class TutorialState :  GameState
             else if (index == 18)
             {
                 text.text = "Please use the special solar connector to connect to the solar pannel ahead.";
-                //checkTileTaken(6, 2);
+                if (playerStates[0].gameData.hasSolarInNetwork)
+                {
+                    index++;
+                }
             }
+            else if(index == 18)
+            {
+                text.text = "You have now added a solar pannel to your grid. Congrats this wilol be useful later";
+                playerStates[0].refilSpecificHand(1, 1, 2);
+                nextMsg();
+            }
+            else if(index == 19)
+            {
+                text.text = "I think its time for you to use it but first click on the help icon at the top of the screne";
+                /*if ()
+                {
+                CHECK IF THE STADIUM UI POPUP HA BEEN CLICKED AND THEN AFTERWARDS INCREMENT THE INDEX, UPDATED UI FROM SAMUEL NEEDED AND TESTSED
+                }*/
+                nextMsg();
+            }
+            else if (index == 20)
+            {
+                text.text = "This is the Key Locations card";
+                nextMsg();
+            }
+            else if (index == 21)
+            {
+                text.text = "Each card has some fun fact abou the location on the left hand side";
+                nextMsg();
+            }
+            else if (index == 22)
+            {
+                text.text = "This is the Key Locations card. Each card has some fun fact abou the location on the left hand side.";
+                nextMsg();
+            }
+            else if (index == 23)
+            {
+                text.text = "The right hand side shows what renewable building you need to have in your grid in order to claim this stadium and rewards you get";
+                nextMsg();
+            }
+            else if (index == 24)
+            {
+                text.text = "For this stadium close by you need a Solar pannel in your grid and you get an extra double connector next turn";
+                nextMsg();
+            }
+            else if (index == 25)
+            {
+                text.text = "Start your turn";
+                CheckPlayerTurn();
+            }
+            else if (index == 26)
+            {
+                text.text = "make a connection from building in your grid to the stadium";
+                checkTileTaken(2, 7);
+            }
+            else if (index == 27)
+            {
+                text.text = "You are now supplying renewable energy to Afas Stadium and would you look at that, the emmision bar has decresed drastically because of that.";
+                playerStates[0].clearHand();
+                playerStates[0].refilSpecificHand(4, 0, 0);
+                nextMsg();
+            }
+            else if (index == 28)
+            {
+                text.text = "It looks like the second player has been making moves around Alkmaar while you were busy";
+            }
+
+
+
         }
+    }
+
+    public void startAiMoves()
+    {
+        /*Make*/
     }
 
     public IEnumerator Wait(float delayInSecs)
@@ -167,6 +242,14 @@ public class TutorialState :  GameState
     private void checkTileTaken(int x, int y)
     {
         if (TileManager.tiles[x][y].OwnedBy == playerStates[0])
+        {
+            index++;
+        }
+    }
+
+    private void CheckPlayerTurn()
+    {
+        if (playerStates[0].gameData.isTurn == true)
         {
             index++;
         }

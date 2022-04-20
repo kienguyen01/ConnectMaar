@@ -14,7 +14,12 @@ public class MainMenu : MonoBehaviour
    public void StartGame(){
        SceneManager.LoadScene("SampleScene");
    }
-    
+
+    public void StartTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
+
     public void OnLanguageChange(TMP_Dropdown dropdown)
     {
         LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[dropdown.value];
