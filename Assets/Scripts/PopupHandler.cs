@@ -5,17 +5,17 @@ using UnityEngine;
 public class PopupHandler : MonoBehaviour
 {
     public Canvas canvas;
-    public bool a = false;
+    public bool isCanvasOpen = false;
     public void Popup()
     {
-        if (a == false)
+        if (isCanvasOpen == false)
         {
-            a = true;
+            isCanvasOpen = true;
             canvas.enabled = true;
         }
-        else if (a == true)
+        else
         {
-            a = false;
+            isCanvasOpen = false;
             canvas.enabled = false;
 
         }
