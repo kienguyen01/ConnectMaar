@@ -243,14 +243,23 @@ public class TutorialState :  GameState
             }
             else if (index == 31)
             {
-                text.text = "looks like you dont have enough connectors to reach the house. Lets use the last item in an inventory, this is called a node. Plaace it down on the tile";
-                //Node placement check on the fild and then check if the player ended his turn. If so then increment the index by 1.
-                
-                
+                text.text = "looks like you dont have enough connectors to reach the house. Lets use the last item in an inventory, this is called a node. Plaace it down ad the end of the";
+                if (playerStates[0].gameData.nodesOwned.Count == 0)
+                {
+                    text.text = "Now you can end your turn";
+                    if (playerStates[0].gameData.isTurn == false)
+                    {
+                        index++;
+                    }
+                }
             }
             else if (index == 32)
             {
-                text.text = "";
+                addTile(2, 13);
+                addTile(2, 13);
+                addTile(2, 13);
+
+                text.text = "Wi";
                 
 
             }

@@ -37,6 +37,8 @@ public class GameState : MonoBehaviour
     Button heatB;
     Button EndTurn;
     TextMeshProUGUI BtnClicked;
+    TextMeshProUGUI EndBtnMsg;
+    Button ClearBtn;
 
     bool p1;
     bool p2;
@@ -44,6 +46,7 @@ public class GameState : MonoBehaviour
     public bool turnCheck;
     bool solarCheck;
     bool heatCheck;
+    bool clearBtn;
 
     [HideInInspector]
     public TextMeshProUGUI text;
@@ -84,7 +87,8 @@ public class GameState : MonoBehaviour
         solarB = GameObject.Find("solar").GetComponent<Button>();
         heatB = GameObject.Find("rawpipe").GetComponent<Button>();
         BtnClicked = GameObject.Find("BtnClicked").GetComponent<TextMeshProUGUI>();
-
+        EndBtnMsg = GameObject.Find("EndBtnMsg").GetComponent<TextMeshProUGUI>();
+        ClearBtn = GameObject.Find("ClearBtn").GetComponent<Button>();
 
         EndTurn = GameObject.Find("EndTurnBtn").GetComponent<Button>();
 
@@ -94,31 +98,43 @@ public class GameState : MonoBehaviour
         EndTurn.onClick.AddListener(endTurnCheck);
         solarB.onClick.AddListener(SolarCheck);
         heatB.onClick.AddListener(HeatCheck);
+        ClearBtn.onClick.AddListener(clearBtnCheck);
 
     }
 
 
-    public void updateButtonIsClicked()
-    {
-
-    }
 
     public void FirstpipeCheck()
     {
-        Debug.Log("FIRST PIPE HAS BEEN PICKED");
         p1 ^= true;
+        if (p1 == true)
+        {
+            BtnClicked.text = "1 Connector";
+        }
+
+    }
+
+    public void clearBtnCheck()
+    {
+        clearBtn ^= true;
     }
 
     public void SecondpipeCheck()
     {
-        Debug.Log("2nd pipe is clicked");
         p2 ^= true;
+        if (p2 == true)
+        {
+            BtnClicked.text = "2 Connector";
+        }
+
     }
     public void ThirdpipeCheck()
     {
-        Debug.Log("3rd pipe is cliked");
-
         p3 ^= true;
+        if (p3 == true)
+        {
+            BtnClicked.text = "3 Connector";
+        }
     }
     public void endTurnCheck()
     {
@@ -127,10 +143,18 @@ public class GameState : MonoBehaviour
     public void SolarCheck()
     {
         solarCheck ^= true;
+        if (solarCheck == true)
+        {
+            BtnClicked.text = "Solar Coneector";
+        }
     }
     public void HeatCheck()
     {
         heatCheck ^= true;
+        if (heatCheck == true)
+        {
+            BtnClicked.text = "Heat Connector";
+        }
     }
 
 
@@ -147,8 +171,21 @@ public class GameState : MonoBehaviour
         playerStates[0].RefillHand();
     }
 
+    private void TurnMsg()
+    {
+        if (playerStates[0].gameData.isTurn == true)
+        {
+            EndBtnMsg.text = "End  Turn";
+        }
+        else
+        {
+            EndBtnMsg.text = "Start Turn";
+        }
+    }
+
     private void Update()
     {
+        TurnMsg();
         if (Input.GetKeyDown(KeyCode.Space) || turnCheck)
         {
             turnCheck = false;
