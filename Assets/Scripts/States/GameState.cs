@@ -105,6 +105,7 @@ public class GameState : MonoBehaviour
                 TileManager.pH.Popup();
             });
 
+
         EndTurn = GameObject.Find("EndTurnBtn").GetComponent<Button>();
 
         Pipe1.onClick.AddListener(FirstpipeCheck);

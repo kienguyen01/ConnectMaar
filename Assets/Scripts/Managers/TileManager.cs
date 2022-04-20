@@ -183,7 +183,6 @@ public class TileManager : MonoBehaviour
             hex_cell.AddStructure<House>(house_cell);
         }
 
-
         addMethods(hex_cell);
         addSpecialBuildingsTutorial(hex_cell);
 
@@ -223,7 +222,6 @@ public class TileManager : MonoBehaviour
                 church_cell.transform.localScale = new Vector3(15.0f, 15.0f, 15.0f);
                 church_cell.name = "church_" + hex_cell.X + "_" + hex_cell.Y;
                 church_cell.SolarRequired = true;
-                church_cell.HeatRequired = true;
                 hex_cell.openInfoCard += (PlayerState player) =>
                 {
                     pH.canvas = GameObject.Find("ChurchCard").GetComponent<Canvas>();
@@ -335,12 +333,18 @@ public class TileManager : MonoBehaviour
                 break;
             case "004|002":
                 hex_cell.IsScrabbleForSolar = true;
+                hex_cell.gameObject.AddComponent<Outline>().OutlineWidth = 4.0f;
+                //hex_cell.gameObject.AddComponent<Outline>().OutlineColor = Color.blue;
                 break;
             case "009|002":
                 hex_cell.IsScrabbleForSolar = true;
+                hex_cell.gameObject.AddComponent<Outline>().OutlineWidth = 4.0f;
+                //hex_cell.gameObject.AddComponent<Outline>().OutlineColor = Color.blue;
                 break;
             case "010|009":
                 hex_cell.IsScrabbleForSolar = true;
+                hex_cell.gameObject.AddComponent<Outline>().OutlineWidth = 4.0f;
+                //hex_cell.gameObject.AddComponent<Outline>().OutlineColor = Color.blue;
                 break;
             default:
                 break;
