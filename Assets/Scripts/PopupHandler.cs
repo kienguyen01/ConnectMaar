@@ -5,7 +5,8 @@ using UnityEngine;
 public class PopupHandler : MonoBehaviour
 {
     public Canvas canvas;
-    public bool isCanvasOpen = false;
+    private bool isCanvasOpen = false;
+
     public void Popup()
     {
         if (isCanvasOpen == false)
