@@ -16,7 +16,7 @@ MonoBehaviour:
   m_TableCollectionNameGuidString: f0f59af9d0e574e1da1aeac967b4f13d
   m_Entries:
   - m_Id: 90797236224
-    m_Key: StartGame
+    m_Key: etartGame
     m_Metadata:
       m_Items: []
   m_Metadata:

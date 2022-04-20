@@ -104,27 +104,22 @@ public class GameState : MonoBehaviour
 
     public void SecondpipeCheck()
     {
-        Debug.Log("second PIPE HAS BEEN PICKED");
         p2 ^= true;
     }
     public void ThirdpipeCheck()
     {
-        Debug.Log("third PIPE HAS BEEN PICKED");
         p3 ^= true;
     }
     public void endTurnCheck()
     {
-        Debug.Log("fourth PIPE HAS BEEN PICKED");
         turnCheck ^= true;
     }
     public void SolarCheck()
     {
-        Debug.Log("fifth PIPE HAS BEEN PICKED");
         solarCheck ^= true;
     }
     public void HeatCheck()
     {
-        Debug.Log("sixth PIPE HAS BEEN PICKED");
         heatCheck ^= true;
     }
 
