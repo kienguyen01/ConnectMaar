@@ -171,7 +171,7 @@ public class TileManager : MonoBehaviour
             hex_cell.AddStructure<House>(house_cell);
         }
 
-        if ((x == 2 && y == 12) || (x == 3 && y == 19) || (x == 5 && y == 19) || (x == 3 && y == 16))
+        if ( (x == 7 && y == 0))
         {
             SolarPanel solar_cell = (SolarPanel)Instantiate(solarPrefab, new Vector3(xPos, 0.2f, y * zOffset), Quaternion.Euler(0, -90, 0));
             solar_cell.transform.SetParent(hex_cell.transform);
@@ -179,7 +179,7 @@ public class TileManager : MonoBehaviour
             hex_cell.AddStructure<House>(solar_cell);
         }
 
-        if (x == 5 && y == 14)
+        if (x == 11 && y == 6)
         {
             SpecialBuilding church_cell = (SpecialBuilding)Instantiate(church, new Vector3(xPos + 0.512f, 0.35f, y * zOffset - 0.636f), Quaternion.Euler(-90, 90, 0));
             church_cell.transform.localScale = new Vector3(15.0f, 15.0f, 15.0f);
@@ -187,7 +187,7 @@ public class TileManager : MonoBehaviour
             hex_cell.AddStructure<House>(church_cell);
         }
 
-        if (x == 9 && y == 17)
+        if (x == 9 && y == 17 || (x == 1 && y == 7))
         {
             SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(stadium, new Vector3(xPos + 0.5f, 0.205f, y * zOffset), Quaternion.Euler(-90, 0, 0));
             stadium_cell.transform.localScale = new Vector3(0.15f, 0.15f, 0.3f);
@@ -286,6 +286,12 @@ public class TileManager : MonoBehaviour
                 hex_cell.IsScrambleForSolar = true;
                 break;
             case "004|002":
+                hex_cell.IsScrambleForSolar = true;
+                break;
+            case "009|002":
+                hex_cell.IsScrambleForSolar = true;
+                break;
+            case "010|009":
                 hex_cell.IsScrambleForSolar = true;
                 break;
             default:

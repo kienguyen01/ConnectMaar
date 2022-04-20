@@ -140,8 +140,13 @@ public class TutorialState :  GameState
             }
             else if (index == 17)
             {
-                text.text = "The special connector you have is used for the";
+                text.text = "The special connector you have can only be used to connect to a solar pannel ";
                 nextMsg();
+            }
+            else if (index == 18)
+            {
+                text.text = "Please use the special solar connector to connect to the solar pannel ahead.";
+                //checkTileTaken(6, 2);
             }
         }
     }
