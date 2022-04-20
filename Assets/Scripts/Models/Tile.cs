@@ -161,4 +161,6 @@ public class Tile : MonoBehaviour
     public UnityAction<PlayerState> onSelected;
 
     public UnityAction<PlayerState> onTaken;
+
+    public UnityAction<PlayerState> openInfoCard;
 }

@@ -231,6 +231,7 @@ public class TileManager : MonoBehaviour
             SolarPanel solar_cell = (SolarPanel)Instantiate(solarPrefab, new Vector3(xPos, 0.2f, y * zOffset), Quaternion.Euler(0, -90, 0));
             solar_cell.transform.SetParent(hex_cell.transform);
             solar_cell.name = "solar_" + x + "_" + y;
+            
             hex_cell.AddStructure<SolarPanel>(solar_cell);
         }
 
@@ -269,6 +270,11 @@ public class TileManager : MonoBehaviour
                 stadium_cell.transform.localScale = new Vector3(0.15f, 0.15f, 0.3f);
                 stadium_cell.name = "stadium_" + hex_cell.X + "_" + hex_cell.Y;
                 stadium_cell.SolarRequired = true;
+                hex_cell.openInfoCard += (PlayerState player) =>
+                {
+                    Debug.Log("!!! OpenInfoCard !!!");
+                    //todo open infocard
+                };
                 hex_cell.AddStructure<SpecialBuilding>(stadium_cell);
                 break;
             case "005|014":
@@ -420,8 +426,3 @@ public class TileManager : MonoBehaviour
         return false;
     }
 }
-
-//TODO TODAY AND TOMORROW:
-//CONNECTORS MANAGER
-//TILE MANAGER WITH LOGIC OF CONNECTION
-//COLOR CELLS ON EVENTS

@@ -1,11 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class Structure : MonoBehaviour
 {
-    
-
     public virtual bool IsBuilding { get => true;  }
 
     public virtual bool IsNode { get => false; }
