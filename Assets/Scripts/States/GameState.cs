@@ -36,6 +36,7 @@ public class GameState : MonoBehaviour
     Button solarB;
     Button heatB;
     Button EndTurn;
+    TextMeshProUGUI BtnClicked;
 
     bool p1;
     bool p2;
@@ -82,6 +83,8 @@ public class GameState : MonoBehaviour
         Pipe3 = GameObject.Find("cable3Btn").GetComponent<Button>();
         solarB = GameObject.Find("solar").GetComponent<Button>();
         heatB = GameObject.Find("rawpipe").GetComponent<Button>();
+        BtnClicked = GameObject.Find("BtnClicked").GetComponent<TextMeshProUGUI>();
+
 
         EndTurn = GameObject.Find("EndTurnBtn").GetComponent<Button>();
 
@@ -95,6 +98,10 @@ public class GameState : MonoBehaviour
     }
 
 
+    public void updateButtonIsClicked()
+    {
+
+    }
 
     public void FirstpipeCheck()
     {
