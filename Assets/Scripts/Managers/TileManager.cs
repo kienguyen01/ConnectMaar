@@ -188,6 +188,7 @@ public class TileManager : MonoBehaviour
             SpecialBuilding church_cell = (SpecialBuilding)Instantiate(church, new Vector3(xPos + 0.512f, 0.35f, y * zOffset - 0.636f), Quaternion.Euler(-90, 90, 0));
             church_cell.transform.localScale = new Vector3(15.0f, 15.0f, 15.0f);
             church_cell.name = "church_" + x + "_" + y;
+            church_cell.SolarRequired = true;
             hex_cell.AddStructure<House>(church_cell);
         }
 
@@ -196,6 +197,7 @@ public class TileManager : MonoBehaviour
             SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(stadium, new Vector3(xPos + 0.5f, 0.205f, y * zOffset), Quaternion.Euler(-90, 0, 0));
             stadium_cell.transform.localScale = new Vector3(0.15f, 0.15f, 0.3f);
             stadium_cell.name = "stadium_" + x + "_" + y;
+            stadium_cell.SolarRequired = true;
             hex_cell.AddStructure<House>(stadium_cell);
         }
 
@@ -292,12 +294,18 @@ public class TileManager : MonoBehaviour
                 break;
             case "004|002":
                 hex_cell.IsScrabbleForSolar = true;
+                hex_cell.gameObject.AddComponent<Outline>().OutlineWidth = 4.0f;
+                //hex_cell.gameObject.AddComponent<Outline>().OutlineColor = Color.blue;
                 break;
             case "009|002":
                 hex_cell.IsScrabbleForSolar = true;
+                hex_cell.gameObject.AddComponent<Outline>().OutlineWidth = 4.0f;
+                //hex_cell.gameObject.AddComponent<Outline>().OutlineColor = Color.blue;
                 break;
             case "010|009":
                 hex_cell.IsScrabbleForSolar = true;
+                hex_cell.gameObject.AddComponent<Outline>().OutlineWidth = 4.0f;
+                //hex_cell.gameObject.AddComponent<Outline>().OutlineColor = Color.blue;
                 break;
             default:
                 break;

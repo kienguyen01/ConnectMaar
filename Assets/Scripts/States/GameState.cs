@@ -83,7 +83,7 @@ public class GameState : MonoBehaviour
         Pipe3 = GameObject.Find("cable3Btn").GetComponent<Button>();
         solarB = GameObject.Find("solar").GetComponent<Button>();
         heatB = GameObject.Find("rawpipe").GetComponent<Button>();
-        BtnClicked = GameObject.Find("BtnClicked").GetComponent<TextMeshProUGUI>();
+        //BtnClicked = GameObject.Find("BtnClicked").GetComponent<TextMeshProUGUI>();
 
 
         EndTurn = GameObject.Find("EndTurnBtn").GetComponent<Button>();

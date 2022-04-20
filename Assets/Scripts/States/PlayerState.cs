@@ -186,6 +186,7 @@ public class PlayerState : MonoBehaviour
         int thirdPipeCount = 0;
         int solarCount = 0;
         int heatCount = 0;
+        int nodeCount = 0;
         foreach (StandardConnector item in gameData.Inventory)
         {
             if (item.MaxLength == 1)
@@ -213,6 +214,10 @@ public class PlayerState : MonoBehaviour
                 solarCount++;   
             }
         }
+        foreach (Node n in gameData.nodesOwned)
+        {
+            nodeCount++;
+        }
         TMP_Text firstPipe = GameObject.Find("firstBtn(X3)").GetComponent<TMP_Text>();
         firstPipe.text = ("x" + firstPipeCount);
         TMP_Text secondPipe = GameObject.Find("secondBtn(X1)").GetComponent<TMP_Text>();
@@ -223,6 +228,8 @@ public class PlayerState : MonoBehaviour
         heatPipe.text = ("x" + heatCount);
         TMP_Text solarPipe = GameObject.Find("fourthBtn(X1)").GetComponent<TMP_Text>();
         solarPipe.text = ("x" + solarCount);
+        TMP_Text node = GameObject.Find("sixthBtn(X2)").GetComponent<TMP_Text>();
+        node.text = ("x" + nodeCount);
     }
 
     public PlayerState AddSolarConnector()
