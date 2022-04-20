@@ -12,6 +12,9 @@ public class TileManager : MonoBehaviour
     public SolarPanel solarPrefab;
     public SpecialBuilding church;
     public SpecialBuilding stadium;
+    public Node nodePrefab;
+
+    public List<SpecialBuilding> specialBuildingList;
 
     List<List<Tile>> specialBuildings = new List<List<Tile>>();
 
@@ -24,7 +27,7 @@ public class TileManager : MonoBehaviour
 
     //public Tile[,] tiles;
 
-    public List<List<Tile>> tiles = new List<List<Tile>>();
+    public static List<List<Tile>> tiles = new List<List<Tile>>();
 
     public UnityAction<PlayerState> OnTileChosen;
 
@@ -81,7 +84,8 @@ public class TileManager : MonoBehaviour
 
                 tiles.Add(tileRow);
             }
-        }else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("SampleScene"))
+        }
+        else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("SampleScene"))
         {
             for (int x = 0; x < WIDTH_MAP; x++)
             {
@@ -135,9 +139,9 @@ public class TileManager : MonoBehaviour
             {
                 neighbours.Add((tiles[t.X - 1])[(t.Y)]);
                 if(t.Y != tiles[0].Count - 1)
-                    neighbours.Add((tiles[t.X - 1])[(t.Y - 1)]);
-                if (t.Y != 0)
                     neighbours.Add((tiles[t.X - 1])[(t.Y + 1)]);
+                if (t.Y != 0)
+                    neighbours.Add((tiles[t.X - 1])[(t.Y - 1)]);
             }
             if (t.Y != tiles[0].Count - 1)
                 neighbours.Add((tiles[t.X])[(t.Y + 1)]);
@@ -280,10 +284,10 @@ public class TileManager : MonoBehaviour
                 hex_cell.AddStructure<House>(house_cell);
                 break;
             case "009|015":
-                hex_cell.IsScrambleForHeat = true;
+                hex_cell.IsScrabbleForHeat = true;
                 break;
             case "012|015":
-                hex_cell.IsScrambleForSolar = true;
+                hex_cell.IsScrabbleForSolar = true;
                 break;
             case "004|002":
                 hex_cell.IsScrambleForSolar = true;
@@ -304,7 +308,7 @@ public class TileManager : MonoBehaviour
         {
             return true;
         }
-        else if (tile.IsSpecial(this))
+        else if (tile.IsSpecial())
         {
             return true;
         }
@@ -319,6 +323,7 @@ public class TileManager : MonoBehaviour
         }
         return false;
     }
+
     public bool IsHeatPipe(Tile tile)
     {
         if (tile.Structure.IsHeat)
@@ -339,15 +344,17 @@ public class TileManager : MonoBehaviour
         {
             List<Tile> neighbours = getNeigbours(tile);
 
-            if (tile.IsSpecial(this))
+
+
+            if (tile.IsSpecial() && ((tile.Structure.SolarRequired && Instigator.gameData.hasSolarInNetwork) || (tile.Structure.HeatRequired && Instigator.gameData.hasHeatInNetwork)))
             {
                 foreach (Tile t in getSpecialNeighbours(tile))
                 {
-                    t.onSelected(Instigator);
+                    t.SelectedBy = Instigator;
                 }
             }
 
-            if (isValidTileToChoose(tile, Instigator))
+            if (isValidTileToChoose(tile, Instigator) && !tile.IsSpecial())
             {
                 if (tile.OwnedBy == null && tile.SelectedBy == null && ((Instigator.gameData.tilesChosen.Count > 0) ? neighbours.Contains(Instigator.gameData.tilesChosen.Peek()) : true))
                 {
@@ -377,21 +384,21 @@ public class TileManager : MonoBehaviour
     private List<Tile> getSpecialNeighbours(Tile tile)
     {
         List<Tile> neighbours = new List<Tile>();
-        Tile origin = tile.GetSpecialOriginTile(this);
+        Tile origin = tile.GetSpecialOriginTile();//left = 10,15 | origin = 10,16 | right = 11,16 | top = 10,17
 
         if (origin.Y % 2 == 0)
         {
-            neighbours.Add(tiles[origin.X][origin.Y + 1]);
+            neighbours.Add(tiles[origin.X][origin.Y - 1]);
             neighbours.Add(tiles[origin.X + 1][origin.Y]);
-            neighbours.Add(tiles[origin.X + 1][origin.Y - 1]);
+            neighbours.Add(tiles[origin.X][origin.Y + 1]);
         }
         else
         {
-            neighbours.Add(tiles[origin.X + 1][origin.Y + 1]);
+            neighbours.Add(tiles[origin.X + 1][origin.Y -1]);
             neighbours.Add(tiles[origin.X + 1][origin.Y]);
-            neighbours.Add(tiles[origin.X][origin.Y - 1]);
+            neighbours.Add(tiles[origin.X + 1][origin.Y + 1]);
         }
-
+        neighbours.Add(origin);
         return neighbours;
     }
 
@@ -409,7 +416,7 @@ public class TileManager : MonoBehaviour
     {
         foreach (Tile tile in getNeigbours(t))
         {
-            if (isOccupiedBySamePlayer(tile, playerState) && (tile.HasBuilding() || tile.SelectedBy != null))
+            if (tile.Structure.IsNode || isOccupiedBySamePlayer(tile, playerState) && (tile.HasBuilding() || tile.SelectedBy != null))
             {
                 return true;
             }

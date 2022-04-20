@@ -24,7 +24,6 @@ public class PlayerGameData
     public bool isTurn;
     public int pointGranted;
     public int handSize;
-    public int numNode;
     public bool hasSolarInNetwork;
     public bool hasHeatInNetwork;
     public List<Tile> tilesTaken;
@@ -33,6 +32,7 @@ public class PlayerGameData
     public List<Connector> Inventory;
     public List<Connector> SpecialConnector;
     public Connector SelectedConnector;
+    public List<Node> nodesOwned;
 }
 
 public class PlayerState : MonoBehaviour
@@ -79,6 +79,7 @@ public class PlayerState : MonoBehaviour
             connectorManager = this.gameObject.AddComponent<ConnectorManager>();
         }
         gameData.handSize = 4;
+        gameData.nodesOwned.Add(this.gameObject.AddComponent<Node>());
 
     }
     private void Update()
@@ -94,7 +95,10 @@ public class PlayerState : MonoBehaviour
         this.gameData.isTurn = false;
         foreach (Tile tile in this.gameData.tilesTaken)
         {
-            tile.OwnedBy = this;
+            if(!(tile.Structure.GetType() == typeof(Node)))
+            {
+                tile.OwnedBy = this;
+            }
             tile.SelectedBy = null;
         }
     }

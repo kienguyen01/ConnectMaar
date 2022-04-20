@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 [System.Serializable]
 public struct TutorialStateConfig
@@ -12,6 +10,7 @@ public struct TutorialStateConfig
     public PlayerState PlayerStateClass;
     public TileManager TileManagerClass;
 }
+
 
 
 public class TutorialState :  GameState
@@ -24,8 +23,6 @@ public class TutorialState :  GameState
 
     private string[] tutorialMessage;
 
-    Button button;
-
 
     public override void startPoint()
     {
@@ -34,6 +31,7 @@ public class TutorialState :  GameState
             tileManager.tiles[0][0].OwnedBy = playerStates[0];
         }
     }
+
 
 
     public override void TutorialStart()
@@ -67,6 +65,7 @@ public class TutorialState :  GameState
             {
                 text.text ="Right now in your inventory you have a single connector,a double connector and a tripple connector";
                 nextMsg();
+
             }
             else if (index == 5)
             {
@@ -161,7 +160,6 @@ public class TutorialState :  GameState
         if (Input.GetMouseButtonDown(0) && !(EventSystem.current.IsPointerOverGameObject()))
         {
             index++;
-
         }
     }
 
@@ -175,3 +173,12 @@ public class TutorialState :  GameState
 
 
 }
+
+//insufficient length of connector used but still can end turn
+
+//choose a random tiles next to one in the connection is allowed
+
+//if you choose 3, after you placed all 3 you can't undo no more, not sure if it is a problem 
+//at all
+
+

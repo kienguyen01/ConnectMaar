@@ -12,8 +12,8 @@ public class Tile : MonoBehaviour
     private PlayerState selectedBy;
     private PlayerState ownedBy;
     private Tile specialOriginTile;
-    public bool IsScrambleForSolar;
-    public bool IsScrambleForHeat;
+    public bool IsScrabbleForSolar;
+    public bool IsScrabbleForHeat;
 
     public Structure Structure;
 
@@ -56,7 +56,7 @@ public class Tile : MonoBehaviour
     private Tile SetStructure(Structure structure)
     {
         Structure = structure;
-        occupied = structure.IsBuilding || structure.IsConnector || structure.IsSolar || structure.IsHeat;
+        occupied = structure.IsBuilding || structure.IsConnector || structure.IsSolar || structure.IsHeat || structure.IsPlaceable;
         return this;
     }
 
@@ -65,7 +65,7 @@ public class Tile : MonoBehaviour
         return this.Structure.IsBuilding;
     }
 
-    public bool IsSpecial(TileManager tm)
+    public bool IsSpecial()
     {
         if (this.Structure.IsSpecial)
         {
@@ -76,41 +76,53 @@ public class Tile : MonoBehaviour
         {
             if(this.Y%2 == 0 && X > 0)
             {
-                if (Y > 0 && tm.tiles[X - 1][Y - 1].Structure.IsSpecial)
+                if (Y > 0 && TileManager.tiles[X - 1][Y - 1].Structure.IsSpecial)
                 {
-                    specialOriginTile = tm.tiles[X - 1][Y - 1];
+                    specialOriginTile = TileManager.tiles[X - 1][Y - 1];
                     return true;
                 }
-                
-                if (tm.tiles[X - 1][Y].Structure.IsSpecial)
+                try
                 {
-                    specialOriginTile = tm.tiles[X - 1][Y];
-                    return true;
+                    if (TileManager.tiles[X - 1][Y].Structure.IsSpecial)
+                    {
+                        specialOriginTile = TileManager.tiles[X - 1][Y];
+                        return true;
+                    }
                 }
-
-                if (Y < (tm.tiles[0].Count - 1) && tm.tiles[X - 1][Y + 1].Structure.IsSpecial)
+                catch(Exception EX)
                 {
-                    specialOriginTile = tm.tiles[X - 1][Y + 1];
-                    return true;
+                    Debug.LogWarning(EX.Message);
+                }
+                try
+                {
+                    if (Y < (TileManager.tiles[0].Count - 1) && TileManager.tiles[X - 1][Y + 1].Structure.IsSpecial)
+                    {
+                        specialOriginTile = TileManager.tiles[X - 1][Y + 1];
+                        return true;
+                    }
+                }
+                catch(Exception EX)
+                {
+                    Debug.LogWarning(EX.Message);
                 }
             }
             else
             {
-                if (Y > 0 && tm.tiles[X][Y - 1].Structure.IsSpecial)
+                if (Y > 0 && TileManager.tiles[X][Y - 1].Structure.IsSpecial)
                 {
-                    specialOriginTile = tm.tiles[X][Y - 1];
+                    specialOriginTile = TileManager.tiles[X][Y - 1];
                     return true;
                 }
 
-                if (X > 0 && tm.tiles[X - 1][Y].Structure.IsSpecial)
+                if (X > 0 && TileManager.tiles[X - 1][Y].Structure.IsSpecial)
                 {
-                    specialOriginTile = tm.tiles[X - 1][Y];
+                    specialOriginTile = TileManager.tiles[X - 1][Y];
                     return true;
                 }
 
-                if (Y < (tm.tiles[0].Count - 1) && tm.tiles[X][Y + 1].Structure.IsSpecial)
+                if (Y < (TileManager.tiles[0].Count - 1) && TileManager.tiles[X][Y + 1].Structure.IsSpecial)
                 {
-                    specialOriginTile = tm.tiles[X][Y + 1];
+                    specialOriginTile = TileManager.tiles[X][Y + 1];
                     return true;
                 }
             }
@@ -118,9 +130,9 @@ public class Tile : MonoBehaviour
         return false;
     }
 
-    public Tile GetSpecialOriginTile(TileManager tm)
+    public Tile GetSpecialOriginTile()
     {
-        if (this.IsSpecial(tm))
+        if (this.IsSpecial())
             return specialOriginTile;
         else
             return null;
