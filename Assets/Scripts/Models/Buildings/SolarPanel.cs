@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SolarPanel : Structure
+public class SolarPanel : MonoBehaviour
 {
-    public override bool IsSolar { get => true; }
-
     // Start is called before the first frame update
     void Start()
     {
