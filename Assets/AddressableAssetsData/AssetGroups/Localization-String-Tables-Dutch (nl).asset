@@ -35,6 +35,60 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-nl
     - Preload
+  - m_GUID: c6bea114569f74c2489d97e7d19f2d31
+    m_Address: TutorialBtn_nl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-nl
+    - Preload
+  - m_GUID: 61ade2d45ecdf4b51b5f20f23647bcd7
+    m_Address: ItemsHeading_nl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-nl
+    - Preload
+  - m_GUID: ad16816709efb469da843a79b4ccfa1f
+    m_Address: ArticlesText_nl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-nl
+    - Preload
+  - m_GUID: 2bf54366836d345dcb9b098551bc871b
+    m_Address: EmissionBarPlayer_nl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-nl
+    - Preload
+  - m_GUID: 5ecabb9c948014725aab56ab1d38adb8
+    m_Address: EndTurnBtn_nl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-nl
+    - Preload
+  - m_GUID: ff6ed1ed42e6d49f8b04635933766f64
+    m_Address: RequiredHeading_nl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-nl
+    - Preload
+  - m_GUID: 152c808ebc9b34b0db62822ba472766d
+    m_Address: YouEarn_nl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-nl
+    - Preload
+  - m_GUID: 9e68189d26cc44b85a20f19ca3d69db3
+    m_Address: DidYouKnow_nl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-nl
+    - Preload
+  - m_GUID: 240091c42d3764c01960a80fb5216a05
+    m_Address: clearBtn_nl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-nl
+    - Preload
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 47fe1e794f5af47abbbe831c258f4d60, type: 2}
   m_SchemaSet:
