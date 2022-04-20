@@ -2376,7 +2376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AIText: {fileID: 1642727287}
-  AIEmissionBar: {fileID: 0}
+  AIEmissionBar: {fileID: 448815170}
 --- !u!1 &682458424
 GameObject:
   m_ObjectHideFlags: 0
@@ -3093,7 +3093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerText: {fileID: 1737140420}
-  playerEmissionbar: {fileID: 0}
+  playerEmissionbar: {fileID: 233327724}
 --- !u!1 &802711095
 GameObject:
   m_ObjectHideFlags: 0
