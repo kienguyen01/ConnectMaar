@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
@@ -26,9 +27,9 @@ public class TutorialState :  GameState
 
     public override void startPoint()
     {
-        if(tileManager.tiles[0][0].OwnedBy == null)
+        if(TileManager.tiles[0][0].OwnedBy == null)
         {
-            tileManager.tiles[0][0].OwnedBy = playerStates[0];
+            TileManager.tiles[0][0].OwnedBy = playerStates[0];
         }
     }
 
@@ -165,7 +166,7 @@ public class TutorialState :  GameState
 
     private void checkTileTaken(int x, int y)
     {
-        if (tileManager.tiles[x][y].OwnedBy == playerStates[0])
+        if (TileManager.tiles[x][y].OwnedBy == playerStates[0])
         {
             index++;
         }

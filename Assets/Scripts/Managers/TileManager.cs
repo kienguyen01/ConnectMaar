@@ -290,13 +290,13 @@ public class TileManager : MonoBehaviour
                 hex_cell.IsScrabbleForSolar = true;
                 break;
             case "004|002":
-                hex_cell.IsScrambleForSolar = true;
+                hex_cell.IsScrabbleForSolar = true;
                 break;
             case "009|002":
-                hex_cell.IsScrambleForSolar = true;
+                hex_cell.IsScrabbleForSolar = true;
                 break;
             case "010|009":
-                hex_cell.IsScrambleForSolar = true;
+                hex_cell.IsScrabbleForSolar = true;
                 break;
             default:
                 break;
