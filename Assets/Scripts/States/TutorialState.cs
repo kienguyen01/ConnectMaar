@@ -214,16 +214,41 @@ public class TutorialState :  GameState
             else if (index == 28)
             {
                 text.text = "It looks like the second player has been making moves around Alkmaar while you were busy";
+                //StartAiMoves()
+                nextMsg();
             }
+            else if (index == 29)
+            {
+                text.text = "Lets claim that house above shall we. ";
+                nextMsg();
+            }
+            else if (index == 30)
+            {
+                text.text = "Start your turn and build as close as you can to that house";
+                if(playerStates[0].gameData.tilesChosen.Count == 4 )
+                {
+                    index++;
+                }
+            }
+            else if (index == 31)
+            {
+                text.text = "looks like you dont have enough connectors to reach the house. Lets use the last item in an inventory, this is called a node. Plaace it down on the tile";
+                //Node placement check on the fild and then check if the player ended his turn. If so then increment the index by 1.
+                
+                
+            }
+            else if (index == 31)
+            {
+                text.text = "";
+                
 
-
-
+            }
         }
     }
 
     public void startAiMoves()
     {
-        /*Make*/
+        /*Make ai have connectionsns to the two houses closed to him */
     }
 
     public IEnumerator Wait(float delayInSecs)
