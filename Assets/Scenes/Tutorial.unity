@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -302,6 +302,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4379436898411582936, guid: 89684bc9d7374d94496de32fedb266e7, type: 3}
+      propertyPath: AIEmissionBar
+      value: 
+      objectReference: {fileID: 1423686974}
+    - target: {fileID: 4379436898543924893, guid: 89684bc9d7374d94496de32fedb266e7, type: 3}
+      propertyPath: playerEmissionbar
+      value: 
+      objectReference: {fileID: 868863347}
     - target: {fileID: 4379436898820028161, guid: 89684bc9d7374d94496de32fedb266e7, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -547,7 +555,7 @@ MonoBehaviour:
   popUps: []
   gameData:
     isTurn: 0
-    pointGranted: 0
+    totalPoint: 0
     handSize: 0
     hasSolarInNetwork: 0
     hasHeatInNetwork: 0
@@ -557,6 +565,7 @@ MonoBehaviour:
     SpecialConnector: []
     SelectedConnector: {fileID: 0}
     nodesOwned: []
+    PlayerColour: {r: 0, g: 0, b: 0, a: 0}
   playerStates: []
 --- !u!1001 &776105621
 PrefabInstance:
@@ -683,6 +692,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afa037a4b08cce548800fbdd13a017ca, type: 3}
+--- !u!114 &868863347 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4379436898025558724, guid: 89684bc9d7374d94496de32fedb266e7, type: 3}
+  m_PrefabInstance: {fileID: 495144045}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1352881787
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -766,6 +786,17 @@ MonoBehaviour:
   text: {fileID: 0}
   TutorialManagerClass: {fileID: 773875032}
   popups: {fileID: 0}
+--- !u!114 &1423686974 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4379436898178137834, guid: 89684bc9d7374d94496de32fedb266e7, type: 3}
+  m_PrefabInstance: {fileID: 495144045}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1741199758
 PrefabInstance:
   m_ObjectHideFlags: 0

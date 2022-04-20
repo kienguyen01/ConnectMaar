@@ -21,6 +21,7 @@ public class TutorialState :  GameState
 
     public GameObject popups;
     private int index;
+    bool onetime = false;
 
     private string[] tutorialMessage;
 
@@ -42,6 +43,14 @@ public class TutorialState :  GameState
         {
             if ( index == 0)
             {
+                if (!onetime)
+                {
+                    startAiMoves();
+                    onetime = true;
+                    nextMsg();
+                }
+
+
                 GameObject varGameObject = GameObject.Find("Plane");
                 varGameObject.GetComponent<PhoneCameraMovement>().enabled = false;
                 text.text = "Welcome to the Tutorial Player 1. In this tutorial we will teach you how to play ConnectMaar. Tap on Screen to start.";
@@ -51,6 +60,8 @@ public class TutorialState :  GameState
             }
             else if (index == 1)
             {
+                playerStates[0].gameData.totalPoint = 45;
+
                 text.text = "This is a tutorial to teach you the basic gameplay of our game. Tap for next.";
                 nextMsg();
             }
@@ -61,6 +72,7 @@ public class TutorialState :  GameState
             }
             else if (index == 3)
             {
+
                 text.text = "In your inventory you have Items called connectors. They are your main tool in making Alkmaar a greener place";
                 nextMsg();
             }
@@ -170,7 +182,7 @@ public class TutorialState :  GameState
                 nextMsg();
             }
             else if (index == 20)
-            {
+            { 
                 text.text = "This is the Key Locations card";
                 nextMsg();
             }
@@ -214,8 +226,7 @@ public class TutorialState :  GameState
             else if (index == 28)
             {
                 text.text = "It looks like the second player has been making moves around Alkmaar while you were busy";
-                //StartAiMoves()
-                nextMsg();
+                
             }
             else if (index == 29)
             {
@@ -237,7 +248,7 @@ public class TutorialState :  GameState
                 
                 
             }
-            else if (index == 31)
+            else if (index == 32)
             {
                 text.text = "";
                 
@@ -249,6 +260,20 @@ public class TutorialState :  GameState
     public void startAiMoves()
     {
         /*Make ai have connectionsns to the two houses closed to him */
+        playerStates.Add(Instantiate(config.PlayerStateClass));
+        playerStates[1].gameData.PlayerColour = Color.black;
+        addTile(0, 14);
+        addTile(0, 13);
+        addTile(1, 13);
+        addTile(2, 13);
+        addTile(3, 13);
+        addTile(4, 13);
+    }
+
+    private void addTile(int x, int y)
+    {
+        playerStates[1].gameData.tilesChosen.Push(TileManager.tiles[x][y]);
+        TileManager.tiles[x][y].OwnedBy = playerStates[1];
     }
 
     public IEnumerator Wait(float delayInSecs)

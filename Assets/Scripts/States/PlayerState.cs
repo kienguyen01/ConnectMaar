@@ -22,7 +22,7 @@ public struct PlayerInfo
 public class PlayerGameData
 {
     public bool isTurn;
-    public int pointGranted;
+    public float totalPoint;
     public int handSize;
     public bool hasSolarInNetwork;
     public bool hasHeatInNetwork;
@@ -83,7 +83,7 @@ public class PlayerState : MonoBehaviour
         }
         gameData.handSize = 4;
         gameData.nodesOwned.Add(this.gameObject.AddComponent<Node>());
-
+        gameData.totalPoint = 50;
     }
     private void Update()
     {

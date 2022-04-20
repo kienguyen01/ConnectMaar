@@ -9,14 +9,15 @@ public class EmissionLevelPlayer : MonoBehaviour
     public TMP_Text playerText;
     public Image playerEmissionbar;
     float lerpSpeed; //making sure increase and decrease is smooth
-    float currentEmission, maxEmission = 50; //setting it to 100
+    float currentEmission, maxEmission; //setting it to 100
 
     private void Start()
     {
-        currentEmission = maxEmission; //setting it automatically to 100% level;
+        maxEmission = 50; //setting it automatically to 100% level;
     }
     private void Update()
     {
+        currentEmission = GameState.instance.playerStates[0].gameData.totalPoint;
         playerText.text = currentEmission + "%"; //displaying the percentage
         //check if currentEmission > maxEmission, then currentemission = maxEmission (currentEmission !> 100)
         if (currentEmission > maxEmission) 
@@ -25,11 +26,17 @@ public class EmissionLevelPlayer : MonoBehaviour
         }
        
         lerpSpeed = 3f * Time.deltaTime; //can be changed to increase or decrease lerp speed
-        EmissionLevelFiller();
+        Debug.Log(playerEmissionbar.fillAmount);
+        Debug.Log(currentEmission);
+        Debug.Log(maxEmission);
+        playerEmissionbar.fillAmount = Mathf.Lerp(playerEmissionbar.fillAmount, currentEmission / maxEmission, lerpSpeed);
+        Debug.Log(playerEmissionbar.fillAmount);
+        Debug.Log(currentEmission);
+        Debug.Log(maxEmission);// should be between 0 and 1 
     }
     void EmissionLevelFiller()
     {
-        //playerEmissionbar.fillAmount = Mathf.Lerp(emissionBar.fillAmount,currentEmission / maxEmission, lerpSpeed); // should be between 0 and 1 
+
     }
 
 
