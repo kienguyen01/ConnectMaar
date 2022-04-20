@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class Structure : MonoBehaviour
 {
+    
+
     public virtual bool IsBuilding { get => true;  }
 
     public virtual bool IsNode { get => false; }
@@ -18,7 +20,8 @@ public abstract class Structure : MonoBehaviour
 
     public virtual bool IsPlaceable { get => false; }
 
-    public virtual bool SolarRequired { set => value = false; get => false; }
-
-    public virtual bool HeatRequired { set => value = false; get => false; }
+    protected bool solarRequired;
+    protected bool heatRequired;
+    public virtual bool SolarRequired { get => solarRequired; set => solarRequired = value; }
+    public virtual bool HeatRequired { get => heatRequired; set => heatRequired = value; }
 }

@@ -39,6 +39,16 @@ public abstract class Connector : Structure
         return this;
     }
 
+    public Connector ResetConnector()
+    {
+        foreach (Tile t in this.GetTiles())
+        {
+            t.SelectedBy = null;
+        }
+        tiles = new List<Tile>();
+        return this;
+    }
+
     public List<Tile> GetTiles()
     {
         return tiles;

@@ -207,19 +207,18 @@ public class PlayerState : MonoBehaviour
         solarPipe.text = ("x" + solarCount);
     }
 
-    public void AddSolarConnector()
+    public PlayerState AddSolarConnector()
     {
         gameData.SpecialConnector.Add(this.gameObject.AddComponent<SolarPanelConnector>());
-        gameData.SpecialConnector.Add(this.gameObject.AddComponent<SolarPanelConnector>());
-        gameData.SpecialConnector.Add(this.gameObject.AddComponent<SolarPanelConnector>());
-        gameData.SpecialConnector.Add(this.gameObject.AddComponent<SolarPanelConnector>());
         Debug.Log("---solar---");
+        return this;
     }
 
-    public void AddHeatPipeConnector()
+    public PlayerState AddHeatPipeConnector()
     {
         gameData.SpecialConnector.Add(this.gameObject.AddComponent<HeatPipeConnector>());
         Debug.Log("---heatpipe---");
+        return this;
     }
 
     public Connection StartConnection()
@@ -232,8 +231,25 @@ public class PlayerState : MonoBehaviour
 
     public PlayerState AbortConnection(Connection conn)
     {
+        AbortConnector(conn, true);
+
+        return this;
+    }
+
+    public PlayerState AbortConnector(Connection conn, bool Hard = false)
+    {
+        foreach (Connector c in conn.Connectors)
+        {
+            if (Hard || c.MaxLength > c.getLength())
+            {
+                if (!c.IsSpecial)
+                    this.gameData.Inventory.Add(c.ResetConnector());
+                else
+                    this.gameData.SpecialConnector.Add(c.ResetConnector());
+            }
+        }
         Destroy(conn);
-        //gameData.connectionsDone.Remove(conn);
+
         return this;
     }
 

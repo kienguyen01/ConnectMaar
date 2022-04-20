@@ -5,7 +5,7 @@ using UnityEngine;
 public class HeatPipeConnector : Connector
 {
 
-    public override bool IsSpecial { get => false; }
+    public override bool IsSpecial { get => true; }
     public override bool IsHeat { get => true; }
 
     // Start is called before the first frame update
