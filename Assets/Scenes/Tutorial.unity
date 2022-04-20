@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -228,6 +228,7 @@ GameObject:
   - component: {fileID: 332096006}
   - component: {fileID: 332096008}
   - component: {fileID: 332096007}
+  - component: {fileID: 332096009}
   m_Layer: 5
   m_Name: TutorialMessgae
   m_TagString: Untagged
@@ -352,6 +353,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 332096005}
   m_CullTransparentMesh: 1
+--- !u!114 &332096009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332096005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:a423ec0babbea4099bed3d6611501727
+    m_TableEntryReference:
+      m_KeyId: 74884046848
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 332096007}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1001 &390829110
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -509,7 +550,6 @@ MonoBehaviour:
     isTurn: 0
     pointGranted: 0
     handSize: 0
-    numNode: 0
     hasSolarInNetwork: 0
     hasHeatInNetwork: 0
     tilesTaken: []
@@ -517,6 +557,7 @@ MonoBehaviour:
     Inventory: []
     SpecialConnector: []
     SelectedConnector: {fileID: 0}
+    nodesOwned: []
   playerStates: []
 --- !u!1001 &996820332
 PrefabInstance:
@@ -897,7 +938,6 @@ MonoBehaviour:
     isTurn: 0
     pointGranted: 0
     handSize: 0
-    numNode: 0
     hasSolarInNetwork: 0
     hasHeatInNetwork: 0
     tilesTaken: []
@@ -905,6 +945,7 @@ MonoBehaviour:
     Inventory: []
     SpecialConnector: []
     SelectedConnector: {fileID: 0}
+    nodesOwned: []
   playerStates: []
 --- !u!20 &1776392741 stripped
 Camera:
