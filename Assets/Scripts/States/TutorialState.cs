@@ -15,7 +15,7 @@ public struct TutorialStateConfig
 
 
 
-public class TutorialState :  GameState
+public class TutorialState : GameState
 {
     public TutorialManager TutorialManagerClass;
     private TutorialManager TutorialManager;
@@ -33,7 +33,7 @@ public class TutorialState :  GameState
 
     public override void startPoint()
     {
-        if(TileManager.tiles[0][0].OwnedBy == null)
+        if (TileManager.tiles[0][0].OwnedBy == null)
         {
             TileManager.tiles[0][0].OwnedBy = playerStates[0];
         }
@@ -54,7 +54,7 @@ public class TutorialState :  GameState
 
         if (text != null)
         {
-            if ( index == 0)
+            if (index == 0)
             {
                 if (!onetime)
                 {
@@ -76,7 +76,7 @@ public class TutorialState :  GameState
                 text.text = "This is a tutorial to teach you the basic gameplay of our game. Tap for next.";
                 nextMsg();
             }
-            else if(index == 2)
+            else if (index == 2)
             {
                 text.text = "On the left hand side of your screen you can see the inventory screen";
                 nextMsg();
@@ -89,7 +89,7 @@ public class TutorialState :  GameState
             }
             else if (index == 4)
             {
-                text.text ="Right now in your inventory you have a single connector,a double connector and a tripple connector";
+                text.text = "Right now in your inventory you have a single connector,a double connector and a tripple connector";
                 nextMsg();
 
             }
@@ -106,12 +106,12 @@ public class TutorialState :  GameState
             else if (index == 7)
             {
                 text.text = "Start your turn by pressing the start turn button.";
-                if (playerStates[0].gameData.isTurn ==  true)
+                if (playerStates[0].gameData.isTurn == true)
                 {
                     index++;
                 }
             }
-            else if(index == 8)
+            else if (index == 8)
             {
                 text.text = "Click on the 3 length connector on the left hand of the screen and then place them one at a time on the grid starting from your windturbine";
                 nextMsg();
@@ -130,7 +130,7 @@ public class TutorialState :  GameState
                 playerStates[0].gameData.totalPoint = 47;
                 nextMsg();
             }
-            else if(index == 11)
+            else if (index == 11)
             {
                 text.text = "Congratulations you have started to make Alkmaar a greener place";
                 playerStates[0].clearHand();
@@ -142,7 +142,7 @@ public class TutorialState :  GameState
                 text.text = "Will you look at that. Your emmision bar has descressed by 3 points";
                 nextMsg();
             }
-            else if(index == 13)
+            else if (index == 13)
             {
                 text.text = "1 connector == 1point,  2 Connectors ==  2 points,  3 Connectors = 3 points";
                 nextMsg();
@@ -160,7 +160,7 @@ public class TutorialState :  GameState
                     index++;
                 }
             }
-            else if(index == 16)
+            else if (index == 16)
             {
                 text.text = "Use the newly aquired pipes to make a connection to the house nearby using one 3 connector and a single connector";
                 nextMsg();
@@ -213,7 +213,7 @@ public class TutorialState :  GameState
                     index++;
                 }
             }
-            else if(index == 25)
+            else if (index == 25)
             {
                 EnablePopup();
                 text.text = "You have now added a solar pannel to your grid. Congrats this wilol be useful later";
@@ -221,122 +221,143 @@ public class TutorialState :  GameState
                 nextMsg();
             }
 
-            else if(index == 26)
+            else if (index == 26)
             {
                 text.text = "Lets put that solar panned to good use in a bit shall we. But first please click on the stadium at the bottom of the map";
-                Canvas stadium = GameObject.Find("StadiumCard").GetComponent<Canvas>();
+                nextMsg();
 
-                if (stadium.enabled == true)
-                {
-                    nextMsg();
-
-                }
             }
             else if (index == 27)
             {
-                text.text = "Lets put that solar panned to good use in a bit shall we. But first please click on the stadium at the bottom of the map";
+                text.text = "That was Afas Stadium";
                 nextMsg();
-
             }
+            //
             else if (index == 28)
             {
-                DisablePopup();
-                Canvas stadium = GameObject.Find("StadiumCard").GetComponent<Canvas>();
-
-                if (stadium.enabled == true)
-                {
-                    nextMsg();
-
-                }
+                text.text = "That was a Key Locations card. Each card has some fun fact about the location on the left hand side.";
+                nextMsg();
             }
             else if (index == 29)
-            {
-                DisablePopup();
-                Canvas stadium = GameObject.Find("StadiumCard").GetComponent<Canvas>();
-
-                if (stadium.enabled == false)
-                {
-                    nextMsg();
-
-                }
-            }
-            else if (index == 30)
-            {
-                text.text = "Each card has some fun fact abou the location on the left hand side";
-                nextMsg();
-            }
-            else if (index == 31)
-            {
-                text.text = "This is the Key Locations card. Each card has some fun fact abou the location on the left hand side.";
-                nextMsg();
-            }
-            else if (index == 32)
             {
                 text.text = "The right hand side shows what renewable building you need to have in your grid in order to claim this stadium and rewards you get";
                 nextMsg();
             }
-            else if (index == 33333)
+            else if (index == 30)
             {
-                text.text = "For this stadium close by you need a Solar pannel in your grid and you get an extra double connector next turn";
+                text.text = "For Afas stadium to be connected to our grid by you need a Solar pannel in your grid and as a reward you get an extra double connector next turn";
                 nextMsg();
             }
-            else if (index == 32)
+            else if (index == 31)
             {
                 text.text = "Start your turn";
                 CheckPlayerTurn();
+                playerStates[0].clearHand();
+                playerStates[0].refilSpecificHand(1, 1, 2);
+            }
+            else if (index == 32)
+            {
+                text.text = "make a connection from building in your grid to the stadium";
+                nextMsg();
             }
             else if (index == 33)
             {
-                text.text = "make a connection from building in your grid to the stadium";
-                checkTileTaken(2, 7);
+                DisablePopup();
+                checkTileTaken(1, 7);
             }
             else if (index == 34)
+            {
+                EnablePopup();
+                text.text = "The Afas stadium is now running on susteanable energy. Congrats";
+                nextMsg();
+            }
+
+            else if (index == 35)
             {
                 text.text = "You are now supplying renewable energy to Afas Stadium and would you look at that, the emmision bar has decresed drastically because of that.";
                 playerStates[0].clearHand();
                 playerStates[0].refilSpecificHand(4, 0, 0);
                 nextMsg();
             }
-            else if (index == 35)
+            else if (index == 36)
             {
                 text.text = "It looks like the second player has been making moves around Alkmaar while you were busy";
-                
+                nextMsg();
             }
-            else if (index == 333664)
+            else if (index == 37)
             {
                 text.text = "Lets claim that house above shall we. ";
                 nextMsg();
             }
-            else if (index == 33)
+            else if (index == 38)
             {
                 text.text = "Start your turn and build as close as you can to that house";
-                if(playerStates[0].gameData.tilesChosen.Count == 4 )
+                nextMsg();
+            }
+            else if (index == 39)
+            {
+                DisablePopup();
+                if (playerStates[0].gameData.tilesChosen.Count == 3)
                 {
                     index++;
                 }
             }
-            else if (index == 34)
+            else if (index == 40)
             {
-                text.text = "looks like you dont have enough connectors to reach the house. Lets use the last item in an inventory, this is called a node. Plaace it down ad the end of the";
+                EnablePopup();
+                text.text = "looks like you dont have enough connectors to reach the house. Lets use the last item in an inventory, this is called a node. Plaace it down ad the end of the tile";
+                nextMsg();
+            }
+            else if (index == 41)
+            {
+                DisablePopup();
                 if (playerStates[0].gameData.nodesOwned.Count == 0)
                 {
-                    text.text = "Now you can end your turn";
-                    if (playerStates[0].gameData.isTurn == false)
-                    {
-                        index++;
-                    }
+                    index++;
                 }
             }
-            else if (index == 35)
+            else if (index == 42)
             {
-                addTile(2, 13);
-                addTile(2, 13);
-                addTile(2, 13);
-
-                text.text = "Wi";
-                
-
+                EnablePopup();
+                text.text = "Nodes allow you to end your turn mid connection and continue the next turn";
+                nextMsg();
             }
+            else if (index == 43)
+            {
+                text.text = "But be careful you only have one per game and it comes as a cost";
+                nextMsg();
+            }
+            else if (index == 44)
+            {
+                text.text = "Other players can also use your node to end their connection midway as well and continue their turn. So you have to be trategic about it";
+                nextMsg();
+            }
+            else if (index == 45)
+            {
+                text.text = "Now place use your last single conector to place over the node to end your turn ";
+                nextMsg();
+            }
+            else if (index == 46)
+            {
+                text.text = "Connect to a house closest to you starting from your node to complete the tutorial";
+                nextMsg();
+            }
+            else if (index == 47)
+            {
+                DisablePopup();
+                checkTileTaken(8, 5);
+                checkTileTaken(8, 8);
+                checkTileTaken(13, 10);
+                checkTileTaken(6, 10);
+            }
+            else if (index == 48)
+            {
+                EnablePopup();
+                text.text = "Congrats on finsihing the tutorial. Continue making Alkmaar a grenner place.";
+                nextMsg();
+            }
+
+
         }
     }
 
@@ -346,6 +367,8 @@ public class TutorialState :  GameState
         text.enabled = false;
         tutBox.enabled = false;
         textTitle.enabled = false;
+        GameObject varGameObject = GameObject.Find("Plane");
+        varGameObject.GetComponent<PhoneCameraMovement>().enabled = true;
     }
 
     public void EnablePopup()
@@ -354,6 +377,8 @@ public class TutorialState :  GameState
         tutBox.enabled = true;
         textTitle.enabled = true;
         textTitle.text = "Tutorial:";
+        GameObject varGameObject = GameObject.Find("Plane");
+        varGameObject.GetComponent<PhoneCameraMovement>().enabled = false;
 
     }
 

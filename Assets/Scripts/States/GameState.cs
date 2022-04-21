@@ -39,6 +39,7 @@ public class GameState : MonoBehaviour
     TextMeshProUGUI BtnClicked;
     TextMeshProUGUI EndBtnMsg;
     Button ClearBtn;
+    Button Node;
 
     bool p1;
     bool p2;
@@ -47,6 +48,7 @@ public class GameState : MonoBehaviour
     bool solarCheck;
     bool heatCheck;
     bool clearBtn;
+    bool nodeCheck;
 
     [HideInInspector]
     public TextMeshProUGUI text;
@@ -89,6 +91,8 @@ public class GameState : MonoBehaviour
         BtnClicked = GameObject.Find("BtnClicked").GetComponent<TextMeshProUGUI>();
         EndBtnMsg = GameObject.Find("EndBtnMsg").GetComponent<TextMeshProUGUI>();
         ClearBtn = GameObject.Find("ClearBtn").GetComponent<Button>();
+        Node = GameObject.Find("node").GetComponent<Button>();
+
 
         GameObject ExStadium = GameObject.Find("ExitBtnStadium");
         ExStadium.GetComponent<Button>()
@@ -115,6 +119,7 @@ public class GameState : MonoBehaviour
         solarB.onClick.AddListener(SolarCheck);
         heatB.onClick.AddListener(HeatCheck);
         ClearBtn.onClick.AddListener(clearBtnCheck);
+        Node.onClick.AddListener(NodeCheck);
 
     }
 
@@ -128,6 +133,10 @@ public class GameState : MonoBehaviour
             BtnClicked.text = "1 Connector";
         }
 
+    }
+    public void NodeCheck()
+    {
+        nodeCheck ^= true;
     }
 
     public void clearBtnCheck()
@@ -242,7 +251,7 @@ public class GameState : MonoBehaviour
                             }
                         }
                     }
-                    
+
                     hasHeat = false;
                     hasSolar = false;
                     allSolar = true;
@@ -263,14 +272,14 @@ public class GameState : MonoBehaviour
         }
         if (playerStates[0].gameData.isTurn)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha0))
+            if (Input.GetKeyDown(KeyCode.Alpha0) || clearBtn)
             {
                 foreach (Connection conn in turnConnections)
                 {
                     playerStates[0].AbortConnection(conn);
                 }
             }
-            
+
             if (Input.GetKeyDown(KeyCode.Alpha1) || p1)
             {
                 p1 = false;
@@ -352,7 +361,7 @@ public class GameState : MonoBehaviour
                     playerStates[0].gameData.SpecialConnector.Remove(selectedConnector);
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Alpha6))
+            if (Input.GetKeyDown(KeyCode.Alpha6) || nodeCheck)
             {
                 if (placingNode)
                 {
@@ -417,11 +426,11 @@ public class GameState : MonoBehaviour
                     }
                 }
             }
-            else if(Input.GetMouseButtonDown(0) && placingNode)
+            else if (Input.GetMouseButtonDown(0) && placingNode)
             {
                 Tile t = PlaceNode();
 
-                if(!(t == null))
+                if (!(t == null))
                 {
                     placingNode = false;
                 }
@@ -465,7 +474,7 @@ public class GameState : MonoBehaviour
         {
             GameObject tileObjectTouched = hitInfo.collider.transform.gameObject;
             tileTouched = tileObjectTouched.GetComponent<Tile>();
-            if(tileTouched == null)
+            if (tileTouched == null)
             {
                 tileTouched = tileObjectTouched.GetComponentInParent<Tile>();
                 if (tileTouched == null)
@@ -477,7 +486,7 @@ public class GameState : MonoBehaviour
             if (selectedConnector.getLength() < 2 || (selectedConnector.GetTiles().Contains(tileTouched)) || Connector.IsValidLengthThree(selectedConnector.GetTiles()[0], selectedConnector.GetTiles()[1], tileTouched))
             {
                 if (selectedConnector.MaxLength == (selectedConnector.getLength() + 1) && tileManager.isOccupied(tileTouched) && !tileManager.IsHeatPipe(tileTouched) && !tileManager.IsSolarPanel(tileTouched))
-                { 
+                {
                     isNormalConnectionEnd = true;
                     currentConnection = new Connection();
                     turnConnections.Add(currentConnection);
@@ -503,7 +512,7 @@ public class GameState : MonoBehaviour
             }
             return tileTouched;
         }
-        
+
         return null;
     }
 
