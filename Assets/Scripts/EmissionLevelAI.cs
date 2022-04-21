@@ -17,7 +17,7 @@ public class EmissionLevelAI : MonoBehaviour
     }
     private void Update()
     {
-        if(GameState.instance.playerStates.Count > 0)
+        if(GameState.instance.playerStates.Count > 1)
         {
             currentEmission = GameState.instance.playerStates[1].gameData.totalPoint;
             AIText.text = currentEmission + "%"; //displaying the percentage

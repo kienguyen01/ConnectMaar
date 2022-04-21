@@ -130,7 +130,7 @@ public class TutorialState : GameState
             {
                 text.text = "Congratulations you have started to make Alkmaar a greener place";
                 playerStates[0].clearHand();
-                playerStates[0].refilSpecificHand(1, 1, 2);
+                playerStates[0].refilSpecificHand(0, 2, 2);
                 nextMsg();
             }
             else if (index == 12)
@@ -220,7 +220,7 @@ public class TutorialState : GameState
             {
                 EnablePopup();
                 text.text = "You have now added a solar pannel to your grid. Congrats this wilol be useful later";
-                playerStates[0].refilSpecificHand(1, 1, 2);
+                playerStates[0].refilSpecificHand(0, 2, 2);
                 nextMsg();
             }
 
