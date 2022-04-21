@@ -13,7 +13,7 @@ public class TileManager : MonoBehaviour
     public SpecialBuilding church;
     public SpecialBuilding stadium;
     public Node nodePrefab;
-
+    public Tile solarHexPrefab;
     
     public static PopupHandler pH;
 
@@ -164,16 +164,27 @@ public class TileManager : MonoBehaviour
 
     Tile GenerateTutorialMap(int x, int y)
     {
+        Tile hex_cell;
         float xPos = x * xOffset;
         // check odd row => go inside
         if (y % 2 != 0)
         {
             xPos += xOffset / 2f;
         }
-        Tile hex_cell = (Tile)Instantiate(hexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
-        hex_cell.name = "Hex_" + x + "_" + y;
-        hex_cell.X = x;
-        hex_cell.Y = y;
+        if (x == 4 && y == 2)
+        {
+            hex_cell = (Tile)Instantiate(solarHexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
+            hex_cell.name = "Hex_" + x + "_" + y;
+            hex_cell.X = x;
+            hex_cell.Y = y;
+        }
+        else
+        {
+            hex_cell = (Tile)Instantiate(hexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
+            hex_cell.name = "Hex_" + x + "_" + y;
+            hex_cell.X = x;
+            hex_cell.Y = y;
+        }
 
         if ((x == 2 && y == 1) || (x == 6 && y == 2) || (x == 10 && y == 0) || (x == 8 && y == 5) || (x == 8 && y == 8) || (x == 8 && y == 5) 
             || (x == 13 && y == 10) || (x == 6 && y == 10) || (x == 4 && y == 13) || (x == 2 && y == 13) || (x==0 && y==0))
@@ -218,7 +229,7 @@ public class TileManager : MonoBehaviour
                 hex_cell.AddStructure<SpecialBuilding>(stadium_cell);
                 break;
             case "011|006":
-                SpecialBuilding church_cell = (SpecialBuilding)Instantiate(church, new Vector3(hex_cell.X * xOffset, 0.35f, hex_cell.Y * zOffset + 0.35f), Quaternion.Euler(-90, 90, 0));
+                SpecialBuilding church_cell = (SpecialBuilding)Instantiate(church, new Vector3(hex_cell.X * xOffset + 0.507f, 0.35f, hex_cell.Y * zOffset - 0.55f), Quaternion.Euler(-90, 90, 0));
                 church_cell.transform.localScale = new Vector3(15.0f, 15.0f, 15.0f);
                 church_cell.name = "church_" + hex_cell.X + "_" + hex_cell.Y;
                 church_cell.SolarRequired = true;
@@ -276,7 +287,7 @@ public class TileManager : MonoBehaviour
 
         if (x == 5 && y == 14)
         {
-            SpecialBuilding church_cell = (SpecialBuilding)Instantiate(church, new Vector3(xPos + 0.512f, 0.35f, y * zOffset - 0.636f), Quaternion.Euler(-90, 90, 0));
+            SpecialBuilding church_cell = (SpecialBuilding)Instantiate(church, new Vector3(xPos + 0.507f, 0.35f, y * zOffset - 0.55f), Quaternion.Euler(-90, 90, 0));
             church_cell.transform.localScale = new Vector3(15.0f, 15.0f, 15.0f);
             church_cell.name = "church_" + x + "_" + y;
             hex_cell.AddStructure<SpecialBuilding>(church_cell);
