@@ -49,6 +49,7 @@ public class TutorialState : GameState
         {
             text = GameObject.Find("txtBody").GetComponent<TextMeshProUGUI>();
             textTitle = GameObject.Find("txtTitle").GetComponent<TextMeshProUGUI>();
+            textTitle.text = "Tutorial:";
 
         }
 
@@ -56,12 +57,7 @@ public class TutorialState : GameState
         {
             if (index == 0)
             {
-                if (!onetime)
-                {
-                    startAiMoves();
-                    onetime = true;
-                    nextMsg();
-                }
+                
 
 
                 GameObject varGameObject = GameObject.Find("Plane");
@@ -207,6 +203,13 @@ public class TutorialState : GameState
             }
             else if (index == 24)
             {
+                if (!onetime)
+                {
+                    startAiMoves();
+                    onetime = true;
+                    nextMsg();
+                }
+                playerStates[1].gameData.totalPoint = 47;
                 DisablePopup();
                 if (playerStates[0].gameData.hasSolarInNetwork)
                 {
@@ -262,6 +265,9 @@ public class TutorialState : GameState
             }
             else if (index == 33)
             {
+                addTile(3, 13);
+                addTile(4, 13);
+                playerStates[1].gameData.totalPoint = 45;
                 DisablePopup();
                 checkTileTaken(1, 7);
             }
@@ -297,6 +303,10 @@ public class TutorialState : GameState
             }
             else if (index == 39)
             {
+                addTile(5, 12);
+                addTile(5, 11);
+                addTile(6, 10);
+                playerStates[1].gameData.totalPoint = 42;
                 DisablePopup();
                 if (playerStates[0].gameData.tilesChosen.Count == 3)
                 {
@@ -345,6 +355,10 @@ public class TutorialState : GameState
             }
             else if (index == 47)
             {
+                addTile(6, 9);
+                addTile(7, 9);
+                addTile(8, 8);
+                playerStates[1].gameData.totalPoint = 42;
                 DisablePopup();
                 checkTileTaken(8, 5);
                 checkTileTaken(8, 8);
@@ -392,8 +406,6 @@ public class TutorialState : GameState
         addTile(0, 13);
         addTile(1, 13);
         addTile(2, 13);
-        addTile(3, 13);
-        addTile(4, 13);
     }
 
     private void addTile(int x, int y)
