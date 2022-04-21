@@ -62,19 +62,19 @@ public class TutorialState : GameState
 
                 GameObject varGameObject = GameObject.Find("Plane");
                 varGameObject.GetComponent<PhoneCameraMovement>().enabled = false;
-                text.text = "Welcome to the Tutorial Player 1. In this tutorial we will teach you how to play ConnectMaar. Tap on Screen to start.";
+                text.text = "Welcome to the Tutorial! In this tutorial we will teach you how to play ConnectMaar. Tap on Screen to start.";
                 playerStates[0].clearHand();
                 playerStates[0].refilSpecificHand(1, 1, 2);
                 nextMsg();
             }
             else if (index == 1)
             {
-                text.text = "This is a tutorial to show you the basic gameplay of our game: ConnectMaar. Tap for next.";
+                text.text = "This is a tutorial to show you the basic gameplay of our game: ConnectMaar. Tap to continue.";
                 nextMsg();
             }
             else if (index == 2)
             {
-                text.text = "On the left side of your screen you can see the inventory screen";
+                text.text = "On the left side of your screen you can see your inventory.";
                 nextMsg();
             }
             else if (index == 3)
@@ -91,12 +91,12 @@ public class TutorialState : GameState
             }
             else if (index == 5)
             {
-                text.text = "Depending on the length and number of connectors you use in your connection, the amount your emission bar decreases will change";
+                text.text = "By connecting buildings to renewable energy sources in the most efficient way possible, you'll reduce the emission level at the top of the screen!";
                 nextMsg();
             }
             else if (index == 6)
             {
-                text.text = "Let's begin using renewable energy to make Alkmaar a Greener city ";
+                text.text = "Let's begin using renewable energy to make Alkmaar a Greener city!";
                 nextMsg();
             }
             else if (index == 7)
@@ -109,7 +109,7 @@ public class TutorialState : GameState
             }
             else if (index == 8)
             {
-                text.text = "Click on the 3 length connector on the left hand of the screen and then place them one at a time on the grid starting from your windturbine";
+                text.text = "Click on the 3 length connector on the left side of the screen and then place them one at a time on the grid starting from your windturbine";
                 nextMsg();
 
             }
@@ -122,13 +122,13 @@ public class TutorialState : GameState
             else if (index == 10)
             {
                 EnablePopup();
-                text.text = "When making connections your emmision bar will decrease by a certain amount depending on how many connectors you used, the more you used, the more energy lost";
+                text.text = "When making connections your emission bar will decrease. The more connectors you used, the less efficient the connection will be";
                 //playerStates[0].gameData.totalPoint = 47;
                 nextMsg();
             }
             else if (index == 11)
             {
-                text.text = "Congratulations you have started to make Alkmaar a greener city";
+                text.text = "Congratulations, you have started to make Alkmaar a greener city!";
                 playerStates[0].clearHand();
                 playerStates[0].refilSpecificHand(1, 1, 2);
                 nextMsg();
@@ -140,12 +140,12 @@ public class TutorialState : GameState
             }
             else if (index == 13)
             {
-                text.text = "1 connector = 1 point,  2 Connectors =  2 points,  3 Connectors = 3 points";
+                text.text = "1 connector = 3 points,  2 Connectors =  2 points,  3 Connectors = 1 point";
                 nextMsg();
             }
             else if (index == 14)
             {
-                text.text = "At the end of each turn your hand of connectors will be filled up again";
+                text.text = "At the end of each turn your inventory of connectors will be filled up again";
                 nextMsg();
             }
             else if (index == 15)
@@ -176,11 +176,10 @@ public class TutorialState : GameState
             }
             else if (index == 19)
             {
-                text.text = "It looks like you built over scrabble tiles and claimed " + playerStates[0].gameData.SpecialConnector.Count + " special connectors";
+                text.text = "It looks like you built over special tiles and gained " + playerStates[0].gameData.SpecialConnector.Count + " special connectors";
                 playerStates[0].clearHand();
                 nextMsg();
             }
-
             else if (index == 20)
             {
                 text.text = "Special connectors are used to connect to special renewable resource in your grid such as heatpumps and solar panels. This will be useful in a bit.";
@@ -188,7 +187,7 @@ public class TutorialState : GameState
             }
             else if (index == 21)
             {
-                text.text = "Since you just connect to a solar scrabble tile, the special connector you have can only be used to connect to a solar pannel.";
+                text.text = "Since you just connected to a solar tile, the special connector you have can only be used to connect to a solar pannel.";
                 nextMsg();
             }
             else if (index == 22)
@@ -219,26 +218,25 @@ public class TutorialState : GameState
             else if (index == 25)
             {
                 EnablePopup();
-                text.text = "You have now added a solar pannel to your connection. Congrats this will be useful later";
+                text.text = "You have now added a solar pannel to your connection. Congratulations! this will be useful later";
                 playerStates[0].refilSpecificHand(1, 1, 2);
                 nextMsg();
             }
 
             else if (index == 26)
             {
-                text.text = "Lets put that solar panel to good use in a bit shall we. But first please click on the stadium at the bottom of the map";
+                text.text = "Lets put that solar panel to good use in a bit shall we. But first please tap on the stadium at the bottom of the map";
                 nextMsg();
-
             }
             else if (index == 27)
             {
-                text.text = "That was AFAS Stadium";
+                text.text = "That was the AFAS Stadium";
                 nextMsg();
             }
             //
             else if (index == 28)
             {
-                text.text = "That was a Key Locations Card. Each card has some fun fact about the location on the left hand side.";
+                text.text = "That was a Key Location info-Card. Each card has some fun facts about the location on the left hand side.";
                 nextMsg();
             }
             else if (index == 29)
@@ -248,7 +246,7 @@ public class TutorialState : GameState
             }
             else if (index == 30)
             {
-                text.text = "For AFAS stadium to be connected to our grid by you need a Solar pannel in your grid and as a reward you get an extra double connector next turn";
+                text.text = "For AFAS stadium to be connected to our grid by you need a Solar pannel in your grid. As a reward, you'll get an extra double connector next turn";
                 nextMsg();
             }
             else if (index == 31)
@@ -260,7 +258,7 @@ public class TutorialState : GameState
             }
             else if (index == 32)
             {
-                text.text = "Make a connection from building in your grid to the stadium";
+                text.text = "Make a connection from a building in your grid to the stadium";
                 nextMsg();
             }
             else if (index == 33)
@@ -340,12 +338,12 @@ public class TutorialState : GameState
             }
             else if (index == 44)
             {
-                text.text = "Other players can also use your node to end their connection midway as well and continue their turn. So you have to be trategic about it";
+                text.text = "Other players can also use your node to end their connection midway as well and continue their turn, So you'll have to be strategic about their placement";
                 nextMsg();
             }
             else if (index == 45)
             {
-                text.text = "Now place use your last single connector to place over the node to end your turn ";
+                text.text = "Now place use your last connector to place over the node to end your turn ";
                 nextMsg();
             }
             else if (index == 46)
@@ -368,7 +366,7 @@ public class TutorialState : GameState
             else if (index == 48)
             {
                 EnablePopup();
-                text.text = "Congrats on finsihing the tutorial. Continue making Alkmaar a Greener place.";
+                text.text = "Congrats on finsihing the tutorial. Continue making Alkmaar a Greener place!";
                 nextMsg();
             }
 
@@ -421,7 +419,7 @@ public class TutorialState : GameState
 
     private void nextMsg()
     {
-        if (Input.GetMouseButtonDown(0) && !(EventSystem.current.IsPointerOverGameObject()))
+        if (Input.GetMouseButtonDown(0) && (EventSystem.current.IsPointerOverGameObject()))
         {
             index++;
         }
