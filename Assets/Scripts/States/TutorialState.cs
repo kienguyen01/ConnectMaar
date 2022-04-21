@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 [System.Serializable]
 public struct TutorialStateConfig
@@ -18,12 +19,16 @@ public class TutorialState :  GameState
 {
     public TutorialManager TutorialManagerClass;
     private TutorialManager TutorialManager;
+    private Image tutBox;
 
     public GameObject popups;
     private int index;
     bool onetime = false;
 
     private string[] tutorialMessage;
+
+    [HideInInspector]
+    public TextMeshProUGUI textTitle;
 
 
     public override void startPoint()
@@ -38,7 +43,15 @@ public class TutorialState :  GameState
 
     public override void TutorialStart()
     {
-        text = GameObject.Find("TutorialMessgae").GetComponent<TextMeshProUGUI>();
+        tutBox = GameObject.Find("TutorialBox").GetComponent<Image>();
+
+        if (tutBox.enabled == true)
+        {
+            text = GameObject.Find("txtBody").GetComponent<TextMeshProUGUI>();
+            textTitle = GameObject.Find("txtTitle").GetComponent<TextMeshProUGUI>();
+
+        }
+
         if (text != null)
         {
             if ( index == 0)
@@ -60,8 +73,6 @@ public class TutorialState :  GameState
             }
             else if (index == 1)
             {
-                playerStates[0].gameData.totalPoint = 45;
-
                 text.text = "This is a tutorial to teach you the basic gameplay of our game. Tap for next.";
                 nextMsg();
             }
@@ -102,34 +113,46 @@ public class TutorialState :  GameState
             }
             else if(index == 8)
             {
-                text.text = "Claim the house closest to you using the least amount of pipes and end your turn";
-                checkTileTaken(2, 1);
-            }
-            else if(index == 9)
-            {
-                text.text = "Congratulations you have started to make Alkmaar a greener place";
-                playerStates[0].clearHand();
-                playerStates[0].refilSpecificHand(1, 1, 2);
-
+                text.text = "Click on the 3 length connector on the left hand of the screen and then place them one at a time on the grid starting from your windturbine";
                 nextMsg();
+
+            }
+            else if (index == 9)
+            {
+                DisablePopup();
+                checkTileTaken(2, 1);
+
             }
             else if (index == 10)
             {
-                text.text = "Will you look at that. Your emmision bar has descressed by 3 points";
-
+                EnablePopup();
+                text.text = "When making connections your emmision bar will decrease by a certain amount depending on how many connectors you used";
+                playerStates[0].gameData.totalPoint = 47;
                 nextMsg();
             }
             else if(index == 11)
             {
-                text.text = "1 connector == 1point,  2 Connectors ==  2 points,  3 Connectors = 3 points";
+                text.text = "Congratulations you have started to make Alkmaar a greener place";
+                playerStates[0].clearHand();
+                playerStates[0].refilSpecificHand(1, 1, 2);
                 nextMsg();
             }
             else if (index == 12)
             {
+                text.text = "Will you look at that. Your emmision bar has descressed by 3 points";
+                nextMsg();
+            }
+            else if(index == 13)
+            {
+                text.text = "1 connector == 1point,  2 Connectors ==  2 points,  3 Connectors = 3 points";
+                nextMsg();
+            }
+            else if (index == 14)
+            {
                 text.text = "At the end of each turn your hand size of pipes will be filled up again";
                 nextMsg();
             }
-            else if (index == 13)
+            else if (index == 15)
             {
                 text.text = "Start your turn again to continue";
                 if (playerStates[0].gameData.isTurn == true)
@@ -137,103 +160,154 @@ public class TutorialState :  GameState
                     index++;
                 }
             }
-            else if(index == 14)
+            else if(index == 16)
             {
-                text.text = "Use the newly aquired pipes to make a connection to the house nearby";
-                checkTileTaken(6,2);
+                text.text = "Use the newly aquired pipes to make a connection to the house nearby using one 3 connector and a single connector";
+                nextMsg();
             }
-            else if (index == 15)
+            else if (index == 17)
+            {
+                DisablePopup();
+                checkTileTaken(6, 2);
+
+            }
+            else if (index == 18)
+            {
+                EnablePopup();
+                playerStates[0].gameData.totalPoint = 45;
+                text.text = "Your emmision levels have further reduced by 2 points. This is because you used two connections instaed of a single one";
+                nextMsg();
+            }
+            else if (index == 19)
             {
                 text.text = "It looks like you built over scrabble tiles and claimed " + playerStates[0].gameData.SpecialConnector.Count + " special connectors";
                 playerStates[0].clearHand();
                 nextMsg();
             }
-            else if (index == 16)
+
+            else if (index == 20)
             {
-                text.text = "Special connectors are used to add special renewable resource in your grid such as heatpumps and solar pannels";
+                text.text = "Special connectors are used to add special renewable resource in your grid such as heatpumps and solar pannels.This will be useful in a bit.";
                 nextMsg();
             }
-            else if (index == 17)
+            else if (index == 21)
             {
-                text.text = "The special connector you have can only be used to connect to a solar pannel ";
+                text.text = "The special connector you have can only be used to connect to a solar pannel.";
                 nextMsg();
             }
-            else if (index == 18)
+            else if (index == 22)
+            {
+                text.text = "Special connectors like these can only be placed on one grid one at a time";
+                nextMsg();
+            }
+            else if (index == 23)
             {
                 text.text = "Please use the special solar connector to connect to the solar pannel ahead.";
+                nextMsg();
+            }
+            else if (index == 24)
+            {
+                DisablePopup();
                 if (playerStates[0].gameData.hasSolarInNetwork)
                 {
                     index++;
                 }
             }
-            else if(index == 18)
+            else if(index == 25)
             {
+                EnablePopup();
                 text.text = "You have now added a solar pannel to your grid. Congrats this wilol be useful later";
                 playerStates[0].refilSpecificHand(1, 1, 2);
                 nextMsg();
             }
-            else if(index == 19)
+
+            else if(index == 26)
             {
-                text.text = "I think its time for you to use it but first click on the help icon at the top of the screne";
-                /*if ()
+                text.text = "Lets put that solar panned to good use in a bit shall we. But first please click on the stadium at the bottom of the map";
+                Canvas stadium = GameObject.Find("StadiumCard").GetComponent<Canvas>();
+
+                if (stadium.enabled == true)
                 {
-                CHECK IF THE STADIUM UI POPUP HA BEEN CLICKED AND THEN AFTERWARDS INCREMENT THE INDEX, UPDATED UI FROM SAMUEL NEEDED AND TESTSED
-                }*/
-                nextMsg();
+                    nextMsg();
+
+                }
             }
-            else if (index == 20)
-            { 
-                text.text = "This is the Key Locations card";
+            else if (index == 27)
+            {
+                text.text = "Lets put that solar panned to good use in a bit shall we. But first please click on the stadium at the bottom of the map";
                 nextMsg();
+
             }
-            else if (index == 21)
+            else if (index == 28)
+            {
+                DisablePopup();
+                Canvas stadium = GameObject.Find("StadiumCard").GetComponent<Canvas>();
+
+                if (stadium.enabled == true)
+                {
+                    nextMsg();
+
+                }
+            }
+            else if (index == 29)
+            {
+                DisablePopup();
+                Canvas stadium = GameObject.Find("StadiumCard").GetComponent<Canvas>();
+
+                if (stadium.enabled == false)
+                {
+                    nextMsg();
+
+                }
+            }
+            else if (index == 30)
             {
                 text.text = "Each card has some fun fact abou the location on the left hand side";
                 nextMsg();
             }
-            else if (index == 22)
+            else if (index == 31)
             {
                 text.text = "This is the Key Locations card. Each card has some fun fact abou the location on the left hand side.";
                 nextMsg();
             }
-            else if (index == 23)
+            else if (index == 32)
             {
                 text.text = "The right hand side shows what renewable building you need to have in your grid in order to claim this stadium and rewards you get";
                 nextMsg();
             }
-            else if (index == 24)
+            else if (index == 33333)
             {
                 text.text = "For this stadium close by you need a Solar pannel in your grid and you get an extra double connector next turn";
                 nextMsg();
             }
-            else if (index == 25)
+            else if (index == 32)
             {
                 text.text = "Start your turn";
                 CheckPlayerTurn();
             }
-            else if (index == 26)
+            else if (index == 33)
             {
                 text.text = "make a connection from building in your grid to the stadium";
                 checkTileTaken(2, 7);
             }
-            else if (index == 27)
+            else if (index == 34)
             {
                 text.text = "You are now supplying renewable energy to Afas Stadium and would you look at that, the emmision bar has decresed drastically because of that.";
                 playerStates[0].clearHand();
                 playerStates[0].refilSpecificHand(4, 0, 0);
                 nextMsg();
             }
-            else if (index == 28)
+            else if (index == 35)
             {
                 text.text = "It looks like the second player has been making moves around Alkmaar while you were busy";
                 
             }
-            else if (index == 29)
+            else if (index == 333664)
             {
                 text.text = "Lets claim that house above shall we. ";
                 nextMsg();
             }
-            else if (index == 30)
+            else if (index == 33)
             {
                 text.text = "Start your turn and build as close as you can to that house";
                 if(playerStates[0].gameData.tilesChosen.Count == 4 )
@@ -241,7 +315,7 @@ public class TutorialState :  GameState
                     index++;
                 }
             }
-            else if (index == 31)
+            else if (index == 34)
             {
                 text.text = "looks like you dont have enough connectors to reach the house. Lets use the last item in an inventory, this is called a node. Plaace it down ad the end of the";
                 if (playerStates[0].gameData.nodesOwned.Count == 0)
@@ -253,7 +327,7 @@ public class TutorialState :  GameState
                     }
                 }
             }
-            else if (index == 32)
+            else if (index == 35)
             {
                 addTile(2, 13);
                 addTile(2, 13);
@@ -264,6 +338,23 @@ public class TutorialState :  GameState
 
             }
         }
+    }
+
+
+    public void DisablePopup()
+    {
+        text.enabled = false;
+        tutBox.enabled = false;
+        textTitle.enabled = false;
+    }
+
+    public void EnablePopup()
+    {
+        text.enabled = true;
+        tutBox.enabled = true;
+        textTitle.enabled = true;
+        textTitle.text = "Tutorial:";
+
     }
 
     public void startAiMoves()

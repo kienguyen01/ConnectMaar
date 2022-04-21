@@ -42,7 +42,7 @@ public class GameState : MonoBehaviour
 
     bool p1;
     bool p2;
-    bool p3;
+    public bool p3;
     public bool turnCheck;
     bool solarCheck;
     bool heatCheck;
