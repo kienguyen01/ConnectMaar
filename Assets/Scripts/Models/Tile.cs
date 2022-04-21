@@ -32,6 +32,10 @@ public class Tile : MonoBehaviour
             }
             else
             {
+                if (this.gameObject.GetComponent<Outline>())
+                {
+                    Destroy(this.gameObject.GetComponent<Outline>());
+                }
                 //change to highlight
                 this.gameObject.AddComponent<Outline>()
                     .OutlineWidth = 4.0f;
