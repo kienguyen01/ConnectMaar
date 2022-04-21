@@ -127,7 +127,7 @@ public class TutorialState : GameState
             {
                 EnablePopup();
                 text.text = "When making connections your emmision bar will decrease by a certain amount depending on how many connectors you used";
-                playerStates[0].gameData.totalPoint = 47;
+                //playerStates[0].gameData.totalPoint = 47;
                 nextMsg();
             }
             else if (index == 11)
@@ -174,7 +174,7 @@ public class TutorialState : GameState
             else if (index == 18)
             {
                 EnablePopup();
-                playerStates[0].gameData.totalPoint = 45;
+                //playerStates[0].gameData.totalPoint = 45;
                 text.text = "Your emmision levels have further reduced by 2 points. This is because you used two connections instaed of a single one";
                 nextMsg();
             }
@@ -267,6 +267,7 @@ public class TutorialState : GameState
             }
             else if (index == 34)
             {
+                playerStates[0].gameData.totalPoint = 35;
                 EnablePopup();
                 text.text = "The Afas stadium is now running on susteanable energy. Congrats";
                 nextMsg();
@@ -418,6 +419,7 @@ public class TutorialState : GameState
     {
         if (TileManager.tiles[x][y].OwnedBy == playerStates[0])
         {
+            playerStates[0].gameData.totalPoint = playerStates[0].gameData.totalPoint - 3;
             index++;
         }
     }
