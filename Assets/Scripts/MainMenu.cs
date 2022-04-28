@@ -7,6 +7,7 @@ using TMPro;
 
 public class MainMenu : MonoBehaviour
 {
+    [SerializeField] private NetworkManager networkManager;
    public void ExitButton(){
        Application.Quit();
        Debug.Log("Game closed!");
@@ -23,5 +24,10 @@ public class MainMenu : MonoBehaviour
     public void OnLanguageChange(TMP_Dropdown dropdown)
     {
         LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[dropdown.value];
+    }
+
+    public void OnConnect()
+    {
+        networkManager.Connect();
     }
 }
