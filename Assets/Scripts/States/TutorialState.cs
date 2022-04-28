@@ -109,7 +109,7 @@ public class TutorialState : GameState
             }
             else if (index == 8)
             {
-                text.text = "Click on the 3 length connector on the left side of the screen and then place them one at a time on the grid starting from your windturbine";
+                text.text = "Click on the 3 length connector on the left side of the screen and then place them one at a time on the grid starting from your windturbine to a house";
                 nextMsg();
 
             }
@@ -130,7 +130,6 @@ public class TutorialState : GameState
             {
                 text.text = "Congratulations, you have started to make Alkmaar a greener city!";
                 playerStates[0].clearHand();
-                playerStates[0].refilSpecificHand(0, 2, 2);
                 nextMsg();
             }
             else if (index == 12)
@@ -145,6 +144,7 @@ public class TutorialState : GameState
             }
             else if (index == 14)
             {
+                playerStates[0].refilSpecificHand(1, 1, 2);
                 text.text = "At the end of each turn your inventory of connectors will be filled up again";
                 nextMsg();
             }

@@ -363,6 +363,7 @@ public class GameState : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Alpha6) || nodeCheck)
             {
+                nodeCheck = false;
                 if (placingNode)
                 {
                     playerStates[0].gameData.nodesOwned.Add(playerNode);
