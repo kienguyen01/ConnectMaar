@@ -30,4 +30,9 @@ public class MainMenu : MonoBehaviour
     {
         networkManager.Connect();
     }
+
+    public void SetConnectionStatus(string status)
+    {
+        
+    }
 }

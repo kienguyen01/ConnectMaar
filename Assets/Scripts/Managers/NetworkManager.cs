@@ -5,6 +5,12 @@ using Photon.Pun;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
+    [SerializeField] private MainMenu mainMenu;
+
+    private void Update()
+    {
+        mainMenu.SetConnectionStatus(PhotonNetwork.NetworkClientState.ToString());
+    }
     public void Connect()
     {
         if (PhotonNetwork.IsConnected)
