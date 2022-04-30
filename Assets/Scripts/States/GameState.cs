@@ -56,6 +56,11 @@ public class GameState : MonoBehaviour
 
     public void Awake()
     {
+        onAwake();
+    }
+
+    protected void onAwake()
+    {
         Assert.IsNull(instance);
         instance = this;
 
@@ -74,11 +79,6 @@ public class GameState : MonoBehaviour
         }
         createPlayer();
         turnConnections = new List<Connection>();
-
-    }
-
-    public virtual void TutorialStart()
-    {
     }
 
     private void addEventHandlers()
@@ -441,7 +441,6 @@ public class GameState : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !selectedConnector)
             GetInfoCard();
 
-        TutorialStart();
         startPoint();
     }
 

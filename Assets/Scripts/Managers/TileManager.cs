@@ -37,6 +37,37 @@ public class TileManager : MonoBehaviour
     private void Awake()
     {
         pH = this.gameObject.AddComponent(typeof(PopupHandler)) as PopupHandler;
+
+        if(SceneManager.GetActiveScene() ==  SceneManager.GetSceneByName("Tutorial"))
+        {
+            for (int x = 0; x < 15; x++)
+            {
+                List<Tile> tileRow = new List<Tile>();
+
+                for (int y = 0; y < 15; y++)
+                {
+                    tileRow.Add((GenerateTutorialMap(x, y)));
+                }
+
+                tiles.Add(tileRow);
+            }
+        }
+        else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("SampleScene"))
+        {
+            for (int x = 0; x < WIDTH_MAP; x++)
+            {
+                List<Tile> tileRow = new List<Tile>();
+
+                for (int y = 0; y < HEIGHT_MAP; y++)
+                {
+                    tileRow.Add((GenerateTilesMap(x, y)));
+                }
+
+                tiles.Add(tileRow);
+            }
+        }
+
+        InitSpecialBuildings();
     }
 
     public int tileAvailable
@@ -75,43 +106,6 @@ public class TileManager : MonoBehaviour
         }
 
         return specialBuildingChosen;
-    }
-
-    private void Start()
-    {
-        if(SceneManager.GetActiveScene() ==  SceneManager.GetSceneByName("Tutorial"))
-        {
-            for (int x = 0; x < 15; x++)
-            {
-                List<Tile> tileRow = new List<Tile>();
-
-                for (int y = 0; y < 15; y++)
-                {
-                    tileRow.Add((GenerateTutorialMap(x, y)));
-                }
-
-                tiles.Add(tileRow);
-            }
-        }
-        else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("SampleScene"))
-        {
-            for (int x = 0; x < WIDTH_MAP; x++)
-            {
-                List<Tile> tileRow = new List<Tile>();
-
-                for (int y = 0; y < HEIGHT_MAP; y++)
-                {
-                    tileRow.Add((GenerateTilesMap(x, y)));
-                }
-
-                tiles.Add(tileRow);
-            }
-        }
-
-        
-        
-
-        InitSpecialBuildings();
     }
     
     /// <summary>
