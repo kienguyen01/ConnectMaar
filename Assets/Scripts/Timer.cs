@@ -7,7 +7,6 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    [Header("Timer UI references: ")]
     [SerializeField] private Image uiFillImage;
     [SerializeField] private TMP_Text uiText;
 
