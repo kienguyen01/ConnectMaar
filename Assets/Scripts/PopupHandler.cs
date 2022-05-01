@@ -20,6 +20,10 @@ public class PopupHandler : MonoBehaviour
             canvas.enabled = false;
 
         }
+    }
 
+    public bool isOpen()
+    {
+        return isCanvasOpen;
     }
 }

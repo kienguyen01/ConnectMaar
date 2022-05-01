@@ -66,7 +66,7 @@ public class TutorialState : GameState
         temporaryRoutines = 0;
         while (true)
         {
-            if (go && (autoAdvance || nextMsg() ))
+            if (go && (autoAdvance || nextMsg()))
             {
                 autoAdvance = false;
                 index++;
@@ -191,13 +191,14 @@ public class TutorialState : GameState
                     break;
                 case 26:
                     text.text = "First, please tap on the stadium at the bottom of the map";
-                    //@TODO ADD check if stadium was opened and closed
                     break;
                 case 27:
-                    text.text = "That was the AFAS Stadium";
+                    DisablePopup();
+                    StartCoroutine(OpenInfoCardCheckRoutine());
                     break;
                 case 28:
-                    text.text = "That was a Key Location info-Card. Each card has some fun facts about the location on the left hand side.";
+                    EnablePopup();
+                    text.text = "That was the info-Card for the AFAS Stadium. Each card has some fun facts about the location on the left hand side.";
                     break;
                 case 29:
                     text.text = "The right hand side shows what renewable building you need to have in your grid in order to claim this stadium and rewards you get";
@@ -296,6 +297,25 @@ public class TutorialState : GameState
         }
     }
 
+    /*string[] TutorialText =
+    {
+        "Welcome to the Tutorial! In this tutorial we will teach you how to play ConnectMaar. Tap on Screen to start.",
+        "This is a tutorial to show you the basic gameplay of our game: ConnectMaar. Tap to continue.",
+        "On the left side of your screen you can see your inventory.",
+        "In your inventory you have Items called Connectors. They are your main tool to make Alkmaar a greener and more sustainable place",
+        "Right now in your inventory you have a single connector, a double connector and a triple connector",
+        "By connecting buildings to renewable energy sources in the most efficient way possible, you'll reduce the emission level at the top of the screen!",
+        "Let's begin using renewable energy to make Alkmaar a Greener city!",
+        "Start your turn by pressing the start turn button.",
+        "Click on the length-3 connector on the left side of the screen and then place it on the grid starting from your wind turbine to the nearest house",
+
+        "When making connections your emission bar will decrease. The more connectors you used, the less efficient the connection will be",
+        "Congratulations, you have started to make Alkmaar a greener city!", 
+        "", 
+        "", 
+        "", 
+    };*/
+
     private IEnumerator TurnCheckRoutine(bool YourTurn = true, bool AutoAdvance = true)
     {
         go = false;
@@ -320,7 +340,7 @@ public class TutorialState : GameState
             if (TileManager.tiles[x][y].OwnedBy == playerStates[0])
             {
                 playerStates[0].gameData.totalPoint = playerStates[0].gameData.totalPoint - 3;
-                if(temporaryRoutines <= 1)
+                if (temporaryRoutines <= 1)
                 {
                     go = true;
                     autoAdvance = true;
@@ -377,6 +397,31 @@ public class TutorialState : GameState
         }
     }
 
+    private IEnumerator OpenInfoCardCheckRoutine()
+    {
+        go = false;
+        bool opened = false;
+        while (true)
+        {
+            if (TileManager.pH.isOpen())
+            {
+                opened = true;
+                yield return 0;
+            }
+
+            if (!TileManager.pH.isOpen() && opened)
+            {
+                go = true;
+                autoAdvance = true;
+                yield break;
+            }
+            else
+            {
+                yield return 0;
+            }
+        }
+    }
+
     public void DisablePopup()
     {
         text.enabled = false;
@@ -421,7 +466,7 @@ public class TutorialState : GameState
         }
         return false;
     }
-
+    /*
     private void checkTileTaken(int x, int y)
     {
         if (TileManager.tiles[x][y].OwnedBy == playerStates[0])
@@ -429,5 +474,7 @@ public class TutorialState : GameState
             playerStates[0].gameData.totalPoint = playerStates[0].gameData.totalPoint - 3;
             go = true;
         }
-    }
+    }*/
+
+    
 }
