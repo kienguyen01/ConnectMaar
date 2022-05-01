@@ -28,22 +28,11 @@ public class EmissionLevelPlayer : MonoBehaviour
             }
 
             lerpSpeed = 3f * Time.deltaTime; //can be changed to increase or decrease lerp speed
-                                             /*
-            Debug.Log(playerEmissionbar.fillAmount);
-            Debug.Log(currentEmission);
-            Debug.Log(maxEmission);*/
+ 
             playerEmissionbar.fillAmount = Mathf.Lerp(playerEmissionbar.fillAmount, currentEmission / maxEmission, lerpSpeed);
-            /*
-            Debug.Log(playerEmissionbar.fillAmount);
-            Debug.Log(currentEmission);
-            Debug.Log(maxEmission);*/// should be between 0 and 1 
+           
         }
     }
-    void EmissionLevelFiller()
-    {
-
-    }
-
 
     //functions for decreasing and increasing emission Levels
     //for decreasing, method takes in a parameter
