@@ -32,7 +32,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        Debug.LogError($"Can not connect because of {message}");
+        Debug.LogError($"Can not connect because of {message}. Creating new one");
         PhotonNetwork.CreateRoom(null);
     }
 
