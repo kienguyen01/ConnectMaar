@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using mixpanel;
 
 [System.Serializable]
 public struct GameStateConfig
@@ -63,6 +64,14 @@ public class GameState : MonoBehaviour
     {
         Assert.IsNull(instance);
         instance = this;
+
+        
+        // Track with event-name and property
+        var props = new Value();
+        props["Test"] = true;
+        props["DeviceName"] = SystemInfo.deviceName;
+        Mixpanel.Track("Run application", props);
+        
 
 
         addEventHandlers();
@@ -151,8 +160,8 @@ public class GameState : MonoBehaviour
         {
             SelectedConnectorText.text = "2 Connector";
         }
-
     }
+
     public void ThirdpipeCheck()
     {
         p3 ^= true;
@@ -161,10 +170,12 @@ public class GameState : MonoBehaviour
             SelectedConnectorText.text = "3 Connector";
         }
     }
+
     public void endTurnCheck()
     {
         turnCheck ^= true;
     }
+
     public void SolarCheck()
     {
         solarCheck ^= true;
@@ -173,6 +184,7 @@ public class GameState : MonoBehaviour
             SelectedConnectorText.text = "Solar Coneector";
         }
     }
+
     public void HeatCheck()
     {
         heatCheck ^= true;
