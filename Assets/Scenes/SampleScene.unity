@@ -237,6 +237,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3306876386921501586, guid: 47f41cefc1f510f4381c44137a4114e9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9495
+      objectReference: {fileID: 0}
+    - target: {fileID: 3306876386921501586, guid: 47f41cefc1f510f4381c44137a4114e9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -913
+      objectReference: {fileID: 0}
+    - target: {fileID: 3306876386921501586, guid: 47f41cefc1f510f4381c44137a4114e9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 222
+      objectReference: {fileID: 0}
     - target: {fileID: 8560036463042808642, guid: 47f41cefc1f510f4381c44137a4114e9, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -544,7 +556,7 @@ GameObject:
   - component: {fileID: 2023770847}
   - component: {fileID: 2023770846}
   m_Layer: 0
-  m_Name: TimerInitialization
+  m_Name: TimerManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
