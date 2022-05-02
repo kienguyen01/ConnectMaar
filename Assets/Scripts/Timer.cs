@@ -46,7 +46,7 @@ public class Timer : MonoBehaviour
     private void UpdateUI(int seconds)
     {
         //uiText.text = string.Format($"{seconds / 60}:{seconds % 60}");
-        uiText.text = string.Format("{0:D2}:{1:D2}", (seconds / 60), (seconds % 60)); //printing 2 digits
+        uiText.text = string.Format("{0:D2}:{1:D2}", (seconds / 60), (seconds % 60)); //printing 2 digits(minute:second)format
         uiFillImage.fillAmount = Mathf.InverseLerp(0, Duration, seconds);
     }
     public void End()
