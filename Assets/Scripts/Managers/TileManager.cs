@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class TileManager : MonoBehaviour
 {
@@ -21,14 +22,27 @@ public class TileManager : MonoBehaviour
 
     List<List<Tile>> specialBuildings = new List<List<Tile>>();
 
+    List<Tile> allHouses;
+   
+    List<Tile> allSolar;
+
+    List<Tile> allStadiums;
+
+    List<Tile> allHeat;
+
+    List<Tile> allChurches;
+
+    List<Tile> scrambleSolar;
+
+    List<Tile> scrambleHeat;
+
+
 
     int WIDTH_MAP = 20;
     int HEIGHT_MAP = 20;
 
-    float xOffset = 1.04f;
-    float zOffset = 0.9f;
-
-    //public Tile[,] tiles;
+    float xOffset = 1.04f * 1.5f;
+    float zOffset = 0.9f * 1.5f;
 
     public static List<List<Tile>> tiles = new List<List<Tile>>();
 
@@ -67,7 +81,13 @@ public class TileManager : MonoBehaviour
             }
         }
 
-        InitSpecialBuildings();
+        allChurches = new List<Tile>();
+        allHouses = new List<Tile>();
+        allStadiums = new List<Tile>();
+        allHeat = new List<Tile>();
+        allSolar = new List<Tile>();
+
+
     }
 
     public int tileAvailable
@@ -80,18 +100,6 @@ public class TileManager : MonoBehaviour
 
     public UnityAction<int> OnTileAvailableChanged;
 
-    //todo discuss if this approach is doable and how to make sure these tiles having special buildings
-    void InitSpecialBuildings()
-    {/*
-        List<Tile> stadium = new List<Tile>();
-        //Add specialbuilding tiles
-        stadium.Add((tiles[10])[(18)]);
-        stadium.Add((tiles[10])[(17)]);
-        stadium.Add((tiles[10])[(16)]);
-        stadium.Add((tiles[9])[(17)]);
-
-        specialBuildings.Add(stadium);*/
-    }
 
     public List<Tile> getSpecialBuildingChosen(Tile t)
     { 
@@ -168,6 +176,7 @@ public class TileManager : MonoBehaviour
         if (x == 4 && y == 2)
         {
             hex_cell = (Tile)Instantiate(solarHexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
+            hex_cell.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
             hex_cell.name = "Hex_" + x + "_" + y;
             hex_cell.X = x;
             hex_cell.Y = y;
@@ -175,6 +184,7 @@ public class TileManager : MonoBehaviour
         else
         {
             hex_cell = (Tile)Instantiate(hexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
+            hex_cell.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f); 
             hex_cell.name = "Hex_" + x + "_" + y;
             hex_cell.X = x;
             hex_cell.Y = y;
@@ -237,17 +247,26 @@ public class TileManager : MonoBehaviour
                 hex_cell.AddStructure<SpecialBuilding>(church_cell);
                 break;
             case "004|002":
-                hex_cell.IsScrabbleForSolar = true;
+                hex_cell.IsScrambleForSolar = true;
                 break;
             case "009|002":
-                hex_cell.IsScrabbleForSolar = true;
+                hex_cell.IsScrambleForSolar = true;
                 break;
             case "010|009":
-                hex_cell.IsScrabbleForSolar = true;
+                hex_cell.IsScrambleForSolar = true;
                 break;
             default:
                 break;
         }
+    }
+    Tile randomizeTile(int xMax, int yMax, int xMin, int yMin, Tile tile)
+    {
+        tile.X = Random.Range(xMax, xMin);
+        tile.Y = Random.Range(yMax, yMin);
+
+        string output = tile.X.ToString().PadLeft(3, '0') + "|" + tile.Y.ToString().PadLeft(3, '0');
+
+        return tile;
     }
 
     Tile GenerateTilesMap(int x, int y)
@@ -307,53 +326,91 @@ public class TileManager : MonoBehaviour
     {
         string tileCoords = hex_cell.X.ToString().PadLeft(3, '0') + "|" + hex_cell.Y.ToString().PadLeft(3, '0');
 
-        switch (tileCoords)
+        allStadiums.Add(randomizeTile(9, 17, 9, 17, hex_cell));
+
+        allHouses.Add(randomizeTile(9, 16, 5, 12, hex_cell));
+        allHouses.Add(randomizeTile(12, 16, 5, 12, hex_cell));
+        allHouses.Add(randomizeTile(17, 12, 5, 5, hex_cell));
+
+        scrambleSolar.Add(randomizeTile(12, 12, 2, 1, hex_cell));
+        scrambleSolar.Add(randomizeTile(12, 12, 2, 1, hex_cell));
+        scrambleSolar.Add(randomizeTile(12, 12, 2, 1, hex_cell));
+
+        foreach(Tile tile in allStadiums)
         {
-            case "009|017":
-                SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(stadium, new Vector3(hex_cell.X*xOffset + 1f, 0.205f, hex_cell.Y * zOffset), Quaternion.Euler(-90, 0, 0));
-                stadium_cell.transform.localScale = new Vector3(0.15f, 0.15f, 0.3f);
-                stadium_cell.name = "stadium_" + hex_cell.X + "_" + hex_cell.Y;
-                stadium_cell.SolarRequired = true;
-                hex_cell.openInfoCard += (PlayerState player) =>
-                {
-                    pH.canvas = GameObject.Find("StadiumCard").GetComponent<Canvas>();
-                    pH.Popup();
-                    //Debug.Log("!!! OpenInfoCard !!!");
-                    //todo open infocard
-                };
-                hex_cell.AddStructure<SpecialBuilding>(stadium_cell);
-                break;
-            case "005|014":
-                hex_cell.AddStructure<SpecialBuilding>();
-                break;
-            case "012|016":
-                House house_cell = (House)Instantiate(housePrefab, new Vector3(hex_cell.X*xOffset, 0.2f, hex_cell.Y * zOffset), Quaternion.identity);
-                hex_cell.AddStructure<House>(house_cell);
-                break;
-            case "009|015":
-                hex_cell.IsScrabbleForSolar = true;
-                break;
-            case "012|015":
-                hex_cell.IsScrabbleForSolar = true;
-                break;
-            case "004|002":
-                hex_cell.IsScrabbleForSolar = true;
-                hex_cell.gameObject.AddComponent<Outline>().OutlineWidth = 4.0f;
-                //hex_cell.gameObject.AddComponent<Outline>().OutlineColor = Color.blue;
-                break;
-            case "009|002":
-                hex_cell.IsScrabbleForSolar = true;
-                hex_cell.gameObject.AddComponent<Outline>().OutlineWidth = 4.0f;
-                //hex_cell.gameObject.AddComponent<Outline>().OutlineColor = Color.blue;
-                break;
-            case "010|009":
-                hex_cell.IsScrabbleForSolar = true;
-                hex_cell.gameObject.AddComponent<Outline>().OutlineWidth = 4.0f;
-                //hex_cell.gameObject.AddComponent<Outline>().OutlineColor = Color.blue;
-                break;
-            default:
-                break;
+            SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(stadium, new Vector3(tile.X * xOffset + 1f, 0.205f, tile.Y * zOffset), Quaternion.Euler(-90, 0, 0));
+            stadium_cell.transform.localScale = new Vector3(0.15f, 0.15f, 0.3f);
+            stadium_cell.name = "stadium_" + tile.X + "_" + tile.Y;
+            stadium_cell.SolarRequired = true;
+            tile.openInfoCard += (PlayerState player) =>
+            {
+                pH.canvas = GameObject.Find("StadiumCard").GetComponent<Canvas>();
+                pH.Popup();
+                //Debug.Log("!!! OpenInfoCard !!!");
+                //todo open infocard
+            };
+            tile.AddStructure<SpecialBuilding>(stadium_cell);
         }
+
+        foreach(Tile tile in allHouses)
+        {
+            House house_cell = (House)Instantiate(housePrefab, new Vector3(tile.X * xOffset, 0.2f, tile.Y * zOffset), Quaternion.identity);
+            tile.AddStructure<House>(house_cell);
+        }
+
+        foreach(Tile tile in scrambleSolar)
+        {
+            tile.IsScrambleForSolar = true;
+            tile.gameObject.AddComponent<Outline>().OutlineWidth = 4.0f;
+        }
+
+        //switch (tileCoords)
+        //{
+        //    case "009|017":
+        //        SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(stadium, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset), Quaternion.Euler(-90, 0, 0));
+        //        stadium_cell.transform.localScale = new Vector3(0.15f, 0.15f, 0.3f);
+        //        stadium_cell.name = "stadium_" + hex_cell.X + "_" + hex_cell.Y;
+        //        stadium_cell.SolarRequired = true;
+        //        hex_cell.openInfoCard += (PlayerState player) =>
+        //        {
+        //            pH.canvas = GameObject.Find("StadiumCard").GetComponent<Canvas>();
+        //            pH.Popup();
+        //            //Debug.Log("!!! OpenInfoCard !!!");
+        //            //todo open infocard
+        //        };
+        //        hex_cell.AddStructure<SpecialBuilding>(stadium_cell);
+        //        break;
+        //    case "005|014":
+        //        hex_cell.AddStructure<SpecialBuilding>();
+        //        break;
+        //    case "012|016":
+        //        House house_cell = (House)Instantiate(housePrefab, new Vector3(hex_cell.X * xOffset, 0.2f, hex_cell.Y * zOffset), Quaternion.identity);
+        //        hex_cell.AddStructure<House>(house_cell);
+        //        break;
+        //    case "009|015":
+        //        hex_cell.IsScrambleForSolar = true;
+        //        break;
+        //    case "012|015":
+        //        hex_cell.IsScrambleForSolar = true;
+        //        break;
+        //    case "004|002":
+        //        hex_cell.IsScrambleForSolar = true;
+        //        hex_cell.gameObject.AddComponent<Outline>().OutlineWidth = 4.0f;
+        //        //hex_cell.gameObject.AddComponent<Outline>().OutlineColor = Color.blue;
+        //        break;
+        //    case "009|002":
+        //        hex_cell.IsScrambleForSolar = true;
+        //        hex_cell.gameObject.AddComponent<Outline>().OutlineWidth = 4.0f;
+        //        //hex_cell.gameObject.AddComponent<Outline>().OutlineColor = Color.blue;
+        //        break;
+        //    case "010|009":
+        //        hex_cell.IsScrambleForSolar = true;
+        //        hex_cell.gameObject.AddComponent<Outline>().OutlineWidth = 4.0f;
+        //        //hex_cell.gameObject.AddComponent<Outline>().OutlineColor = Color.blue;
+        //        break;
+        //    default:
+        //        break;
+        //}
     }
 
     public bool isOccupied(Tile tile) {
