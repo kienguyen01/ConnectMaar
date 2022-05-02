@@ -51,7 +51,7 @@ public class TileManager : MonoBehaviour
 
                 tiles.Add(tileRow);
             }
-        }
+        } 
         else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("SampleScene"))
         {
             for (int x = 0; x < WIDTH_MAP; x++)
@@ -59,6 +59,20 @@ public class TileManager : MonoBehaviour
                 List<Tile> tileRow = new List<Tile>();
 
                 for (int y = 0; y < HEIGHT_MAP; y++)
+                {
+                    tileRow.Add((GenerateTilesMap(x, y)));
+                }
+
+                tiles.Add(tileRow);
+            }
+        }
+        else if(SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MultiplayerMap"))
+        {
+            for (int x = 0; x < 30; x++)
+            {
+                List<Tile> tileRow = new List<Tile>();
+
+                for (int y = 0; y < 30; y++)
                 {
                     tileRow.Add((GenerateTilesMap(x, y)));
                 }

@@ -263,6 +263,7 @@ public class PlayerState : MonoBehaviour
 
     public PlayerState AbortConnector(Connection conn, bool Hard = false)
     {
+        
         foreach (Connector c in conn.Connectors)
         {
             if (Hard || c.MaxLength > c.getLength())

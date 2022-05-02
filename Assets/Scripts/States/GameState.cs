@@ -65,7 +65,7 @@ public class GameState : MonoBehaviour
         instance = this;
 
 
-        addEventHandlers();
+        //addEventHandlers();
 
         //Assert.IsNotNull(config.PlayerStateClass);
         //Assert.IsTrue(PlayerStarts.Length > 0);
@@ -122,6 +122,25 @@ public class GameState : MonoBehaviour
         Node.onClick.AddListener(NodeCheck);
 
     }
+    
+    public void SelectSingleConnector()
+    {
+        FirstpipeCheck();
+        if (selectedConnector != null)
+        {
+            playerStates[0].gameData.tilesChosen.Clear();
+            playerStates[0].AbortConnector(currentConnection, false);
+            selectedConnector = null;
+        }
+        else
+        {
+            selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 1);
+            playerStates[0].gameData.Inventory.Remove(selectedConnector);
+            hasStandard = true;
+        }
+        p1 = false;
+
+    }
 
 
 
@@ -130,7 +149,8 @@ public class GameState : MonoBehaviour
         p1 ^= true;
         if (p1 == true)
         {
-            BtnClicked.text = "1 Connector";
+            Debug.Log("1st Connector");
+           // BtnClicked.text = "1 Connector";
         }
 
     }
@@ -198,14 +218,14 @@ public class GameState : MonoBehaviour
 
     private void TurnMsg()
     {
-        if (playerStates[0].gameData.isTurn == true)
+/*        if (playerStates[0].gameData.isTurn == true)
         {
             EndBtnMsg.text = "End  Turn";
         }
         else
         {
             EndBtnMsg.text = "Start Turn";
-        }
+        }*/
     }
 
     private void Update()
@@ -282,19 +302,7 @@ public class GameState : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Alpha1) || p1)
             {
-                p1 = false;
-                if (selectedConnector != null)
-                {
-                    playerStates[0].gameData.tilesChosen.Clear();
-                    playerStates[0].AbortConnector(currentConnection, false);
-                    selectedConnector = null;
-                }
-                else
-                {
-                    selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 1);
-                    playerStates[0].gameData.Inventory.Remove(selectedConnector);
-                    hasStandard = true;
-                }
+                SelectSingleConnector();
             }
             if (Input.GetKeyDown(KeyCode.Alpha2) || p2)
             {

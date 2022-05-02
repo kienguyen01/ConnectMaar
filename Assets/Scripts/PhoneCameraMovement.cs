@@ -44,6 +44,8 @@ public class PhoneCameraMovement : MonoBehaviour
         var Delta1 = Vector3.zero;
         var Delta2 = Vector3.zero;
 
+
+
         //Scroll (Pan function)
         if (Input.touchCount >= 1)
         {
@@ -51,8 +53,10 @@ public class PhoneCameraMovement : MonoBehaviour
             Delta1 = PlanePositionDelta(Input.GetTouch(0)) / DecreaseCameraPanSpeed;
             if (Input.GetTouch(0).phase == TouchPhase.Moved)
                 Camera.transform.Translate(Delta1, Space.World);
+                
         }
 
+        
         //Pinch (Zoom Function)
         if (Input.touchCount >= 2)
         {
