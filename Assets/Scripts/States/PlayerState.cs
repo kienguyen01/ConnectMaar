@@ -108,7 +108,7 @@ public class PlayerState : MonoBehaviour
                     .AddHeatPipeConnector()
                     .AddHeatPipeConnector();
             }
-            else if (tile.IsScrabbleForSolar)
+            else if (tile.IsScrambleForSolar)
             {
                 this
                     .AddSolarConnector()
