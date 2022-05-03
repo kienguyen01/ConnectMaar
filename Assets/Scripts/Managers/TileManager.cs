@@ -328,6 +328,8 @@ public class TileManager : MonoBehaviour
         allHouses.Add(randomizeTile(19, 19, 2, 1));
         allHouses.Add(randomizeTile(19, 19, 2, 1));
         allHouses.Add(randomizeTile(19, 19, 2, 1));
+        allHouses.Add(randomizeTile(12, 16, 12, 16));
+
 
         scrambleSolar.Add(randomizeTile(19, 19, 2, 1));
         scrambleSolar.Add(randomizeTile(19, 19, 2, 1));
@@ -401,7 +403,6 @@ public class TileManager : MonoBehaviour
             if(tileCoords == tile)
             {
                 hex_cell.IsScrambleForSolar = true;
-                hex_cell.gameObject.AddComponent<Outline>().OutlineWidth = 4.0f;
             }
         }
     }

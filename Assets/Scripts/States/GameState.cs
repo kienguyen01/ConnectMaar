@@ -88,8 +88,8 @@ public class GameState : MonoBehaviour
         Pipe3 = GameObject.Find("cable3Btn").GetComponent<Button>();
         solarB = GameObject.Find("solar").GetComponent<Button>();
         heatB = GameObject.Find("rawpipe").GetComponent<Button>();
-        //BtnClicked = GameObject.Find("BtnClicked").GetComponent<TextMeshProUGUI>();
-        //EndBtnMsg = GameObject.Find("EndBtnMsg").GetComponent<TextMeshProUGUI>();
+        BtnClicked = GameObject.Find("BtnClicked").GetComponent<TextMeshProUGUI>();
+        EndBtnMsg = GameObject.Find("EndBtnMsg").GetComponent<TextMeshProUGUI>();
         ClearBtn = GameObject.Find("ClearBtn").GetComponent<Button>();
         Node = GameObject.Find("node").GetComponent<Button>();
 
@@ -198,14 +198,14 @@ public class GameState : MonoBehaviour
 
     private void TurnMsg()
     {
-        //if (playerStates[0].gameData.isTurn == true)
-        //{
-        //    EndBtnMsg.text = "End  Turn";
-        //}
-        //else
-        //{
-        //    EndBtnMsg.text = "Start Turn";
-        //}
+        if (playerStates[0].gameData.isTurn == true)
+        {
+            EndBtnMsg.text = "End  Turn";
+        }
+        else
+        {
+            EndBtnMsg.text = "Start Turn";
+        }
     }
 
     private void Update()
@@ -285,6 +285,7 @@ public class GameState : MonoBehaviour
                 p1 = false;
                 if (selectedConnector != null)
                 {
+                    Debug.Log("1 selected");
                     playerStates[0].AbortConnector(selectedConnector, false);
                     selectedConnector = null;
                 }
@@ -297,6 +298,7 @@ public class GameState : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Alpha2) || p2)
             {
+                Debug.Log("2 selected");
                 p2 = false;
                 if (selectedConnector != null)
                 {
@@ -312,6 +314,7 @@ public class GameState : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Alpha3) || p3)
             {
+                Debug.Log("3 selected");
                 p3 = false;
                 if (selectedConnector != null)
                 {
