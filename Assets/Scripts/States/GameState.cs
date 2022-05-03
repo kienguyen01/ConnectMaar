@@ -285,8 +285,7 @@ public class GameState : MonoBehaviour
                 p1 = false;
                 if (selectedConnector != null)
                 {
-                    playerStates[0].gameData.tilesChosen.Clear();
-                    playerStates[0].AbortConnector(currentConnection, false);
+                    playerStates[0].AbortConnector(selectedConnector, false);
                     selectedConnector = null;
                 }
                 else
@@ -301,8 +300,7 @@ public class GameState : MonoBehaviour
                 p2 = false;
                 if (selectedConnector != null)
                 {
-                    playerStates[0].gameData.tilesChosen.Clear();
-                    playerStates[0].AbortConnector(currentConnection, false);
+                    playerStates[0].AbortConnector(selectedConnector, false);
                     selectedConnector = null;
                 }
                 else
@@ -317,8 +315,7 @@ public class GameState : MonoBehaviour
                 p3 = false;
                 if (selectedConnector != null)
                 {
-                    playerStates[0].gameData.tilesChosen.Clear();
-                    playerStates[0].AbortConnector(currentConnection, false);
+                    playerStates[0].AbortConnector(selectedConnector, false);
                     selectedConnector = null;
                 }
                 else
@@ -334,8 +331,7 @@ public class GameState : MonoBehaviour
                 solarCheck = false;
                 if (selectedConnector != null)
                 {
-                    playerStates[0].gameData.tilesChosen.Clear();
-                    playerStates[0].AbortConnector(currentConnection, false);
+                    playerStates[0].AbortConnector(selectedConnector, false);
                     selectedConnector = null;
                 }
                 else
@@ -350,8 +346,7 @@ public class GameState : MonoBehaviour
                 heatCheck = false;
                 if (selectedConnector != null)
                 {
-                    playerStates[0].gameData.tilesChosen.Clear();
-                    playerStates[0].AbortConnector(currentConnection, false);
+                    playerStates[0].AbortConnector(selectedConnector, false);
                     selectedConnector = null;
                 }
                 else
