@@ -119,6 +119,7 @@ public class TutorialState : GameState
                     text.text = "Start your turn by pressing the start turn button.";
                     StartCoroutine(TurnCheckRoutine());
                     break;
+                    //To start a connection on the map select a connector in your inventory then double click on the tile next to your starting position
                 case 8:
                     text.text = "Click on the length-3 connector on the left side of the screen and then place it on the grid starting from your wind turbine to the nearest house";
                     break;
@@ -141,7 +142,7 @@ public class TutorialState : GameState
                     text.text = "1 connector = 3 points,  2 Connectors =  2 points,  3 Connectors = 1 point";
                     break;
                 case 14:
-                    playerStates[0].refilSpecificHand(1, 1, 2);
+                    playerStates[0].refilSpecificHand(1, 2, 1);
                     text.text = "At the end of each turn your inventory of connectors will be filled up again";
                     break;
                 case 15:
@@ -173,7 +174,7 @@ public class TutorialState : GameState
                     text.text = "Special connectors like these can only be placed on one grid one at a time";
                     break;
                 case 23:
-                    text.text = "Please use the special solar connector to connect to the solar panel ahead.";
+                    text.text = "Please use the special solar connector to connect to the solar panel ahead. But first start your turn";
                     break;
                 case 24:
                     {
@@ -187,7 +188,8 @@ public class TutorialState : GameState
                 case 25:
                     EnablePopup();
                     text.text = "You have now added a solar pannel to your connection. Congratulations! this will be useful later";
-                    playerStates[0].refilSpecificHand(0, 2, 2);
+                    playerStates[0].clearHand();
+                    playerStates[0].refilSpecificHand(1, 1, 2);
                     break;
                 case 26:
                     text.text = "First, please tap on the stadium at the bottom of the map";

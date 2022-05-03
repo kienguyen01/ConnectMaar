@@ -1434,9 +1434,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8560036463042808654}
         m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
+        m_MethodName: 
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1579,7 +1579,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8560036461540653045}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6565780256225056723}
+        m_TargetAssemblyTypeName: UiEvents, Assembly-CSharp
+        m_MethodName: BtnClickConnectorSolar
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8560036461548228139
 GameObject:
   m_ObjectHideFlags: 0
@@ -3442,7 +3454,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8560036461860828137}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6565780256225056723}
+        m_TargetAssemblyTypeName: UiEvents, Assembly-CSharp
+        m_MethodName: BtnClickConnectorHeat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8560036461875089174
 GameObject:
   m_ObjectHideFlags: 0
@@ -6078,7 +6102,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8560036462836919558}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6565780256225056723}
+        m_TargetAssemblyTypeName: UiEvents, Assembly-CSharp
+        m_MethodName: btnClickConnector3
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8560036462901503303
 GameObject:
   m_ObjectHideFlags: 0
@@ -6624,7 +6660,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8560036463024000336}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6565780256225056723}
+        m_TargetAssemblyTypeName: UiEvents, Assembly-CSharp
+        m_MethodName: btnClickConnector2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8560036463024861310
 GameObject:
   m_ObjectHideFlags: 0
@@ -6746,7 +6794,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8560036463024861299}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6565780256225056723}
+        m_TargetAssemblyTypeName: UiEvents, Assembly-CSharp
+        m_MethodName: btnClickConnector1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8560036463042808654
 GameObject:
   m_ObjectHideFlags: 0
@@ -6759,6 +6819,7 @@ GameObject:
   - component: {fileID: 8560036463042808643}
   - component: {fileID: 8560036463042808652}
   - component: {fileID: 8560036463042808653}
+  - component: {fileID: 6565780256225056723}
   m_Layer: 5
   m_Name: GameCanvas
   m_TagString: Untagged
@@ -6856,6 +6917,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6565780256225056723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8560036463042808654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcb8c74d9f6aca34e9ab2d76f74524e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8560036463087353981
 GameObject:
   m_ObjectHideFlags: 0
@@ -7154,7 +7227,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8560036463138228235}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6565780256225056723}
+        m_TargetAssemblyTypeName: UiEvents, Assembly-CSharp
+        m_MethodName: BtnClickConnectorNode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8560036463153670451
 GameObject:
   m_ObjectHideFlags: 0
