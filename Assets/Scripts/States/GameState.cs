@@ -198,14 +198,14 @@ public class GameState : MonoBehaviour
 
     private void TurnMsg()
     {
-        if (playerStates[0].gameData.isTurn == true)
-        {
-            EndBtnMsg.text = "End  Turn";
-        }
-        else
-        {
-            EndBtnMsg.text = "Start Turn";
-        }
+        //if (playerStates[0].gameData.isTurn == true)
+        //{
+        //    EndBtnMsg.text = "End  Turn";
+        //}
+        //else
+        //{
+        //    EndBtnMsg.text = "Start Turn";
+        //}
     }
 
     private void Update()
