@@ -29,8 +29,8 @@ public class QuestionDialogUI : MonoBehaviour
         gameObject.SetActive(true);
 
         text_TMP.text = question;
-        yesBtn.onClick.AddListener(new UnityEngine.Events.UnityAction(yesAction));
-        noBtn.onClick.AddListener(new UnityEngine.Events.UnityAction(noAction));
+        //yesBtn.onClick.AddListener(new UnityEngine.Events.UnityAction(yesAction));
+        //noBtn.onClick.AddListener(new UnityEngine.Events.UnityAction(noAction));
 
         yesBtn.onClick.AddListener(() =>
         {
