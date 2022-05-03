@@ -256,31 +256,29 @@ public class PlayerState : MonoBehaviour
 
     public PlayerState AbortConnection(Connection conn)
     {
-        AbortConnector(conn, true);
+        foreach (Connector c in conn.Connectors)
+        {
+            AbortConnector(c, true);
+        }
+        Destroy(conn);
 
         return this;
     }
 
-    public PlayerState AbortConnector(Connection conn, bool Hard = false)
+    public PlayerState AbortConnector(Connector c, bool Hard = false)
     {
-        foreach (Connector c in conn.Connectors)
+        if (Hard || c.MaxLength > c.getLength())
         {
-            if (Hard || c.MaxLength > c.getLength())
+            foreach (Tile t in c.GetTiles())
             {
-                foreach (Tile t in c.GetTiles())
-                {
-                    gameData.tilesChosen.Pop();
-                }
-
-                if (!c.IsSpecial)
-                    this.gameData.Inventory.Add(c.ResetConnector());
-                else
-                    this.gameData.SpecialConnector.Add(c.ResetConnector());
-
-                
+                gameData.tilesChosen.Pop();
             }
+
+            if (!c.IsSpecial)
+                this.gameData.Inventory.Add(c.ResetConnector());
+            else
+                this.gameData.SpecialConnector.Add(c.ResetConnector());
         }
-        Destroy(conn);
 
         return this;
     }
