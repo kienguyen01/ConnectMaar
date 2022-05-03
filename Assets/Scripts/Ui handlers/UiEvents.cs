@@ -14,7 +14,18 @@ public class UiEvents : MonoBehaviour
     {
         Debug.Log("It wotrks");
         GameState.instance.SelectSingleConnector();
-
     }
+    public void btnClickConnector2()
+    {
+        Debug.Log("It wotrks2");
+        GameState.instance.SelectDoubleConnector();
+    }
+    public void btnClickConnector3()
+    {
+        Debug.Log("It wotrks3");
+        GameState.instance.SelectTrippleConnector();
+    }
+
+
 }
 
