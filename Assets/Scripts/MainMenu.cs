@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Localization.Settings;
 using TMPro;
+using UnityEditor;
 
 public class MainMenu : MonoBehaviour
 {
    public void ExitButton(){
-       Application.Quit();
-       Debug.Log("Game closed!");
+        Application.Quit();
+        EditorApplication.ExitPlaymode();
+
+        Debug.Log("Game closed!");
    }
    public void StartGame(){
        SceneManager.LoadScene("SampleScene");
