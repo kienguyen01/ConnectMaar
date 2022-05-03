@@ -278,6 +278,7 @@ public class GameState : MonoBehaviour
                 {
                     playerStates[0].AbortConnection(conn);
                 }
+                playerStates[0].AbortConnection(currentConnection);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1) || p1)

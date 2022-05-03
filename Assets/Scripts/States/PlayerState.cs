@@ -260,7 +260,8 @@ public class PlayerState : MonoBehaviour
         {
             AbortConnector(c, true);
         }
-        Destroy(conn);
+        //Destroy(conn);
+        conn = null;
 
         return this;
     }
