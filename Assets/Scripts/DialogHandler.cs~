@@ -1,0 +1,19 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class DialogHandler : MonoBehaviour
+{
+    [SerializeField] Button showMessageBtn;
+
+    void Start()
+    {
+        showMessageBtn.onClick.RemoveAllListeners(); //avoiding leaks
+        showMessageBtn.onClick.AddListener(onShowMessageBtnClicked);
+    }
+    void onShowMessageBtnClicked()
+    {
+        Debug.Log("btn clicked");
+    }
+}
