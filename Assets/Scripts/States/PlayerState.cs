@@ -41,7 +41,7 @@ public class PlayerState : MonoBehaviour
     public ConnectorConfig config;
     public Player playerClass;
     public PlayerCamera cameraClass;
-
+    public int MultiplayerSessionID;
     
 
     [HideInInspector]

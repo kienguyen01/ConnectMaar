@@ -7,13 +7,14 @@ using TMPro;
 
 public class MainMenu : MonoBehaviour
 {
-   public void ExitButton(){
-       Application.Quit();
-       Debug.Log("Game closed!");
-   }
-   public void StartGame(){
-       SceneManager.LoadScene("SampleScene");
-   }
+    public void ExitButton(){
+        Application.Quit();
+        Debug.Log("Game closed!");
+    }
+
+    public void StartGame(){
+        SceneManager.LoadScene("SampleScene");
+    }
 
     public void StartTutorial()
     {
@@ -23,5 +24,13 @@ public class MainMenu : MonoBehaviour
     public void OnLanguageChange(TMP_Dropdown dropdown)
     {
         LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[dropdown.value];
+    }
+
+    private void OnGUI()
+    {
+        if (GUI.Button(new Rect(0, 0, 200, 40), "Multiplayer Test"))
+        {
+            SceneManager.LoadScene("MultiplayerTestSceene");
+        }
     }
 }

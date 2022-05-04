@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tutorial.unity
     guid: b9df8a277e7f5c54185ed7e427fa61e3
+  - enabled: 1
+    path: Assets/Scenes/MultiplayerTestSceene.unity
+    guid: 21ecc1e8a726ba646b052a90fca55806
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 52888179401cf4b148555baa485b5872, type: 2}
     com.unity.localization.settings: {fileID: 11400000, guid: be86bacfcecad492aa380045f2d162ef, type: 2}
