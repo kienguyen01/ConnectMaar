@@ -36,17 +36,20 @@ public class MultiplayerState : GameState, INetworkRunnerCallbacks
         player.FinalizeConnection(conn);
     }
 
-    [Rpc(RpcSources.All, RpcTargets.All)]
-    public void RPC_EndTurn(PlayerState player)
+    [Rpc(sources: RpcSources.All, targets: RpcTargets.All)]
+    public RpcInvokeInfo RPC_EndTurn(PlayerState player)
     {
         if(player.MultiplayerSessionID == _runner.LocalPlayer.PlayerId)
         {
-            playerStates[0].EndTurn();
+            //playerStates[0].EndTurn();
+            Debug.LogError($"RPC LOCAL --- PlayerID: {player.MultiplayerSessionID}");
         }
         else
         {
+            Debug.LogError($"RPC Foreign --- PlayerID: {player.MultiplayerSessionID}");
             //dothingswhenYourTurn begins
         }
+        return default;
     }
 
     new public void ClickChecks()
@@ -67,9 +70,13 @@ public class MultiplayerState : GameState, INetworkRunnerCallbacks
     {
         if (_runner == null)
         {
-            if (GUI.Button(new Rect(0, 0, 200, 40), "Join Game"))
+            if (GUI.Button(new Rect(0, 0, 200, 40), "Host"))
             {
-                StartGame(GameMode.AutoHostOrClient);
+                StartGame(GameMode.Host);
+            }
+            if (GUI.Button(new Rect(0, 40, 200, 40), "Join"))
+            {
+                StartGame(GameMode.Client);
             }
         }
     }
@@ -90,16 +97,19 @@ public class MultiplayerState : GameState, INetworkRunnerCallbacks
     void INetworkRunnerCallbacks.OnInput(NetworkRunner runner, NetworkInput input)
     {
         //throw new NotImplementedException();
+        
+        Debug.LogError($"RPC INFO: {RPC_EndTurn(playerStates[0])}");
+        Debug.LogError($"Lobby INFO: {runner.SessionInfo}");
     }
 
     void INetworkRunnerCallbacks.OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     void INetworkRunnerCallbacks.OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     void INetworkRunnerCallbacks.OnConnectedToServer(NetworkRunner runner)
@@ -111,42 +121,42 @@ public class MultiplayerState : GameState, INetworkRunnerCallbacks
 
     void INetworkRunnerCallbacks.OnDisconnectedFromServer(NetworkRunner runner)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     void INetworkRunnerCallbacks.OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     void INetworkRunnerCallbacks.OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     void INetworkRunnerCallbacks.OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     void INetworkRunnerCallbacks.OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     void INetworkRunnerCallbacks.OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     void INetworkRunnerCallbacks.OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     void INetworkRunnerCallbacks.OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     void INetworkRunnerCallbacks.OnSceneLoadDone(NetworkRunner runner)

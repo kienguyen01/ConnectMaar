@@ -126,7 +126,66 @@ public class GameState : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        TurnMsg();
 
+        if (Input.GetKeyDown(KeyCode.Space) || turnCheck)
+        {
+            TurnEndCheck();
+        }
+
+        if (playerStates[0].gameData.isTurn)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha0) || clearBtn)
+            {
+                AbortConnectionsCheck();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha1) || p1)
+            {
+                SelectSingleConnectorCheck();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha2) || p2)
+            {
+                SelectDoubleConnectorCheck();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha3) || p3)
+            {
+                SelectTripleConnectorCheck();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha4) || solarCheck)
+            {
+                SelectSolarConnectorCheck();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha5) || heatCheck)
+            {
+                SelectHeatConnectorCheck();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha6) || nodeCheck)
+            {
+                SelectNodeCheck();
+            }
+
+            if (!(Input.GetMouseButtonDown(0) && !selectedConnector))
+            {
+                ClickChecks();
+            }
+            else if (Input.GetMouseButtonDown(0) && placingNode)
+            {
+                SelectNode();
+            }
+        }
+        if (Input.GetMouseButtonDown(0) && !selectedConnector)
+            GetInfoCard();
+
+        startPoint();
+    }
 
     public void FirstpipeCheck()
     {
@@ -211,46 +270,35 @@ public class GameState : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        TurnMsg();
-        TurnEndCheck();
-        if (playerStates[0].gameData.isTurn)
-        {
-            AbortConnectionsCheck();
-            SelectSingleConnectorCheck();
-            SelectDoubleConnectorCheck();
-            SelectTripleConnectorCheck();
-            SelectSolarConnectorCheck();
-            SelectHeatConnectorCheck();
-            SelectNodeCheck();
-
-            ClickChecks();
-        }
-
-        if (Input.GetMouseButtonDown(0) && !selectedConnector)
-            GetInfoCard();
-
-        startPoint();
-    }
-
     public void ClickChecks()
     {
-        if (!(Input.GetMouseButtonDown(0) && !selectedConnector))
+        if (!placingNode && Input.GetMouseButtonDown(0) && (selectedConnector == null || selectedConnector.MaxLength > selectedConnector.getLength()) && !(EventSystem.current.IsPointerOverGameObject()))
         {
-            if (!placingNode && Input.GetMouseButtonDown(0) && (selectedConnector == null || selectedConnector.MaxLength > selectedConnector.getLength()) && !(EventSystem.current.IsPointerOverGameObject()))
+            Tile t = chooseTile();
+            if (t != null)
             {
-                Tile t = chooseTile();
-                if (t != null)
+                if (t.SelectedBy != null && selectedConnector != null && !(t == selectedConnector.GetLastTile()))
                 {
-                    if (t.SelectedBy != null && selectedConnector != null && !(t == selectedConnector.GetLastTile()))
+                    if (t.IsSpecial() && isNormalConnectionEnd)
                     {
-                        if (t.IsSpecial() && isNormalConnectionEnd)
+                        foreach (Tile tile in tileManager.getSpecialNeighbours(t))
                         {
-                            foreach (Tile tile in tileManager.getSpecialNeighbours(t))
-                            {
-                                selectedConnector.AddTile(t);
-                            }
+                            selectedConnector.AddTile(t);
+                        }
+                        if (currentConnection == null)
+                        {
+                            currentConnection = playerStates[0].StartConnection();
+                            turnConnections.Add(currentConnection);
+                        }
+                        currentConnection.Connectors.Add(selectedConnector);
+                        selectedConnector = null;
+                    }
+                    else
+                    {
+                        selectedConnector.AddTile(t);
+
+                        if (selectedConnector.MaxLength == selectedConnector.getLength())
+                        {
                             if (currentConnection == null)
                             {
                                 currentConnection = playerStates[0].StartConnection();
@@ -259,235 +307,196 @@ public class GameState : MonoBehaviour
                             currentConnection.Connectors.Add(selectedConnector);
                             selectedConnector = null;
                         }
-                        else
-                        {
-                            selectedConnector.AddTile(t);
-
-                            if (selectedConnector.MaxLength == selectedConnector.getLength())
-                            {
-                                if (currentConnection == null)
-                                {
-                                    currentConnection = playerStates[0].StartConnection();
-                                    turnConnections.Add(currentConnection);
-                                }
-                                currentConnection.Connectors.Add(selectedConnector);
-                                selectedConnector = null;
-                            }
-                        }
                     }
-                    else
-                    {
-                        selectedConnector.RemoveTile(t);
-                    }
+                }
+                else
+                {
+                    selectedConnector.RemoveTile(t);
                 }
             }
         }
-        else if (Input.GetMouseButtonDown(0) && placingNode)
-        {
-            Tile t = PlaceNode();
+    }
 
-            if (!(t == null))
-            {
-                placingNode = false;
-            }
+    private void SelectNode()
+    {
+        Tile t = PlaceNode();
+
+        if (!(t == null))
+        {
+            placingNode = false;
         }
     }
 
     private void SelectNodeCheck()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha6) || nodeCheck)
+        nodeCheck = false;
+        if (placingNode)
         {
-            nodeCheck = false;
-            if (placingNode)
+            playerStates[0].gameData.nodesOwned.Add(playerNode);
+            playerNode = null;
+            placingNode = false;
+        }
+        else
+        {
+            if (playerStates[0].gameData.nodesOwned.Count > 0)
             {
-                playerStates[0].gameData.nodesOwned.Add(playerNode);
-                playerNode = null;
-                placingNode = false;
-            }
-            else
-            {
-                if (playerStates[0].gameData.nodesOwned.Count > 0)
-                {
-                    playerNode = playerStates[0].gameData.nodesOwned[0];
-                    playerStates[0].gameData.nodesOwned.Remove(playerNode);
-                    placingNode = true;
-                }
+                playerNode = playerStates[0].gameData.nodesOwned[0];
+                playerStates[0].gameData.nodesOwned.Remove(playerNode);
+                placingNode = true;
             }
         }
     }
 
     private void SelectHeatConnectorCheck()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha5) || heatCheck)
+        heatCheck = false;
+        if (selectedConnector != null)
         {
-            heatCheck = false;
-            if (selectedConnector != null)
-            {
-                playerStates[0].gameData.tilesChosen.Clear();
-                playerStates[0].AbortConnector(currentConnection, false);
-                selectedConnector = null;
-            }
-            else
-            {
-                selectedConnector = playerStates[0].gameData.SpecialConnector.Find(x => x.IsHeat);
-                hasHeat = true;
-                playerStates[0].gameData.SpecialConnector.Remove(selectedConnector);
-            }
+            playerStates[0].gameData.tilesChosen.Clear();
+            playerStates[0].AbortConnector(currentConnection, false);
+            selectedConnector = null;
+        }
+        else
+        {
+            selectedConnector = playerStates[0].gameData.SpecialConnector.Find(x => x.IsHeat);
+            hasHeat = true;
+            playerStates[0].gameData.SpecialConnector.Remove(selectedConnector);
         }
     }
 
     private void SelectSolarConnectorCheck()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha4) || solarCheck)
+        solarCheck = false;
+        if (selectedConnector != null)
         {
-            solarCheck = false;
-            if (selectedConnector != null)
-            {
-                playerStates[0].gameData.tilesChosen.Clear();
-                playerStates[0].AbortConnector(currentConnection, false);
-                selectedConnector = null;
-            }
-            else
-            {
-                selectedConnector = playerStates[0].gameData.SpecialConnector.Find(x => x.IsSolar);
-                hasSolar = true;
-                playerStates[0].gameData.SpecialConnector.Remove(selectedConnector);
-            }
+            playerStates[0].gameData.tilesChosen.Clear();
+            playerStates[0].AbortConnector(currentConnection, false);
+            selectedConnector = null;
+        }
+        else
+        {
+            selectedConnector = playerStates[0].gameData.SpecialConnector.Find(x => x.IsSolar);
+            hasSolar = true;
+            playerStates[0].gameData.SpecialConnector.Remove(selectedConnector);
         }
     }
 
     private void SelectTripleConnectorCheck()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha3) || p3)
+        p3 = false;
+        if (selectedConnector != null)
         {
-            p3 = false;
-            if (selectedConnector != null)
-            {
-                playerStates[0].gameData.tilesChosen.Clear();
-                playerStates[0].AbortConnector(currentConnection, false);
-                selectedConnector = null;
-            }
-            else
-            {
-                selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 3);
-                playerStates[0].gameData.Inventory.Remove(selectedConnector);
-                hasStandard = true;
-            }
-
+            playerStates[0].gameData.tilesChosen.Clear();
+            playerStates[0].AbortConnector(currentConnection, false);
+            selectedConnector = null;
+        }
+        else
+        {
+            selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 3);
+            playerStates[0].gameData.Inventory.Remove(selectedConnector);
+            hasStandard = true;
         }
     }
 
     private void SelectDoubleConnectorCheck()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha2) || p2)
+        p2 = false;
+        if (selectedConnector != null)
         {
-            p2 = false;
-            if (selectedConnector != null)
-            {
-                playerStates[0].gameData.tilesChosen.Clear();
-                playerStates[0].AbortConnector(currentConnection, false);
-                selectedConnector = null;
-            }
-            else
-            {
-                selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 2);
-                playerStates[0].gameData.Inventory.Remove(selectedConnector);
-                hasStandard = true;
-            }
+            playerStates[0].gameData.tilesChosen.Clear();
+            playerStates[0].AbortConnector(currentConnection, false);
+            selectedConnector = null;
+        }
+        else
+        {
+            selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 2);
+            playerStates[0].gameData.Inventory.Remove(selectedConnector);
+            hasStandard = true;
         }
     }
 
     private void SelectSingleConnectorCheck()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) || p1)
+        p1 = false;
+        if (selectedConnector != null)
         {
-            p1 = false;
-            if (selectedConnector != null)
-            {
-                playerStates[0].gameData.tilesChosen.Clear();
-                playerStates[0].AbortConnector(currentConnection, false);
-                selectedConnector = null;
-            }
-            else
-            {
-                selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 1);
-                playerStates[0].gameData.Inventory.Remove(selectedConnector);
-                hasStandard = true;
-            }
+            playerStates[0].gameData.tilesChosen.Clear();
+            playerStates[0].AbortConnector(currentConnection, false);
+            selectedConnector = null;
+        }
+        else
+        {
+            selectedConnector = playerStates[0].gameData.Inventory.Find(x => x.MaxLength == 1);
+            playerStates[0].gameData.Inventory.Remove(selectedConnector);
+            hasStandard = true;
         }
     }
 
     private void AbortConnectionsCheck()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha0) || clearBtn)
+        foreach (Connection conn in turnConnections)
         {
-            foreach (Connection conn in turnConnections)
-            {
-                playerStates[0].AbortConnection(conn);
-            }
+            playerStates[0].AbortConnection(conn);
         }
     }
 
     protected void TurnEndCheck()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || turnCheck)
+        turnCheck = false;
+        if (selectedConnector == null || selectedConnector.getLength() >= selectedConnector.MaxLength)
         {
-            turnCheck = false;
-            if (selectedConnector == null || selectedConnector.getLength() >= selectedConnector.MaxLength)
+            if (playerStates[0].gameData.isTurn)
             {
-                if (playerStates[0].gameData.isTurn)
+                foreach (Connection conn in turnConnections)
                 {
-                    foreach (Connection conn in turnConnections)
+                    foreach (Connector connector in conn.Connectors)
                     {
-                        foreach (Connector connector in conn.Connectors)
+                        if (conn == SolarConnection && !connector.GetType().Equals(typeof(SolarPanelConnector)))
                         {
-                            if (conn == SolarConnection && !connector.GetType().Equals(typeof(SolarPanelConnector)))
-                            {
-                                allSolar = false;
-                            }
-                            if (conn == HeatConnection && !connector.GetType().Equals(typeof(HeatPipeConnector)))
-                            {
-                                allHeat = false;
-                            }
+                            allSolar = false;
                         }
-                        if ((isSolarConnectionEnd && allSolar) || (isHeatConnectionEnd && allHeat) || (hasStandard && !hasHeat && !hasSolar && isNormalConnectionEnd))
+                        if (conn == HeatConnection && !connector.GetType().Equals(typeof(HeatPipeConnector)))
                         {
-                            playerStates[0].RefillHand();
-                            playerStates[0].gameData.isTurn = false;
-                            playerStates[0].EndTurn();
-
-                            foreach (Connection c in turnConnections)
-                            {
-                                playerStates[0].FinalizeConnection(c);
-                            }
-                            if (isSolarConnectionEnd && allSolar)
-                            {
-                                playerStates[0].gameData.hasSolarInNetwork = true;
-                            }
-                            if (isHeatConnectionEnd && allHeat)
-                            {
-                                playerStates[0].gameData.hasHeatInNetwork = true;
-                            }
+                            allHeat = false;
                         }
                     }
+                    if ((isSolarConnectionEnd && allSolar) || (isHeatConnectionEnd && allHeat) || (hasStandard && !hasHeat && !hasSolar && isNormalConnectionEnd))
+                    {
+                        playerStates[0].RefillHand();
+                        playerStates[0].gameData.isTurn = false;
+                        playerStates[0].EndTurn();
 
-                    hasHeat = false;
-                    hasSolar = false;
-                    allSolar = true;
-                    allHeat = true;
-                    hasStandard = false;
-                    isHeatConnectionEnd = false;
-                    isSolarConnectionEnd = false;
-                    currentConnection = null;
-                    turnConnections = new List<Connection>();
-                    isNormalConnectionEnd = false;
+                        foreach (Connection c in turnConnections)
+                        {
+                            playerStates[0].FinalizeConnection(c);
+                        }
+                        if (isSolarConnectionEnd && allSolar)
+                        {
+                            playerStates[0].gameData.hasSolarInNetwork = true;
+                        }
+                        if (isHeatConnectionEnd && allHeat)
+                        {
+                            playerStates[0].gameData.hasHeatInNetwork = true;
+                        }
+                    }
                 }
-                else
-                {
-                    playerStates[0].gameData.isTurn = true;
-                }
-                Debug.Log("isTurn" + playerStates[0].gameData.isTurn.ToString());
+
+                hasHeat = false;
+                hasSolar = false;
+                allSolar = true;
+                allHeat = true;
+                hasStandard = false;
+                isHeatConnectionEnd = false;
+                isSolarConnectionEnd = false;
+                currentConnection = null;
+                turnConnections = new List<Connection>();
+                isNormalConnectionEnd = false;
             }
+            else
+            {
+                playerStates[0].gameData.isTurn = true;
+            }
+            Debug.Log("isTurn" + playerStates[0].gameData.isTurn.ToString());
         }
     }
 
