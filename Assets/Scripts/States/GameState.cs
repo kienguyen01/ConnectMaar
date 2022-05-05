@@ -273,22 +273,7 @@ public class GameState : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Alpha6) || nodeCheck)
             {
-                nodeCheck = false;
-                if (placingNode)
-                {
-                    playerStates[0].gameData.nodesOwned.Add(playerNode);
-                    playerNode = null;
-                    placingNode = false;
-                }
-                else
-                {
-                    if (playerStates[0].gameData.nodesOwned.Count > 0)
-                    {
-                        playerNode = playerStates[0].gameData.nodesOwned[0];
-                        playerStates[0].gameData.nodesOwned.Remove(playerNode);
-                        placingNode = true;
-                    }
-                }
+                SelectNodeConnector();
             }
 
             if (!(Input.GetMouseButtonDown(0) && !selectedConnector))
@@ -567,7 +552,7 @@ public class GameState : MonoBehaviour
 
     public void SelectNodeConnector()
     {
-        nodeCheck = false;
+        //nodeCheck = false;
         if (placingNode)
         {
             playerStates[0].gameData.nodesOwned.Add(playerNode);
