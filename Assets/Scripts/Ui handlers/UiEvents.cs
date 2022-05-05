@@ -64,6 +64,13 @@ public class UiEvents : MonoBehaviour
         }
     }
 
+    public void BtnClearAll()
+    {
+        GameState.instance.clearAllSelected();
+    }
+
+
+
     public void CloseStadiumPopup()
     {
         GameState.instance.CheckStadiumPopup();

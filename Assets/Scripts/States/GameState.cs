@@ -30,16 +30,9 @@ public class GameState : MonoBehaviour
     bool hasHeat = false;
     bool hasSolar = false;
 
-    Button Pipe1;
-    Button Pipe2;
-    Button Pipe3;
-    Button solarB;
-    Button heatB;
-    Button EndTurn;
     TextMeshProUGUI BtnClicked;
     TextMeshProUGUI EndBtnMsg;
-    Button ClearBtn;
-    Button Node;
+
 
     bool p1;
     bool p2;
@@ -96,7 +89,7 @@ public class GameState : MonoBehaviour
     }
     public void CheckStadiumPopup()
     {
-            
+
     }
 
 
@@ -140,7 +133,7 @@ public class GameState : MonoBehaviour
             Debug.Log("3 -- Pipe");
         }
     }
-   
+
     public void SolarCheck()
     {
         solarCheck ^= true;
@@ -176,14 +169,14 @@ public class GameState : MonoBehaviour
     {
         EndBtnMsg = GameObject.Find("EndBtnMsg").GetComponent<TextMeshProUGUI>();
 
-            if (playerStates[0].gameData.isTurn == true)
-            {
-                EndBtnMsg.text = "End  Turn";
-            }
-            else
-            {
-               EndBtnMsg.text = "Start Turn";
-            }
+        if (playerStates[0].gameData.isTurn == true)
+        {
+            EndBtnMsg.text = "End  Turn";
+        }
+        else
+        {
+            EndBtnMsg.text = "Start Turn";
+        }
     }
 
 
@@ -255,10 +248,7 @@ public class GameState : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha0) || clearBtn)
             {
-                foreach (Connection conn in turnConnections)
-                {
-                    playerStates[0].AbortConnection(conn);
-                }
+                clearAllSelected();
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1) || p1)
@@ -500,8 +490,7 @@ public class GameState : MonoBehaviour
 
     public void SelectSingleConnector()
     {
-        FirstpipeCheck();
-        p1 = false;
+
         if (selectedConnector != null)
         {
             playerStates[0].AbortConnector(selectedConnector, false);
@@ -517,8 +506,7 @@ public class GameState : MonoBehaviour
 
     public void SelectDoubleConnector()
     {
-        SecondpipeCheck();
-        p2 = false;
+
         if (selectedConnector != null)
         {
             playerStates[0].AbortConnector(selectedConnector, false);
@@ -534,8 +522,6 @@ public class GameState : MonoBehaviour
 
     public void SelectTrippleConnector()
     {
-        ThirdpipeCheck();
-        p3 = false;
         if (selectedConnector != null)
         {
             playerStates[0].AbortConnector(selectedConnector, false);
@@ -551,7 +537,6 @@ public class GameState : MonoBehaviour
 
     public void SelectSolarConnector()
     {
-        solarCheck = false;
         if (selectedConnector != null)
         {
             playerStates[0].AbortConnector(selectedConnector, false);
@@ -567,7 +552,6 @@ public class GameState : MonoBehaviour
 
     public void SelectHeatConnector()
     {
-        heatCheck = false;
         if (selectedConnector != null)
         {
             playerStates[0].AbortConnector(selectedConnector, false);
@@ -600,6 +584,16 @@ public class GameState : MonoBehaviour
             }
         }
     }
+
+
+    public void clearAllSelected()
+    {
+        foreach (Connection conn in turnConnections)
+        {
+            playerStates[0].AbortConnection(conn);
+        }
+    }
+
 
 }
 
