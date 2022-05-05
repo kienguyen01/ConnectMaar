@@ -95,45 +95,27 @@ public class MultiplayerState : GameState, INetworkRunnerCallbacks
         Debug.LogError($"{player.PlayerId} has just left");
     }
 
-    //void OnInput(NetworkRunner runner, NetworkInput input) 
-    //{
-    //    //throw new NotImplementedException();
-        
-    //    Debug.LogError($"RPC INFO: {RPC_EndTurn(playerStates[0])}");
-    //    Debug.LogError($"Lobby INFO: {_runner.SessionInfo}");
-
-    //    if(playerStates[0].gameData.isTurn)
-    //    {
-    //        Debug.LogError("0 did something");
-    //    }
-
-
-    //    var data = new NetworkInputData();
-
-    //    if (Input.GetKey(KeyCode.G))
-    //    {
-    //        data.message = "G pressed";
-    //    }
-
-    //    input.Set(data);
-    //}
-    public void OnInput(NetworkRunner runner, NetworkInput input)
+    void INetworkRunnerCallbacks.OnInput(NetworkRunner runner, NetworkInput input)
     {
+        //throw new NotImplementedException();
+
+        Debug.LogError($"RPC INFO: {RPC_EndTurn(playerStates[0])}");
+        Debug.LogError($"Lobby INFO: {_runner.SessionInfo}");
+
+        if (playerStates[0].gameData.isTurn)
+        {
+            Debug.LogError("0 did something");
+        }
+
+
         var data = new NetworkInputData();
 
-        if (Input.GetKey(KeyCode.W))
-            data.direction += Vector3.forward;
+        if (Input.GetKey(KeyCode.G))
+        {
+            data.message = "G pressed";
+        }
 
-        if (Input.GetKey(KeyCode.S))
-            data.direction += Vector3.back;
-
-        if (Input.GetKey(KeyCode.A))
-            data.direction += Vector3.left;
-
-        if (Input.GetKey(KeyCode.D))
-            data.direction += Vector3.right;
-
-        input.Set(data);
+        //input.Set(data);
     }
 
     void INetworkRunnerCallbacks.OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
