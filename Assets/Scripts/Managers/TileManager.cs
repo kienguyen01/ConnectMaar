@@ -270,13 +270,13 @@ public class TileManager : MonoBehaviour
                 hex_cell.AddStructure<SpecialBuilding>(church_cell);
                 break;
             case "004|002":
-                hex_cell.IsScrabbleForSolar = true;
+                hex_cell.IsScrambleForSolar = true;
                 break;
             case "009|002":
-                hex_cell.IsScrabbleForSolar = true;
+                hex_cell.IsScrambleForSolar = true;
                 break;
             case "010|009":
-                hex_cell.IsScrabbleForSolar = true;
+                hex_cell.IsScrambleForSolar = true;
                 break;
             default:
                 break;

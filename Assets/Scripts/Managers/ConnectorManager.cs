@@ -160,7 +160,6 @@ public class Connection : ScriptableObject
 
     private void Awake()
     {
-        Connectors = new List<Connector>();
     }
 }
 

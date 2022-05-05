@@ -234,10 +234,11 @@ public class GameState : MonoBehaviour
                             {
                                 playerStates[0].gameData.totalPoint -= 5 / connectorCount;
                                 Debug.LogError(connectorCount);
+                                Debug.LogError(playerStates[0].gameData.totalPoint) ;
                             }
                             else if (connector.GetLastTile().Structure.GetType().Equals(typeof(SpecialBuilding)))
                             {
-                                playerStates[0].gameData.totalPoint -= 15 / conn.Connectors.Count; //TODO multiply by bonus
+                                playerStates[0].gameData.totalPoint -= 15 / conn.Connectors.Count; //TODO: multiply by bonus
 
                             }
                             else if (connector.GetLastTile().Structure.GetType().Equals(typeof(Node)))
@@ -341,8 +342,15 @@ public class GameState : MonoBehaviour
                                         currentConnection = playerStates[0].StartConnection();
                                         turnConnections.Add(currentConnection);
                                     }
+                                    if(currentConnection.Connectors == null)
+                                    {
+                                        currentConnection.Connectors = new List<Connector>();
+                                    }
                                     currentConnection.Connectors.Add(selectedConnector);
                                     selectedConnector = null;
+
+                                    //TODO: Connectors is set back to 0
+                                    //TODO: turnConnections is not adding multiple connection in 1 turn
                                 }
                             }
                         }

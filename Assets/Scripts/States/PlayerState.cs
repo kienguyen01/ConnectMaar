@@ -102,14 +102,14 @@ public class PlayerState : MonoBehaviour
                 tile.OwnedBy = this;
             }
             tile.SelectedBy = null;
-            if (tile.IsScrabbleForHeat)
+            if (tile.IsScrambleForHeat)
             {
                 this.AddHeatPipeConnector()
                     .AddHeatPipeConnector()
                     .AddHeatPipeConnector()
                     .AddHeatPipeConnector();
             }
-            else if (tile.IsScrabbleForSolar)
+            else if (tile.IsScrambleForSolar)
             {
                 this
                     .AddSolarConnector()
