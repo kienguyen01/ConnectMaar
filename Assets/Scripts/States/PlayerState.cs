@@ -1,4 +1,3 @@
-using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -37,9 +36,8 @@ public class PlayerGameData
     public Color PlayerColour;
 }
 
-public class PlayerState : NetworkBehaviour
+public class PlayerState : MonoBehaviour
 {
-    NetworkCharacterController _cc;
     public ConnectorConfig config;
     public Player playerClass;
     public PlayerCamera cameraClass;
@@ -86,18 +84,10 @@ public class PlayerState : NetworkBehaviour
         gameData.handSize = 4;
         gameData.nodesOwned.Add(this.gameObject.AddComponent<Node>());
         gameData.totalPoint = 50;
-
-        _cc = GetComponent<NetworkCharacterController>();
-
     }
     private void Update()
     {
 
-    }
-
-    public override void FixedUpdateNetwork()
-    {
-        
     }
 
     public void EndTurn()
