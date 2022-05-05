@@ -26,7 +26,8 @@ public class MultiplayerState : GameState, INetworkRunnerCallbacks
             GameMode = mode,
             SessionName = "TestRoom",
             Scene = SceneManager.GetActiveScene().buildIndex,
-            SceneObjectProvider = gameObject.AddComponent<NetworkSceneManagerDefault>()
+            SceneObjectProvider = gameObject.AddComponent<NetworkSceneManagerDefault>(),
+            PlayerCount = 2
         });
     }
 
@@ -72,11 +73,11 @@ public class MultiplayerState : GameState, INetworkRunnerCallbacks
         {
             if (GUI.Button(new Rect(0, 0, 200, 40), "Host"))
             {
-                StartGame(GameMode.Host);
+                StartGame(GameMode.Shared);
             }
             if (GUI.Button(new Rect(0, 40, 200, 40), "Join"))
             {
-                StartGame(GameMode.Client);
+                StartGame(GameMode.Shared);
             }
         }
     }
@@ -86,20 +87,53 @@ public class MultiplayerState : GameState, INetworkRunnerCallbacks
 
     void INetworkRunnerCallbacks.OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        Debug.LogWarning($"{player.PlayerId} has just joined");
+        Debug.LogError($"{player.PlayerId} has just joined");
     }
 
     void INetworkRunnerCallbacks.OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        Debug.LogWarning($"{player.PlayerId} has just left");
+        Debug.LogError($"{player.PlayerId} has just left");
     }
 
-    void INetworkRunnerCallbacks.OnInput(NetworkRunner runner, NetworkInput input)
-    {
-        //throw new NotImplementedException();
+    //void OnInput(NetworkRunner runner, NetworkInput input) 
+    //{
+    //    //throw new NotImplementedException();
         
-        Debug.LogError($"RPC INFO: {RPC_EndTurn(playerStates[0])}");
-        Debug.LogError($"Lobby INFO: {runner.SessionInfo}");
+    //    Debug.LogError($"RPC INFO: {RPC_EndTurn(playerStates[0])}");
+    //    Debug.LogError($"Lobby INFO: {_runner.SessionInfo}");
+
+    //    if(playerStates[0].gameData.isTurn)
+    //    {
+    //        Debug.LogError("0 did something");
+    //    }
+
+
+    //    var data = new NetworkInputData();
+
+    //    if (Input.GetKey(KeyCode.G))
+    //    {
+    //        data.message = "G pressed";
+    //    }
+
+    //    input.Set(data);
+    //}
+    public void OnInput(NetworkRunner runner, NetworkInput input)
+    {
+        var data = new NetworkInputData();
+
+        if (Input.GetKey(KeyCode.W))
+            data.direction += Vector3.forward;
+
+        if (Input.GetKey(KeyCode.S))
+            data.direction += Vector3.back;
+
+        if (Input.GetKey(KeyCode.A))
+            data.direction += Vector3.left;
+
+        if (Input.GetKey(KeyCode.D))
+            data.direction += Vector3.right;
+
+        input.Set(data);
     }
 
     void INetworkRunnerCallbacks.OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
