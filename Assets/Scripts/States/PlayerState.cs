@@ -83,6 +83,7 @@ public class PlayerState : MonoBehaviour
         }
         gameData.handSize = 4;
         gameData.nodesOwned.Add(this.gameObject.AddComponent<Node>());
+        gameData.nodesOwned.Add(this.gameObject.AddComponent<Node>());
         gameData.totalPoint = 50;
     }
     private void Update()

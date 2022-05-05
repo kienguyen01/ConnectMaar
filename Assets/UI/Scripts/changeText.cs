@@ -15,8 +15,8 @@ public class changeText : MonoBehaviour
         tutorialBody = GameObject.Find("txtBody").GetComponent<TMP_Text>();
 
         //change content
-        tutorialTitle.text = "CHANGE";
-        tutorialBody.text = "This";
+ /*       tutorialTitle.text = "CHANGE";
+        tutorialBody.text = "This";*/
     }
 
 }
