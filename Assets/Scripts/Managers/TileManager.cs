@@ -71,7 +71,7 @@ public class TileManager : MonoBehaviour
 
                 tiles.Add(tileRow);
             }
-        }
+        } 
         else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("SampleScene"))
         {
             for (int x = 0; x < WIDTH_MAP; x++)
@@ -91,6 +91,20 @@ public class TileManager : MonoBehaviour
                 {
                     instantiateSpecialTile(tile);
                 }
+            }
+        }
+        else if(SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MultiplayerMap"))
+        {
+            for (int x = 0; x < 30; x++)
+            {
+                List<Tile> tileRow = new List<Tile>();
+
+                for (int y = 0; y < 30; y++)
+                {
+                    tileRow.Add((GenerateTilesMap(x, y)));
+                }
+
+                tiles.Add(tileRow);
             }
         }
 
@@ -185,7 +199,6 @@ public class TileManager : MonoBehaviour
         if (x == 4 && y == 2)
         {
             hex_cell = (Tile)Instantiate(solarHexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
-            //hex_cell.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
             hex_cell.name = "Hex_" + x + "_" + y;
             hex_cell.X = x;
             hex_cell.Y = y;
@@ -193,7 +206,6 @@ public class TileManager : MonoBehaviour
         else
         {
             hex_cell = (Tile)Instantiate(hexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
-            //hex_cell.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f); 
             hex_cell.name = "Hex_" + x + "_" + y;
             hex_cell.X = x;
             hex_cell.Y = y;
@@ -205,6 +217,7 @@ public class TileManager : MonoBehaviour
             House house_cell = (House)Instantiate(housePrefab, new Vector3(xPos, 0.2f, y * zOffset), Quaternion.identity);
             house_cell.transform.localScale = new Vector3(0.08f, 0.16f, 0.16f);
             house_cell.name = "house_" + x + "_" + y;
+            house_cell.transform.localScale = new Vector3(0.08f, 0.16f, 0.16f);
             hex_cell.AddStructure<House>(house_cell);
         }
 
@@ -257,13 +270,13 @@ public class TileManager : MonoBehaviour
                 hex_cell.AddStructure<SpecialBuilding>(church_cell);
                 break;
             case "004|002":
-                hex_cell.IsScrambleForSolar = true;
+                hex_cell.IsScrabbleForSolar = true;
                 break;
             case "009|002":
-                hex_cell.IsScrambleForSolar = true;
+                hex_cell.IsScrabbleForSolar = true;
                 break;
             case "010|009":
-                hex_cell.IsScrambleForSolar = true;
+                hex_cell.IsScrabbleForSolar = true;
                 break;
             default:
                 break;
@@ -395,6 +408,7 @@ public class TileManager : MonoBehaviour
                 House house_cell = (House)Instantiate(housePrefab, new Vector3(hex_cell.X * xOffset, 0.2f, hex_cell.Y * zOffset), Quaternion.identity);
                 house_cell.transform.localScale = new Vector3(0.08f, 0.16f, 0.16f);
                 hex_cell.AddStructure<House>(house_cell);
+
             }
         }
 

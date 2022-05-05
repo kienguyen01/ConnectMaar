@@ -83,6 +83,7 @@ public class PlayerState : MonoBehaviour
         }
         gameData.handSize = 4;
         gameData.nodesOwned.Add(this.gameObject.AddComponent<Node>());
+        gameData.nodesOwned.Add(this.gameObject.AddComponent<Node>());
         gameData.totalPoint = 50;
     }
     private void Update()
@@ -108,7 +109,7 @@ public class PlayerState : MonoBehaviour
                     .AddHeatPipeConnector()
                     .AddHeatPipeConnector();
             }
-            else if (tile.IsScrambleForSolar)
+            else if (tile.IsScrabbleForSolar)
             {
                 this
                     .AddSolarConnector()
@@ -260,8 +261,8 @@ public class PlayerState : MonoBehaviour
         {
             AbortConnector(c, true);
         }
-        //Destroy(conn);
-        conn = null;
+        Destroy(conn);
+
 
         return this;
     }
