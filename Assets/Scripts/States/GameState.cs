@@ -236,11 +236,7 @@ public class GameState : MonoBehaviour
                             playerStates[0].RefillHand();
                             playerStates[0].gameData.isTurn = false;
                             playerStates[0].EndTurn();
-
-                            foreach (Connection c in turnConnections)
-                            {
-                                playerStates[0].FinalizeConnection(c);
-                            }
+                            
                             if (isSolarConnectionEnd && allSolar)
                             {
                                 playerStates[0].gameData.hasSolarInNetwork = true;
@@ -249,8 +245,34 @@ public class GameState : MonoBehaviour
                             {
                                 playerStates[0].gameData.hasHeatInNetwork = true;
                             }
+                            int connectorCount = turnConnections.Count;
+                            Connector connector = conn.GetLastConnector();
+                                
+                            if (connector.GetLastTile().Structure.GetType().Equals(typeof(House)))
+                            {
+                                playerStates[0].gameData.totalPoint -= 5 / connectorCount;
+                                Debug.LogError(connectorCount);
+                            }
+                            else if (connector.GetLastTile().Structure.GetType().Equals(typeof(SpecialBuilding)))
+                            {
+                                playerStates[0].gameData.totalPoint -= 15 / conn.Connectors.Count; //TODO multiply by bonus
+
+                            }
+                            else if (connector.GetLastTile().Structure.GetType().Equals(typeof(Node)))
+                            {
+
+                            }
+                            else if (connector.GetLastTile().Structure.GetType().Equals(typeof(SolarPanel)) || connector.GetLastTile().Structure.GetType().Equals(typeof(HeatPipe)))
+                            {
+
+                            }
+                            playerStates[0].FinalizeConnection(conn);
+
+
                         }
                     }
+
+
 
                     hasHeat = false;
                     hasSolar = false;

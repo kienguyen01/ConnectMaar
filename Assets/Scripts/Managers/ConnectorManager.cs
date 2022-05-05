@@ -150,6 +150,14 @@ public class Connection : ScriptableObject
     int length;
     Player ownedPlayer;
 
+    public Connector GetLastConnector()
+    {
+        if (Connectors.Count > 0)
+            return Connectors[^1];
+        else
+            return null;
+    }
+
     private void Awake()
     {
         Connectors = new List<Connector>();
