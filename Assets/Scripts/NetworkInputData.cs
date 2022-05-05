@@ -5,5 +5,5 @@ using UnityEngine;
 
 public struct NetworkInputData : INetworkInput
 {
-    public string direction;
+    public string message;
 }
