@@ -215,6 +215,7 @@ public class TileManager : MonoBehaviour
             || (x == 13 && y == 10) || (x == 6 && y == 10) || (x == 4 && y == 13) || (x == 2 && y == 13) || (x==0 && y==0))
         {
             House house_cell = (House)Instantiate(housePrefab, new Vector3(xPos, 0.2f, y * zOffset), Quaternion.identity);
+            house_cell.transform.localScale = new Vector3(0.08f, 0.16f, 0.16f);
             house_cell.name = "house_" + x + "_" + y;
             house_cell.transform.localScale = new Vector3(0.08f, 0.16f, 0.16f);
             hex_cell.AddStructure<House>(house_cell);
@@ -339,6 +340,8 @@ public class TileManager : MonoBehaviour
         allHouses.Add(randomizeTile(19, 19, 2, 1));
         allHouses.Add(randomizeTile(19, 19, 2, 1));
         allHouses.Add(randomizeTile(19, 19, 2, 1));
+        allHouses.Add(randomizeTile(12, 16, 12, 16));
+
 
         scrambleSolar.Add(randomizeTile(19, 19, 2, 1));
         scrambleSolar.Add(randomizeTile(19, 19, 2, 1));
@@ -413,8 +416,7 @@ public class TileManager : MonoBehaviour
         {
             if(tileCoords == tile)
             {
-                hex_cell.IsScrabbleForSolar = true;
-                hex_cell.gameObject.AddComponent<Outline>().OutlineWidth = 4.0f;
+                hex_cell.IsScrambleForSolar = true;
             }
         }
     }
