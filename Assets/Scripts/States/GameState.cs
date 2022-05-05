@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using mixpanel;
 
 [System.Serializable]
 public struct GameStateConfig
@@ -36,7 +37,7 @@ public class GameState : MonoBehaviour
     Button solarB;
     Button heatB;
     Button EndTurn;
-    TextMeshProUGUI BtnClicked;
+    TextMeshProUGUI SelectedConnectorText;
     TextMeshProUGUI EndBtnMsg;
     Button ClearBtn;
     Button Node;
@@ -64,6 +65,14 @@ public class GameState : MonoBehaviour
         Assert.IsNull(instance);
         instance = this;
 
+        
+        // Track with event-name and property
+        var props = new Value();
+        props["Test"] = true;
+        props["DeviceName"] = SystemInfo.deviceName;
+        Mixpanel.Track("Run application", props);
+        
+
 
         addEventHandlers();
 
@@ -88,7 +97,7 @@ public class GameState : MonoBehaviour
         Pipe3 = GameObject.Find("cable3Btn").GetComponent<Button>();
         solarB = GameObject.Find("solar").GetComponent<Button>();
         heatB = GameObject.Find("rawpipe").GetComponent<Button>();
-        BtnClicked = GameObject.Find("BtnClicked").GetComponent<TextMeshProUGUI>();
+        SelectedConnectorText = GameObject.Find("SelectedConnectorDisplay").GetComponent<TextMeshProUGUI>();
         EndBtnMsg = GameObject.Find("EndBtnMsg").GetComponent<TextMeshProUGUI>();
         ClearBtn = GameObject.Find("ClearBtn").GetComponent<Button>();
         Node = GameObject.Find("node").GetComponent<Button>();
@@ -130,7 +139,7 @@ public class GameState : MonoBehaviour
         p1 ^= true;
         if (p1 == true)
         {
-            BtnClicked.text = "1 Connector";
+            SelectedConnectorText.text = "1 Connector";
         }
 
     }
@@ -149,36 +158,39 @@ public class GameState : MonoBehaviour
         p2 ^= true;
         if (p2 == true)
         {
-            BtnClicked.text = "2 Connector";
+            SelectedConnectorText.text = "2 Connector";
         }
-
     }
+
     public void ThirdpipeCheck()
     {
         p3 ^= true;
         if (p3 == true)
         {
-            BtnClicked.text = "3 Connector";
+            SelectedConnectorText.text = "3 Connector";
         }
     }
+
     public void endTurnCheck()
     {
         turnCheck ^= true;
     }
+
     public void SolarCheck()
     {
         solarCheck ^= true;
         if (solarCheck == true)
         {
-            BtnClicked.text = "Solar Coneector";
+            SelectedConnectorText.text = "Solar Coneector";
         }
     }
+
     public void HeatCheck()
     {
         heatCheck ^= true;
         if (heatCheck == true)
         {
-            BtnClicked.text = "Heat Connector";
+            SelectedConnectorText.text = "Heat Connector";
         }
     }
 
