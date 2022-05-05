@@ -143,23 +143,23 @@ public class GameState : MonoBehaviour
         }
     }
 
-    public void SolarCheck()
+    /*public void SolarCheck()
     {
         solarCheck ^= true;
         if (solarCheck == true)
         {
             SelectedConnectorText.text = "Solar Coneector";
         }
-    }
+    }*/
 
-    public void HeatCheck()
+    /*public void HeatCheck()
     {
         heatCheck ^= true;
         if (heatCheck == true)
         {
             SelectedConnectorText.text = "Heat Connector";
         }
-    }
+    }*/
 
 
     Node playerNode;
