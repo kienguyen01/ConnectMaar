@@ -91,36 +91,48 @@ public class PlayerState : MonoBehaviour
 
     }
 
-    public void EndTurn()
+    public virtual void EndTurn()
     {
         Debug.Log("clicked end button");
         this.gameData.isTurn = false;
+        EndTurnCheck();
+        this.gameData.tilesChosen = new Stack<Tile>();
+    }
+
+    public void EndTurnCheck()
+    {
         foreach (Tile tile in this.gameData.tilesChosen)
         {
-            if(!(tile.Structure.GetType() == typeof(Node)))
+            if (!(tile.Structure.GetType() == typeof(Node)))
             {
                 tile.OwnedBy = this;
             }
             tile.SelectedBy = null;
-            if (tile.IsScrambleForHeat)
-            {
-                this.AddHeatPipeConnector()
-                    .AddHeatPipeConnector()
-                    .AddHeatPipeConnector()
-                    .AddHeatPipeConnector();
-            }
-            else if (tile.IsScrambleForSolar)
-            {
-                this
-                    .AddSolarConnector()
-                    .AddSolarConnector()
-                    .AddSolarConnector()
-                    .AddSolarConnector();
-            }
+            AssignScrabbleTileRewards(tile);
         }
         this.gameData.tilesTaken.AddRange(this.gameData.tilesChosen);
-        this.gameData.tilesChosen = new Stack<Tile>();
     }
+
+    public void AssignScrabbleTileRewards(Tile tile)
+    {
+        if (tile.IsScrambleForHeat)
+        {
+            this.AddHeatPipeConnector()
+                .AddHeatPipeConnector()
+                .AddHeatPipeConnector()
+                .AddHeatPipeConnector();
+        }
+        else if (tile.IsScrambleForSolar)
+        {
+            this
+                .AddSolarConnector()
+                .AddSolarConnector()
+                .AddSolarConnector()
+                .AddSolarConnector();
+        }
+    }
+
+
 
 
     public void RefillHand()
