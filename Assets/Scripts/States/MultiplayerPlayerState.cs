@@ -51,7 +51,7 @@ public class MultiplayerPlayerState : PlayerState
 
     void StartingPoint()
     {
-
+       // GameObject x = PhotonNetwork.Instantiate()
     }
 
     private void Update()
