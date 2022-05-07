@@ -38,27 +38,17 @@ public class MultiplayerPlayerState : PlayerState
             me.gameData.PlayerColour = Color.blue;
             TileManager.tiles[10][16].OwnedBy = me;
 
-            StartingPoint();
             //me.RefillHand();
-
-            enemy = this;
-            enemy.gameData.PlayerColour = Color.black;
-            TileManager.tiles[15][15].OwnedBy = enemy;
 
         }
         else
         {
-
-            me = this;
-            me.gameData.PlayerColour = Color.red;
-            TileManager.tiles[10][16].OwnedBy = me;
-
-
             enemy = this;
             enemy.gameData.PlayerColour = Color.black;
             TileManager.tiles[15][15].OwnedBy = enemy;
-
         }
+        StartingPoint();
+
     }
 
     void StartingPoint()
@@ -67,6 +57,10 @@ public class MultiplayerPlayerState : PlayerState
 
             plane.GetPhotonView().RPC("Initialize", RpcTarget.Others, false);
             plane.GetPhotonView().RPC("Initialize", photonPlayer,true); 
+
+
+
+            
        
     }
 
@@ -78,7 +72,7 @@ public class MultiplayerPlayerState : PlayerState
         }
         if(Input.GetMouseButtonDown(0) && MultiplayerState.instance.currentPlayer == this)
         {
-
+            Debug.Log("It is my turn");
         }
     }
 
