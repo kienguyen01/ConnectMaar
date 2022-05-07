@@ -60,6 +60,8 @@ public class MultiplayerState : GameState
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            Debug.LogError("turn changed");
+            Debug.LogError(player1.gameData.isTurn ? "p1" : "p2");
             photonView.RPC("EndTurn", RpcTarget.All);
         }
     }
@@ -73,8 +75,12 @@ public class MultiplayerState : GameState
 
         Debug.LogError($"{player1.photonPlayer.NickName}");
         Debug.LogError($"{player2.photonPlayer.NickName}");
+       
 
         photonView.RPC("SetNextTurn", RpcTarget.AllBuffered);
+
+        Debug.LogError($"{player1.gameData.isTurn}");
+        Debug.LogError($"{player2.gameData.isTurn}");
     }
 
     [PunRPC]
