@@ -305,10 +305,4 @@ public class PlayerState : MonoBehaviourPun
         return this;
     }
 
-
-    [PunRPC]
-    void ReduceEmmisons(int score)
-    {
-        
-    }
 }

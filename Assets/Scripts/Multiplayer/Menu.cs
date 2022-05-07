@@ -100,12 +100,6 @@ public class Menu : MonoBehaviourPunCallbacks
         }
     }
 
-    //[PunRPC]
-    //public void Changescene()
-    //{
-    //    SceneManager.LoadScene("Menu");
-    //}
-
     [PunRPC]
     public void OnLeaveButton()
     {
