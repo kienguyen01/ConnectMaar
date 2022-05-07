@@ -47,6 +47,8 @@ public class GameState : MonoBehaviour
     [HideInInspector]
     public TextMeshProUGUI text;
 
+    Value props;
+
 
     public void Awake()
     {
@@ -58,8 +60,8 @@ public class GameState : MonoBehaviour
         Assert.IsNull(instance);
         instance = this;  
         // Track with event-name and property
-        var props = new Value();
-        props["Test"] = true;
+        props = new Value();
+        props["Test"] = Application.isEditor;
         props["DeviceName"] = SystemInfo.deviceName;
         Mixpanel.Track("Run application", props);
         
@@ -71,6 +73,9 @@ public class GameState : MonoBehaviour
         ExStadium.GetComponent<Button>()
             .onClick.AddListener(
             () => {
+                var nProps = props;
+                nProps["SpecialBuiding"] = "De Meent";
+                Mixpanel.Track("Open Infocard", props);
                 TileManager.pH.canvas = ExStadium.transform.parent.parent.gameObject.GetComponent<Canvas>();
                 TileManager.pH.Popup();
             });
