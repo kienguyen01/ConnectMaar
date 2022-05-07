@@ -7,8 +7,8 @@ using UnityEngine;
 public class MultiplayerState : GameState
 {
 
-    public PlayerState player1;
-    public PlayerState player2;
+    public MultiplayerPlayerState player1;
+    public MultiplayerPlayerState player2;
 
     public PlayerState currentPlayer;
 
@@ -23,7 +23,38 @@ public class MultiplayerState : GameState
 
     void SetPlayers()
     {
-        //player1.pho
+        player1.photonView.TransferOwnership(1);
+        player2.photonView.TransferOwnership(2);
+
+        player1.photonView.RPC("Initialize", RpcTarget.AllBuffered, PhotonNetwork.CurrentRoom.GetPlayer(1));
+        player2.photonView.RPC("Initialize", RpcTarget.AllBuffered, PhotonNetwork.CurrentRoom.GetPlayer(2));
+
+        Debug.LogError($"{player1.photonPlayer.NickName}");
+        Debug.LogError($"{player2.photonPlayer.NickName}");
+
+        photonView.RPC("SetNextTurn", RpcTarget.AllBuffered);
     }
 
+    [PunRPC]
+    void SetNextTurn()
+    {
+        if(currentPlayer == null)
+        {
+            currentPlayer = player1;
+        }
+        else
+        {
+            currentPlayer = currentPlayer == player1 ? player2 : player1;
+        }
+
+        if(currentPlayer == MultiplayerPlayerState.me)
+        {
+            MultiplayerPlayerState.me.BeginTurn();
+        }
+    }
+       
+    public MultiplayerPlayerState GetOtherPlayer(MultiplayerPlayerState player)
+    {
+        return player == player1 ? player2 : player1;
+    }
 }

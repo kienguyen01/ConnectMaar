@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using mixpanel;
+using Photon.Pun;
 
 [System.Serializable]
 public struct GameStateConfig
@@ -14,7 +15,7 @@ public struct GameStateConfig
     public TileManager TileManagerClass;
 }
 
-public class GameState : MonoBehaviour
+public class GameState : MonoBehaviourPun
 {
     public GameStateConfig config;
 

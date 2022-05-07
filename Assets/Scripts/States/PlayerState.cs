@@ -38,7 +38,7 @@ public class PlayerGameData
     public Color PlayerColour;
 }
 
-public class PlayerState : MonoBehaviour
+public class PlayerState : MonoBehaviourPun
 {
     public ConnectorConfig config;
     public Player playerClass;

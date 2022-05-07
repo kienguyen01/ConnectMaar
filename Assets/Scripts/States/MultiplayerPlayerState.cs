@@ -9,8 +9,8 @@ public class MultiplayerPlayerState : PlayerState
 
     public Photon.Realtime.Player photonPlayer;
 
-    public static PlayerState me;
-    public static PlayerState enemy;
+    public static MultiplayerPlayerState me;
+    public static MultiplayerPlayerState enemy;
 
     [PunRPC]
 
@@ -27,6 +27,11 @@ public class MultiplayerPlayerState : PlayerState
         {
             enemy = this;
         }
+    }
+
+    public void BeginTurn()
+    {
+        me.gameData.isTurn = true;
     }
 
 
