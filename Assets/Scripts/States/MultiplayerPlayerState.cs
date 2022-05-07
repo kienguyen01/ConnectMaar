@@ -47,7 +47,7 @@ public class MultiplayerPlayerState : PlayerState
             enemy.gameData.PlayerColour = Color.black;
             TileManager.tiles[15][15].OwnedBy = enemy;
         }
-        StartingPoint();
+        //StartingPoint();
 
     }
 
@@ -70,10 +70,10 @@ public class MultiplayerPlayerState : PlayerState
         {
             return;
         }
-        if(Input.GetMouseButtonDown(0) && MultiplayerState.instance.currentPlayer == this)
-        {
-            Debug.Log("It is my turn");
-        }
+        //if(Input.GetMouseButtonDown(0) && MultiplayerState.instance.currentPlayer == this)
+        //{
+        //    Debug.Log("It is my turn");
+        //}
     }
 
     public void BeginTurn()

@@ -282,14 +282,18 @@ public class GameState : MonoBehaviourPun
 
             if (Input.GetKeyDown(KeyCode.Alpha1) || p1)
             {
+                Debug.Log("select 1");
+
                 SelectSingleConnector();
             }
             if (Input.GetKeyDown(KeyCode.Alpha2) || p2)
             {
+                Debug.Log("select 2");
                 SelectDoubleConnector();
             }
             if (Input.GetKeyDown(KeyCode.Alpha3) || p3)
             {
+                Debug.Log("select 3");
                 SelectTrippleConnector();
             }
             if (Input.GetKeyDown(KeyCode.Alpha4) || solarCheck)
