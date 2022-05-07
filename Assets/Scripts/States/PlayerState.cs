@@ -76,7 +76,7 @@ public class PlayerState : MonoBehaviourPun
         //Assert.IsNotNull(config.PlayerStateClass);
         //Assert.IsTrue(PlayerStarts.Length > 0);
 
-        gameData.PlayerColour = Color.red;
+        //gameData.PlayerColour = Color.red;
 
         Debug.Log($"ConnectorManager - {(config.ConnectorManagerClass ? "true" : "false")}");
         if (config.ConnectorManagerClass)

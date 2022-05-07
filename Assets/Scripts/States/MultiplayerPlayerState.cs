@@ -10,10 +10,10 @@ public class MultiplayerPlayerState : PlayerState
 {
 
     public Photon.Realtime.Player photonPlayer;
+    GameObject PlaneObj;
 
 
-
-
+    public string[] sdtatingPoints;
 
     public static MultiplayerPlayerState me;
     public static MultiplayerPlayerState enemy;
@@ -35,23 +35,28 @@ public class MultiplayerPlayerState : PlayerState
         if (player.IsLocal)
         {
             me = this;
-            TileManager.tiles[12][16].OwnedBy = me;
             me.gameData.PlayerColour = Color.blue;
+            TileManager.tiles[10][16].OwnedBy = me;
 
+            StartingPoint();
             //me.RefillHand();
         }
         else
         {
             enemy = this;
-            TileManager.tiles[12][15].OwnedBy = enemy;
-            me.gameData.PlayerColour = Color.black;
+            enemy.gameData.PlayerColour = Color.black;
+            TileManager.tiles[15][15].OwnedBy = enemy;
 
         }
     }
 
     void StartingPoint()
     {
-       // GameObject x = PhotonNetwork.Instantiate()
+            GameObject plane = PhotonNetwork.Instantiate("Plane",PlaneObj.transform.position,PlaneObj.transform.rotation);
+
+            plane.GetPhotonView().RPC("Initialize", RpcTarget.Others, false);
+            plane.GetPhotonView().RPC("Initialize", photonPlayer,true); 
+       
     }
 
     private void Update()

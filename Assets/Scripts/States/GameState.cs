@@ -373,7 +373,7 @@ public class GameState : MonoBehaviourPun
         if (Input.GetMouseButtonDown(0) && !selectedConnector)
             GetInfoCard();
 
-        startPoint();
+        //startPoint();
     }
 
 
