@@ -60,8 +60,7 @@ public class MultiplayerState : GameState
     {
         if (Input.GetKeyDown(KeyCode.Space) && currentPlayer == MultiplayerPlayerState.me)
         {
-            Debug.LogError("turn changed");
-            Debug.LogError(player1.gameData.isTurn ? "p1" : "p2");
+            
             photonView.RPC("EndTurn", RpcTarget.All);
         }
     }
@@ -122,6 +121,9 @@ public class MultiplayerState : GameState
             player2.gameData.isTurn = false;
             player1.gameData.isTurn = true;
         }
+        Debug.LogError("turn changed");
+        Debug.LogError(player1.gameData.isTurn ? "p1" : "p2");
+
 
     }
 
