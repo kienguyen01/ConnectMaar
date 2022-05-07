@@ -21,29 +21,9 @@ public class NetManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
     }
 
-    /*Check if connection to photon is sucessful
-     * public override void OnConnectedToMaster()
-    {
-        Debug.Log("Connected");
-    }*/
-
-       
-
     public void CreateOrJoinRoom()
     {
-        if(PhotonNetwork.CountOfRooms > 0)
-        {
-            PhotonNetwork.JoinRandomRoom();
-        }
-        else
-        {
-            RoomOptions options = new RoomOptions();
-            //Set max players of room to 2 
-            options.MaxPlayers = 2;
-            //Chreate room
-            PhotonNetwork.CreateRoom(null, options);
-
-        }
+        PhotonNetwork.JoinRandomRoom();
     }
 
     [PunRPC]
@@ -53,8 +33,14 @@ public class NetManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel(sceneName);
     }
 
-    
-
+    public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        RoomOptions options = new RoomOptions();
+        //Set max players of room to 2 
+        options.MaxPlayers = 2;
+        //Chreate room
+        PhotonNetwork.CreateRoom(null, options);
+    }
 
 
 
