@@ -55,6 +55,14 @@ public class MultiplayerState : GameState
         }
     }
 
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            photonView.RPC("EndTurn", RpcTarget.All);
+        }
+    }
     void SetPlayers()
     {
         player1.photonView.TransferOwnership(1);
@@ -77,12 +85,7 @@ public class MultiplayerState : GameState
             currentPlayer = player1;
             player1.gameData.isTurn = true;
         }
-        else if(currentPlayer == player1)
-        {
-            currentPlayer = player2;
-            player2.gameData.isTurn = true;
-            player1.gameData.isTurn = false;
-        }else if(currentPlayer == player2)
+        else
         {
             currentPlayer = player1;
             player1.gameData.isTurn = true;
@@ -93,6 +96,27 @@ public class MultiplayerState : GameState
         {
             MultiplayerPlayerState.me.BeginTurn();
         }
+    }
+
+    [PunRPC]
+    void EndTurn()
+    {
+        if(currentPlayer == null)
+        {
+            return;
+        }
+        if (currentPlayer == player1)
+        {
+            currentPlayer = player2;
+            player1.gameData.isTurn = false;
+            player2.gameData.isTurn = true;
+        }
+        else if (currentPlayer == player2) { 
+            currentPlayer = player1;
+            player2.gameData.isTurn = false;
+            player1.gameData.isTurn = true;
+        }
+
     }
 
     [PunRPC]
