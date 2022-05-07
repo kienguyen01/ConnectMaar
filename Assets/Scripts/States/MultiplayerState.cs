@@ -58,7 +58,7 @@ public class MultiplayerState : GameState
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && currentPlayer.gameData.isTurn)
         {
             Debug.LogError("turn changed");
             Debug.LogError(player1.gameData.isTurn ? "p1" : "p2");
