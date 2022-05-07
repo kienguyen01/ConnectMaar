@@ -40,9 +40,20 @@ public class MultiplayerPlayerState : PlayerState
 
             StartingPoint();
             //me.RefillHand();
+
+            enemy = this;
+            enemy.gameData.PlayerColour = Color.black;
+            TileManager.tiles[15][15].OwnedBy = enemy;
+
         }
         else
         {
+
+            me = this;
+            me.gameData.PlayerColour = Color.red;
+            TileManager.tiles[10][16].OwnedBy = me;
+
+
             enemy = this;
             enemy.gameData.PlayerColour = Color.black;
             TileManager.tiles[15][15].OwnedBy = enemy;
