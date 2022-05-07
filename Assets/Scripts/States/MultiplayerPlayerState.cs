@@ -78,7 +78,7 @@ public class MultiplayerPlayerState : PlayerState
 
     public void BeginTurn()
     {
-        me.gameData.isTurn = true;
+        
     }
     
     [PunRPC]

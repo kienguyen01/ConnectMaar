@@ -22,19 +22,19 @@ public class TileManager : MonoBehaviour
 
     List<List<Tile>> specialBuildings = new List<List<Tile>>();
 
-    List<string> allHouses;
+    public List<string> allHouses;
    
-    List<string> allSolar;
+    public List<string> allSolar;
 
-    List<string> allStadiums;
+    public List<string> allStadiums;
 
-    List<string> allHeat;
+    public List<string> allHeat;
 
-    List<string> allChurches;
+    public List<string> allChurches;
 
-    List<string> scrambleSolar;
+    public List<string> scrambleSolar;
 
-    List<string> scrambleHeat;
+    public List<string> scrambleHeat;
 
 
 
@@ -89,7 +89,8 @@ public class TileManager : MonoBehaviour
             {
                 foreach(Tile tile in tileRow)
                 {
-                    instantiateSpecialTile(tile);
+                    instantiateSpecialTile(tile, allChurches, allSolar, allStadiums, allHouses, scrambleSolar, scrambleHeat, allHeat);
+
                 }
             }
         }
@@ -143,7 +144,7 @@ public class TileManager : MonoBehaviour
         {
             foreach (Tile tile in tileRow)
             {
-                instantiateSpecialTile(tile);
+                instantiateSpecialTile(tile, allChurches, allSolar, allStadiums, allHouses, scrambleSolar, scrambleHeat, allHeat);
             }
         }
     }
@@ -291,7 +292,7 @@ public class TileManager : MonoBehaviour
                 break;
         }
     }
-    string randomizeTile(int xMax, int yMax, int xMin, int yMin)
+    public string randomizeTile(int xMax, int yMax, int xMin, int yMin)
     {
         int X = Random.Range(xMax, xMin);
         int Y = Random.Range(yMax, yMin);
@@ -301,7 +302,7 @@ public class TileManager : MonoBehaviour
         return output;
     }
 
-    Tile GenerateTilesMap(int x, int y)
+    public Tile GenerateTilesMap(int x, int y)
     {
         Tile hex_cell;
         float xPos = x * xOffset;
@@ -339,7 +340,7 @@ public class TileManager : MonoBehaviour
         }
     }
 
-    private void addSpecialTiles()
+    public void addSpecialTiles()
     {
         allStadiums.Add(randomizeTile(9, 17, 9, 17));
 
@@ -367,11 +368,11 @@ public class TileManager : MonoBehaviour
 
     }
 
-    private void instantiateSpecialTile(Tile hex_cell)
+    public void instantiateSpecialTile(Tile hex_cell, List<string> churches, List<string> solars, List<string> stadiums, List<string> houses, List<string> scrambleSolars, List<string> scrambleHeats, List<string> heats)
     {
         string tileCoords = hex_cell.X.ToString().PadLeft(3, '0') + "|" + hex_cell.Y.ToString().PadLeft(3, '0');
 
-        foreach(string tile in allChurches)
+        foreach(string tile in churches)
         {
             if(tileCoords == tile)
             {
@@ -381,7 +382,7 @@ public class TileManager : MonoBehaviour
             }
         }
 
-        foreach(string tile in allSolar)
+        foreach(string tile in solars)
         {
             if(tileCoords == tile)
             {
@@ -393,7 +394,7 @@ public class TileManager : MonoBehaviour
             }
         }
 
-        foreach (string tile in allStadiums)
+        foreach (string tile in stadiums)
         {
             if(tileCoords == tile)
             {
@@ -412,7 +413,7 @@ public class TileManager : MonoBehaviour
             }
         }
 
-        foreach (string tile in allHouses)
+        foreach (string tile in houses)
         {
             if(tileCoords == tile)
             {
@@ -423,7 +424,7 @@ public class TileManager : MonoBehaviour
             }
         }
 
-        foreach (string tile in scrambleSolar)
+        foreach (string tile in scrambleSolars)
         {
             if(tileCoords == tile)
             {
