@@ -7,9 +7,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
+public struct MapData
+{
+    public List<string> houses;
+    public List<string> stadiums;
+    public List<string> churches;
+    public List<string> solars;
+    public List<string> heats;
+    public List<string> scrabbleSolar;
+    public List<string> scrabbleHeats;
+}
 public class MultiplayerState : GameState
 {
-    List<(List<string> Houses, List<string> Stadiums, List<string> Churches, List<string> Solars, List<string> Heats, List<string> ScrabblesSolar, List<string> ScrabblesHeat)> randomizedTiles;
+    MapData mapData;
     public MultiplayerPlayerState player1;
     public MultiplayerPlayerState player2;
 
@@ -26,18 +36,8 @@ public class MultiplayerState : GameState
         Debug.Log("Multiplayer");
         if (PhotonNetwork.IsMasterClient)
         {
-            randomizedTiles = new List<(List<string> Houses, List<string> Stadiums, List<string> Churches, List<string> Solars, List<string> Heats, List<string> ScrabblesSolar, List<string> ScrabblesHeat)>
-            {(
-            tileManager.allHouses,
-            tileManager.allStadiums,
-            tileManager.allChurches,
-            tileManager.allSolar,
-            tileManager.allHeat,
-            tileManager.scrambleSolar,
-            tileManager.scrambleHeat
-            )};
             addSpecialTiles();
-            photonView.RPC("CreateMap", RpcTarget.All, randomizedTiles);
+            photonView.RPC("CreateMap", RpcTarget.All, mapData);
             SetPlayers();
         }
     }
@@ -83,7 +83,7 @@ public class MultiplayerState : GameState
     }
 
     [PunRPC]
-    void CreateMap(List<(List<string> Houses, List<string> Stadiums, List<string> Churches, List<string> Solars, List<string> Heats, List<string> ScrabblesSolar, List<string> ScrabblesHeat)> randomTiles)
+    void CreateMap(MapData mapData)
     {
         for (int x = 0; x < 30; x++)
         {
@@ -100,36 +100,36 @@ public class MultiplayerState : GameState
         {
             foreach (Tile tile in tileRow)
             {
-                tileManager.instantiateSpecialTile(tile, randomTiles[0].Churches, randomTiles[0].Solars, randomTiles[0].Stadiums, randomTiles[0].Houses, randomTiles[0].ScrabblesSolar, randomTiles[0].ScrabblesHeat, randomTiles[0].Heats);
+                tileManager.instantiateSpecialTile(tile, mapData.churches, mapData.solars, mapData.stadiums, mapData.houses, mapData.scrabbleSolar, mapData.scrabbleHeats, mapData.heats);
             }
         }
     }
        
     void addSpecialTiles()
     {
-        randomizedTiles[0].Stadiums.Add(randomizeTile(9, 17, 9, 17));
+        mapData.stadiums.Add(randomizeTile(9, 17, 9, 17));
 
-        randomizedTiles[0].Houses.Add(randomizeTile(9, 16, 5, 12));
-        randomizedTiles[0].Houses.Add(randomizeTile(12, 16, 5, 12));
-        randomizedTiles[0].Houses.Add(randomizeTile(17, 12, 5, 5));
-        randomizedTiles[0].Houses.Add(randomizeTile(19, 19, 2, 1));
-        randomizedTiles[0].Houses.Add(randomizeTile(19, 19, 2, 1));
-        randomizedTiles[0].Houses.Add(randomizeTile(19, 19, 2, 1));
-        randomizedTiles[0].Houses.Add(randomizeTile(12, 16, 12, 16));
-        randomizedTiles[0].Houses.Add(randomizeTile(10, 16, 10, 16));
-        randomizedTiles[0].Houses.Add(randomizeTile(15, 15, 15, 15));
+        mapData.houses.Add(randomizeTile(9, 16, 5, 12));
+        mapData.houses.Add(randomizeTile(12, 16, 5, 12));
+        mapData.houses.Add(randomizeTile(17, 12, 5, 5));
+        mapData.houses.Add(randomizeTile(19, 19, 2, 1));
+        mapData.houses.Add(randomizeTile(19, 19, 2, 1));
+        mapData.houses.Add(randomizeTile(19, 19, 2, 1));
+        mapData.houses.Add(randomizeTile(12, 16, 12, 16));
+        mapData.houses.Add(randomizeTile(10, 16, 10, 16));
+        mapData.houses.Add(randomizeTile(15, 15, 15, 15));
 
 
-        randomizedTiles[0].ScrabblesSolar.Add(randomizeTile(19, 19, 2, 1));
-        randomizedTiles[0].ScrabblesSolar.Add(randomizeTile(19, 19, 2, 1));
-        randomizedTiles[0].ScrabblesSolar.Add(randomizeTile(19, 19, 2, 1));
+        mapData.scrabbleSolar.Add(randomizeTile(19, 19, 2, 1));
+        mapData.scrabbleSolar.Add(randomizeTile(19, 19, 2, 1));
+        mapData.scrabbleSolar.Add(randomizeTile(19, 19, 2, 1));
 
-        randomizedTiles[0].Churches.Add(randomizeTile(5, 14, 5, 14));
+        mapData.churches.Add(randomizeTile(5, 14, 5, 14));
 
-        randomizedTiles[0].Solars.Add(randomizeTile(19, 19, 2, 1));
-        randomizedTiles[0].Solars.Add(randomizeTile(19, 19, 2, 1));
-        randomizedTiles[0].Solars.Add(randomizeTile(19, 19, 2, 1));
-        randomizedTiles[0].Solars.Add(randomizeTile(19, 19, 2, 1));
+        mapData.solars.Add(randomizeTile(19, 19, 2, 1));
+        mapData.solars.Add(randomizeTile(19, 19, 2, 1));
+        mapData.solars.Add(randomizeTile(19, 19, 2, 1));
+        mapData.solars.Add(randomizeTile(19, 19, 2, 1));
     }
 
 
