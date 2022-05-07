@@ -106,6 +106,13 @@ public class TileManager : MonoBehaviour
 
                 tiles.Add(tileRow);
             }
+            foreach (List<Tile> tileRow in tiles)
+            {
+                foreach (Tile tile in tileRow)
+                {
+                    instantiateSpecialTile(tile);
+                }
+            }
         }
 
        
@@ -341,6 +348,8 @@ public class TileManager : MonoBehaviour
         allHouses.Add(randomizeTile(19, 19, 2, 1));
         allHouses.Add(randomizeTile(19, 19, 2, 1));
         allHouses.Add(randomizeTile(12, 16, 12, 16));
+        allHouses.Add(randomizeTile(10, 16, 10, 16));
+        allHouses.Add(randomizeTile(15, 15, 15, 15));
 
 
         scrambleSolar.Add(randomizeTile(19, 19, 2, 1));
