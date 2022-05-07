@@ -92,7 +92,7 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         if(PhotonNetwork.PlayerList.Length == 2)
         {
-            NetManager.instance.photonView.RPC("Changescene", RpcTarget.All, "Game");
+            NetManager.instance.photonView.RPC("ChangeScene", RpcTarget.All, "MultiplayerMap");
         }
         else
         {
@@ -100,11 +100,11 @@ public class Menu : MonoBehaviourPunCallbacks
         }
     }
 
-    [PunRPC]
-    public void Changescene()
-    {
-        SceneManager.LoadScene("Menu");
-    }
+    //[PunRPC]
+    //public void Changescene()
+    //{
+    //    SceneManager.LoadScene("Menu");
+    //}
 
     [PunRPC]
     public void OnLeaveButton()

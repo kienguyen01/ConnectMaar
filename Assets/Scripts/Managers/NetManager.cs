@@ -46,6 +46,7 @@ public class NetManager : MonoBehaviourPunCallbacks
         }
     }
 
+    [PunRPC]
     public void ChangeScene(string sceneName)
     {
         PhotonNetwork.LoadLevel(sceneName);

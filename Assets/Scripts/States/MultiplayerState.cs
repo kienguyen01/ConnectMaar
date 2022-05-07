@@ -14,7 +14,7 @@ public class MultiplayerState : GameState
 
     private void Start()
     {
-        Debug.Log("Muyltiplayer");
+        Debug.Log("Multiplayer");
         if (PhotonNetwork.IsMasterClient)
         {
             SetPlayers();
