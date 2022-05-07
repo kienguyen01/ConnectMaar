@@ -93,27 +93,7 @@ public class TileManager : MonoBehaviour
                 }
             }
         }
-        else if(SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MultiplayerMap"))
-        {
-            for (int x = 0; x < 30; x++)
-            {
-                List<Tile> tileRow = new List<Tile>();
-
-                for (int y = 0; y < 30; y++)
-                {
-                    tileRow.Add((GenerateTilesMap(x, y)));
-                }
-
-                tiles.Add(tileRow);
-            }
-            foreach (List<Tile> tileRow in tiles)
-            {
-                foreach (Tile tile in tileRow)
-                {
-                    instantiateSpecialTile(tile);
-                }
-            }
-        }
+        
 
        
 
@@ -146,6 +126,28 @@ public class TileManager : MonoBehaviour
         return specialBuildingChosen;
     }
     
+    public void CreateMultiplayerMap()
+    {
+        for (int x = 0; x < 30; x++)
+        {
+            List<Tile> tileRow = new List<Tile>();
+
+            for (int y = 0; y < 30; y++)
+            {
+                tileRow.Add((GenerateTilesMap(x, y)));
+            }
+
+            tiles.Add(tileRow);
+        }
+        foreach (List<Tile> tileRow in tiles)
+        {
+            foreach (Tile tile in tileRow)
+            {
+                instantiateSpecialTile(tile);
+            }
+        }
+    }
+
     /// <summary>
     /// Function to retrive neighbouring cells from a tile
     /// </summary>

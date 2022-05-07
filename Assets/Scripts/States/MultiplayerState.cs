@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MultiplayerState : GameState
 {
@@ -19,6 +20,7 @@ public class MultiplayerState : GameState
         Debug.Log("Multiplayer");
         if (PhotonNetwork.IsMasterClient)
         {
+            photonView.RPC("CreateMap", RpcTarget.AllBuffered);
             SetPlayers();
         }
     }
@@ -43,16 +45,30 @@ public class MultiplayerState : GameState
         if(currentPlayer == null)
         {
             currentPlayer = player1;
+            player1.gameData.isTurn = true;
         }
-        else
+        else if(currentPlayer == player1)
         {
-            currentPlayer = currentPlayer == player1 ? player2 : player1;
+            currentPlayer = player2;
+            player2.gameData.isTurn = true;
+            player1.gameData.isTurn = false;
+        }else if(currentPlayer == player2)
+        {
+            currentPlayer = player1;
+            player1.gameData.isTurn = true;
+            player2.gameData.isTurn = false;
         }
 
         if(currentPlayer == MultiplayerPlayerState.me)
         {
             MultiplayerPlayerState.me.BeginTurn();
         }
+    }
+
+    [PunRPC]
+    void CreateMap()
+    {
+        tileManager.CreateMultiplayerMap();
     }
        
     public MultiplayerPlayerState GetOtherPlayer(MultiplayerPlayerState player)
