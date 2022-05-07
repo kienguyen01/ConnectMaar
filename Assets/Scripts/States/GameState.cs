@@ -294,7 +294,7 @@ public class GameState : MonoBehaviourPun
             if (Input.GetKeyDown(KeyCode.Alpha3) || p3)
             {
                 Debug.Log("select 3");
-                SelectTrippleConnector();
+                SelectTripleConnector();
             }
             if (Input.GetKeyDown(KeyCode.Alpha4) || solarCheck)
             {
@@ -546,7 +546,7 @@ public class GameState : MonoBehaviourPun
         }
     }
 
-    public void SelectTrippleConnector()
+    public void SelectTripleConnector()
     {
         if (selectedConnector != null)
         {

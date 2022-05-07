@@ -517,7 +517,7 @@ public class TileManager : MonoBehaviour
     public List<Tile> getSpecialNeighbours(Tile tile)
     {
         List<Tile> neighbours = new List<Tile>();
-        Tile origin = tile.GetSpecialOriginTile();//left = 10,15 | origin = 10,16 | right = 11,16 | top = 10,17
+        Tile origin = tile.GetSpecialOriginTile();
 
         if (origin.Y % 2 == 0)
         {

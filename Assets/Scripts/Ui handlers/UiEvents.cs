@@ -31,7 +31,7 @@ public class UiEvents : MonoBehaviour
     public void btnClickConnector3()
     {
         Debug.Log("It wotrks3");
-        GameState.instance.SelectTrippleConnector();
+        GameState.instance.SelectTripleConnector();
     }
 
     public void BtnClickConnectorSolar()
