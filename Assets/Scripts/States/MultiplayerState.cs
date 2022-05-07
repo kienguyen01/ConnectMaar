@@ -3,10 +3,15 @@ using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
+[Serializable]
 public struct MapData
 {
     public List<string> houses;
@@ -17,6 +22,7 @@ public struct MapData
     public List<string> scrabbleSolar;
     public List<string> scrabbleHeats;
 }
+
 public class MultiplayerState : GameState
 {
     MapData mapData;
@@ -32,12 +38,19 @@ public class MultiplayerState : GameState
     private void Start()
     {
         mapData = new MapData();
-       
+        mapData.houses = new List<string>();
+        mapData.stadiums = new List<string>();
+        mapData.churches = new List<string>();
+        mapData.solars = new List<string>();
+        mapData.heats = new List<string>();
+        mapData.scrabbleSolar = new List<string>();
+        mapData.scrabbleHeats = new List<string>();
+
         Debug.Log("Multiplayer");
         if (PhotonNetwork.IsMasterClient)
         {
             addSpecialTiles();
-            photonView.RPC("CreateMap", RpcTarget.All, mapData);
+            photonView.RPC("CreateMap", RpcTarget.All, SerializeData(mapData));
             SetPlayers();
         }
     }
@@ -83,8 +96,9 @@ public class MultiplayerState : GameState
     }
 
     [PunRPC]
-    void CreateMap(MapData mapData)
+    void CreateMap(byte[] transferObject)
     {
+        MapData mapData = DeserializeData<MapData>(transferObject);
         for (int x = 0; x < 30; x++)
         {
             List<Tile> tileRow = new List<Tile>();
@@ -132,9 +146,6 @@ public class MultiplayerState : GameState
         mapData.solars.Add(randomizeTile(19, 19, 2, 1));
     }
 
-
-
-
     public string randomizeTile(int xMax, int yMax, int xMin, int yMin)
     {
         int X = Random.Range(xMax, xMin);
@@ -144,8 +155,41 @@ public class MultiplayerState : GameState
 
         return output;
     }
+
     public MultiplayerPlayerState GetOtherPlayer(MultiplayerPlayerState player)
     {
         return player == player1 ? player2 : player1;
+    }
+
+    public static byte[] SerializeData<T>(T data)
+    {
+        Console.WriteLine("Serializing an instance of the object.");
+        byte[] bytes;
+        using (var stream = new MemoryStream())
+        {
+            var serializer = new DataContractSerializer(typeof(T));
+            serializer.WriteObject(stream, data);
+            bytes = new byte[stream.Length];
+            stream.Position = 0;
+            stream.Read(bytes, 0, (int)stream.Length);
+        }
+        return bytes;
+    }
+
+    public static T DeserializeData<T>(byte[] data)
+    {
+        Console.WriteLine("Deserializing an instance of the object.");
+
+        T deserializedThing = default(T);
+
+        using (var stream = new MemoryStream(data))
+        using (var reader = XmlDictionaryReader.CreateTextReader(stream, new XmlDictionaryReaderQuotas()))
+        {
+            var serializer = new DataContractSerializer(typeof(T));
+
+            // Deserialize the data and read it from the instance.
+            deserializedThing = (T)serializer.ReadObject(reader, true);
+        }
+        return deserializedThing;
     }
 }
