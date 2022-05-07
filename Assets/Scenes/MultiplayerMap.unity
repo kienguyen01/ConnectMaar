@@ -245,6 +245,92 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15090ffcdcde0af459512219c0a55924, type: 3}
+--- !u!1 &136995008
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 136995011}
+  - component: {fileID: 136995010}
+  - component: {fileID: 136995009}
+  m_Layer: 0
+  m_Name: player1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &136995009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136995008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4899a5cb3cf31ee469047b2bc98c0ff2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config:
+    ConnectorManagerClass: {fileID: 0}
+  playerClass: {fileID: 0}
+  cameraClass: {fileID: 0}
+  gameData:
+    isTurn: 0
+    totalPoint: 0
+    handSize: 0
+    hasSolarInNetwork: 0
+    hasHeatInNetwork: 0
+    tilesTaken: []
+    connectionsDone: []
+    Inventory: []
+    SpecialConnector: []
+    SelectedConnector: {fileID: 0}
+    nodesOwned: []
+    PlayerColour: {r: 0, g: 0, b: 0, a: 0}
+  connectorManager: {fileID: 0}
+  points: 0
+--- !u!114 &136995010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136995008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!4 &136995011
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136995008}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &338751678
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,8 +368,8 @@ MonoBehaviour:
   p3: 0
   turnCheck: 0
   text: {fileID: 0}
-  player1: {fileID: 0}
-  player2: {fileID: 0}
+  player1: {fileID: 136995009}
+  player2: {fileID: 424589832}
   currentPlayer: {fileID: 0}
 --- !u!4 &338751680
 Transform:
@@ -299,6 +385,92 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &424589830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 424589833}
+  - component: {fileID: 424589832}
+  - component: {fileID: 424589831}
+  m_Layer: 0
+  m_Name: player2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &424589831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424589830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 2
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &424589832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424589830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4899a5cb3cf31ee469047b2bc98c0ff2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config:
+    ConnectorManagerClass: {fileID: 0}
+  playerClass: {fileID: 0}
+  cameraClass: {fileID: 0}
+  gameData:
+    isTurn: 0
+    totalPoint: 0
+    handSize: 0
+    hasSolarInNetwork: 0
+    hasHeatInNetwork: 0
+    tilesTaken: []
+    connectionsDone: []
+    Inventory: []
+    SpecialConnector: []
+    SelectedConnector: {fileID: 0}
+    nodesOwned: []
+    PlayerColour: {r: 0, g: 0, b: 0, a: 0}
+  connectorManager: {fileID: 0}
+  points: 0
+--- !u!4 &424589833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424589830}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -262.38263, y: 771.13513, z: 1154.0586}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &865698801 stripped
 Camera:

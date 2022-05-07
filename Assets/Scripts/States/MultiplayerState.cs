@@ -12,6 +12,8 @@ public class MultiplayerState : GameState
 
     public PlayerState currentPlayer;
 
+    public static MultiplayerState instance;
+
     private void Start()
     {
         Debug.Log("Multiplayer");

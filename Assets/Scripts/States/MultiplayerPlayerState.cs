@@ -29,17 +29,20 @@ public class MultiplayerPlayerState : PlayerState
         }
     }
 
+    private void Update()
+    {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+        if(Input.GetMouseButtonDown(0) && MultiplayerState.instance.currentPlayer == this)
+        {
+
+        }
+    }
+
     public void BeginTurn()
     {
         me.gameData.isTurn = true;
     }
-
-
-
-
-
-    
-    
-        
-    
 }
