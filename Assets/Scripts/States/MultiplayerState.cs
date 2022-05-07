@@ -31,7 +31,7 @@ public class MultiplayerState : GameState
 
     private void Start()
     {
-        
+        mapData = new MapData();
        
         Debug.Log("Multiplayer");
         if (PhotonNetwork.IsMasterClient)
