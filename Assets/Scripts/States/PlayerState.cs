@@ -1,9 +1,11 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
+using Photon.Realtime;
 
 [System.Serializable]
 public struct ConnectorConfig
@@ -301,5 +303,12 @@ public class PlayerState : MonoBehaviour
     {
         gameData.connectionsDone.Add(conn);
         return this;
+    }
+
+
+    [PunRPC]
+    void ReduceEmmisons(int score)
+    {
+        
     }
 }

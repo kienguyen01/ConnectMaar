@@ -254,9 +254,6 @@ public class GameState : MonoBehaviour
 
                         }
                     }
-
-
-
                     hasHeat = false;
                     hasSolar = false;
                     allSolar = true;

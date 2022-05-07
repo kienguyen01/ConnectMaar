@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviourPunCallbacks
 {
@@ -100,11 +101,19 @@ public class Menu : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
+    public void Changescene()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+    [PunRPC]
     public void OnLeaveButton()
     {
         PhotonNetwork.LeaveRoom();
         SetScreen(mainScreen);
     }
+
+
 
 
 
