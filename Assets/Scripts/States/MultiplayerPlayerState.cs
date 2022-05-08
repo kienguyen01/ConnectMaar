@@ -35,6 +35,7 @@ public class MultiplayerPlayerState : PlayerState
         if (player.IsLocal)
         {
             me = this;
+            //SetStartPoint(me);
             me.gameData.PlayerColour = Color.blue;
             TileManager.tiles[10][16].OwnedBy = me;
 
@@ -44,7 +45,7 @@ public class MultiplayerPlayerState : PlayerState
         else
         {
             enemy = this;
-            enemy.gameData.PlayerColour = Color.black;
+          enemy.gameData.PlayerColour = Color.black;
             TileManager.tiles[15][15].OwnedBy = enemy;
         }
         //StartingPoint();
@@ -75,6 +76,21 @@ public class MultiplayerPlayerState : PlayerState
         //    Debug.Log("It is my turn");
         //}
     }
+
+/*    public void SetStartPoint(MultiplayerPlayerState player)
+    {
+        if(TileManager.tiles[10][16].OwnedBy == null)
+        {
+            TileManager.tiles[10][16].OwnedBy = player;
+            me.gameData.PlayerColour = Color.red;
+            //photonView.RPC()
+        }
+        else
+        {
+            player.gameData.PlayerColour = Color.blue;
+            TileManager.tiles[15][15].OwnedBy = player;
+        }
+    }*/
 
     public void BeginTurn()
     {

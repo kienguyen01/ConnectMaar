@@ -388,7 +388,7 @@ public class GameState : MonoBehaviourPun
         if (Input.GetMouseButtonDown(0) && !selectedConnector)
             GetInfoCard(player1);
 
-        startPoint();
+        //startPoint();
     }
 
 
@@ -426,7 +426,7 @@ public class GameState : MonoBehaviourPun
         {
             GameObject tileObjectTouched = hitInfo.collider.transform.gameObject;
             tileTouched = tileObjectTouched.GetComponent<Tile>();
-            Debug.LogError(tileTouched.X + " " + tileTouched.Y);
+            //Debug.LogError(tileTouched.X + " " + tileTouched.Y);
 
             if (tileTouched == null)
             {

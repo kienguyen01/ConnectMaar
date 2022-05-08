@@ -24,9 +24,21 @@ public struct MapData
     public List<string> scrabbleHeats;
 }
 
+[Serializable]
+public struct ConnectionsList
+{
+    
+    public List<Tile> tilesChosen;
+}
+
+
+
+
+
 public class MultiplayerState : GameState
 {
     MapData mapData;
+    ConnectionsList connectionsList;
     /*public MultiplayerPlayerState player1;
     public MultiplayerPlayerState player2;*/
 
@@ -62,11 +74,21 @@ public class MultiplayerState : GameState
         Debug.LogError(currentPlayer ? "current assigned" : "current empty");
     }
 
+
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && currentPlayer == MultiplayerPlayerState.me)
         {
+            connectionsList.tilesChosen= new List<Tile>(player1.gameData.tilesChosen);
+            photonView.RPC("SendTiles", RpcTarget.Others, SerializeData(connectionsList));
+
             photonView.RPC("EndTurn", RpcTarget.All);
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+
         }
         if (currentPlayer.gameData.isTurn)
         {
@@ -199,6 +221,7 @@ public class MultiplayerState : GameState
         {
             currentPlayer = player1;
             player1.gameData.isTurn = true;
+
         }
         else
         {
@@ -258,6 +281,43 @@ public class MultiplayerState : GameState
             }
         }
     }
+
+    [PunRPC]
+    void SendTiles(byte[] transferObject)
+    {
+        ConnectionsList connectionsList = DeserializeData<ConnectionsList>(transferObject);
+
+        foreach (Tile tile in connectionsList.tilesChosen)
+        {
+            if (!(tile.Structure.GetType() == typeof(Node)))
+            {
+                tile.OwnedBy = player2;
+            }
+            tile.SelectedBy = null;
+           // AssignScrabbleTileRewards(tile);
+        }
+        player2.gameData.tilesTaken.AddRange(player2.gameData.tilesChosen);
+
+    }
+
+/*    public void AssignScrabbleTileRewards(Tile tile)
+    {
+        if (tile.IsScrambleForHeat)
+        {
+            this.AddHeatPipeConnector()
+                .AddHeatPipeConnector()
+                .AddHeatPipeConnector()
+                .AddHeatPipeConnector();
+        }
+        else if (tile.IsScrambleForSolar)
+        {
+            this
+                .AddSolarConnector()
+                .AddSolarConnector()
+                .AddSolarConnector()
+                .AddSolarConnector();
+        }
+    }*/
 
     void addSpecialTiles()
     {
