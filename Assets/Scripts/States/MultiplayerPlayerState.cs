@@ -10,7 +10,7 @@ public class MultiplayerPlayerState : PlayerState
 {
 
     public Photon.Realtime.Player photonPlayer;
-    GameObject PlaneObj;
+    //GameObject PlaneObj;
 
 
     public string[] sdtatingPoints;
@@ -51,7 +51,7 @@ public class MultiplayerPlayerState : PlayerState
 
     }
 
-    void StartingPoint()
+    /*void StartingPoint()
     {
             GameObject plane = PhotonNetwork.Instantiate("Plane",PlaneObj.transform.position,PlaneObj.transform.rotation);
 
@@ -62,7 +62,7 @@ public class MultiplayerPlayerState : PlayerState
 
             
        
-    }
+    }*/
 
     private void Update()
     {

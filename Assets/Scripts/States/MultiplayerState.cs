@@ -27,12 +27,12 @@ public struct MapData
 public class MultiplayerState : GameState
 {
     MapData mapData;
-    public MultiplayerPlayerState player1;
-    public MultiplayerPlayerState player2;
+    /*public MultiplayerPlayerState player1;
+    public MultiplayerPlayerState player2;*/
 
     public PlayerState currentPlayer;
 
-    public static MultiplayerState instance;
+    new public static MultiplayerState instance;
 
 
 
@@ -77,7 +77,6 @@ public class MultiplayerState : GameState
 
             if (Input.GetKeyDown(KeyCode.Alpha1) || p1)
             {
-
                 SelectSingleConnector(currentPlayer);
             }
             if (Input.GetKeyDown(KeyCode.Alpha2) || p2)
@@ -95,18 +94,17 @@ public class MultiplayerState : GameState
             if (Input.GetKeyDown(KeyCode.Alpha5) || heatCheck)
             {
                 SelectHeatConnector(currentPlayer);
-
             }
             if (Input.GetKeyDown(KeyCode.Alpha6) || nodeCheck)
             {
                 SelectNodeConnector(currentPlayer);
             }
 
-            if (!(Input.GetMouseButtonDown(0) && !selectedConnector))
+            if (!(Input.GetMouseButtonDown(0) && !selectedConnector) && Input.GetMouseButton(0)) //click & selected == true | click & not selected == false | not click and anything == true
             {
-                if (!placingNode && Input.GetMouseButtonDown(0) && (selectedConnector == null || selectedConnector.MaxLength > selectedConnector.getLength()) && !(EventSystem.current.IsPointerOverGameObject()))
+                if (!placingNode && (selectedConnector == null || selectedConnector.MaxLength > selectedConnector.getLength()) && !(EventSystem.current.IsPointerOverGameObject()))
                 {
-                    Tile t = chooseTile(currentPlayer);
+                    Tile t = chooseTile(currentPlayer, selectedConnector);
                     if (t != null)
                     {
                         if (t.SelectedBy != null && selectedConnector != null && !(t == selectedConnector.GetLastTile()))
@@ -173,20 +171,25 @@ public class MultiplayerState : GameState
     }
     void SetPlayers()
     {
-        player1.photonView.TransferOwnership(1);
-        player2.photonView.TransferOwnership(2);
+        /*player1.photonView.TransferOwnership(1);
+        player2.photonView.TransferOwnership(2);*/
 
-        player1.photonView.RPC("Initialize", RpcTarget.AllBuffered, PhotonNetwork.CurrentRoom.GetPlayer(1));
-        player2.photonView.RPC("Initialize", RpcTarget.AllBuffered, PhotonNetwork.CurrentRoom.GetPlayer(2));
+        player1.photonView.RPC("Initialize", RpcTarget.AllBuffered, PhotonNetwork.LocalPlayer);
+        player2.photonView.RPC("Initialize", RpcTarget.AllBuffered, PhotonNetwork.PlayerListOthers[0]);
 
-        Debug.LogError($"{player1.photonPlayer.NickName}");
-        Debug.LogError($"{player2.photonPlayer.NickName}");
-       
+        Debug.LogError($"{((MultiplayerPlayerState)player1).photonPlayer.NickName}");
+        Debug.LogError($"{((MultiplayerPlayerState)player2).photonPlayer.NickName}");
 
         photonView.RPC("SetNextTurn", RpcTarget.AllBuffered);
 
         Debug.LogError($"{player1.gameData.isTurn}");
         Debug.LogError($"{player2.gameData.isTurn}");
+
+        player1.RefillHand();
+        player2.RefillHand();
+
+        /*player1.EndTurn();
+        RPCSendTakenTiles();*/
     }
 
     [PunRPC]
@@ -230,8 +233,6 @@ public class MultiplayerState : GameState
         }
         Debug.LogError("turn changed");
         Debug.LogError(player1.gameData.isTurn ? "p1" : "p2");
-
-
     }
 
     [PunRPC]
@@ -257,7 +258,7 @@ public class MultiplayerState : GameState
             }
         }
     }
-       
+
     void addSpecialTiles()
     {
         mapData.stadiums.Add(randomizeTile(9, 17, 9, 17));
@@ -295,7 +296,7 @@ public class MultiplayerState : GameState
         return output;
     }
 
-    public MultiplayerPlayerState GetOtherPlayer(MultiplayerPlayerState player)
+    public PlayerState GetOtherPlayer(PlayerState player)
     {
         return player == player1 ? player2 : player1;
     }

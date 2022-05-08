@@ -137,7 +137,7 @@ public class PlayerState : MonoBehaviourPun
 
 
 
-    public void RefillHand()
+    public PlayerState RefillHand()
     {
         for (int i = gameData.Inventory.Count; i < gameData.handSize; i++)
         {
@@ -159,9 +159,11 @@ public class PlayerState : MonoBehaviourPun
             }
         }
         updateInventoryUI();
+
+        return this;
     }
     
-    public void refilSpecificHand(int one,int two, int three)
+    public PlayerState refilSpecificHand(int one,int two, int three)
     {
         if (gameData.Inventory.Count < gameData.handSize)
         {
@@ -182,9 +184,10 @@ public class PlayerState : MonoBehaviourPun
 
         updateInventoryUI();
 
+        return this;
     }
 
-    public void clearHand()
+    public PlayerState clearHand()
     {
         gameData.Inventory.RemoveAll(x => x.MaxLength == 1);
         gameData.Inventory.RemoveAll(x => x.MaxLength == 2);
@@ -192,6 +195,7 @@ public class PlayerState : MonoBehaviourPun
 
         updateInventoryUI();
 
+        return this;
     }
 
     public void updateInventoryUI()

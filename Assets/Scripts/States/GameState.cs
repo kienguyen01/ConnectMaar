@@ -20,7 +20,10 @@ public class GameState : MonoBehaviourPun
     public GameStateConfig config;
 
     [HideInInspector]
-    public List<PlayerState> playerStates;
+    public PlayerState player1;
+    [HideInInspector]
+    public PlayerState player2;
+
 
     [HideInInspector]
     public TileManager tileManager;
@@ -169,16 +172,24 @@ public class GameState : MonoBehaviourPun
     protected Connection currentConnection;
     protected List<Connection> turnConnections; 
 
-    private void createPlayer()
+    protected void createPlayer()
     {
-        playerStates.Add(Instantiate(config.PlayerStateClass));
-        playerStates[0].RefillHand();
+        if(player1 == null)
+        {
+            player1 = Instantiate(config.PlayerStateClass)
+                      .RefillHand(); 
+        }
+        else if (player2 == null)
+        {
+            player2 = Instantiate(config.PlayerStateClass)
+                      .RefillHand();
+        }
     }
 
     private void TurnMsg()
     {
         EndBtnMsg = GameObject.Find("EndBtnMsg").GetComponent<TextMeshProUGUI>();
-        if (playerStates[0].gameData.isTurn == true)
+        if (player1.gameData.isTurn == true)
         {
             EndBtnMsg.text = "End  Turn";
         }
@@ -199,7 +210,7 @@ public class GameState : MonoBehaviourPun
             turnCheck = false;
             if (selectedConnector == null || selectedConnector.getLength() >= selectedConnector.MaxLength)
             {
-                if (playerStates[0].gameData.isTurn)
+                if (player1.gameData.isTurn)
                 {
                     foreach (Connection conn in turnConnections)
                     {
@@ -216,30 +227,30 @@ public class GameState : MonoBehaviourPun
                         }
                         if ((isSolarConnectionEnd && allSolar) || (isHeatConnectionEnd && allHeat) || (hasStandard && !hasHeat && !hasSolar && isNormalConnectionEnd))
                         {
-                            playerStates[0].RefillHand();
-                            playerStates[0].gameData.isTurn = false;
-                            playerStates[0].EndTurn();
+                            player1.RefillHand();
+                            player1.gameData.isTurn = false;
+                            player1.EndTurn();
                             
                             if (isSolarConnectionEnd && allSolar)
                             {
-                                playerStates[0].gameData.hasSolarInNetwork = true;
+                                player1.gameData.hasSolarInNetwork = true;
                             }
                             if (isHeatConnectionEnd && allHeat)
                             {
-                                playerStates[0].gameData.hasHeatInNetwork = true;
+                                player1.gameData.hasHeatInNetwork = true;
                             }
                             int connectorCount = turnConnections.Count;
                             Connector connector = conn.GetLastConnector();
                                 
                             if (connector.GetLastTile().Structure.GetType().Equals(typeof(House)))
                             {
-                                playerStates[0].gameData.totalPoint -= 5 / connectorCount;
+                                player1.gameData.totalPoint -= 5 / connectorCount;
                                 Debug.LogError(connectorCount);
-                                Debug.LogError(playerStates[0].gameData.totalPoint) ;
+                                Debug.LogError(player1.gameData.totalPoint) ;
                             }
                             else if (connector.GetLastTile().Structure.GetType().Equals(typeof(SpecialBuilding)))
                             {
-                                playerStates[0].gameData.totalPoint -= 15 / conn.Connectors.Count; //TODO: multiply by bonus
+                                player1.gameData.totalPoint -= 15 / conn.Connectors.Count; //TODO: multiply by bonus
 
                             }
                             else if (connector.GetLastTile().Structure.GetType().Equals(typeof(Node)))
@@ -250,7 +261,7 @@ public class GameState : MonoBehaviourPun
                             {
 
                             }
-                            playerStates[0].FinalizeConnection(conn);
+                            player1.FinalizeConnection(conn);
 
 
                         }
@@ -268,53 +279,53 @@ public class GameState : MonoBehaviourPun
                 }
                 else
                 {
-                    playerStates[0].gameData.isTurn = true;
+                    player1.gameData.isTurn = true;
                 }
-                Debug.Log("isTurn" + playerStates[0].gameData.isTurn.ToString());
+                Debug.Log("isTurn" + player1.gameData.isTurn.ToString());
             }
         }
-        if (playerStates[0].gameData.isTurn)
+        if (player1.gameData.isTurn)
         {
             if (Input.GetKeyDown(KeyCode.Alpha0) || clearBtn)
             {
-                clearAllSelected(playerStates[0]);
+                clearAllSelected(player1);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1) || p1)
             {
                 Debug.Log("select 1");
 
-                SelectSingleConnector(playerStates[0]);
+                SelectSingleConnector(player1);
             }
             if (Input.GetKeyDown(KeyCode.Alpha2) || p2)
             {
                 Debug.Log("select 2");
-                SelectDoubleConnector(playerStates[0]);
+                SelectDoubleConnector(player1);
             }
             if (Input.GetKeyDown(KeyCode.Alpha3) || p3)
             {
                 Debug.Log("select 3");
-                SelectTripleConnector(playerStates[0]);
+                SelectTripleConnector(player1);
             }
             if (Input.GetKeyDown(KeyCode.Alpha4) || solarCheck)
             {
-                SelectSolarConnector(playerStates[0]);
+                SelectSolarConnector(player1);
             }
             if (Input.GetKeyDown(KeyCode.Alpha5) || heatCheck)
             {
-                SelectHeatConnector(playerStates[0]);
+                SelectHeatConnector(player1);
 
             }
             if (Input.GetKeyDown(KeyCode.Alpha6) || nodeCheck)
             {
-                SelectNodeConnector(playerStates[0]);
+                SelectNodeConnector(player1);
             }
 
             if (!(Input.GetMouseButtonDown(0) && !selectedConnector))
             {
                 if (!placingNode && Input.GetMouseButtonDown(0) && (selectedConnector == null || selectedConnector.MaxLength > selectedConnector.getLength()) && !(EventSystem.current.IsPointerOverGameObject()))
                 {
-                    Tile t = chooseTile(playerStates[0]);
+                    Tile t = chooseTile(player1);
                     if (t != null)
                     {
                         if (t.SelectedBy != null && selectedConnector != null && !(t == selectedConnector.GetLastTile()))
@@ -327,7 +338,7 @@ public class GameState : MonoBehaviourPun
                                 }
                                 if (currentConnection == null)
                                 {
-                                    currentConnection = playerStates[0].StartConnection();
+                                    currentConnection = player1.StartConnection();
                                     turnConnections.Add(currentConnection);
                                 }
                                 currentConnection.Connectors.Add(selectedConnector);
@@ -341,7 +352,7 @@ public class GameState : MonoBehaviourPun
                                 {
                                     if (currentConnection == null)
                                     {
-                                        currentConnection = playerStates[0].StartConnection();
+                                        currentConnection = player1.StartConnection();
                                         turnConnections.Add(currentConnection);
                                     }
                                     if(currentConnection.Connectors == null)
@@ -375,7 +386,7 @@ public class GameState : MonoBehaviourPun
         }
 
         if (Input.GetMouseButtonDown(0) && !selectedConnector)
-            GetInfoCard(playerStates[0]);
+            GetInfoCard(player1);
 
         startPoint();
     }
@@ -385,7 +396,7 @@ public class GameState : MonoBehaviourPun
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            TileManager.tiles[12][16].OwnedBy = playerStates[0];
+            TileManager.tiles[12][16].OwnedBy = player1;
         }
     }
 
@@ -399,12 +410,17 @@ public class GameState : MonoBehaviourPun
     /// Function that selects one tile when tapped
     /// </summary>
     /// <returns></returns>
-    protected Tile chooseTile(PlayerState player)
+    protected Tile chooseTile(PlayerState player, Connector _connector = null)
     {
         Tile tileTouched;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hitInfo;
+
+        //test
+        player = player1;
+
+        selectedConnector = _connector ?? selectedConnector;
 
         if (Physics.Raycast(ray, out hitInfo))
         {
@@ -419,6 +435,11 @@ public class GameState : MonoBehaviourPun
                 {
                     return null;
                 }
+            }
+
+            if (!selectedConnector)
+            {
+                return null;
             }
 
             if (selectedConnector.getLength() < 2 || (selectedConnector.GetTiles().Contains(tileTouched)) || Connector.IsValidLengthThree(selectedConnector.GetTiles()[0], selectedConnector.GetTiles()[1], tileTouched))
