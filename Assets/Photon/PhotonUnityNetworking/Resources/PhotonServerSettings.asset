@@ -50,6 +50,8 @@ MonoBehaviour:
   - UpdateEmissionBar
   - Win
   - CreateMap
+  - EndTurn
+  - DebugTest
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

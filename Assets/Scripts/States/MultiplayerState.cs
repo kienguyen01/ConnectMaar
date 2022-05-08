@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
@@ -55,14 +56,120 @@ public class MultiplayerState : GameState
         }
     }
 
+    [PunRPC]
+    void DebugTest()
+    {
+        Debug.LogError(currentPlayer ? "current assigned" : "current empty");
+    }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && currentPlayer == MultiplayerPlayerState.me)
         {
-            
             photonView.RPC("EndTurn", RpcTarget.All);
         }
+        if (currentPlayer.gameData.isTurn)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha0) || clearBtn)
+            {
+                clearAllSelected(currentPlayer);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha1) || p1)
+            {
+
+                SelectSingleConnector(currentPlayer);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2) || p2)
+            {
+                SelectDoubleConnector(currentPlayer);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3) || p3)
+            {
+                SelectTripleConnector(currentPlayer);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4) || solarCheck)
+            {
+                SelectSolarConnector(currentPlayer);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha5) || heatCheck)
+            {
+                SelectHeatConnector(currentPlayer);
+
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha6) || nodeCheck)
+            {
+                SelectNodeConnector(currentPlayer);
+            }
+
+            if (!(Input.GetMouseButtonDown(0) && !selectedConnector))
+            {
+                if (!placingNode && Input.GetMouseButtonDown(0) && (selectedConnector == null || selectedConnector.MaxLength > selectedConnector.getLength()) && !(EventSystem.current.IsPointerOverGameObject()))
+                {
+                    Tile t = chooseTile(currentPlayer);
+                    if (t != null)
+                    {
+                        if (t.SelectedBy != null && selectedConnector != null && !(t == selectedConnector.GetLastTile()))
+                        {
+                            if (t.IsSpecial() && isNormalConnectionEnd)
+                            {
+                                foreach (Tile tile in tileManager.getSpecialNeighbours(t))
+                                {
+                                    selectedConnector.AddTile(t);
+                                }
+                                if (currentConnection == null)
+                                {
+                                    currentConnection = currentPlayer.StartConnection();
+                                    turnConnections.Add(currentConnection);
+                                }
+                                currentConnection.Connectors.Add(selectedConnector);
+                                selectedConnector = null;
+                            }
+                            else
+                            {
+                                selectedConnector.AddTile(t);
+
+                                if (selectedConnector.MaxLength == selectedConnector.getLength())
+                                {
+                                    if (currentConnection == null)
+                                    {
+                                        currentConnection = currentPlayer.StartConnection();
+                                        turnConnections.Add(currentConnection);
+                                    }
+                                    if (currentConnection.Connectors == null)
+                                    {
+                                        currentConnection.Connectors = new List<Connector>();
+                                    }
+                                    currentConnection.Connectors.Add(selectedConnector);
+                                    selectedConnector = null;
+
+                                    //TODO: Connectors is set back to 0
+                                    //TODO: turnConnections is not adding multiple connection in 1 turn
+                                }
+                            }
+                        }
+                        else
+                        {
+                            selectedConnector.RemoveTile(t);
+                        }
+                    }
+                }
+            }
+            else if (Input.GetMouseButtonDown(0) && placingNode)
+            {
+                Tile t = PlaceNode();
+
+                if (!(t == null))
+                {
+                    placingNode = false;
+                }
+            }
+        }
+
+        if (Input.GetMouseButtonDown(0) && !selectedConnector)
+            GetInfoCard(MultiplayerPlayerState.me);
+
+
     }
     void SetPlayers()
     {
