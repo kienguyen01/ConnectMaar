@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using mixpanel;
 using Photon.Pun;
+using System;
 
 [System.Serializable]
 public struct GameStateConfig
@@ -204,86 +205,9 @@ public class GameState : MonoBehaviourPun
     private void Update()
     {
         TurnMsg();
-        if (Input.GetKeyDown(KeyCode.Space) || turnCheck)
-        {
 
-            turnCheck = false;
-            if (selectedConnector == null || selectedConnector.getLength() >= selectedConnector.MaxLength)
-            {
-                if (player1.gameData.isTurn)
-                {
-                    foreach (Connection conn in turnConnections)
-                    {
-                        foreach (Connector connector in conn.Connectors)
-                        {
-                            if (conn == SolarConnection && !connector.GetType().Equals(typeof(SolarPanelConnector)))
-                            {
-                                allSolar = false;
-                            }
-                            if (conn == HeatConnection && !connector.GetType().Equals(typeof(HeatPipeConnector)))
-                            {
-                                allHeat = false;
-                            }
-                        }
-                        if ((isSolarConnectionEnd && allSolar) || (isHeatConnectionEnd && allHeat) || (hasStandard && !hasHeat && !hasSolar && isNormalConnectionEnd))
-                        {
-                            player1.RefillHand();
-                            player1.gameData.isTurn = false;
-                            player1.EndTurn();
-                            
-                            if (isSolarConnectionEnd && allSolar)
-                            {
-                                player1.gameData.hasSolarInNetwork = true;
-                            }
-                            if (isHeatConnectionEnd && allHeat)
-                            {
-                                player1.gameData.hasHeatInNetwork = true;
-                            }
-                            int connectorCount = turnConnections.Count;
-                            Connector connector = conn.GetLastConnector();
-                                
-                            if (connector.GetLastTile().Structure.GetType().Equals(typeof(House)))
-                            {
-                                player1.gameData.totalPoint -= 5 / connectorCount;
-                                Debug.LogError(connectorCount);
-                                Debug.LogError(player1.gameData.totalPoint) ;
-                            }
-                            else if (connector.GetLastTile().Structure.GetType().Equals(typeof(SpecialBuilding)))
-                            {
-                                player1.gameData.totalPoint -= 15 / conn.Connectors.Count; //TODO: multiply by bonus
+        CheckEndTurn();
 
-                            }
-                            else if (connector.GetLastTile().Structure.GetType().Equals(typeof(Node)))
-                            {
-
-                            }
-                            else if (connector.GetLastTile().Structure.GetType().Equals(typeof(SolarPanel)) || connector.GetLastTile().Structure.GetType().Equals(typeof(HeatPipe)))
-                            {
-
-                            }
-                            player1.FinalizeConnection(conn);
-
-
-                        }
-                    }
-                    hasHeat = false;
-                    hasSolar = false;
-                    allSolar = true;
-                    allHeat = true;
-                    hasStandard = false;
-                    isHeatConnectionEnd = false;
-                    isSolarConnectionEnd = false;
-                    currentConnection = null;
-                    turnConnections = new List<Connection>();
-                    isNormalConnectionEnd = false;
-                }
-                else
-                {
-                    player1.gameData.isTurn = true;
-                }
-                Debug.Log("isTurn" + player1.gameData.isTurn.ToString());
-            }
-        }
         if (player1.gameData.isTurn)
         {
             if (Input.GetKeyDown(KeyCode.Alpha0) || clearBtn)
@@ -391,6 +315,89 @@ public class GameState : MonoBehaviourPun
         //startPoint();
     }
 
+    protected bool CheckEndTurn()
+    {
+        bool returnObj = false;
+        if (Input.GetKeyDown(KeyCode.Space) || turnCheck)
+        {
+            turnCheck = false;
+            if (selectedConnector == null || selectedConnector.getLength() >= selectedConnector.MaxLength)
+            {
+                if (player1.gameData.isTurn)
+                {
+                    foreach (Connection conn in turnConnections)
+                    {
+                        foreach (Connector connector in conn.Connectors)
+                        {
+                            if (conn == SolarConnection && !connector.GetType().Equals(typeof(SolarPanelConnector)))
+                            {
+                                allSolar = false;
+                            }
+                            if (conn == HeatConnection && !connector.GetType().Equals(typeof(HeatPipeConnector)))
+                            {
+                                allHeat = false;
+                            }
+                        }
+                        if ((isSolarConnectionEnd && allSolar) || (isHeatConnectionEnd && allHeat) || (hasStandard && !hasHeat && !hasSolar && isNormalConnectionEnd))
+                        {
+                            returnObj = true;
+                            player1.RefillHand();
+                            player1.gameData.isTurn = false;
+                            player1.EndTurn();
+
+                            if (isSolarConnectionEnd && allSolar)
+                            {
+                                player1.gameData.hasSolarInNetwork = true;
+                            }
+                            if (isHeatConnectionEnd && allHeat)
+                            {
+                                player1.gameData.hasHeatInNetwork = true;
+                            }
+                            int connectorCount = turnConnections.Count;
+                            Connector connector = conn.GetLastConnector();
+
+                            if (connector.GetLastTile().Structure.GetType().Equals(typeof(House)))
+                            {
+                                player1.gameData.totalPoint -= 5 / connectorCount;
+                                Debug.LogError(connectorCount);
+                                Debug.LogError(player1.gameData.totalPoint);
+                            }
+                            else if (connector.GetLastTile().Structure.GetType().Equals(typeof(SpecialBuilding)))
+                            {
+                                player1.gameData.totalPoint -= 15 / conn.Connectors.Count; //TODO: multiply by bonus
+
+                            }
+                            else if (connector.GetLastTile().Structure.GetType().Equals(typeof(Node)))
+                            {
+
+                            }
+                            else if (connector.GetLastTile().Structure.GetType().Equals(typeof(SolarPanel)) || connector.GetLastTile().Structure.GetType().Equals(typeof(HeatPipe)))
+                            {
+
+                            }
+                            player1.FinalizeConnection(conn);
+                        }
+                    }
+                    hasHeat = false;
+                    hasSolar = false;
+                    allSolar = true;
+                    allHeat = true;
+                    hasStandard = false;
+                    isHeatConnectionEnd = false;
+                    isSolarConnectionEnd = false;
+                    currentConnection = null;
+                    turnConnections = new List<Connection>();
+                    isNormalConnectionEnd = false;
+                }
+                else
+                {
+                    player1.gameData.isTurn = true;
+                }
+                Debug.Log("isTurn" + player1.gameData.isTurn.ToString());
+            }
+        }
+        return returnObj;
+    }
 
     public virtual void startPoint()
     {

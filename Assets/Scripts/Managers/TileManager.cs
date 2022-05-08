@@ -94,11 +94,6 @@ public class TileManager : MonoBehaviour
                 }
             }
         }
-        
-
-       
-
-
     }
 
     public int tileAvailable

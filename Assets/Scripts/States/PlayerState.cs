@@ -6,6 +6,10 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
 using Photon.Realtime;
+using System.Reflection;
+using System.Linq;
+using System;
+using System.Runtime.Serialization;
 
 [System.Serializable]
 public struct ConnectorConfig
@@ -38,6 +42,8 @@ public class PlayerGameData
     public Color PlayerColour;
 }
 
+[DataContract]
+[KnownType("GetKnownTypes")]
 public class PlayerState : MonoBehaviourPun
 {
     public ConnectorConfig config;
@@ -141,7 +147,7 @@ public class PlayerState : MonoBehaviourPun
     {
         for (int i = gameData.Inventory.Count; i < gameData.handSize; i++)
         {
-            switch (Random.Range(1, 4))
+            switch (UnityEngine.Random.Range(1, 4))
             {
                 case 1:
                     gameData.Inventory.Add(this.gameObject.AddComponent<StandardConnector>());
@@ -307,6 +313,22 @@ public class PlayerState : MonoBehaviourPun
     {
         gameData.connectionsDone.Add(conn);
         return this;
+    }
+
+
+    private static IEnumerable<Type> _playerStateTypes;
+    /// <summary>
+    /// Method returning types of PlayerState, used for Serialization
+    /// </summary>
+    /// <returns></returns>
+    private static IEnumerable<Type> GetKnownTypes()
+    {
+        if (_playerStateTypes == null)
+            _playerStateTypes = Assembly.GetExecutingAssembly()
+                                    .GetTypes()
+                                    .Where(t => typeof(PlayerState).IsAssignableFrom(t))
+                                    .ToList();
+        return _playerStateTypes;
     }
 
 }

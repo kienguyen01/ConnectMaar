@@ -25,20 +25,15 @@ public struct MapData
 }
 
 [Serializable]
-public struct ConnectionsList
+public struct EndTurnData
 {
-    
-    public List<Tile> tilesChosen;
+    public List<string> tilesChosen;
 }
-
-
-
-
 
 public class MultiplayerState : GameState
 {
     MapData mapData;
-    ConnectionsList connectionsList;
+    EndTurnData endTurnData;
     /*public MultiplayerPlayerState player1;
     public MultiplayerPlayerState player2;*/
 
@@ -46,11 +41,10 @@ public class MultiplayerState : GameState
 
     new public static MultiplayerState instance;
 
-
-
     private void Start()
     {
         mapData = new MapData();
+        endTurnData = new EndTurnData();
         mapData.houses = new List<string>();
         mapData.stadiums = new List<string>();
         mapData.churches = new List<string>();
@@ -74,22 +68,13 @@ public class MultiplayerState : GameState
         Debug.LogError(currentPlayer ? "current assigned" : "current empty");
     }
 
-
-
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && currentPlayer == MultiplayerPlayerState.me)
+        if (Input.GetKeyDown(KeyCode.Space) || turnCheck)
         {
-            connectionsList.tilesChosen= new List<Tile>(player1.gameData.tilesChosen);
-            photonView.RPC("SendTiles", RpcTarget.Others, SerializeData(connectionsList));
-
-            photonView.RPC("EndTurn", RpcTarget.All);
-
+            CheckEndTurn();
         }
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
 
-        }
         if (currentPlayer.gameData.isTurn)
         {
             if (Input.GetKeyDown(KeyCode.Alpha0) || clearBtn)
@@ -122,7 +107,7 @@ public class MultiplayerState : GameState
                 SelectNodeConnector(currentPlayer);
             }
 
-            if (!(Input.GetMouseButtonDown(0) && !selectedConnector) && Input.GetMouseButton(0)) //click & selected == true | click & not selected == false | not click and anything == true
+            if (!(Input.GetMouseButtonDown(0) && !selectedConnector) && Input.GetMouseButtonDown(0)) //click & selected == true | click & not selected == false | not click and anything == true
             {
                 if (!placingNode && (selectedConnector == null || selectedConnector.MaxLength > selectedConnector.getLength()) && !(EventSystem.current.IsPointerOverGameObject()))
                 {
@@ -188,13 +173,36 @@ public class MultiplayerState : GameState
 
         if (Input.GetMouseButtonDown(0) && !selectedConnector)
             GetInfoCard(MultiplayerPlayerState.me);
-
-
     }
+
+    new protected bool CheckEndTurn()
+    {
+        List<Tile> chosenTiles = new List<Tile>(player1.gameData.tilesChosen);
+        bool returnObj = base.CheckEndTurn();
+
+        if (returnObj)
+        {
+            endTurnData.tilesChosen = new List<string>();
+
+            foreach (var item in chosenTiles)
+            {
+                endTurnData.tilesChosen.Add(item.X.ToString().PadLeft(3, '0') + "|" + item.Y.ToString().PadLeft(3, '0'));
+            }
+
+            photonView.RPC("SendTiles", RpcTarget.Others, SerializeData(endTurnData));
+
+            photonView.RPC("EndTurn", RpcTarget.All);
+        }
+
+        return returnObj;
+    }
+
     void SetPlayers()
     {
-        /*player1.photonView.TransferOwnership(1);
-        player2.photonView.TransferOwnership(2);*/
+        /*
+        player1.photonView.TransferOwnership(1);
+        player2.photonView.TransferOwnership(2);
+        */
 
         player1.photonView.RPC("Initialize", RpcTarget.AllBuffered, PhotonNetwork.LocalPlayer);
         player2.photonView.RPC("Initialize", RpcTarget.AllBuffered, PhotonNetwork.PlayerListOthers[0]);
@@ -285,10 +293,13 @@ public class MultiplayerState : GameState
     [PunRPC]
     void SendTiles(byte[] transferObject)
     {
-        ConnectionsList connectionsList = DeserializeData<ConnectionsList>(transferObject);
+        EndTurnData _endTurnData = DeserializeData<EndTurnData>(transferObject);
 
-        foreach (Tile tile in connectionsList.tilesChosen)
+        foreach(string tileLocation in _endTurnData.tilesChosen)
         {
+            var tileCoords = tileLocation.Split('|');
+            Tile tile = TileManager.tiles[Convert.ToInt32(tileCoords[0])][Convert.ToInt32(tileCoords[1])];
+
             if (!(tile.Structure.GetType() == typeof(Node)))
             {
                 tile.OwnedBy = player2;
@@ -297,7 +308,6 @@ public class MultiplayerState : GameState
            // AssignScrabbleTileRewards(tile);
         }
         player2.gameData.tilesTaken.AddRange(player2.gameData.tilesChosen);
-
     }
 
 /*    public void AssignScrabbleTileRewards(Tile tile)
