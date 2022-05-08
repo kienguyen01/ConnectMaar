@@ -37,7 +37,7 @@ public class MultiplayerState : GameState
     /*public MultiplayerPlayerState player1;
     public MultiplayerPlayerState player2;*/
 
-    public PlayerState currentPlayer;
+    //public PlayerState currentPlayer;
 
     new public static MultiplayerState instance;
 
@@ -65,7 +65,7 @@ public class MultiplayerState : GameState
     [PunRPC]
     void DebugTest()
     {
-        Debug.LogError(currentPlayer ? "current assigned" : "current empty");
+        Debug.LogError(player1 ? "current assigned" : "current empty");
     }
 
     private void Update()
@@ -75,43 +75,43 @@ public class MultiplayerState : GameState
             CheckEndTurn();
         }
 
-        if (currentPlayer.gameData.isTurn)
+        if (player1.gameData.isTurn)
         {
             if (Input.GetKeyDown(KeyCode.Alpha0) || clearBtn)
             {
-                clearAllSelected(currentPlayer);
+                clearAllSelected(player1);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1) || p1)
             {
-                SelectSingleConnector(currentPlayer);
+                SelectSingleConnector(player1);
             }
             if (Input.GetKeyDown(KeyCode.Alpha2) || p2)
             {
-                SelectDoubleConnector(currentPlayer);
+                SelectDoubleConnector(player1);
             }
             if (Input.GetKeyDown(KeyCode.Alpha3) || p3)
             {
-                SelectTripleConnector(currentPlayer);
+                SelectTripleConnector(player1);
             }
             if (Input.GetKeyDown(KeyCode.Alpha4) || solarCheck)
             {
-                SelectSolarConnector(currentPlayer);
+                SelectSolarConnector(player1);
             }
             if (Input.GetKeyDown(KeyCode.Alpha5) || heatCheck)
             {
-                SelectHeatConnector(currentPlayer);
+                SelectHeatConnector(player1);
             }
             if (Input.GetKeyDown(KeyCode.Alpha6) || nodeCheck)
             {
-                SelectNodeConnector(currentPlayer);
+                SelectNodeConnector(player1);
             }
-
+            
             if (!(Input.GetMouseButtonDown(0) && !selectedConnector) && Input.GetMouseButtonDown(0)) //click & selected == true | click & not selected == false | not click and anything == true
             {
                 if (!placingNode && (selectedConnector == null || selectedConnector.MaxLength > selectedConnector.getLength()) && !(EventSystem.current.IsPointerOverGameObject()))
                 {
-                    Tile t = chooseTile(currentPlayer, selectedConnector);
+                    Tile t = chooseTile(player1, selectedConnector);
                     if (t != null)
                     {
                         if (t.SelectedBy != null && selectedConnector != null && !(t == selectedConnector.GetLastTile()))
@@ -124,7 +124,7 @@ public class MultiplayerState : GameState
                                 }
                                 if (currentConnection == null)
                                 {
-                                    currentConnection = currentPlayer.StartConnection();
+                                    currentConnection = player1.StartConnection();
                                     turnConnections.Add(currentConnection);
                                 }
                                 currentConnection.Connectors.Add(selectedConnector);
@@ -138,7 +138,7 @@ public class MultiplayerState : GameState
                                 {
                                     if (currentConnection == null)
                                     {
-                                        currentConnection = currentPlayer.StartConnection();
+                                        currentConnection = player1.StartConnection();
                                         turnConnections.Add(currentConnection);
                                     }
                                     if (currentConnection.Connectors == null)
@@ -172,11 +172,13 @@ public class MultiplayerState : GameState
         }
 
         if (Input.GetMouseButtonDown(0) && !selectedConnector)
-            GetInfoCard(MultiplayerPlayerState.me);
+            GetInfoCard(player1);
     }
 
     new protected bool CheckEndTurn()
     {
+        photonView.RPC("RPC_Log", RpcTarget.All, $"{PhotonNetwork.LocalPlayer.UserId} --- local player: {player1.gameData.isTurn} - foreign player: {player2.gameData.isTurn}");
+
         List<Tile> chosenTiles = new List<Tile>(player1.gameData.tilesChosen);
         bool returnObj = base.CheckEndTurn();
 
@@ -199,18 +201,16 @@ public class MultiplayerState : GameState
 
     void SetPlayers()
     {
-        /*
-        player1.photonView.TransferOwnership(1);
-        player2.photonView.TransferOwnership(2);
-        */
+        /*player1.photonView.TransferOwnership(1);
+        player2.photonView.TransferOwnership(2);*/
 
-        player1.photonView.RPC("Initialize", RpcTarget.AllBuffered, PhotonNetwork.LocalPlayer);
-        player2.photonView.RPC("Initialize", RpcTarget.AllBuffered, PhotonNetwork.PlayerListOthers[0]);
+        photonView.RPC("Initialize", RpcTarget.All, PhotonNetwork.LocalPlayer);
+        photonView.RPC("Initialize", RpcTarget.All, PhotonNetwork.PlayerListOthers[0]);
 
         Debug.LogError($"{((MultiplayerPlayerState)player1).photonPlayer.NickName}");
         Debug.LogError($"{((MultiplayerPlayerState)player2).photonPlayer.NickName}");
 
-        photonView.RPC("SetNextTurn", RpcTarget.AllBuffered);
+        photonView.RPC("SetFirstTurn", RpcTarget.Others);
 
         Debug.LogError($"{player1.gameData.isTurn}");
         Debug.LogError($"{player2.gameData.isTurn}");
@@ -218,50 +218,72 @@ public class MultiplayerState : GameState
         player1.RefillHand();
         player2.RefillHand();
 
-        /*player1.EndTurn();
-        RPCSendTakenTiles();*/
+        photonView.RPC("RPC_Log", RpcTarget.All, $"{PhotonNetwork.LocalPlayer.UserId} --- local player: {player1.gameData.isTurn} - foreign player: {player2.gameData.isTurn}");
+
+        /*
+        player1.EndTurn();
+        RPCSendTakenTiles();
+        */
     }
 
     [PunRPC]
-    void SetNextTurn()
+    void RPC_Log(String s)
     {
-        if(currentPlayer == null)
-        {
-            currentPlayer = player1;
-            player1.gameData.isTurn = true;
+        Debug.Log(s);
+    }
 
+    [PunRPC]
+    private void Initialize(Photon.Realtime.Player player)
+    {
+        if (player.IsLocal)
+        {
+            ((MultiplayerPlayerState)player1).photonPlayer = player;
+            player1.gameData.PlayerColour = Color.blue;
         }
         else
         {
-            currentPlayer = player1;
+            ((MultiplayerPlayerState)player2).photonPlayer = player;
+            player2.gameData.PlayerColour = Color.black;
+        }
+
+        if (player1 && ((MultiplayerPlayerState)player1).photonPlayer.IsMasterClient)
+        {
+            TileManager.tiles[14][22].OwnedBy = player2;
+            TileManager.tiles[10][16].OwnedBy = player1;
+        }
+        else
+        {
+            TileManager.tiles[14][22].OwnedBy = player1;
+            TileManager.tiles[10][16].OwnedBy = player2;
+        }
+
+    }
+
+    [PunRPC]
+    void SetFirstTurn()
+    {
+        if(player1.gameData.isTurn)
+        {
+            player1.gameData.isTurn = false;
+            player2.gameData.isTurn = true;
+        }
+        else
+        {
             player1.gameData.isTurn = true;
             player2.gameData.isTurn = false;
         }
 
-        if(currentPlayer == MultiplayerPlayerState.me)
+        /*if(player1 == MultiplayerPlayerState.me)
         {
             MultiplayerPlayerState.me.BeginTurn();
-        }
+        }*/
     }
 
     [PunRPC]
     void EndTurn()
     {
-        if(currentPlayer == null)
-        {
-            return;
-        }
-        if (currentPlayer == player1)
-        {
-            currentPlayer = player2;
-            player1.gameData.isTurn = false;
-            player2.gameData.isTurn = true;
-        }
-        else if (currentPlayer == player2) { 
-            currentPlayer = player1;
-            player2.gameData.isTurn = false;
-            player1.gameData.isTurn = true;
-        }
+        player1.gameData.isTurn = true;
+        player2.gameData.isTurn = false;
         Debug.LogError("turn changed");
         Debug.LogError(player1.gameData.isTurn ? "p1" : "p2");
     }
@@ -309,7 +331,7 @@ public class MultiplayerState : GameState
         }
         player2.gameData.tilesTaken.AddRange(player2.gameData.tilesChosen);
     }
-
+     
 /*    public void AssignScrabbleTileRewards(Tile tile)
     {
         if (tile.IsScrambleForHeat)
@@ -342,7 +364,6 @@ public class MultiplayerState : GameState
         mapData.houses.Add(randomizeTile(12, 16, 12, 16));
         mapData.houses.Add(randomizeTile(10, 16, 10, 16));
         mapData.houses.Add(randomizeTile(15, 15, 15, 15));
-
 
         mapData.scrabbleSolar.Add(randomizeTile(19, 19, 2, 1));
         mapData.scrabbleSolar.Add(randomizeTile(19, 19, 2, 1));

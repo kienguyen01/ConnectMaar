@@ -13,8 +13,6 @@ public struct TutorialStateConfig
     public TileManager TileManagerClass;
 }
 
-
-
 public class TutorialState : GameState
 {
     private Image tutBox;
@@ -54,6 +52,8 @@ public class TutorialState : GameState
             textTitle = GameObject.Find("txtTitle").GetComponent<TextMeshProUGUI>();
             textTitle.text = "Tutorial:";
         }
+
+
 
         StartCoroutine(TutorialRoutine());
     }

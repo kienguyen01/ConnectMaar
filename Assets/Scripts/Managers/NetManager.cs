@@ -41,8 +41,4 @@ public class NetManager : MonoBehaviourPunCallbacks
         //Chreate room
         PhotonNetwork.CreateRoom(null, options);
     }
-
-
-
-
 }

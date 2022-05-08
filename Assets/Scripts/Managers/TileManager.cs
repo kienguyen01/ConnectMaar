@@ -287,6 +287,7 @@ public class TileManager : MonoBehaviour
                 break;
         }
     }
+
     public string randomizeTile(int xMax, int yMax, int xMin, int yMin)
     {
         int X = Random.Range(xMax, xMin);
@@ -427,8 +428,6 @@ public class TileManager : MonoBehaviour
             }
         }
     }
-
-   
 
     public bool isOccupied(Tile tile) {
         if (tile.occupied)

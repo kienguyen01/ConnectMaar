@@ -646,7 +646,6 @@ public class GameState : MonoBehaviourPun
         }
     }
 
-
     public void clearAllSelected(PlayerState player)
     {
         foreach (Connection conn in turnConnections)
@@ -655,14 +654,4 @@ public class GameState : MonoBehaviourPun
         }
     }
 
-
 }
-
-//insufficient length of connector used but still can end turn
-
-//choose a random tiles next to one in the connection is allowed
-
-//if you choose 3, after you placed all 3 you can't undo no more, not sure if it is a problem 
-//at all
-
-

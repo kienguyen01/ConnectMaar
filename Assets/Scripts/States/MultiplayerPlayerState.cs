@@ -15,42 +15,11 @@ public class MultiplayerPlayerState : PlayerState
 
     public string[] sdtatingPoints;
 
-    public static MultiplayerPlayerState me;
-    public static MultiplayerPlayerState enemy;
-
     //Maybe delete just for testing
     public TMP_Text playerText;
     public Image playerEmissionbar;
     float lerpSpeed; //making sure increase and decrease is smooth
     float currentEmission, maxEmission;
-
-
-
-
-    [PunRPC]
-    private void Initialize(Photon.Realtime.Player player)
-    {
-        photonPlayer = player;
-
-        if (player.IsLocal)
-        {
-            me = this;
-            //SetStartPoint(me);
-            me.gameData.PlayerColour = Color.blue;
-            TileManager.tiles[10][16].OwnedBy = me;
-
-            //me.RefillHand();
-
-        }
-        else
-        {
-            enemy = this;
-          enemy.gameData.PlayerColour = Color.black;
-            TileManager.tiles[15][15].OwnedBy = enemy;
-        }
-        //StartingPoint();
-
-    }
 
     /*void StartingPoint()
     {
