@@ -224,10 +224,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1539416234422378371, guid: 47f41cefc1f510f4381c44137a4114e9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -22.714844
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295127341416807439, guid: 47f41cefc1f510f4381c44137a4114e9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -22.714844
+      objectReference: {fileID: 0}
+    - target: {fileID: 6526978010938690532, guid: 47f41cefc1f510f4381c44137a4114e9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -22.714844
+      objectReference: {fileID: 0}
+    - target: {fileID: 6975948083146327118, guid: 47f41cefc1f510f4381c44137a4114e9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -22.714844
+      objectReference: {fileID: 0}
+    - target: {fileID: 7638083241330906966, guid: 47f41cefc1f510f4381c44137a4114e9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -22.714844
+      objectReference: {fileID: 0}
     - target: {fileID: 8535373044461711691, guid: 47f41cefc1f510f4381c44137a4114e9, type: 3}
       propertyPath: audio
       value: 
       objectReference: {fileID: 2087013619}
+    - target: {fileID: 8560036462433977816, guid: 47f41cefc1f510f4381c44137a4114e9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8560036463042808642, guid: 47f41cefc1f510f4381c44137a4114e9, type: 3}
       propertyPath: m_Pivot.x
       value: 0
