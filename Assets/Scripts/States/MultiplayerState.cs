@@ -193,7 +193,7 @@ public class MultiplayerState : GameState
 
             photonView.RPC("SendTiles", RpcTarget.Others, SerializeData(endTurnData));
 
-            photonView.RPC("EndTurn", RpcTarget.All);
+            photonView.RPC("EndTurn", RpcTarget.Others);
         }
 
         return returnObj;
@@ -210,7 +210,7 @@ public class MultiplayerState : GameState
         Debug.LogError($"{((MultiplayerPlayerState)player1).photonPlayer.NickName}");
         Debug.LogError($"{((MultiplayerPlayerState)player2).photonPlayer.NickName}");
 
-        photonView.RPC("SetFirstTurn", RpcTarget.Others);
+        photonView.RPC("SetFirstTurn", RpcTarget.All);
 
         Debug.LogError($"{player1.gameData.isTurn}");
         Debug.LogError($"{player2.gameData.isTurn}");
@@ -262,15 +262,15 @@ public class MultiplayerState : GameState
     [PunRPC]
     void SetFirstTurn()
     {
-        if(player1.gameData.isTurn)
-        {
-            player1.gameData.isTurn = false;
-            player2.gameData.isTurn = true;
-        }
-        else
+        if(((MultiplayerPlayerState)player1).photonPlayer.IsMasterClient)
         {
             player1.gameData.isTurn = true;
             player2.gameData.isTurn = false;
+        }
+        else
+        {
+            player1.gameData.isTurn = false;
+            player2.gameData.isTurn = true;
         }
 
         /*if(player1 == MultiplayerPlayerState.me)
