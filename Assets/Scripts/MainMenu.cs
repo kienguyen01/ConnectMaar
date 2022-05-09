@@ -12,7 +12,7 @@ public class MainMenu : MonoBehaviour
        Debug.Log("Game closed!");
    }
    public void StartGame(){
-       SceneManager.LoadScene("SampleScene");
+       SceneManager.LoadScene("Lobby");
    }
 
     public void StartTutorial()

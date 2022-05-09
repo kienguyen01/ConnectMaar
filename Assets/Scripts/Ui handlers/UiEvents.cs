@@ -18,39 +18,39 @@ public class UiEvents : MonoBehaviour
 
     }
 
-    public void btnClickConnector1()
-    {
-        Debug.Log("It wotrks");
-        GameState.instance.SelectSingleConnector();
-    }
-    public void btnClickConnector2()
-    {
-        Debug.Log("It wotrks2");
-        GameState.instance.SelectDoubleConnector();
-    }
-    public void btnClickConnector3()
-    {
-        Debug.Log("It wotrks3");
-        GameState.instance.SelectTrippleConnector();
-    }
+    //public void btnClickConnector1()
+    //{
+    //    Debug.Log("It wotrks");
+    //    GameState.instance.SelectSingleConnector();
+    //}
+    //public void btnClickConnector2()
+    //{
+    //    Debug.Log("It wotrks2");
+    //    GameState.instance.SelectDoubleConnector();
+    //}
+    //public void btnClickConnector3()
+    //{
+    //    Debug.Log("It wotrks3");
+    //    GameState.instance.SelectTripleConnector();
+    //}
 
-    public void BtnClickConnectorSolar()
-    {
-        Debug.Log("Solar");
-        GameState.instance.SelectSolarConnector();    
-    }
+    //public void BtnClickConnectorSolar()
+    //{
+    //    Debug.Log("Solar");
+    //    GameState.instance.SelectSolarConnector();    
+    //}
 
-    public void BtnClickConnectorHeat()
-    {
-        Debug.Log("Heat");
-        GameState.instance.SelectHeatConnector();    
-    }
+    //public void BtnClickConnectorHeat()
+    //{
+    //    Debug.Log("Heat");
+    //    GameState.instance.SelectHeatConnector();    
+    //}
 
-    public void BtnClickConnectorNode()
-    {
-        Debug.Log("Node");
-        GameState.instance.SelectNodeConnector();
-    }
+    //public void BtnClickConnectorNode()
+    //{
+    //    Debug.Log("Node");
+    //    GameState.instance.SelectNodeConnector();
+    //}
 
     public void BtnClickEndTurn()
     {
@@ -64,10 +64,10 @@ public class UiEvents : MonoBehaviour
         }
     }
 
-    public void BtnClearAll()
-    {
-        GameState.instance.clearAllSelected();
-    }
+    //public void BtnClearAll()
+    //{
+    //    GameState.instance.clearAllSelected();
+    //}
 
 
 

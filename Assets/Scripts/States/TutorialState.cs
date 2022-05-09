@@ -13,8 +13,6 @@ public struct TutorialStateConfig
     public TileManager TileManagerClass;
 }
 
-
-
 public class TutorialState : GameState
 {
     private Image tutBox;
@@ -43,7 +41,7 @@ public class TutorialState : GameState
 
         if (TileManager.tiles[0][0].OwnedBy == null)
         {
-            TileManager.tiles[0][0].OwnedBy = playerStates[0];
+            TileManager.tiles[0][0].OwnedBy = player1;
         }
 
         tutBox = GameObject.Find("TutorialBox").GetComponent<Image>();
@@ -54,6 +52,8 @@ public class TutorialState : GameState
             textTitle = GameObject.Find("txtTitle").GetComponent<TextMeshProUGUI>();
             textTitle.text = "Tutorial:";
         }
+
+
 
         StartCoroutine(TutorialRoutine());
     }
@@ -93,8 +93,8 @@ public class TutorialState : GameState
                         GameObject varGameObject = GameObject.Find("Plane");
                         varGameObject.GetComponent<PhoneCameraMovement>().enabled = false;
                         text.text = "Welcome to the Tutorial! In this tutorial we will teach you how to play ConnectMaar. Tap on Screen to continue.";
-                        playerStates[0].clearHand();
-                        playerStates[0].refilSpecificHand(1, 1, 2);
+                        player1.clearHand()
+                               .refilSpecificHand(1, 1, 2);
                         break;
                     }
                 case 1:
@@ -155,8 +155,8 @@ public class TutorialState : GameState
                     text.text = "1 connector = 3 points  \n 2 Connectors =  2 points  \n  3 Connectors = 1 point";
                     break;
                 case 19:
-                    playerStates[0].clearHand();
-                    playerStates[0].refilSpecificHand(1, 2, 1);
+                    player1.clearHand()
+                           .refilSpecificHand(1, 2, 1);
                     text.text = "At the end of each turn your inventory of connectors will be filled up again";
                     break;
                 case 20:
@@ -175,8 +175,8 @@ public class TutorialState : GameState
                     text.text = "Your emission levels have further reduced by 2 points. This is because you used two connections instead of a single one";
                     break;
                 case 24:
-                    text.text = "It looks like you built over special tiles and gained " + playerStates[0].gameData.SpecialConnector.Count + " special connectors";
-                    playerStates[0].clearHand();
+                    text.text = "It looks like you built over special tiles and gained " + player1.gameData.SpecialConnector.Count + " special connectors";
+                    player1.clearHand();
                     break;
                 case 25:
                     text.text = "Special connectors are used to connect to special renewable resource in your grid such as heatpumps and solar panels. This will be useful in a bit.";
@@ -193,7 +193,7 @@ public class TutorialState : GameState
                 case 29:
                     {
                         startAiMoves();
-                        playerStates[1].gameData.totalPoint = 47;
+                        player2.gameData.totalPoint = 47;
                         DisablePopup();
 
                         StartCoroutine(SolarHeatCheckRoutine());
@@ -202,8 +202,8 @@ public class TutorialState : GameState
                 case 30:
                     EnablePopup();
                     text.text = "You have now added a solar pannel to your connection. Congratulations! this will be useful later";
-                    playerStates[0].clearHand();
-                    playerStates[0].refilSpecificHand(1, 1, 2);
+                    player1.clearHand()
+                           .refilSpecificHand(1, 1, 2);
                     break;
                 case 31:
                     text.text = "There are two types of special connectors you can get from the random tiles scatered over the map and they can ony be used for a specific powersource";
@@ -234,28 +234,28 @@ public class TutorialState : GameState
                 case 39:
                     text.text = "Start your turn";
                     StartCoroutine(TurnCheckRoutine());
-                    playerStates[0].clearHand();
-                    playerStates[0].refilSpecificHand(1, 1, 2);
+                    player1.clearHand()
+                           .refilSpecificHand(1, 1, 2);
                     break;
                 case 40:
                     text.text = "Make a connection from a building in your grid to the stadium";
                     break;
                 case 41:
-                    playerStates[1].gameData.totalPoint = 45;
+                    player1.gameData.totalPoint = 45;
                     DisablePopup();
                     StartCoroutine(TileCheckRoutine(1, 7));
                     addTile(3, 13);
                     addTile(4, 13);
                     break;
                 case 42:
-                    playerStates[0].gameData.totalPoint = 35;
+                    player1.gameData.totalPoint = 35;
                     EnablePopup();
                     text.text = "The AFAS stadium is now using sustainable energy. Congratulations!";
                     break;
                 case 43:
                     text.text = "You are now supplying renewable energy to AFAS Stadium and would you look at that, the emission bar has decreased drastically because of that.";
-                    playerStates[0].clearHand();
-                    playerStates[0].refilSpecificHand(4, 0, 0);
+                    player1.clearHand()
+                           .refilSpecificHand(4, 0, 0);
                     break;
                 case 44:
                     text.text = "It looks like the second player has been making moves around Alkmaar while you were busy";
@@ -271,7 +271,7 @@ public class TutorialState : GameState
                         addTile(5, 12);
                         addTile(5, 11);
                         addTile(6, 10);
-                        playerStates[1].gameData.totalPoint = 42;
+                        player2.gameData.totalPoint = 42;
                         DisablePopup();
 
                         StartCoroutine(TilesChosenCheckRoutine(3));
@@ -306,7 +306,7 @@ public class TutorialState : GameState
                         addTile(6, 9);
                         addTile(7, 9);
                         addTile(8, 8);
-                        playerStates[1].gameData.totalPoint = 42;
+                        player2.gameData.totalPoint = 42;
                         DisablePopup();
                         StartCoroutine(TileCheckRoutine(8, 5));
                         StartCoroutine(TileCheckRoutine(8, 8));
@@ -346,7 +346,7 @@ public class TutorialState : GameState
         go = false;
         while (true)
         {
-            if (playerStates[0].gameData.isTurn == YourTurn)
+            if (player1.gameData.isTurn == YourTurn)
             {
                 go = true;
                 autoAdvance = AutoAdvance;
@@ -362,9 +362,9 @@ public class TutorialState : GameState
         temporaryRoutines++;
         while (true)
         {
-            if (TileManager.tiles[x][y].OwnedBy == playerStates[0])
+            if (TileManager.tiles[x][y].OwnedBy == player1)
             {
-                playerStates[0].gameData.totalPoint = playerStates[0].gameData.totalPoint - 3;
+                player1.gameData.totalPoint = player1.gameData.totalPoint - 3;
                 if (temporaryRoutines <= 1)
                 {
                     go = true;
@@ -382,7 +382,7 @@ public class TutorialState : GameState
         go = false;
         while (true)
         {
-            if ((solar) ? playerStates[0].gameData.hasSolarInNetwork : playerStates[0].gameData.hasHeatInNetwork)
+            if ((solar) ? player1.gameData.hasSolarInNetwork : player1.gameData.hasHeatInNetwork)
             {
                 go = true;
                 autoAdvance = true;
@@ -397,7 +397,7 @@ public class TutorialState : GameState
         go = false;
         while (true)
         {
-            if (playerStates[0].gameData.tilesChosen.Count == count)
+            if (player1.gameData.tilesChosen.Count == count)
             {
                 go = true;
                 autoAdvance = true;
@@ -412,7 +412,7 @@ public class TutorialState : GameState
         go = false;
         while (true)
         {
-            if (playerStates[0].gameData.nodesOwned.Count == count)
+            if (player1.gameData.nodesOwned.Count == count)
             {
                 go = true;
                 autoAdvance = true;
@@ -469,8 +469,8 @@ public class TutorialState : GameState
     public void startAiMoves()
     {
         /*Make ai have connectionsns to the two houses closed to him */
-        playerStates.Add(Instantiate(config.PlayerStateClass));
-        playerStates[1].gameData.PlayerColour = Color.black;
+        createPlayer();
+        player2.gameData.PlayerColour = Color.black;
         addTile(0, 14);
         addTile(0, 13);
         addTile(1, 13);
@@ -479,8 +479,8 @@ public class TutorialState : GameState
 
     private void addTile(int x, int y)
     {
-        playerStates[1].gameData.tilesChosen.Push(TileManager.tiles[x][y]);
-        TileManager.tiles[x][y].OwnedBy = playerStates[1];
+        player2.gameData.tilesChosen.Push(TileManager.tiles[x][y]);
+        TileManager.tiles[x][y].OwnedBy = player2;
     }
 
     private bool nextMsg()
@@ -517,9 +517,9 @@ public class TutorialState : GameState
     /*
     private void checkTileTaken(int x, int y)
     {
-        if (TileManager.tiles[x][y].OwnedBy == playerStates[0])
+        if (TileManager.tiles[x][y].OwnedBy == player1)
         {
-            playerStates[0].gameData.totalPoint = playerStates[0].gameData.totalPoint - 3;
+            player1.gameData.totalPoint = player1.gameData.totalPoint - 3;
             go = true;
         }
     }*/

@@ -22,19 +22,19 @@ public class TileManager : MonoBehaviour
 
     List<List<Tile>> specialBuildings = new List<List<Tile>>();
 
-    List<string> allHouses;
+    public List<string> allHouses;
    
-    List<string> allSolar;
+    public List<string> allSolar;
 
-    List<string> allStadiums;
+    public List<string> allStadiums;
 
-    List<string> allHeat;
+    public List<string> allHeat;
 
-    List<string> allChurches;
+    public List<string> allChurches;
 
-    List<string> scrambleSolar;
+    public List<string> scrambleSolar;
 
-    List<string> scrambleHeat;
+    public List<string> scrambleHeat;
 
 
 
@@ -89,28 +89,11 @@ public class TileManager : MonoBehaviour
             {
                 foreach(Tile tile in tileRow)
                 {
-                    instantiateSpecialTile(tile);
+                    instantiateSpecialTile(tile, allChurches, allSolar, allStadiums, allHouses, scrambleSolar, scrambleHeat, allHeat);
+
                 }
             }
         }
-        else if(SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MultiplayerMap"))
-        {
-            for (int x = 0; x < 30; x++)
-            {
-                List<Tile> tileRow = new List<Tile>();
-
-                for (int y = 0; y < 30; y++)
-                {
-                    tileRow.Add((GenerateTilesMap(x, y)));
-                }
-
-                tiles.Add(tileRow);
-            }
-        }
-
-       
-
-
     }
 
     public int tileAvailable
@@ -139,6 +122,28 @@ public class TileManager : MonoBehaviour
         return specialBuildingChosen;
     }
     
+    public void CreateMultiplayerMap()
+    {
+        for (int x = 0; x < 30; x++)
+        {
+            List<Tile> tileRow = new List<Tile>();
+
+            for (int y = 0; y < 30; y++)
+            {
+                tileRow.Add((GenerateTilesMap(x, y)));
+            }
+
+            tiles.Add(tileRow);
+        }
+        foreach (List<Tile> tileRow in tiles)
+        {
+            foreach (Tile tile in tileRow)
+            {
+                instantiateSpecialTile(tile, allChurches, allSolar, allStadiums, allHouses, scrambleSolar, scrambleHeat, allHeat);
+            }
+        }
+    }
+
     /// <summary>
     /// Function to retrive neighbouring cells from a tile
     /// </summary>
@@ -282,7 +287,8 @@ public class TileManager : MonoBehaviour
                 break;
         }
     }
-    string randomizeTile(int xMax, int yMax, int xMin, int yMin)
+
+    public string randomizeTile(int xMax, int yMax, int xMin, int yMin)
     {
         int X = Random.Range(xMax, xMin);
         int Y = Random.Range(yMax, yMin);
@@ -292,7 +298,7 @@ public class TileManager : MonoBehaviour
         return output;
     }
 
-    Tile GenerateTilesMap(int x, int y)
+    public Tile GenerateTilesMap(int x, int y)
     {
         Tile hex_cell;
         float xPos = x * xOffset;
@@ -330,7 +336,7 @@ public class TileManager : MonoBehaviour
         }
     }
 
-    private void addSpecialTiles()
+    public void addSpecialTiles()
     {
         allStadiums.Add(randomizeTile(9, 17, 9, 17));
 
@@ -341,6 +347,8 @@ public class TileManager : MonoBehaviour
         allHouses.Add(randomizeTile(19, 19, 2, 1));
         allHouses.Add(randomizeTile(19, 19, 2, 1));
         allHouses.Add(randomizeTile(12, 16, 12, 16));
+        allHouses.Add(randomizeTile(10, 16, 10, 16));
+        allHouses.Add(randomizeTile(15, 15, 15, 15));
 
 
         scrambleSolar.Add(randomizeTile(19, 19, 2, 1));
@@ -356,11 +364,11 @@ public class TileManager : MonoBehaviour
 
     }
 
-    private void instantiateSpecialTile(Tile hex_cell)
+    public void instantiateSpecialTile(Tile hex_cell, List<string> churches, List<string> solars, List<string> stadiums, List<string> houses, List<string> scrambleSolars, List<string> scrambleHeats, List<string> heats)
     {
         string tileCoords = hex_cell.X.ToString().PadLeft(3, '0') + "|" + hex_cell.Y.ToString().PadLeft(3, '0');
 
-        foreach(string tile in allChurches)
+        foreach(string tile in churches)
         {
             if(tileCoords == tile)
             {
@@ -370,7 +378,7 @@ public class TileManager : MonoBehaviour
             }
         }
 
-        foreach(string tile in allSolar)
+        foreach(string tile in solars)
         {
             if(tileCoords == tile)
             {
@@ -382,7 +390,7 @@ public class TileManager : MonoBehaviour
             }
         }
 
-        foreach (string tile in allStadiums)
+        foreach (string tile in stadiums)
         {
             if(tileCoords == tile)
             {
@@ -401,7 +409,7 @@ public class TileManager : MonoBehaviour
             }
         }
 
-        foreach (string tile in allHouses)
+        foreach (string tile in houses)
         {
             if(tileCoords == tile)
             {
@@ -412,7 +420,7 @@ public class TileManager : MonoBehaviour
             }
         }
 
-        foreach (string tile in scrambleSolar)
+        foreach (string tile in scrambleSolars)
         {
             if(tileCoords == tile)
             {
@@ -420,8 +428,6 @@ public class TileManager : MonoBehaviour
             }
         }
     }
-
-   
 
     public bool isOccupied(Tile tile) {
         if (tile.occupied)
@@ -505,7 +511,7 @@ public class TileManager : MonoBehaviour
     public List<Tile> getSpecialNeighbours(Tile tile)
     {
         List<Tile> neighbours = new List<Tile>();
-        Tile origin = tile.GetSpecialOriginTile();//left = 10,15 | origin = 10,16 | right = 11,16 | top = 10,17
+        Tile origin = tile.GetSpecialOriginTile();
 
         if (origin.Y % 2 == 0)
         {
