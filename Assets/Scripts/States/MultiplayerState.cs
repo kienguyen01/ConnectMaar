@@ -363,7 +363,7 @@ public class MultiplayerState : GameState
         mapData.houses.Add(randomizeTile(19, 19, 2, 1));
         mapData.houses.Add(randomizeTile(12, 16, 12, 16));
         mapData.houses.Add(randomizeTile(10, 16, 10, 16));
-        mapData.houses.Add(randomizeTile(15, 15, 15, 15));
+        mapData.houses.Add(randomizeTile(14, 22, 14, 22));
 
         mapData.scrabbleSolar.Add(randomizeTile(19, 19, 2, 1));
         mapData.scrabbleSolar.Add(randomizeTile(19, 19, 2, 1));
