@@ -28,6 +28,7 @@ public struct MapData
 public struct EndTurnData
 {
     public List<string> tilesChosen;
+    public float totalPoint;
 }
 
 public class MultiplayerState : GameState
@@ -128,6 +129,8 @@ public class MultiplayerState : GameState
         if (returnObj)
         {
             endTurnData.tilesChosen = new List<string>();
+
+            endTurnData.totalPoint = player1.gameData.totalPoint;
 
             foreach (var item in chosenTiles)
             {
@@ -283,6 +286,7 @@ public class MultiplayerState : GameState
            // AssignScrabbleTileRewards(tile);
         }
         player2.gameData.tilesTaken.AddRange(player2.gameData.tilesChosen);
+        player2.gameData.totalPoint = _endTurnData.totalPoint;
     }
      
 /*    public void AssignScrabbleTileRewards(Tile tile)
