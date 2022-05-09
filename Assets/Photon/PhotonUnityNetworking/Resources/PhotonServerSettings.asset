@@ -55,6 +55,7 @@ MonoBehaviour:
   - SendTiles
   - SetFirstTurn
   - RPC_Log
+  - RPC_HandRefill
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

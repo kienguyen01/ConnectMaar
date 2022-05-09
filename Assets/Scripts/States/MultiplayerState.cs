@@ -106,69 +106,12 @@ public class MultiplayerState : GameState
             {
                 SelectNodeConnector(player1);
             }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                HandleClickCheck();
+            }
             
-            if (!(Input.GetMouseButtonDown(0) && !selectedConnector) && Input.GetMouseButtonDown(0)) //click & selected == true | click & not selected == false | not click and anything == true
-            {
-                if (!placingNode && (selectedConnector == null || selectedConnector.MaxLength > selectedConnector.getLength()) && !(EventSystem.current.IsPointerOverGameObject()))
-                {
-                    Tile t = chooseTile(player1, selectedConnector);
-                    if (t != null)
-                    {
-                        if (t.SelectedBy != null && selectedConnector != null && !(t == selectedConnector.GetLastTile()))
-                        {
-                            if (t.IsSpecial() && isNormalConnectionEnd)
-                            {
-                                foreach (Tile tile in tileManager.getSpecialNeighbours(t))
-                                {
-                                    selectedConnector.AddTile(t);
-                                }
-                                if (currentConnection == null)
-                                {
-                                    currentConnection = player1.StartConnection();
-                                    turnConnections.Add(currentConnection);
-                                }
-                                currentConnection.Connectors.Add(selectedConnector);
-                                selectedConnector = null;
-                            }
-                            else
-                            {
-                                selectedConnector.AddTile(t);
-
-                                if (selectedConnector.MaxLength == selectedConnector.getLength())
-                                {
-                                    if (currentConnection == null)
-                                    {
-                                        currentConnection = player1.StartConnection();
-                                        turnConnections.Add(currentConnection);
-                                    }
-                                    if (currentConnection.Connectors == null)
-                                    {
-                                        currentConnection.Connectors = new List<Connector>();
-                                    }
-                                    currentConnection.Connectors.Add(selectedConnector);
-                                    selectedConnector = null;
-
-                                    //TODO: Connectors is set back to 0
-                                    //TODO: turnConnections is not adding multiple connection in 1 turn
-                                }
-                            }
-                        }
-                        else
-                        {
-                            selectedConnector.RemoveTile(t);
-                        }
-                    }
-                }
-            }
-            else if (Input.GetMouseButtonDown(0) && placingNode)
-            {
-                Tile t = PlaceNode();
-
-                if (!(t == null))
-                {
-                    placingNode = false;
-                }
-            }
         }
 
         if (Input.GetMouseButtonDown(0) && !selectedConnector)
@@ -215,8 +158,12 @@ public class MultiplayerState : GameState
         Debug.LogError($"{player1.gameData.isTurn}");
         Debug.LogError($"{player2.gameData.isTurn}");
 
-        player1.RefillHand();
-        player2.RefillHand();
+        /*
+            player1.RefillHand();
+            player2.RefillHand();
+        */
+
+        photonView.RPC("RPC_HandRefill", RpcTarget.All);
 
         photonView.RPC("RPC_Log", RpcTarget.All, $"{PhotonNetwork.LocalPlayer.UserId} --- local player: {player1.gameData.isTurn} - foreign player: {player2.gameData.isTurn}");
 
@@ -224,6 +171,12 @@ public class MultiplayerState : GameState
         player1.EndTurn();
         RPCSendTakenTiles();
         */
+    }
+
+    [PunRPC]
+    void RPC_HandRefill()
+    {
+        player1.RefillHand();
     }
 
     [PunRPC]

@@ -864,9 +864,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'X2
-
-'
+  m_text: X0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bf4dcd04f3db5df4aa01269cea826c3e, type: 2}
   m_sharedMaterial: {fileID: 5966740480944852310, guid: bf4dcd04f3db5df4aa01269cea826c3e, type: 2}
@@ -3537,7 +3535,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'X1
+  m_text: 'X0
 
 '
   m_isRightToLeft: 0
@@ -4403,7 +4401,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: X3
+  m_text: X0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bf4dcd04f3db5df4aa01269cea826c3e, type: 2}
   m_sharedMaterial: {fileID: 5966740480944852310, guid: bf4dcd04f3db5df4aa01269cea826c3e, type: 2}
@@ -5155,7 +5153,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'X1
+  m_text: 'X0
 
 '
   m_isRightToLeft: 0
@@ -6259,7 +6257,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'X1
+  m_text: 'X0
 
 '
   m_isRightToLeft: 0
@@ -6472,7 +6470,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: X3
+  m_text: X0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bf4dcd04f3db5df4aa01269cea826c3e, type: 2}
   m_sharedMaterial: {fileID: 5966740480944852310, guid: bf4dcd04f3db5df4aa01269cea826c3e, type: 2}

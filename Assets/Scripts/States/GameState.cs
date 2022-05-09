@@ -245,74 +245,88 @@ public class GameState : MonoBehaviourPun
                 SelectNodeConnector(player1);
             }
 
-            if (!(Input.GetMouseButtonDown(0) && !selectedConnector))
+            if (Input.GetMouseButtonDown(0))
             {
-                if (!placingNode && Input.GetMouseButtonDown(0) && (selectedConnector == null || selectedConnector.MaxLength > selectedConnector.getLength()) && !(EventSystem.current.IsPointerOverGameObject()))
-                {
-                    Tile t = chooseTile(player1);
-                    if (t != null)
-                    {
-                        if (t.SelectedBy != null && selectedConnector != null && !(t == selectedConnector.GetLastTile()))
-                        {
-                            if (t.IsSpecial() && isNormalConnectionEnd)
-                            {
-                                foreach (Tile tile in tileManager.getSpecialNeighbours(t))
-                                {
-                                    selectedConnector.AddTile(t);
-                                }
-                                if (currentConnection == null)
-                                {
-                                    currentConnection = player1.StartConnection();
-                                    turnConnections.Add(currentConnection);
-                                }
-                                currentConnection.Connectors.Add(selectedConnector);
-                                selectedConnector = null;
-                            }
-                            else
-                            {
-                                selectedConnector.AddTile(t);
-
-                                if (selectedConnector.MaxLength == selectedConnector.getLength())
-                                {
-                                    if (currentConnection == null)
-                                    {
-                                        currentConnection = player1.StartConnection();
-                                        turnConnections.Add(currentConnection);
-                                    }
-                                    if(currentConnection.Connectors == null)
-                                    {
-                                        currentConnection.Connectors = new List<Connector>();
-                                    }
-                                    currentConnection.Connectors.Add(selectedConnector);
-                                    selectedConnector = null;
-
-                                    //TODO: Connectors is set back to 0
-                                    //TODO: turnConnections is not adding multiple connection in 1 turn
-                                }
-                            }
-                        }
-                        else
-                        {
-                            selectedConnector.RemoveTile(t);
-                        }
-                    }
-                }
+                HandleClickCheck();
             }
-            else if (Input.GetMouseButtonDown(0) && placingNode)
-            {
-                Tile t = PlaceNode();
-
-                if (!(t == null))
-                {
-                    placingNode = false;
-                }
-            }
+            
         }
 
         if (Input.GetMouseButtonDown(0) && !selectedConnector)
             GetInfoCard(player1);
 
         //startPoint();
+    }
+
+    protected void HandleClickCheck()
+    {
+        if (selectedConnector)
+        {
+            if (!placingNode && Input.GetMouseButtonDown(0) && (selectedConnector == null || selectedConnector.MaxLength > selectedConnector.getLength()) && !(EventSystem.current.IsPointerOverGameObject()))
+            {
+                Tile t = chooseTile(player1);
+                if (t != null)
+                {
+                    if (t.SelectedBy != null && selectedConnector != null && !(t == selectedConnector.GetLastTile()))
+                    {
+                        if (t.IsSpecial() && isNormalConnectionEnd)
+                        {
+                            foreach (Tile tile in tileManager.getSpecialNeighbours(t))
+                            {
+                                selectedConnector.AddTile(t);
+                            }
+                            if (currentConnection == null)
+                            {
+                                currentConnection = player1.StartConnection();
+                                turnConnections.Add(currentConnection);
+                            }
+                            currentConnection.Connectors.Add(selectedConnector);
+                            selectedConnector = null;
+                        }
+                        else
+                        {
+                            selectedConnector.AddTile(t);
+
+                            if (selectedConnector.MaxLength == selectedConnector.getLength())
+                            {
+                                if (currentConnection == null)
+                                {
+                                    currentConnection = player1.StartConnection();
+                                    turnConnections.Add(currentConnection);
+                                }
+                                if (currentConnection.Connectors == null)
+                                {
+                                    currentConnection.Connectors = new List<Connector>();
+                                }
+                                currentConnection.Connectors.Add(selectedConnector);
+                                selectedConnector = null;
+
+                                //TODO: Connectors is set back to 0
+                                //TODO: turnConnections is not adding multiple connection in 1 turn
+                            }
+                        }
+                    }
+                    else
+                    {
+                        selectedConnector.RemoveTile(t);
+                    }
+                }
+            }
+        }
+        else if (placingNode)
+        {
+            CheckPlaceNode();
+        }
+    }
+
+    protected void CheckPlaceNode()
+    {
+        Tile t = PlaceNode();
+
+        if (!(t == null))
+        {
+            placingNode = false;
+        }
     }
 
     protected bool CheckEndTurn()
