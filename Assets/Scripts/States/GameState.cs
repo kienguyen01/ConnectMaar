@@ -57,6 +57,7 @@ public class GameState : MonoBehaviourPun
 
     public void Awake()
     {
+        
         onAwake();
     }
 
