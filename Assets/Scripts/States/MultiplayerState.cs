@@ -310,6 +310,9 @@ public class MultiplayerState : GameState
 
     void addSpecialTiles()
     {
+      //  List<>
+        //mapData.houses.Add(PickRandomTiles());
+
         mapData.stadiums.Add(randomizeTile(9, 17, 9, 17));
 
         mapData.houses.Add(randomizeTile(9, 16, 5, 12));
@@ -332,6 +335,17 @@ public class MultiplayerState : GameState
         mapData.solars.Add(randomizeTile(19, 19, 2, 1));
         mapData.solars.Add(randomizeTile(19, 19, 2, 1));
         mapData.solars.Add(randomizeTile(19, 19, 2, 1));
+    }
+
+     
+
+
+    public string PickRandomTiles(List<string> tiles)
+    {
+        int x = Random.Range(1, 3);
+
+      //  string output = tiles[x].ToString().PadLeft(3, '');
+        return null;
     }
 
     public string randomizeTile(int xMax, int yMax, int xMin, int yMin)

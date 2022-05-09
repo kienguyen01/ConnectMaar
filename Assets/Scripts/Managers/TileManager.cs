@@ -74,11 +74,11 @@ public class TileManager : MonoBehaviour
         } 
         else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("SampleScene"))
         {
-            for (int x = 0; x < WIDTH_MAP; x++)
+            for (int x = 0; x < 30; x++)
             {
                 List<Tile> tileRow = new List<Tile>();
 
-                for (int y = 0; y < HEIGHT_MAP; y++)
+                for (int y = 0; y < 30; y++)
                 {
                     tileRow.Add((GenerateTilesMap(x, y)));
                 }

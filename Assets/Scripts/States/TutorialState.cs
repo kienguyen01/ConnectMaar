@@ -33,6 +33,7 @@ public class TutorialState : GameState
     new private void Awake()
     {
         onAwake();
+        createPlayer();
     }
 
     private void Start()
@@ -469,7 +470,6 @@ public class TutorialState : GameState
     public void startAiMoves()
     {
         /*Make ai have connectionsns to the two houses closed to him */
-        createPlayer();
         player2.gameData.PlayerColour = Color.black;
         addTile(0, 14);
         addTile(0, 13);
