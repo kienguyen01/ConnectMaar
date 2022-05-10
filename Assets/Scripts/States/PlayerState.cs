@@ -28,7 +28,7 @@ public struct PlayerInfo
 [System.Serializable]
 public class PlayerGameData
 {
-    private bool isTurn;
+    public bool isTurn;
     public float totalPoint;
     public int handSize;
     public bool hasSolarInNetwork;

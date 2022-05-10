@@ -481,12 +481,6 @@ public class GameState : MonoBehaviourPun
         player.gameData.isTurn = false;
     }
 
-    protected Connection SolarConnection;
-    protected Connection HeatConnection;
-    protected bool isNormalConnectionEnd = false;
-    protected bool isHeatConnectionEnd = false;
-    protected bool isSolarConnectionEnd = false;
-
     /// <summary>
     /// Function that selects one tile when tapped
     /// </summary>
