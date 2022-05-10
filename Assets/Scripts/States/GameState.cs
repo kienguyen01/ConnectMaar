@@ -440,7 +440,7 @@ public class GameState : MonoBehaviourPun
                         //    returnObj = true;
 
                         //    skipTurn(player1);
-                        }
+                        //}
                     }
                     hasHeat = false;
                     hasSolar = false;
