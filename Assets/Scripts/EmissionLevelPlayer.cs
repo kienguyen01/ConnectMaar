@@ -17,9 +17,9 @@ public class EmissionLevelPlayer : MonoBehaviour
     }
     private void Update()
     {
-        if (GameState.instance.playerStates.Count > 0)
+        if (GameState.instance.player1)
         {
-            currentEmission = GameState.instance.playerStates[0].gameData.totalPoint;
+            currentEmission = GameState.instance.player1.gameData.totalPoint;
             playerText.text = currentEmission + "%"; //displaying the percentage
                                                      //check if currentEmission > maxEmission, then currentemission = maxEmission (currentEmission !> 100)
             if (currentEmission > maxEmission)

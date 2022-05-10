@@ -1,9 +1,15 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
+using Photon.Realtime;
+using System.Reflection;
+using System.Linq;
+using System;
+using System.Runtime.Serialization;
 
 [System.Serializable]
 public struct ConnectorConfig
@@ -36,7 +42,9 @@ public class PlayerGameData
     public Color PlayerColour;
 }
 
-public class PlayerState : MonoBehaviour
+[DataContract]
+[KnownType("GetKnownTypes")]
+public class PlayerState : MonoBehaviourPun
 {
     public ConnectorConfig config;
     public Player playerClass;
@@ -74,7 +82,7 @@ public class PlayerState : MonoBehaviour
         //Assert.IsNotNull(config.PlayerStateClass);
         //Assert.IsTrue(PlayerStarts.Length > 0);
 
-        gameData.PlayerColour = Color.red;
+        //gameData.PlayerColour = Color.red;
 
         Debug.Log($"ConnectorManager - {(config.ConnectorManagerClass ? "true" : "false")}");
         if (config.ConnectorManagerClass)
@@ -91,43 +99,55 @@ public class PlayerState : MonoBehaviour
 
     }
 
-    public void EndTurn()
+    public virtual void EndTurn()
     {
         Debug.Log("clicked end button");
         this.gameData.isTurn = false;
+        EndTurnCheck();
+        this.gameData.tilesChosen = new Stack<Tile>();
+    }
+
+    public void EndTurnCheck()
+    {
         foreach (Tile tile in this.gameData.tilesChosen)
         {
-            if(!(tile.Structure.GetType() == typeof(Node)))
+            if (!(tile.Structure.GetType() == typeof(Node)))
             {
                 tile.OwnedBy = this;
             }
             tile.SelectedBy = null;
-            if (tile.IsScrambleForHeat)
-            {
-                this.AddHeatPipeConnector()
-                    .AddHeatPipeConnector()
-                    .AddHeatPipeConnector()
-                    .AddHeatPipeConnector();
-            }
-            else if (tile.IsScrambleForSolar)
-            {
-                this
-                    .AddSolarConnector()
-                    .AddSolarConnector()
-                    .AddSolarConnector()
-                    .AddSolarConnector();
-            }
+            AssignScrabbleTileRewards(tile);
         }
         this.gameData.tilesTaken.AddRange(this.gameData.tilesChosen);
-        this.gameData.tilesChosen = new Stack<Tile>();
+    }
+
+    public void AssignScrabbleTileRewards(Tile tile)
+    {
+        if (tile.IsScrambleForHeat)
+        {
+            this.AddHeatPipeConnector()
+                .AddHeatPipeConnector()
+                .AddHeatPipeConnector()
+                .AddHeatPipeConnector();
+        }
+        else if (tile.IsScrambleForSolar)
+        {
+            this
+                .AddSolarConnector()
+                .AddSolarConnector()
+                .AddSolarConnector()
+                .AddSolarConnector();
+        }
     }
 
 
-    public void RefillHand()
+
+
+    public PlayerState RefillHand()
     {
         for (int i = gameData.Inventory.Count; i < gameData.handSize; i++)
         {
-            switch (Random.Range(1, 4))
+            switch (UnityEngine.Random.Range(1, 4))
             {
                 case 1:
                     gameData.Inventory.Add(this.gameObject.AddComponent<StandardConnector>());
@@ -145,9 +165,11 @@ public class PlayerState : MonoBehaviour
             }
         }
         updateInventoryUI();
+
+        return this;
     }
     
-    public void refilSpecificHand(int one,int two, int three)
+    public PlayerState refilSpecificHand(int one,int two, int three)
     {
         if (gameData.Inventory.Count < gameData.handSize)
         {
@@ -168,9 +190,10 @@ public class PlayerState : MonoBehaviour
 
         updateInventoryUI();
 
+        return this;
     }
 
-    public void clearHand()
+    public PlayerState clearHand()
     {
         gameData.Inventory.RemoveAll(x => x.MaxLength == 1);
         gameData.Inventory.RemoveAll(x => x.MaxLength == 2);
@@ -178,6 +201,7 @@ public class PlayerState : MonoBehaviour
 
         updateInventoryUI();
 
+        return this;
     }
 
     public void updateInventoryUI()
@@ -290,4 +314,21 @@ public class PlayerState : MonoBehaviour
         gameData.connectionsDone.Add(conn);
         return this;
     }
+
+
+    private static IEnumerable<Type> _playerStateTypes;
+    /// <summary>
+    /// Method returning types of PlayerState, used for Serialization
+    /// </summary>
+    /// <returns></returns>
+    private static IEnumerable<Type> GetKnownTypes()
+    {
+        if (_playerStateTypes == null)
+            _playerStateTypes = Assembly.GetExecutingAssembly()
+                                    .GetTypes()
+                                    .Where(t => typeof(PlayerState).IsAssignableFrom(t))
+                                    .ToList();
+        return _playerStateTypes;
+    }
+
 }
