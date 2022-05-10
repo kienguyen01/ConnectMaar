@@ -28,6 +28,7 @@ public struct MapData
 public struct EndTurnData
 {
     public List<string> tilesChosen;
+    public float totalPoint;
 }
 
 public class MultiplayerState : GameState
@@ -129,6 +130,8 @@ public class MultiplayerState : GameState
         {
             endTurnData.tilesChosen = new List<string>();
 
+            endTurnData.totalPoint = player1.gameData.totalPoint;
+
             foreach (var item in chosenTiles)
             {
                 endTurnData.tilesChosen.Add(item.X.ToString().PadLeft(3, '0') + "|" + item.Y.ToString().PadLeft(3, '0'));
@@ -202,14 +205,13 @@ public class MultiplayerState : GameState
         if (player1 && ((MultiplayerPlayerState)player1).photonPlayer.IsMasterClient)
         {
             TileManager.tiles[14][22].OwnedBy = player2;
-            TileManager.tiles[10][16].OwnedBy = player1;
+            TileManager.tiles[12][11].OwnedBy = player1;
         }
         else
         {
             TileManager.tiles[14][22].OwnedBy = player1;
-            TileManager.tiles[10][16].OwnedBy = player2;
+            TileManager.tiles[12][11].OwnedBy = player2;
         }
-
     }
 
     [PunRPC]
@@ -283,6 +285,7 @@ public class MultiplayerState : GameState
            // AssignScrabbleTileRewards(tile);
         }
         player2.gameData.tilesTaken.AddRange(player2.gameData.tilesChosen);
+        player2.gameData.totalPoint = _endTurnData.totalPoint;
     }
      
 /*    public void AssignScrabbleTileRewards(Tile tile)
@@ -306,29 +309,102 @@ public class MultiplayerState : GameState
 
     void addSpecialTiles()
     {
-        mapData.stadiums.Add(randomizeTile(9, 17, 9, 17));
+        //  List<>
+        //mapData.houses.Add(PickRandomTiles());
 
-        mapData.houses.Add(randomizeTile(9, 16, 5, 12));
-        mapData.houses.Add(randomizeTile(12, 16, 5, 12));
-        mapData.houses.Add(randomizeTile(17, 12, 5, 5));
-        mapData.houses.Add(randomizeTile(19, 19, 2, 1));
-        mapData.houses.Add(randomizeTile(19, 19, 2, 1));
-        mapData.houses.Add(randomizeTile(19, 19, 2, 1));
-        mapData.houses.Add(randomizeTile(12, 16, 12, 16));
-        mapData.houses.Add(randomizeTile(10, 16, 10, 16));
-        mapData.houses.Add(randomizeTile(14, 22, 14, 22));
+        /* mapData.stadiums.Add(randomizeTile(9, 17, 9, 17));
 
-        mapData.scrabbleSolar.Add(randomizeTile(19, 19, 2, 1));
-        mapData.scrabbleSolar.Add(randomizeTile(19, 19, 2, 1));
-        mapData.scrabbleSolar.Add(randomizeTile(19, 19, 2, 1));
+         mapData.houses.Add(randomizeTile(9, 16, 5, 12));
+         mapData.houses.Add(randomizeTile(12, 16, 5, 12));
+         mapData.houses.Add(randomizeTile(17, 12, 5, 5));
+         mapData.houses.Add(randomizeTile(19, 19, 2, 1));
+         mapData.houses.Add(randomizeTile(19, 19, 2, 1));
+         mapData.houses.Add(randomizeTile(19, 19, 2, 1));
+         mapData.houses.Add(randomizeTile(12, 16, 12, 16));
+         mapData.houses.Add(randomizeTile(10, 16, 10, 16));
+         mapData.houses.Add(randomizeTile(14, 22, 14, 22));
 
-        mapData.churches.Add(randomizeTile(5, 14, 5, 14));
+         mapData.scrabbleSolar.Add(randomizeTile(19, 19, 2, 1));
+         mapData.scrabbleSolar.Add(randomizeTile(19, 19, 2, 1));
+         mapData.scrabbleSolar.Add(randomizeTile(19, 19, 2, 1));
 
-        mapData.solars.Add(randomizeTile(19, 19, 2, 1));
-        mapData.solars.Add(randomizeTile(19, 19, 2, 1));
-        mapData.solars.Add(randomizeTile(19, 19, 2, 1));
-        mapData.solars.Add(randomizeTile(19, 19, 2, 1));
+         mapData.churches.Add(randomizeTile(5, 14, 5, 14));
+
+         mapData.solars.Add(randomizeTile(19, 19, 2, 1));
+         mapData.solars.Add(randomizeTile(19, 19, 2, 1));
+         mapData.solars.Add(randomizeTile(19, 19, 2, 1));
+         mapData.solars.Add(randomizeTile(19, 19, 2, 1));*/
+
+        PickRandomTiles();
     }
+
+     
+
+
+    public void PickRandomTiles()
+    {
+        // Template         houses.Add("|,|,|");
+        string output;
+        List<string> houses = new List<string>();
+        houses.Add("2|4,5|4,4|8");
+        houses.Add("8|6,10|3,10|8");
+        houses.Add("9|12,8|16,6|11");
+        houses.Add("3|25,5|23,4|27");
+        houses.Add("8|19,9|23,6|21");
+        houses.Add("12|2,12|5,14|4");
+        houses.Add("16|17,18|9,16|10");
+        houses.Add("16|28,18|26,15|27");
+        houses.Add("2|26,11|28,11|24");
+        houses.Add("18|16,18|19,18|13");
+        houses.Add("27|26,25|22,23|27");
+        houses.Add("19|23,21|20,23|22");
+        houses.Add("27|18,28|14,25|16");
+        houses.Add("21|14,22|12,21|17");
+        houses.Add("27|9,27|6,24|7");
+        houses.Add("28|1,25|1,27|4");
+        /*houses.Add("|,|,|");
+        houses.Add("|,|,|");
+        houses.Add("|,|,|");
+        houses.Add("|,|,|");*/
+
+        int x = Random.Range(1, 3);
+        foreach(string hex in houses)
+        {
+            string[] y = hex.Split(',');
+
+            for (int i = 0; i < y.Length; i++)
+            {
+                if(i == x)
+                {
+                    string[] h = y[i].Split('|');
+                    output = h[0].ToString().PadLeft(3, '0') + "|" + h[1].ToString().PadLeft(3, '0');
+                    mapData.houses.Add(output);
+                }
+            }
+        }
+
+        KeyLoacation();
+
+    }
+
+    public void KeyLoacation()
+    {
+        mapData.stadiums.Add(randomizeTile(9, 17, 9, 17));
+        mapData.stadiums.Add(randomizeTile(21, 5, 21, 5));
+        mapData.stadiums.Add(randomizeTile(24, 19, 24, 19));
+        mapData.churches.Add(randomizeTile(7, 6, 7, 6));
+
+
+         mapData.solars.Add(randomizeTile(19, 19, 19, 19));
+         mapData.solars.Add(randomizeTile(27, 9, 27, 9));
+        /*mapData.solars.Add(randomizeTile(19, 19, 2, 1));
+        mapData.solars.Add(randomizeTile(19, 19, 2, 1));*/
+
+        //mapData.stadiums.Add(randomizeTile(9, 17, 9, 17));
+
+    }
+
+
 
     public string randomizeTile(int xMax, int yMax, int xMin, int yMin)
     {
