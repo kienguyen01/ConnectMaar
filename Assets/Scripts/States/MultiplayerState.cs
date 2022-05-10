@@ -235,7 +235,7 @@ public class MultiplayerState : GameState
     }
 
     [PunRPC]
-    void EndTurn()
+    void EndTurn()  
     {
         player1.gameData.isTurn = true;
         player2.gameData.isTurn = false;
@@ -362,6 +362,8 @@ public class MultiplayerState : GameState
         houses.Add("21|14,22|12,21|17");
         houses.Add("27|9,27|6,24|7");
         houses.Add("28|1,25|1,27|4");
+        houses.Add("14|22,14|22,14|22");
+        houses.Add("11|12,11|12,11|12");
         /*houses.Add("|,|,|");
         houses.Add("|,|,|");
         houses.Add("|,|,|");
