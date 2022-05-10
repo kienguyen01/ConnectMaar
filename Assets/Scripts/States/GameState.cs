@@ -362,8 +362,8 @@ public class GameState : MonoBehaviourPun
 
         if (Input.GetKeyDown(KeyCode.Space) || turnCheck)
         {
-            turnTime.endTurn = false;
-            turnTime.SetDuration(10).Begin();
+            //turnTime.endTurn = false;
+            //turnTime.SetDuration(10).Begin();
             Debug.LogError("turn changed");
             turnCheck = false;
             if (selectedConnector == null || selectedConnector.getLength() >= selectedConnector.MaxLength)
