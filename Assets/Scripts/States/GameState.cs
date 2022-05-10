@@ -360,7 +360,7 @@ public class GameState : MonoBehaviourPun
         bool returnObj = false;
         //Debug.LogError("asdasdfgjkl");
 
-        if (Input.GetKeyDown(KeyCode.Space) || turnCheck || turnTime.endTurn)
+        if (Input.GetKeyDown(KeyCode.Space) || turnCheck)
         {
             turnTime.endTurn = false;
             turnTime.SetDuration(10).Begin();
