@@ -381,6 +381,8 @@ public class MultiplayerState : GameState
         houses.Add("21|14,22|12,21|17");
         houses.Add("27|9,27|6,24|7");
         houses.Add("28|1,25|1,27|4");
+        houses.Add("14|22");
+        houses.Add("12|11");
         /*houses.Add("|,|,|");
         houses.Add("|,|,|");
         houses.Add("|,|,|");
