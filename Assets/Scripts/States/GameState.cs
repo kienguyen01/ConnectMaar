@@ -57,7 +57,13 @@ public class GameState : MonoBehaviourPun
     [HideInInspector]
     public TextMeshProUGUI text;
 
+
+    public static PopupHandler pH;
+
+    public Timer turnTime;
+
     Value props;
+
 
 
     public void Awake()
@@ -71,7 +77,9 @@ public class GameState : MonoBehaviourPun
         Assert.IsNull(instance);
         instance = this;  
         // Track with event-name and property
+
         GameState.Track("Run application", ("Test", Application.isEditor), ("DeviceName", SystemInfo.deviceName));
+
 
         //addEventHandlers();
         GameObject ExStadium = GameObject.Find("ExitBtnStadium");
@@ -91,6 +99,8 @@ public class GameState : MonoBehaviourPun
 
         //Assert.IsNotNull(config.PlayerStateClass);
         //Assert.IsTrue(PlayerStarts.Length > 0);
+
+        pH = this.gameObject.AddComponent(typeof(PopupHandler)) as PopupHandler;
 
         Debug.Log($"TileManager - {(config.TileManagerClass ? "true" : "false")}");
         Debug.Log($"PlayerState in GameState - {(config.PlayerStateClass ? "true" : "false")}");
@@ -153,7 +163,7 @@ public class GameState : MonoBehaviourPun
         if (Input.GetMouseButtonDown(0) && !selectedConnector)
             GetInfoCard(player1);
 
-        //startPoint();
+        startPoint();
     }
 
     public static void Track(string eventName, params (string key, object value)[] props)
@@ -348,8 +358,13 @@ public class GameState : MonoBehaviourPun
     protected bool CheckEndTurn()
     {
         bool returnObj = false;
-        if (Input.GetKeyDown(KeyCode.Space) || turnCheck)
+        //Debug.LogError("asdasdfgjkl");
+
+        if (Input.GetKeyDown(KeyCode.Space) || turnCheck || turnTime.endTurn)
         {
+            turnTime.endTurn = false;
+            turnTime.SetDuration(10).Begin();
+            Debug.LogError("turn changed");
             turnCheck = false;
             if (selectedConnector == null || selectedConnector.getLength() >= selectedConnector.MaxLength)
             {
@@ -407,6 +422,25 @@ public class GameState : MonoBehaviourPun
                             }
                             player1.FinalizeConnection(conn);
                         }
+                        else if (hasStandard && !hasHeat && !hasSolar && !isNormalConnectionEnd)
+                        {
+                            returnObj = true;
+
+                            skipTurn(player1);
+                        }
+                        else if (allHeat && !isHeatConnectionEnd)
+                        {
+                            returnObj = true;
+
+                            skipTurn(player1);
+
+                        }
+                        else if (allSolar && !isSolarConnectionEnd)
+                        {
+                            returnObj = true;
+
+                            skipTurn(player1);
+                        }
                     }
                     hasHeat = false;
                     hasSolar = false;
@@ -423,7 +457,9 @@ public class GameState : MonoBehaviourPun
                 {
                     player1.gameData.IsTurn = true;
                 }
+
                 Debug.Log("isTurn" + player1.gameData.IsTurn.ToString());
+
             }
         }
         return returnObj;
@@ -437,6 +473,19 @@ public class GameState : MonoBehaviourPun
         }
     }
 
+
+
+    public virtual void skipTurn(PlayerState player)
+    {
+        clearAllSelected(player);
+        player.gameData.isTurn = false;
+    }
+
+    protected Connection SolarConnection;
+    protected Connection HeatConnection;
+    protected bool isNormalConnectionEnd = false;
+    protected bool isHeatConnectionEnd = false;
+    protected bool isSolarConnectionEnd = false;
 
     /// <summary>
     /// Function that selects one tile when tapped

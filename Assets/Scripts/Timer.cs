@@ -9,12 +9,13 @@ public class Timer : MonoBehaviour
 {
     [SerializeField] private Image uiFillImage;
     [SerializeField] private TMP_Text uiText;
-
+    public bool endTurn;
     public int Duration { get; private set; } //readonly
     private int remainingDuration;
 
     private void Awake()
     {
+        endTurn = false;
         ResetTimer();
     }
     private void ResetTimer()
@@ -41,7 +42,8 @@ public class Timer : MonoBehaviour
             remainingDuration--;
             yield return new WaitForSeconds(1f);
         }
-        End();
+        endTurn = true;
+        EndTurnTimer();
     }
     private void UpdateUI(int seconds)
     {
@@ -49,7 +51,7 @@ public class Timer : MonoBehaviour
         uiText.text = string.Format("{0:D2}:{1:D2}", (seconds / 60), (seconds % 60)); //printing 2 digits
         uiFillImage.fillAmount = Mathf.InverseLerp(0, Duration, seconds);
     }
-    public void End()
+    public void EndTurnTimer()
     {
         ResetTimer();
     }
