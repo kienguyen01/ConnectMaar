@@ -57,7 +57,7 @@ public class TileManager : MonoBehaviour
         allHeat = new List<string>();
         allSolar = new List<string>();
         scrambleSolar = new List<string>();
-        addSpecialTiles();
+        //addSpecialTiles();
         if (SceneManager.GetActiveScene() ==  SceneManager.GetSceneByName("Tutorial"))
         {
             for (int x = 0; x < 15; x++)
@@ -336,7 +336,7 @@ public class TileManager : MonoBehaviour
         }
     }
 
-    public void addSpecialTiles()
+/*    public void addSpecialTiles()
     {
         allStadiums.Add(randomizeTile(9, 17, 9, 17));
 
@@ -362,7 +362,7 @@ public class TileManager : MonoBehaviour
         allSolar.Add(randomizeTile(19, 19, 2, 1));
         allSolar.Add(randomizeTile(19, 19, 2, 1));
 
-    }
+    }*/
 
     public void instantiateSpecialTile(Tile hex_cell, List<string> churches, List<string> solars, List<string> stadiums, List<string> houses, List<string> scrambleSolars, List<string> scrambleHeats, List<string> heats)
     {
