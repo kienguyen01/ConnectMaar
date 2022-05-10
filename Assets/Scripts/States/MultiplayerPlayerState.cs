@@ -26,12 +26,7 @@ public class MultiplayerPlayerState : PlayerState
             GameObject plane = PhotonNetwork.Instantiate("Plane",PlaneObj.transform.position,PlaneObj.transform.rotation);
 
             plane.GetPhotonView().RPC("Initialize", RpcTarget.Others, false);
-            plane.GetPhotonView().RPC("Initialize", photonPlayer,true); 
-
-
-
-            
-       
+            plane.GetPhotonView().RPC("Initialize", photonPlayer,true);
     }*/
 
     private void Update()
