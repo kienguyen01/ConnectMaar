@@ -52,6 +52,9 @@ public class GameState : MonoBehaviourPun
     [HideInInspector]
     public TextMeshProUGUI text;
 
+    public static PopupHandler pH;
+
+    public Timer turnTime;
 
     public void Awake()
     {
@@ -67,9 +70,8 @@ public class GameState : MonoBehaviourPun
         props["Test"] = true;
         props["DeviceName"] = SystemInfo.deviceName;
         Mixpanel.Track("Run application", props);
+
         
-
-
 
         //addEventHandlers();
         GameObject ExStadium = GameObject.Find("ExitBtnStadium");
@@ -89,6 +91,8 @@ public class GameState : MonoBehaviourPun
 
         //Assert.IsNotNull(config.PlayerStateClass);
         //Assert.IsTrue(PlayerStarts.Length > 0);
+
+        pH = this.gameObject.AddComponent(typeof(PopupHandler)) as PopupHandler;
 
         Debug.Log($"TileManager - {(config.TileManagerClass ? "true" : "false")}");
         Debug.Log($"PlayerState in GameState - {(config.PlayerStateClass ? "true" : "false")}");
@@ -249,13 +253,14 @@ public class GameState : MonoBehaviourPun
             {
                 HandleClickCheck();
             }
-            
         }
+
+
 
         if (Input.GetMouseButtonDown(0) && !selectedConnector)
             GetInfoCard(player1);
 
-        //startPoint();
+        startPoint();
     }
 
     protected void HandleClickCheck()
@@ -332,7 +337,9 @@ public class GameState : MonoBehaviourPun
     protected bool CheckEndTurn()
     {
         bool returnObj = false;
-        if (Input.GetKeyDown(KeyCode.Space) || turnCheck)
+        Debug.LogError("asdasdfgjkl");
+
+        if (Input.GetKeyDown(KeyCode.Space) || turnCheck || turnTime.endTurn)
         {
             turnCheck = false;
             if (selectedConnector == null || selectedConnector.getLength() >= selectedConnector.MaxLength)
@@ -391,6 +398,25 @@ public class GameState : MonoBehaviourPun
                             }
                             player1.FinalizeConnection(conn);
                         }
+                        else if (hasStandard && !hasHeat && !hasSolar && !isNormalConnectionEnd)
+                        {
+                            returnObj = true;
+
+                            skipTurn(player1);
+                        }
+                        else if (allHeat && !isHeatConnectionEnd)
+                        {
+                            returnObj = true;
+
+                            skipTurn(player1);
+
+                        }
+                        else if (allSolar && !isSolarConnectionEnd)
+                        {
+                            returnObj = true;
+
+                            skipTurn(player1);
+                        }
                     }
                     hasHeat = false;
                     hasSolar = false;
@@ -421,6 +447,12 @@ public class GameState : MonoBehaviourPun
         }
     }
 
+
+    public virtual void skipTurn(PlayerState player)
+    {
+        clearAllSelected(player);
+        player.gameData.isTurn = false;
+    }
 
     protected Connection SolarConnection;
     protected Connection HeatConnection;

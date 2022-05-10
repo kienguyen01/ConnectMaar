@@ -33,8 +33,10 @@ public struct EndTurnData
 
 public class MultiplayerState : GameState
 {
+    List<string> factPopups;
     MapData mapData;
     EndTurnData endTurnData;
+    
     /*public MultiplayerPlayerState player1;
     public MultiplayerPlayerState player2;*/
 
@@ -54,6 +56,8 @@ public class MultiplayerState : GameState
         mapData.scrabbleSolar = new List<string>();
         mapData.scrabbleHeats = new List<string>();
 
+        turnTime = new Timer();
+        instantiatePopup();
         Debug.Log("Multiplayer");
         if (PhotonNetwork.IsMasterClient)
         {
@@ -114,7 +118,22 @@ public class MultiplayerState : GameState
             }
             
         }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            string factPopup = "Fact" + Random.Range(1, 4).ToString();
 
+            foreach(string fact in factPopups)
+            {
+                pH.canvas = GameObject.Find(fact).GetComponent<Canvas>();
+                if (pH.isOpen())
+                {
+                    pH.canvas.enabled = false;
+                }
+            }
+
+            pH.canvas = GameObject.Find(factPopup).GetComponent<Canvas>();
+            pH.Popup();
+        }
         if (Input.GetMouseButtonDown(0) && !selectedConnector)
             GetInfoCard(player1);
     }
@@ -123,8 +142,8 @@ public class MultiplayerState : GameState
     {
         photonView.RPC("RPC_Log", RpcTarget.All, $"{PhotonNetwork.LocalPlayer.UserId} --- local player: {player1.gameData.isTurn} - foreign player: {player2.gameData.isTurn}");
 
-        List<Tile> chosenTiles = new List<Tile>(player1.gameData.tilesChosen);
         bool returnObj = base.CheckEndTurn();
+        List<Tile> chosenTiles = new List<Tile>(player1.gameData.tilesChosen);
 
         if (returnObj)
         {
@@ -379,5 +398,13 @@ public class MultiplayerState : GameState
             deserializedThing = (T)serializer.ReadObject(reader, true);
         }
         return deserializedThing;
+    }
+
+    void instantiatePopup()
+    {
+        factPopups = new List<string>();
+        factPopups.Add("Fact1");
+        factPopups.Add("Fact2");
+        factPopups.Add("Fact3");
     }
 }

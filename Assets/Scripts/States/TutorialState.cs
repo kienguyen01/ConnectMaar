@@ -469,8 +469,8 @@ public class TutorialState : GameState
     public void startAiMoves()
     {
         /*Make ai have connectionsns to the two houses closed to him */
-        createPlayer();
-        player2.gameData.PlayerColour = Color.black;
+        //createPlayer();
+        player2.gameData.PlayerColour = Color.blue;
         addTile(0, 14);
         addTile(0, 13);
         addTile(1, 13);

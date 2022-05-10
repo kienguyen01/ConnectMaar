@@ -382,11 +382,21 @@ public class TileManager : MonoBehaviour
         {
             if(tileCoords == tile)
             {
-                SolarPanel solar_cell = (SolarPanel)Instantiate(solarPrefab, new Vector3(hex_cell.X, 0.2f, hex_cell.Y * zOffset), Quaternion.Euler(0, -90, 0));
-                solar_cell.transform.SetParent(hex_cell.transform);
-                solar_cell.name = "solar_" + hex_cell.X + "_" + hex_cell.Y;
+                if (hex_cell.Y % 2 == 0)
+                {
+                    SolarPanel solar_cell = (SolarPanel)Instantiate(solarPrefab, new Vector3(hex_cell.X + 0.56f, 0.2f, hex_cell.Y * zOffset), Quaternion.Euler(0, -90, 0));
+                    solar_cell.transform.SetParent(hex_cell.transform);
+                    solar_cell.name = "solar_" + hex_cell.X + "_" + hex_cell.Y;
+                    hex_cell.AddStructure<SolarPanel>(solar_cell);
 
-                hex_cell.AddStructure<SolarPanel>(solar_cell);
+                }
+                else if (hex_cell.Y % 2 != 0)
+                {
+                    SolarPanel solar_cell = (SolarPanel)Instantiate(solarPrefab, new Vector3(hex_cell.X + 0.62f, 0.2f, hex_cell.Y * zOffset - 0.065f), Quaternion.Euler(0, -90, 0));
+                    solar_cell.transform.SetParent(hex_cell.transform);
+                    solar_cell.name = "solar_" + hex_cell.X + "_" + hex_cell.Y;
+                    hex_cell.AddStructure<SolarPanel>(solar_cell);
+                }
             }
         }
 
@@ -413,10 +423,19 @@ public class TileManager : MonoBehaviour
         {
             if(tileCoords == tile)
             {
-                House house_cell = (House)Instantiate(housePrefab, new Vector3(hex_cell.X * xOffset, 0.2f, hex_cell.Y * zOffset), Quaternion.identity);
-                house_cell.transform.localScale = new Vector3(0.08f, 0.16f, 0.16f);
-                hex_cell.AddStructure<House>(house_cell);
+                if (hex_cell.Y % 2 == 0)
+                {
+                    House house_cell = (House)Instantiate(housePrefab, new Vector3(hex_cell.X * xOffset, 0.2f, hex_cell.Y * zOffset), Quaternion.identity);
+                    house_cell.transform.localScale = new Vector3(0.08f, 0.16f, 0.16f);
 
+                    hex_cell.AddStructure<House>(house_cell);
+                }
+                else
+                {
+                    House house_cell = (House)Instantiate(housePrefab, new Vector3(hex_cell.X * xOffset + 0.52f, 0.2f, hex_cell.Y * zOffset + 0.012f), Quaternion.identity);
+                    house_cell.transform.localScale = new Vector3(0.08f, 0.16f, 0.16f);
+                    hex_cell.AddStructure<House>(house_cell);
+                }
             }
         }
 
