@@ -75,11 +75,5 @@ public class UiEvents : MonoBehaviour
     {
         GameState.instance.CheckStadiumPopup();
     }
-
-    
-
-
-
-
 }
 

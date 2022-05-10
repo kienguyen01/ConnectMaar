@@ -346,7 +346,7 @@ public class TutorialState : GameState
         go = false;
         while (true)
         {
-            if (player1.gameData.isTurn == YourTurn)
+            if (player1.gameData.IsTurn == YourTurn)
             {
                 go = true;
                 autoAdvance = AutoAdvance;

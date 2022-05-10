@@ -75,7 +75,7 @@ public class MultiplayerState : GameState
             CheckEndTurn();
         }
 
-        if (player1.gameData.isTurn)
+        if (player1.gameData.IsTurn)
         {
             if (Input.GetKeyDown(KeyCode.Alpha0) || clearBtn)
             {
@@ -120,7 +120,7 @@ public class MultiplayerState : GameState
 
     new protected bool CheckEndTurn()
     {
-        photonView.RPC("RPC_Log", RpcTarget.All, $"{PhotonNetwork.LocalPlayer.UserId} --- local player: {player1.gameData.isTurn} - foreign player: {player2.gameData.isTurn}");
+        photonView.RPC("RPC_Log", RpcTarget.All, $"{PhotonNetwork.LocalPlayer.UserId} --- local player: {player1.gameData.IsTurn} - foreign player: {player2.gameData.IsTurn}");
 
         List<Tile> chosenTiles = new List<Tile>(player1.gameData.tilesChosen);
         bool returnObj = base.CheckEndTurn();
@@ -155,8 +155,8 @@ public class MultiplayerState : GameState
 
         photonView.RPC("SetFirstTurn", RpcTarget.All);
 
-        Debug.LogError($"{player1.gameData.isTurn}");
-        Debug.LogError($"{player2.gameData.isTurn}");
+        Debug.LogError($"{player1.gameData.IsTurn}");
+        Debug.LogError($"{player2.gameData.IsTurn}");
 
         /*
             player1.RefillHand();
@@ -165,7 +165,7 @@ public class MultiplayerState : GameState
 
         photonView.RPC("RPC_HandRefill", RpcTarget.All);
 
-        photonView.RPC("RPC_Log", RpcTarget.All, $"{PhotonNetwork.LocalPlayer.UserId} --- local player: {player1.gameData.isTurn} - foreign player: {player2.gameData.isTurn}");
+        photonView.RPC("RPC_Log", RpcTarget.All, $"{PhotonNetwork.LocalPlayer.UserId} --- local player: {player1.gameData.IsTurn} - foreign player: {player2.gameData.IsTurn}");
 
         /*
         player1.EndTurn();
@@ -217,13 +217,13 @@ public class MultiplayerState : GameState
     {
         if(((MultiplayerPlayerState)player1).photonPlayer.IsMasterClient)
         {
-            player1.gameData.isTurn = true;
-            player2.gameData.isTurn = false;
+            player1.gameData.IsTurn = true;
+            player2.gameData.IsTurn = false;
         }
         else
         {
-            player1.gameData.isTurn = false;
-            player2.gameData.isTurn = true;
+            player1.gameData.IsTurn = false;
+            player2.gameData.IsTurn = true;
         }
 
         /*if(player1 == MultiplayerPlayerState.me)
@@ -235,10 +235,10 @@ public class MultiplayerState : GameState
     [PunRPC]
     void EndTurn()
     {
-        player1.gameData.isTurn = true;
-        player2.gameData.isTurn = false;
+        player1.gameData.IsTurn = true;
+        player2.gameData.IsTurn = false;
         Debug.LogError("turn changed");
-        Debug.LogError(player1.gameData.isTurn ? "p1" : "p2");
+        Debug.LogError(player1.gameData.IsTurn ? "p1" : "p2");
     }
 
     [PunRPC]

@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Linq;
 using System;
 using System.Runtime.Serialization;
+using mixpanel;
 
 [System.Serializable]
 public struct ConnectorConfig
@@ -27,7 +28,7 @@ public struct PlayerInfo
 [System.Serializable]
 public class PlayerGameData
 {
-    public bool isTurn;
+    private bool isTurn;
     public float totalPoint;
     public int handSize;
     public bool hasSolarInNetwork;
@@ -40,6 +41,21 @@ public class PlayerGameData
     public Connector SelectedConnector;
     public List<Node> nodesOwned;
     public Color PlayerColour;
+
+    public bool IsTurn { get => isTurn;
+        set
+        {
+            if (value)
+            {
+                GameState.Track("TurnStart", ("Connections", connectionsDone), ("Points", totalPoint), ("Tiles", tilesTaken));
+            }
+            else
+            {
+                GameState.Track("TurnEnd", ("Connections", connectionsDone), ("Points", totalPoint), ("Tiles", tilesTaken));
+            }
+            isTurn = value;
+        }
+    }
 }
 
 [DataContract]
@@ -68,7 +84,7 @@ public class PlayerState : MonoBehaviourPun
 
     public void Awake()
     {
-        gameData.isTurn = false;
+        gameData.IsTurn = false;
         gameData.tilesChosen = new Stack<Tile>();
         //Assert.IsNotNull(playerClass);
         //Assert.IsNotNull(cameraClass);
@@ -102,7 +118,7 @@ public class PlayerState : MonoBehaviourPun
     public virtual void EndTurn()
     {
         Debug.Log("clicked end button");
-        this.gameData.isTurn = false;
+        this.gameData.IsTurn = false;
         EndTurnCheck();
         this.gameData.tilesChosen = new Stack<Tile>();
     }
@@ -165,6 +181,8 @@ public class PlayerState : MonoBehaviourPun
             }
         }
         updateInventoryUI();
+
+
 
         return this;
     }

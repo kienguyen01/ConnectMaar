@@ -48,6 +48,11 @@ public class GameState : MonoBehaviourPun
     protected bool heatCheck;
     protected bool clearBtn;
     protected bool nodeCheck;
+    protected Connection SolarConnection;
+    protected Connection HeatConnection;
+    protected bool isNormalConnectionEnd = false;
+    protected bool isHeatConnectionEnd = false;
+    protected bool isSolarConnectionEnd = false;
 
     [HideInInspector]
     public TextMeshProUGUI text;
@@ -66,22 +71,13 @@ public class GameState : MonoBehaviourPun
         Assert.IsNull(instance);
         instance = this;  
         // Track with event-name and property
-        props = new Value();
-        props["Test"] = Application.isEditor;
-        props["DeviceName"] = SystemInfo.deviceName;
-        Mixpanel.Track("Run application", props);
-        
-
-
+        GameState.Track("Run application", ("Test", Application.isEditor), ("DeviceName", SystemInfo.deviceName));
 
         //addEventHandlers();
         GameObject ExStadium = GameObject.Find("ExitBtnStadium");
         ExStadium.GetComponent<Button>()
             .onClick.AddListener(
             () => {
-                var nProps = props;
-                nProps["SpecialBuiding"] = "De Meent";
-                Mixpanel.Track("Open Infocard", props);
                 TileManager.pH.canvas = ExStadium.transform.parent.parent.gameObject.GetComponent<Canvas>();
                 TileManager.pH.Popup();
             });
@@ -106,12 +102,74 @@ public class GameState : MonoBehaviourPun
         createPlayer();
         turnConnections = new List<Connection>();
     }
-    public void CheckStadiumPopup()
-    {
 
+    private void Update()
+    {
+        TurnMsg();
+
+        CheckEndTurn();
+
+        if (player1.gameData.IsTurn)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha0) || clearBtn)
+            {
+                clearAllSelected(player1);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha1) || p1)
+            {
+                Debug.Log("select 1");
+                SelectSingleConnector(player1);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2) || p2)
+            {
+                Debug.Log("select 2");
+                SelectDoubleConnector(player1);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3) || p3)
+            {
+                Debug.Log("select 3");
+                SelectTripleConnector(player1);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4) || solarCheck)
+            {
+                SelectSolarConnector(player1);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha5) || heatCheck)
+            {
+                SelectHeatConnector(player1);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha6) || nodeCheck)
+            {
+                SelectNodeConnector(player1);
+            }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                HandleClickCheck();
+            }
+        }
+
+        if (Input.GetMouseButtonDown(0) && !selectedConnector)
+            GetInfoCard(player1);
+
+        //startPoint();
     }
 
+    public static void Track(string eventName, params (string key, object value)[] props)
+    {
+        Value eventProperty = new Value();
+        foreach (var item in props)
+        {
+            eventProperty[item.key] = item.value.ToString();
+        }
+        Mixpanel.Track(eventName, eventProperty);
+    }
 
+    public void CheckStadiumPopup()
+    {
+        //@TODO why does this exist? it's empty
+    }
 
     public void FirstpipeCheck()
     {
@@ -196,7 +254,7 @@ public class GameState : MonoBehaviourPun
     private void TurnMsg()
     {
         EndBtnMsg = GameObject.Find("EndBtnMsg").GetComponent<TextMeshProUGUI>();
-        if (player1.gameData.isTurn == true)
+        if (player1.gameData.IsTurn == true)
         {
             EndBtnMsg.text = "End  Turn";
         }
@@ -206,64 +264,6 @@ public class GameState : MonoBehaviourPun
         }
     }
 
-
-
-    private void Update()
-    {
-        TurnMsg();
-
-        CheckEndTurn();
-
-        if (player1.gameData.isTurn)
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha0) || clearBtn)
-            {
-                clearAllSelected(player1);
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha1) || p1)
-            {
-                Debug.Log("select 1");
-
-                SelectSingleConnector(player1);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2) || p2)
-            {
-                Debug.Log("select 2");
-                SelectDoubleConnector(player1);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha3) || p3)
-            {
-                Debug.Log("select 3");
-                SelectTripleConnector(player1);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha4) || solarCheck)
-            {
-                SelectSolarConnector(player1);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha5) || heatCheck)
-            {
-                SelectHeatConnector(player1);
-
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha6) || nodeCheck)
-            {
-                SelectNodeConnector(player1);
-            }
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                HandleClickCheck();
-            }
-            
-        }
-
-        if (Input.GetMouseButtonDown(0) && !selectedConnector)
-            GetInfoCard(player1);
-
-        //startPoint();
-    }
-
     protected void HandleClickCheck()
     {
         if (selectedConnector)
@@ -271,6 +271,8 @@ public class GameState : MonoBehaviourPun
             if (!placingNode && Input.GetMouseButtonDown(0) && (selectedConnector == null || selectedConnector.MaxLength > selectedConnector.getLength()) && !(EventSystem.current.IsPointerOverGameObject()))
             {
                 Tile t = chooseTile(player1);
+                GameState.Track("Click", ("SelectedConnector", (!selectedConnector) ? "Not Selected" : selectedConnector.GetType().ToString()));
+                TrackTile(t, player1);
                 if (t != null)
                 {
                     if (t.SelectedBy != null && selectedConnector != null && !(t == selectedConnector.GetLastTile()))
@@ -325,6 +327,14 @@ public class GameState : MonoBehaviourPun
         }
     }
 
+    private static void TrackTile(Tile t, PlayerState p)
+    {
+        if (t)
+        {
+            GameState.Track("TileTouched", ("X", t.X), ("Y", t.Y), ("StructureType", t.Structure.GetType()), ("isSelected", t.SelectedBy ? "Selected" : "Not Selected"), ("OwnedBy", (t.OwnedBy == p) ? "Local Player" : "Other"));
+        }
+    }
+
     protected void CheckPlaceNode()
     {
         Tile t = PlaceNode();
@@ -343,7 +353,7 @@ public class GameState : MonoBehaviourPun
             turnCheck = false;
             if (selectedConnector == null || selectedConnector.getLength() >= selectedConnector.MaxLength)
             {
-                if (player1.gameData.isTurn)
+                if (player1.gameData.IsTurn)
                 {
                     foreach (Connection conn in turnConnections)
                     {
@@ -362,7 +372,7 @@ public class GameState : MonoBehaviourPun
                         {
                             returnObj = true;
                             player1.RefillHand();
-                            player1.gameData.isTurn = false;
+                            player1.gameData.IsTurn = false;
                             player1.EndTurn();
 
                             if (isSolarConnectionEnd && allSolar)
@@ -411,9 +421,9 @@ public class GameState : MonoBehaviourPun
                 }
                 else
                 {
-                    player1.gameData.isTurn = true;
+                    player1.gameData.IsTurn = true;
                 }
-                Debug.Log("isTurn" + player1.gameData.isTurn.ToString());
+                Debug.Log("isTurn" + player1.gameData.IsTurn.ToString());
             }
         }
         return returnObj;
@@ -428,11 +438,6 @@ public class GameState : MonoBehaviourPun
     }
 
 
-    protected Connection SolarConnection;
-    protected Connection HeatConnection;
-    protected bool isNormalConnectionEnd = false;
-    protected bool isHeatConnectionEnd = false;
-    protected bool isSolarConnectionEnd = false;
     /// <summary>
     /// Function that selects one tile when tapped
     /// </summary>
@@ -471,34 +476,35 @@ public class GameState : MonoBehaviourPun
 
             if (selectedConnector.getLength() < 2 || (selectedConnector.GetTiles().Contains(tileTouched)) || Connector.IsValidLengthThree(selectedConnector.GetTiles()[0], selectedConnector.GetTiles()[1], tileTouched))
             {
-                if (selectedConnector.MaxLength == (selectedConnector.getLength() + 1) && tileManager.isOccupied(tileTouched) && !tileManager.IsHeatPipe(tileTouched) && !tileManager.IsSolarPanel(tileTouched))
-                {
-                    isNormalConnectionEnd = true;
-                    currentConnection = new Connection();
-                    turnConnections.Add(currentConnection);
-                }
-                else if (tileManager.IsHeatPipe(tileTouched))
-                {
-                    isHeatConnectionEnd = true;
-                    HeatConnection = currentConnection;
-                }
-                else if (tileManager.IsSolarPanel(tileTouched))
-                {
-                    isSolarConnectionEnd = true;
-                    SolarConnection = currentConnection;
-                    currentConnection = new Connection();
-                    turnConnections.Add(currentConnection);
-                }
-                else if (!tileManager.isOccupied(tileTouched))
-                {
-                    isNormalConnectionEnd = false;
-                }
                 if (tileTouched.OwnedBy == null)
+                {
+                    if (selectedConnector.MaxLength == (selectedConnector.getLength() + 1) && tileManager.isOccupied(tileTouched) && !tileManager.IsHeatPipe(tileTouched) && !tileManager.IsSolarPanel(tileTouched))
+                    {
+                        isNormalConnectionEnd = true;
+                        currentConnection = new Connection();
+                        turnConnections.Add(currentConnection);
+                    }
+                    else if (tileManager.IsHeatPipe(tileTouched))
+                    {
+                        isHeatConnectionEnd = true;
+                        HeatConnection = currentConnection;
+                    }
+                    else if (tileManager.IsSolarPanel(tileTouched))
+                    {
+                        isSolarConnectionEnd = true;
+                        SolarConnection = currentConnection;
+                        currentConnection = new Connection();
+                        turnConnections.Add(currentConnection);
+                    }
+                    else if (!tileManager.isOccupied(tileTouched))
+                    {
+                        isNormalConnectionEnd = false;
+                    }
                     tileTouched.onSelected(player);
+                }
             }
             return tileTouched;
         }
-
         return null;
     }
 
@@ -525,7 +531,6 @@ public class GameState : MonoBehaviourPun
             {
                 tileTouched.GetSpecialOriginTile().openInfoCard(player);
             }
-
 
             return tileTouched;
         }
@@ -568,7 +573,6 @@ public class GameState : MonoBehaviourPun
     public void SelectSingleConnector(PlayerState player)
     {
         Debug.LogError("select 1");
-
         if (selectedConnector != null)
         {
             player.AbortConnector(selectedConnector, false);
@@ -580,6 +584,8 @@ public class GameState : MonoBehaviourPun
             player.gameData.Inventory.Remove(selectedConnector);
             hasStandard = true;
         }
+
+        GameState.Track("SingleConnector", ("Selection", ((selectedConnector) ? "Enabled" : "Disabled")));
     }
 
     public void SelectDoubleConnector(PlayerState player)
@@ -597,6 +603,8 @@ public class GameState : MonoBehaviourPun
             player.gameData.Inventory.Remove(selectedConnector);
             hasStandard = true;
         }
+
+        GameState.Track("DoubleConnector", ("Selection", ((selectedConnector) ? "Enabled" : "Disabled")));
     }
 
     public void SelectTripleConnector(PlayerState player)
@@ -614,6 +622,8 @@ public class GameState : MonoBehaviourPun
             player.gameData.Inventory.Remove(selectedConnector);
             hasStandard = true;
         }
+
+        GameState.Track("TripleConnector", ("Selection", ((selectedConnector) ? "Enabled" : "Disabled")));
     }
 
     public void SelectSolarConnector(PlayerState player)
@@ -629,6 +639,8 @@ public class GameState : MonoBehaviourPun
             hasSolar = true;
             player.gameData.SpecialConnector.Remove(selectedConnector);
         }
+
+        GameState.Track("SolarConnector", ("Selection", ((selectedConnector) ? "Enabled" : "Disabled")));
     }
 
     public void SelectHeatConnector(PlayerState player)
@@ -644,6 +656,8 @@ public class GameState : MonoBehaviourPun
             hasHeat = true;
             player.gameData.SpecialConnector.Remove(selectedConnector);
         }
+
+        GameState.Track("HeatConnector", ("Selection", ((selectedConnector) ? "Enabled" : "Disabled")));
     }
 
     public void SelectNodeConnector(PlayerState player)
@@ -664,14 +678,17 @@ public class GameState : MonoBehaviourPun
                 placingNode = true;
             }
         }
+
+        GameState.Track("Node", ("Selection", ((selectedConnector) ? "Enabled" : "Disabled")));
     }
 
     public void clearAllSelected(PlayerState player)
     {
+        GameState.Track("ClearAll");
+
         foreach (Connection conn in turnConnections)
         {
             player.AbortConnection(conn);
         }
     }
-
 }
