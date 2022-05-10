@@ -422,24 +422,24 @@ public class GameState : MonoBehaviourPun
                             }
                             player1.FinalizeConnection(conn);
                         }
-                        else if (hasStandard && !hasHeat && !hasSolar && !isNormalConnectionEnd)
-                        {
-                            returnObj = true;
+                        //else if (hasStandard && !hasHeat && !hasSolar && !isNormalConnectionEnd)
+                        //{
+                        //    returnObj = true;
 
-                            skipTurn(player1);
-                        }
-                        else if (allHeat && !isHeatConnectionEnd)
-                        {
-                            returnObj = true;
+                        //    skipTurn(player1);
+                        //}
+                        //else if (allHeat && !isHeatConnectionEnd)
+                        //{
+                        //    returnObj = true;
 
-                            skipTurn(player1);
+                        //    skipTurn(player1);
 
-                        }
-                        else if (allSolar && !isSolarConnectionEnd)
-                        {
-                            returnObj = true;
+                        //}
+                        //else if (allSolar && !isSolarConnectionEnd)
+                        //{
+                        //    returnObj = true;
 
-                            skipTurn(player1);
+                        //    skipTurn(player1);
                         }
                     }
                     hasHeat = false;
