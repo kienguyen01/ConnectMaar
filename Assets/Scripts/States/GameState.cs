@@ -337,10 +337,13 @@ public class GameState : MonoBehaviourPun
     protected bool CheckEndTurn()
     {
         bool returnObj = false;
-        Debug.LogError("asdasdfgjkl");
+        //Debug.LogError("asdasdfgjkl");
 
         if (Input.GetKeyDown(KeyCode.Space) || turnCheck || turnTime.endTurn)
         {
+            turnTime.endTurn = false;
+            turnTime.SetDuration(10).Begin();
+            Debug.LogError("turn changed");
             turnCheck = false;
             if (selectedConnector == null || selectedConnector.getLength() >= selectedConnector.MaxLength)
             {
@@ -433,7 +436,7 @@ public class GameState : MonoBehaviourPun
                 {
                     player1.gameData.isTurn = true;
                 }
-                Debug.Log("isTurn" + player1.gameData.isTurn.ToString());
+                //Debug.Log("isTurn" + player1.gameData.isTurn.ToString());
             }
         }
         return returnObj;
