@@ -123,35 +123,35 @@ public class GameState : MonoBehaviourPun
         {
             if (Input.GetKeyDown(KeyCode.Alpha0) || clearBtn)
             {
-                clearAllSelected(player1);
+                clearAllSelected();
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1) || p1)
             {
                 Debug.Log("select 1");
-                SelectSingleConnector(player1);
+                SelectSingleConnector();
             }
             if (Input.GetKeyDown(KeyCode.Alpha2) || p2)
             {
                 Debug.Log("select 2");
-                SelectDoubleConnector(player1);
+                SelectDoubleConnector();
             }
             if (Input.GetKeyDown(KeyCode.Alpha3) || p3)
             {
                 Debug.Log("select 3");
-                SelectTripleConnector(player1);
+                SelectTripleConnector();
             }
             if (Input.GetKeyDown(KeyCode.Alpha4) || solarCheck)
             {
-                SelectSolarConnector(player1);
+                SelectSolarConnector();
             }
             if (Input.GetKeyDown(KeyCode.Alpha5) || heatCheck)
             {
-                SelectHeatConnector(player1);
+                SelectHeatConnector();
             }
             if (Input.GetKeyDown(KeyCode.Alpha6) || nodeCheck)
             {
-                SelectNodeConnector(player1);
+                SelectNodeConnector();
             }
 
             if (Input.GetMouseButtonDown(0))
@@ -360,10 +360,10 @@ public class GameState : MonoBehaviourPun
         bool returnObj = false;
         //Debug.LogError("asdasdfgjkl");
 
-        if (Input.GetKeyDown(KeyCode.Space) || turnCheck || turnTime.endTurn)
+        if (Input.GetKeyDown(KeyCode.Space) || turnCheck)
         {
-            turnTime.endTurn = false;
-            turnTime.SetDuration(10).Begin();
+            //turnTime.endTurn = false;
+            //turnTime.SetDuration(10).Begin();
             Debug.LogError("turn changed");
             turnCheck = false;
             if (selectedConnector == null || selectedConnector.getLength() >= selectedConnector.MaxLength)
@@ -403,13 +403,13 @@ public class GameState : MonoBehaviourPun
 
                             if (connector.GetLastTile().Structure.GetType().Equals(typeof(House)))
                             {
-                                player1.gameData.totalPoint -= 5 / connectorCount;
+                                player1.gameData.totalPoint -= 20 / connectorCount;
                                 Debug.LogError(connectorCount);
                                 Debug.LogError(player1.gameData.totalPoint);
                             }
                             else if (connector.GetLastTile().Structure.GetType().Equals(typeof(SpecialBuilding)))
                             {
-                                player1.gameData.totalPoint -= 15 / conn.Connectors.Count; //TODO: multiply by bonus
+                                player1.gameData.totalPoint -= 30 / conn.Connectors.Count; //TODO: multiply by bonus
 
                             }
                             else if (connector.GetLastTile().Structure.GetType().Equals(typeof(Node)))
@@ -422,25 +422,25 @@ public class GameState : MonoBehaviourPun
                             }
                             player1.FinalizeConnection(conn);
                         }
-                        else if (hasStandard && !hasHeat && !hasSolar && !isNormalConnectionEnd)
-                        {
-                            returnObj = true;
+                        //else if (hasStandard && !hasHeat && !hasSolar && !isNormalConnectionEnd)
+                        //{
+                        //    returnObj = true;
 
-                            skipTurn(player1);
-                        }
-                        else if (allHeat && !isHeatConnectionEnd)
-                        {
-                            returnObj = true;
+                        //    skipTurn(player1);
+                        //}
+                        //else if (allHeat && !isHeatConnectionEnd)
+                        //{
+                        //    returnObj = true;
 
-                            skipTurn(player1);
+                        //    skipTurn(player1);
 
-                        }
-                        else if (allSolar && !isSolarConnectionEnd)
-                        {
-                            returnObj = true;
+                        //}
+                        //else if (allSolar && !isSolarConnectionEnd)
+                        //{
+                        //    returnObj = true;
 
-                            skipTurn(player1);
-                        }
+                        //    skipTurn(player1);
+                        //}
                     }
                     hasHeat = false;
                     hasSolar = false;
@@ -475,10 +475,10 @@ public class GameState : MonoBehaviourPun
 
 
 
-    public virtual void skipTurn(PlayerState player)
+    public virtual void skipTurn()
     {
-        clearAllSelected(player);
-        player.gameData.isTurn = false;
+        clearAllSelected();
+        player1.gameData.IsTurn = false;
     }
 
     /// <summary>
@@ -613,111 +613,111 @@ public class GameState : MonoBehaviourPun
         return null;
     }
 
-    public void SelectSingleConnector(PlayerState player)
+    public void SelectSingleConnector()
     {
         Debug.LogError("select 1");
         if (selectedConnector != null)
         {
-            player.AbortConnector(selectedConnector, false);
+            player1.AbortConnector(selectedConnector, false);
             selectedConnector = null;
         }
         else
         {
-            selectedConnector = player.gameData.Inventory.Find(x => x.MaxLength == 1);
-            player.gameData.Inventory.Remove(selectedConnector);
+            selectedConnector = player1.gameData.Inventory.Find(x => x.MaxLength == 1);
+            player1.gameData.Inventory.Remove(selectedConnector);
             hasStandard = true;
         }
 
         GameState.Track("SingleConnector", ("Selection", ((selectedConnector) ? "Enabled" : "Disabled")));
     }
 
-    public void SelectDoubleConnector(PlayerState player)
+    public void SelectDoubleConnector()
     {
         Debug.LogError("select 2");
 
         if (selectedConnector != null)
         {
-            player.AbortConnector(selectedConnector, false);
+            player1.AbortConnector(selectedConnector, false);
             selectedConnector = null;
         }
         else
         {
-            selectedConnector = player.gameData.Inventory.Find(x => x.MaxLength == 2);
-            player.gameData.Inventory.Remove(selectedConnector);
+            selectedConnector = player1.gameData.Inventory.Find(x => x.MaxLength == 2);
+            player1.gameData.Inventory.Remove(selectedConnector);
             hasStandard = true;
         }
 
         GameState.Track("DoubleConnector", ("Selection", ((selectedConnector) ? "Enabled" : "Disabled")));
     }
 
-    public void SelectTripleConnector(PlayerState player)
+    public void SelectTripleConnector()
     {
         Debug.LogError("select 3");
 
         if (selectedConnector != null)
         {
-            player.AbortConnector(selectedConnector, false);
+            player1.AbortConnector(selectedConnector, false);
             selectedConnector = null;
         }
         else
         {
-            selectedConnector = player.gameData.Inventory.Find(x => x.MaxLength == 3);
-            player.gameData.Inventory.Remove(selectedConnector);
+            selectedConnector = player1.gameData.Inventory.Find(x => x.MaxLength == 3);
+            player1.gameData.Inventory.Remove(selectedConnector);
             hasStandard = true;
         }
 
         GameState.Track("TripleConnector", ("Selection", ((selectedConnector) ? "Enabled" : "Disabled")));
     }
 
-    public void SelectSolarConnector(PlayerState player)
+    public void SelectSolarConnector()
     {
         if (selectedConnector != null)
         {
-            player.AbortConnector(selectedConnector, false);
+            player1.AbortConnector(selectedConnector, false);
             selectedConnector = null;
         }
         else
         {
-            selectedConnector = player.gameData.SpecialConnector.Find(x => x.IsSolar);
+            selectedConnector = player1.gameData.SpecialConnector.Find(x => x.IsSolar);
             hasSolar = true;
-            player.gameData.SpecialConnector.Remove(selectedConnector);
+            player1.gameData.SpecialConnector.Remove(selectedConnector);
         }
 
         GameState.Track("SolarConnector", ("Selection", ((selectedConnector) ? "Enabled" : "Disabled")));
     }
 
-    public void SelectHeatConnector(PlayerState player)
+    public void SelectHeatConnector()
     {
         if (selectedConnector != null)
         {
-            player.AbortConnector(selectedConnector, false);
+            player1.AbortConnector(selectedConnector, false);
             selectedConnector = null;
         }
         else
         {
-            selectedConnector = player.gameData.SpecialConnector.Find(x => x.IsHeat);
+            selectedConnector = player1.gameData.SpecialConnector.Find(x => x.IsHeat);
             hasHeat = true;
-            player.gameData.SpecialConnector.Remove(selectedConnector);
+            player1.gameData.SpecialConnector.Remove(selectedConnector);
         }
 
         GameState.Track("HeatConnector", ("Selection", ((selectedConnector) ? "Enabled" : "Disabled")));
     }
 
-    public void SelectNodeConnector(PlayerState player)
+    public void SelectNodeConnector()
     {
         //nodeCheck = false;
         if (placingNode)
         {
-            player.gameData.nodesOwned.Add(playerNode);
+            player1.gameData.nodesOwned.Add(playerNode);
             playerNode = null;
             placingNode = false;
         }
         else
         {
-            if (player.gameData.nodesOwned.Count > 0)
+            if (player1.gameData.nodesOwned.Count > 0)
             {
-                playerNode = player.gameData.nodesOwned[0];
-                player.gameData.nodesOwned.Remove(playerNode);
+                playerNode = player1.gameData.nodesOwned[0];
+                player1.gameData.nodesOwned.Remove(playerNode);
                 placingNode = true;
             }
         }
@@ -725,13 +725,13 @@ public class GameState : MonoBehaviourPun
         GameState.Track("Node", ("Selection", ((selectedConnector) ? "Enabled" : "Disabled")));
     }
 
-    public void clearAllSelected(PlayerState player)
+    public void clearAllSelected()
     {
         GameState.Track("ClearAll");
 
         foreach (Connection conn in turnConnections)
         {
-            player.AbortConnection(conn);
+            player1.AbortConnection(conn);
         }
     }
 }
