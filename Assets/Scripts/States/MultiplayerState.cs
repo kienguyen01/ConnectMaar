@@ -302,59 +302,30 @@ public class MultiplayerState : GameState
                 tile.OwnedBy = player2;
             }
             tile.SelectedBy = null;
-           // AssignScrabbleTileRewards(tile);
+            AssignScrabbleTileRewards(tile);
         }
         player2.gameData.tilesTaken.AddRange(player2.gameData.tilesChosen);
         player2.gameData.totalPoint = _endTurnData.totalPoint;
     }
      
-/*    public void AssignScrabbleTileRewards(Tile tile)
+    public void AssignScrabbleTileRewards(Tile tile)
     {
         if (tile.IsScrambleForHeat)
         {
-            this.AddHeatPipeConnector()
-                .AddHeatPipeConnector()
-                .AddHeatPipeConnector()
+            player1.AddHeatPipeConnector()
                 .AddHeatPipeConnector();
+
         }
         else if (tile.IsScrambleForSolar)
         {
-            this
-                .AddSolarConnector()
-                .AddSolarConnector()
+            player1
                 .AddSolarConnector()
                 .AddSolarConnector();
         }
-    }*/
+    }
 
     void addSpecialTiles()
     {
-        //  List<>
-        //mapData.houses.Add(PickRandomTiles());
-
-        /* mapData.stadiums.Add(randomizeTile(9, 17, 9, 17));
-
-         mapData.houses.Add(randomizeTile(9, 16, 5, 12));
-         mapData.houses.Add(randomizeTile(12, 16, 5, 12));
-         mapData.houses.Add(randomizeTile(17, 12, 5, 5));
-         mapData.houses.Add(randomizeTile(19, 19, 2, 1));
-         mapData.houses.Add(randomizeTile(19, 19, 2, 1));
-         mapData.houses.Add(randomizeTile(19, 19, 2, 1));
-         mapData.houses.Add(randomizeTile(12, 16, 12, 16));
-         mapData.houses.Add(randomizeTile(10, 16, 10, 16));
-         mapData.houses.Add(randomizeTile(14, 22, 14, 22));
-
-         mapData.scrabbleSolar.Add(randomizeTile(19, 19, 2, 1));
-         mapData.scrabbleSolar.Add(randomizeTile(19, 19, 2, 1));
-         mapData.scrabbleSolar.Add(randomizeTile(19, 19, 2, 1));
-
-         mapData.churches.Add(randomizeTile(5, 14, 5, 14));
-
-         mapData.solars.Add(randomizeTile(19, 19, 2, 1));
-         mapData.solars.Add(randomizeTile(19, 19, 2, 1));
-         mapData.solars.Add(randomizeTile(19, 19, 2, 1));
-         mapData.solars.Add(randomizeTile(19, 19, 2, 1));*/
-
         PickRandomTiles();
     }
 
@@ -421,6 +392,13 @@ public class MultiplayerState : GameState
 
          mapData.solars.Add(randomizeTile(19, 19, 19, 19));
          mapData.solars.Add(randomizeTile(27, 9, 27, 9));
+
+        mapData.scrabbleSolar.Add(randomizeTile(19, 19, 19, 19));
+        mapData.scrabbleSolar.Add(randomizeTile(16, 18, 16, 18));
+        mapData.scrabbleSolar.Add(randomizeTile(17, 6, 17, 6));
+        mapData.scrabbleSolar.Add(randomizeTile(13, 17, 13, 17));
+
+
         /*mapData.solars.Add(randomizeTile(19, 19, 2, 1));
         mapData.solars.Add(randomizeTile(19, 19, 2, 1));*/
 
