@@ -74,7 +74,7 @@ public class MultiplayerState : GameState
             SetPlayers();
         }
 
-        name.text = player1.name;
+        name.text = PhotonNetwork.LocalPlayer.NickName;
 
 
     }
