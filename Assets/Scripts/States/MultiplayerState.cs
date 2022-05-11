@@ -4,7 +4,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml;
 using UnityEngine;
@@ -62,7 +61,7 @@ public class MultiplayerState : GameState
         if (PhotonNetwork.IsMasterClient)
         {
             addSpecialTiles();
-            photonView.RPC("CreateMap", RpcTarget.All, SerializeData(mapData));
+            photonView.RPC("CreateMap", RpcTarget.All, ObjectToByteArray(mapData));
             SetPlayers();
         }
     }
@@ -158,7 +157,7 @@ public class MultiplayerState : GameState
                 endTurnData.tilesChosen.Add(item.X.ToString().PadLeft(3, '0') + "|" + item.Y.ToString().PadLeft(3, '0'));
             }
 
-            photonView.RPC("SendTiles", RpcTarget.Others, SerializeData(endTurnData));
+            photonView.RPC("SendTiles", RpcTarget.Others, ObjectToByteArray(endTurnData));
 
             photonView.RPC("EndTurn", RpcTarget.Others);
         }
@@ -267,7 +266,7 @@ public class MultiplayerState : GameState
     [PunRPC]
     void CreateMap(byte[] transferObject)
     {
-        MapData mapData = DeserializeData<MapData>(transferObject);
+        MapData mapData = (MapData)ByteArrayToObject(transferObject);
         for (int x = 0; x < 30; x++)
         {
             List<Tile> tileRow = new List<Tile>();
@@ -291,7 +290,7 @@ public class MultiplayerState : GameState
     [PunRPC]
     void SendTiles(byte[] transferObject)
     {
-        EndTurnData _endTurnData = DeserializeData<EndTurnData>(transferObject);
+        EndTurnData _endTurnData = (EndTurnData)ByteArrayToObject(transferObject);
 
         foreach(string tileLocation in _endTurnData.tilesChosen)
         {
@@ -446,37 +445,28 @@ public class MultiplayerState : GameState
         return player == player1 ? player2 : player1;
     }
 
-    public static byte[] SerializeData<T>(T data)
+    public static byte[] ObjectToByteArray(object obj)
     {
-        Console.WriteLine("Serializing an instance of the object.");
-        byte[] bytes;
-        using (var stream = new MemoryStream())
+        BinaryFormatter bf = new BinaryFormatter();
+        using (var ms = new MemoryStream())
         {
-            var serializer = new DataContractSerializer(typeof(T));
-            serializer.WriteObject(stream, data);
-            bytes = new byte[stream.Length];
-            stream.Position = 0;
-            stream.Read(bytes, 0, (int)stream.Length);
+            bf.Serialize(ms, obj);
+            return ms.ToArray();
         }
-        return bytes;
     }
 
-    public static T DeserializeData<T>(byte[] data)
+    public static object ByteArrayToObject(byte[] arrBytes)
     {
-        Console.WriteLine("Deserializing an instance of the object.");
-
-        T deserializedThing = default(T);
-
-        using (var stream = new MemoryStream(data))
-        using (var reader = XmlDictionaryReader.CreateTextReader(stream, new XmlDictionaryReaderQuotas()))
+        using (var memStream = new MemoryStream())
         {
-            var serializer = new DataContractSerializer(typeof(T));
-
-            // Deserialize the data and read it from the instance.
-            deserializedThing = (T)serializer.ReadObject(reader, true);
+            var binForm = new BinaryFormatter();
+            memStream.Write(arrBytes, 0, arrBytes.Length);
+            memStream.Seek(0, SeekOrigin.Begin);
+            var obj = binForm.Deserialize(memStream);
+            return obj;
         }
-        return deserializedThing;
     }
+
 
     void instantiatePopup()
     {
