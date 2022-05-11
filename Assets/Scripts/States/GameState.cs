@@ -252,7 +252,8 @@ public class GameState : MonoBehaviourPun
         if(player1 == null)
         {
             player1 = Instantiate(config.PlayerStateClass)
-                      .RefillHand(); 
+                      .RefillHand();
+            player1.name = PhotonNetwork.CurrentRoom.GetPlayer(1).NickName;
         }
         else if (player2 == null)
         {
@@ -403,7 +404,7 @@ public class GameState : MonoBehaviourPun
 
                             if (connector.GetLastTile().Structure.GetType().Equals(typeof(House)))
                             {
-                                player1.gameData.totalPoint -= 20 / connectorCount;
+                                player1.gameData.totalPoint -= 100 / connectorCount;
                                 Debug.LogError(connectorCount);
                                 Debug.LogError(player1.gameData.totalPoint);
                             }

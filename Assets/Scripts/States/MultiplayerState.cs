@@ -90,7 +90,7 @@ public class MultiplayerState : GameState
     {
         if (player1.gameData.totalPoint == 0)
         {
-
+            NetManager.instance.photonView.RPC("ChangeScene", RpcTarget.All, "WinnerScene", player1.name);
         }
     }
 
