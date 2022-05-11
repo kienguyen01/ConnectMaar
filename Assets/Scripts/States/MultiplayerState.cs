@@ -89,27 +89,27 @@ public class MultiplayerState : GameState
 
             if (Input.GetKeyDown(KeyCode.Alpha1) || p1)
             {
-                SelectSingleConnector(player1);
+                SelectSingleConnector();
             }
             if (Input.GetKeyDown(KeyCode.Alpha2) || p2)
             {
-                SelectDoubleConnector(player1);
+                SelectDoubleConnector();
             }
             if (Input.GetKeyDown(KeyCode.Alpha3) || p3)
             {
-                SelectTripleConnector(player1);
+                SelectTripleConnector();
             }
             if (Input.GetKeyDown(KeyCode.Alpha4) || solarCheck)
             {
-                SelectSolarConnector(player1);
+                SelectSolarConnector();
             }
             if (Input.GetKeyDown(KeyCode.Alpha5) || heatCheck)
             {
-                SelectHeatConnector(player1);
+                SelectHeatConnector();
             }
             if (Input.GetKeyDown(KeyCode.Alpha6) || nodeCheck)
             {
-                SelectNodeConnector(player1);
+                SelectNodeConnector();
             }
 
             if (Input.GetMouseButtonDown(0))
@@ -416,6 +416,8 @@ public class MultiplayerState : GameState
         mapData.stadiums.Add(randomizeTile(24, 19, 24, 19));
         mapData.churches.Add(randomizeTile(7, 6, 7, 6));
 
+        //School
+        //
 
          mapData.solars.Add(randomizeTile(19, 19, 19, 19));
          mapData.solars.Add(randomizeTile(27, 9, 27, 9));
