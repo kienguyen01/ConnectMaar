@@ -3,7 +3,37 @@ guid: 5c58b761601e8bf45b8b33dc16a16a5f
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: MaterialBaseColorbroad
+    second: {fileID: 2800000, guid: e296ca9036ca77f429ed279fef315abc, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: MaterialBaseColorlong
+    second: {fileID: 2800000, guid: 0801a4365594099428b2de6fdce8b71a, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: churchbase.Diffuse
+    second: {fileID: 2800000, guid: 22e5b0bc791c4b24d80b0db1e7cd28c8, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: churchsmallleft.Diffuse
+    second: {fileID: 2800000, guid: 9d0305aad57aecb409da653682ad36bd, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: churchsmallright.Diffuse
+    second: {fileID: 2800000, guid: 480645153db2f7248be30179b81ae3c2, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: churchtower.Diffuse
+    second: {fileID: 2800000, guid: d7de05cf09e121542867f0a70d909f68, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

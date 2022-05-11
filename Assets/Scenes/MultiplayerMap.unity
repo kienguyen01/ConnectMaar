@@ -371,6 +371,9 @@ MonoBehaviour:
   tileManager: {fileID: 0}
   p3: 0
   turnCheck: 0
+  Connector1Count: 0
+  Connector2Count: 0
+  Connector3Count: 0
   text: {fileID: 0}
   turnTime: {fileID: 0}
   playey1Name: {fileID: 519305116}
@@ -637,6 +640,14 @@ PrefabInstance:
     - target: {fileID: 5031659293516314584, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
       propertyPath: m_Name
       value: GameCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 5921759036958687778, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 711
+      objectReference: {fileID: 0}
+    - target: {fileID: 5921759036958687778, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 291
       objectReference: {fileID: 0}
     - target: {fileID: 6884564246510265455, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
       propertyPath: audio
