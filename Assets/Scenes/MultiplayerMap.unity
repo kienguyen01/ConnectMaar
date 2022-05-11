@@ -505,6 +505,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5031659291843114159, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+      propertyPath: m_text
+      value: 'end
+
+        turn'
+      objectReference: {fileID: 0}
     - target: {fileID: 5031659293471345898, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -619,11 +625,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
---- !u!1 &519305115 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5031659293516314584, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+--- !u!114 &519305115 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5447771045163600685, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
   m_PrefabInstance: {fileID: 519305114}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcb8c74d9f6aca34e9ab2d76f74524e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &865698801 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 9021570777978465087, guid: 15090ffcdcde0af459512219c0a55924, type: 3}

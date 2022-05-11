@@ -75,13 +75,14 @@ public class MultiplayerState : GameState
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || turnCheck)
-        {
-            CheckEndTurn();
-        }
+        
 
         if (player1.gameData.IsTurn)
         {
+            if (Input.GetKeyDown(KeyCode.Space) || turnCheck)
+            {
+                    CheckEndTurn();
+            }
             if (Input.GetKeyDown(KeyCode.Alpha0) || clearBtn)
             {
                 clearAllSelected();
