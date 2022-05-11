@@ -42,7 +42,9 @@ public class TutorialState : GameState
 
         if (TileManager.tiles[0][0].OwnedBy == null)
         {
+            player1.gameData.PlayerColour = Color.blue;
             TileManager.tiles[0][0].OwnedBy = player1;
+            
         }
 
         tutBox = GameObject.Find("TutorialBox").GetComponent<Image>();
