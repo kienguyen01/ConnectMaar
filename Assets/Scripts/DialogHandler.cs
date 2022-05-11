@@ -24,7 +24,9 @@ public class DialogHandler : MonoBehaviour
             Application.Quit();
             Debug.Log("Quit game");
             //quit application
+            #if UNITY_EDITOR
             EditorApplication.ExitPlaymode();
+            #endif
             //load main menu scene
             SceneManager.LoadScene("Menu");
         }, () => {
