@@ -766,9 +766,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: LobbyCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 6097610303297883490, guid: fc925fb3cf40924408ba61d6e5c79b1a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6097610303429389606, guid: fc925fb3cf40924408ba61d6e5c79b1a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6097610303618858106, guid: fc925fb3cf40924408ba61d6e5c79b1a, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1523343036}
+    - target: {fileID: 6097610303849037844, guid: fc925fb3cf40924408ba61d6e5c79b1a, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6097610303849037844, guid: fc925fb3cf40924408ba61d6e5c79b1a, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294901760
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc925fb3cf40924408ba61d6e5c79b1a, type: 3}
