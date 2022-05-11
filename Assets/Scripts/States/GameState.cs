@@ -478,7 +478,7 @@ public class GameState : MonoBehaviourPun
     public virtual void skipTurn(PlayerState player)
     {
         clearAllSelected(player);
-        player.gameData.isTurn = false;
+        player.gameData.IsTurn = false;
     }
 
     /// <summary>

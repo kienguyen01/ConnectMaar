@@ -142,8 +142,9 @@ public class MultiplayerState : GameState
     {
         photonView.RPC("RPC_Log", RpcTarget.All, $"{PhotonNetwork.LocalPlayer.UserId} --- local player: {player1.gameData.IsTurn} - foreign player: {player2.gameData.IsTurn}");
 
-        bool returnObj = base.CheckEndTurn();
         List<Tile> chosenTiles = new List<Tile>(player1.gameData.tilesChosen);
+
+        bool returnObj = base.CheckEndTurn();
 
         if (returnObj)
         {
