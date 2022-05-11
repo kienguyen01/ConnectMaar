@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -31,6 +32,10 @@ public struct EndTurnData
     public List<string> nodesPlaced;
 }
 
+
+
+
+
 public class MultiplayerState : GameState
 {
     List<string> factPopups;
@@ -43,6 +48,9 @@ public class MultiplayerState : GameState
     //public PlayerState currentPlayer;
 
     new public static MultiplayerState instance;
+
+    [SerializeField]
+    TextMeshPro name;
 
     private void Start()
     {
@@ -65,12 +73,25 @@ public class MultiplayerState : GameState
             photonView.RPC("CreateMap", RpcTarget.All, ObjectToByteArray(mapData));
             SetPlayers();
         }
+
+        name.text = player1.name;
+
+
     }
 
     [PunRPC]
     void DebugTest()
     {
         Debug.LogError(player1 ? "current assigned" : "current empty");
+    }
+
+    [PunRPC]
+    void WinCondition()
+    {
+        if (player1.gameData.totalPoint == 0)
+        {
+
+        }
     }
 
     private void Update()

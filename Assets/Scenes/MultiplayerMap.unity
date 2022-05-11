@@ -373,6 +373,7 @@ MonoBehaviour:
   turnCheck: 0
   text: {fileID: 0}
   turnTime: {fileID: 0}
+  name: {fileID: 0}
 --- !u!4 &338751680
 Transform:
   m_ObjectHideFlags: 0
@@ -505,6 +506,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4350961224196114046, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+      propertyPath: m_Name
+      value: LocalPlayerName
+      objectReference: {fileID: 0}
     - target: {fileID: 5031659291843114159, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
       propertyPath: m_text
       value: 'end

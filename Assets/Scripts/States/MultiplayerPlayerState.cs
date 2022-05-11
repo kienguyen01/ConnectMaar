@@ -92,9 +92,4 @@ public class MultiplayerPlayerState : PlayerState
         playerEmissionbar.fillAmount = Mathf.Lerp(playerEmissionbar.fillAmount, currentEmission / maxEmission, lerpSpeed);
     }
 
-    [PunRPC]
-    void Win()
-    {
-
-    }
 }
