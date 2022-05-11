@@ -511,6 +511,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1131289361, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -28.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1131289361, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -81.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1144103301, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -48.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1144103301, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -126.4
+      objectReference: {fileID: 0}
     - target: {fileID: 4350961224196114046, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
       propertyPath: m_Name
       value: LocalPlayerName
