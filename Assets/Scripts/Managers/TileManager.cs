@@ -32,9 +32,9 @@ public class TileManager : MonoBehaviour
 
     public List<string> allChurches;
 
-    public List<string> scrambleSolar;
+    public List<string> scrabbleSolar;
 
-    public List<string> scrambleHeat;
+    public List<string> scrabbleHeat;
 
 
 
@@ -56,7 +56,7 @@ public class TileManager : MonoBehaviour
         allStadiums = new List<string>();
         allHeat = new List<string>();
         allSolar = new List<string>();
-        scrambleSolar = new List<string>();
+        scrabbleSolar = new List<string>();
         //addSpecialTiles();
         if (SceneManager.GetActiveScene() ==  SceneManager.GetSceneByName("Tutorial"))
         {
@@ -89,7 +89,7 @@ public class TileManager : MonoBehaviour
             {
                 foreach(Tile tile in tileRow)
                 {
-                    instantiateSpecialTile(tile, allChurches, allSolar, allStadiums, allHouses, scrambleSolar, scrambleHeat, allHeat);
+                    instantiateSpecialTile(tile, allChurches, allSolar, allStadiums, allHouses, scrabbleSolar, scrabbleHeat, allHeat);
                 }
             }
         }
@@ -138,7 +138,7 @@ public class TileManager : MonoBehaviour
         {
             foreach (Tile tile in tileRow)
             {
-                instantiateSpecialTile(tile, allChurches, allSolar, allStadiums, allHouses, scrambleSolar, scrambleHeat, allHeat);
+                instantiateSpecialTile(tile, allChurches, allSolar, allStadiums, allHouses, scrabbleSolar, scrabbleHeat, allHeat);
             }
         }
     }
@@ -308,7 +308,7 @@ public class TileManager : MonoBehaviour
         }
         string tileCoords = x.ToString().PadLeft(3, '0') + "|" + y.ToString().PadLeft(3, '0');
 
-        if (scrambleSolar.Contains(tileCoords))
+        if (scrabbleSolar.Contains(tileCoords))
         {
             hex_cell = (Tile)Instantiate(solarHexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
             hex_cell.name = "Hex_" + x + "_" + y;

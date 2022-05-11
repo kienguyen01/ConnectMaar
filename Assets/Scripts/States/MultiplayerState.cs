@@ -96,8 +96,6 @@ public class MultiplayerState : GameState
 
     private void Update()
     {
-        
-
         if (player1.gameData.IsTurn)
         {
             if (Input.GetKeyDown(KeyCode.Space) || turnCheck)
@@ -295,7 +293,7 @@ public class MultiplayerState : GameState
     void CreateMap(byte[] transferObject)
     {
         MapData mapData = (MapData)ByteArrayToObject(transferObject);
-        tileManager.scrambleSolar = mapData.scrabbleSolar;
+        tileManager.scrabbleSolar = mapData.scrabbleSolar;
 
         for (int x = 0; x < 30; x++)
         {
@@ -420,11 +418,11 @@ public class MultiplayerState : GameState
             }
         }
 
-        KeyLoacation();
+        KeyLocation();
 
     }
 
-    public void KeyLoacation()
+    public void KeyLocation()
     {
         mapData.stadiums.Add(randomizeTile(9, 17, 9, 17));
         mapData.stadiums.Add(randomizeTile(21, 5, 21, 5));
@@ -443,7 +441,7 @@ public class MultiplayerState : GameState
         mapData.scrabbleSolar.Add(randomizeTile(13, 17, 13, 17));
 
 
-        tileManager.scrambleSolar = mapData.scrabbleSolar;
+        tileManager.scrabbleSolar = mapData.scrabbleSolar;
 
         /*mapData.solars.Add(randomizeTile(19, 19, 2, 1));
         mapData.solars.Add(randomizeTile(19, 19, 2, 1));*/
