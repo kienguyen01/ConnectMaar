@@ -290,6 +290,7 @@ public class PlayerState : MonoBehaviourPun
     public Connection StartConnection()
     {
         Connection c = new Connection();
+        c.Connectors = new List<Connector>();
         //Connection c = ;
         //gameData.connectionsDone.Add(c);
         return c;

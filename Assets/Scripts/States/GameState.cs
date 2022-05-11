@@ -309,6 +309,10 @@ public class GameState : MonoBehaviourPun
                                 currentConnection = player1.StartConnection();
                                 turnConnections.Add(currentConnection);
                             }
+                            if(currentConnection.Connectors == null)
+                            {
+                                currentConnection.Connectors = new List<Connector>();
+                            }
                             currentConnection.Connectors.Add(selectedConnector);
                             selectedConnector = null;
                         }
@@ -631,6 +635,7 @@ public class GameState : MonoBehaviourPun
         {
             player1.AbortConnector(selectedConnector, false);
             selectedConnector = null;
+            SelectSingleConnector();
         }
         else
         {
@@ -651,6 +656,7 @@ public class GameState : MonoBehaviourPun
         {
             player1.AbortConnector(selectedConnector, false);
             selectedConnector = null;
+            SelectDoubleConnector();
         }
         else
         {
@@ -671,6 +677,7 @@ public class GameState : MonoBehaviourPun
         {
             player1.AbortConnector(selectedConnector, false);
             selectedConnector = null;
+            SelectTripleConnector();
         }
         else
         {
@@ -689,6 +696,7 @@ public class GameState : MonoBehaviourPun
         {
             player1.AbortConnector(selectedConnector, false);
             selectedConnector = null;
+            SelectSolarConnector();
         }
         else
         {
@@ -706,6 +714,7 @@ public class GameState : MonoBehaviourPun
         {
             player1.AbortConnector(selectedConnector, false);
             selectedConnector = null;
+            SelectHeatConnector();
         }
         else
         {
@@ -730,6 +739,11 @@ public class GameState : MonoBehaviourPun
         {
             if (player1.gameData.nodesOwned.Count > 0)
             {
+                if(selectedConnector != null)
+                {
+                    player1.AbortConnector(selectedConnector, false);
+                    selectedConnector = null;
+                }
                 playerNode = player1.gameData.nodesOwned[0];
                 player1.gameData.nodesOwned.Remove(playerNode);
                 placingNode = true;

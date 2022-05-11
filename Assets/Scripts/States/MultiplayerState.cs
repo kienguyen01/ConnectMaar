@@ -267,7 +267,7 @@ public class MultiplayerState : GameState
             player2.gameData.PlayerColour = Color.black;
         }
 
-        if (player1 && ((MultiplayerPlayerState)player1).photonPlayer.IsMasterClient)
+        if (player1 && (((MultiplayerPlayerState)player1).photonPlayer != null && ((MultiplayerPlayerState)player1).photonPlayer.IsMasterClient))
         {
             TileManager.tiles[14][22].OwnedBy = player2;
             TileManager.tiles[12][11].OwnedBy = player1;
@@ -367,7 +367,7 @@ public class MultiplayerState : GameState
         player2.gameData.tilesTaken.AddRange(player2.gameData.tilesChosen);
         player2.gameData.totalPoint = _endTurnData.totalPoint;
     }
-     
+
     public void AssignScrabbleTileRewards(Tile tile)
     {
         if (tile.IsScrambleForHeat)
@@ -389,9 +389,6 @@ public class MultiplayerState : GameState
     {
         PickRandomTiles();
     }
-
-     
-
 
     public void PickRandomTiles()
     {
