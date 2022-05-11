@@ -22,6 +22,7 @@ public struct MapData
     public List<string> heats;
     public List<string> scrabbleSolar;
     public List<string> scrabbleHeats;
+    public List<string> windTurbines;
 }
 
 [Serializable]
@@ -63,6 +64,7 @@ public class MultiplayerState : GameState
         mapData.heats = new List<string>();
         mapData.scrabbleSolar = new List<string>();
         mapData.scrabbleHeats = new List<string>();
+        mapData.windTurbines = new List<string>();
 
         turnTime = new Timer();
         instantiatePopup();
@@ -311,7 +313,7 @@ public class MultiplayerState : GameState
         {
             foreach (Tile tile in tileRow)
             {
-                tileManager.instantiateSpecialTile(tile, mapData.churches, mapData.solars, mapData.stadiums, mapData.houses, mapData.scrabbleSolar, mapData.scrabbleHeats, mapData.heats);
+                tileManager.instantiateSpecialTile(tile, mapData.churches, mapData.solars, mapData.stadiums, mapData.houses, mapData.scrabbleSolar, mapData.windTurbines, mapData.scrabbleHeats, mapData.heats);
             }
         }
     }
@@ -395,12 +397,15 @@ public class MultiplayerState : GameState
         houses.Add("21|14,22|12,21|17");
         houses.Add("27|9,27|6,24|7");
         houses.Add("28|1,25|1,27|4");
-        houses.Add("14|22,14|22,14|22");
-        houses.Add("12|11,12|11,12|11");
+        
         /*houses.Add("|,|,|");
         houses.Add("|,|,|");
         houses.Add("|,|,|");
         houses.Add("|,|,|");*/
+
+        List<string> windTurbines = new List<string>();
+        windTurbines.Add("14|22,14|22,14|22");
+        windTurbines.Add("12|11,12|11,12|11");
 
         int x = Random.Range(1, 3);
         foreach(string hex in houses)
@@ -417,7 +422,20 @@ public class MultiplayerState : GameState
                 }
             }
         }
+        foreach (string hex in windTurbines)
+        {
+            string[] y = hex.Split(',');
 
+            for (int i = 0; i < y.Length; i++)
+            {
+                if (i == x)
+                {
+                    string[] h = y[i].Split('|');
+                    output = h[0].ToString().PadLeft(3, '0') + "|" + h[1].ToString().PadLeft(3, '0');
+                    mapData.windTurbines.Add(output);
+                }
+            }
+        }
         KeyLocation();
 
     }
