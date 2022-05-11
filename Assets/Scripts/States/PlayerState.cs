@@ -58,8 +58,6 @@ public class PlayerGameData
     }
 }
 
-[DataContract]
-[KnownType("GetKnownTypes")]
 public class PlayerState : MonoBehaviourPun
 {
     public ConnectorConfig config;
@@ -332,21 +330,4 @@ public class PlayerState : MonoBehaviourPun
         gameData.connectionsDone.Add(conn);
         return this;
     }
-
-
-    private static IEnumerable<Type> _playerStateTypes;
-    /// <summary>
-    /// Method returning types of PlayerState, used for Serialization
-    /// </summary>
-    /// <returns></returns>
-    private static IEnumerable<Type> GetKnownTypes()
-    {
-        if (_playerStateTypes == null)
-            _playerStateTypes = Assembly.GetExecutingAssembly()
-                                    .GetTypes()
-                                    .Where(t => typeof(PlayerState).IsAssignableFrom(t))
-                                    .ToList();
-        return _playerStateTypes;
-    }
-
 }
