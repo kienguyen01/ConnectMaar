@@ -90,7 +90,6 @@ public class TileManager : MonoBehaviour
                 foreach(Tile tile in tileRow)
                 {
                     instantiateSpecialTile(tile, allChurches, allSolar, allStadiums, allHouses, scrambleSolar, scrambleHeat, allHeat);
-
                 }
             }
         }

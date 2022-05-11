@@ -440,6 +440,8 @@ public class MultiplayerState : GameState
         mapData.scrabbleSolar.Add(randomizeTile(13, 17, 13, 17));
 
 
+        tileManager.scrambleSolar = mapData.scrabbleSolar;
+
         /*mapData.solars.Add(randomizeTile(19, 19, 2, 1));
         mapData.solars.Add(randomizeTile(19, 19, 2, 1));*/
 
