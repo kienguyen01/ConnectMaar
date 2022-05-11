@@ -51,11 +51,13 @@ MonoBehaviour:
   stadium: {fileID: 4467196121627705901, guid: 54803134503aef24da1c8b7919121c75, type: 3}
   nodePrefab: {fileID: 1634176675827848267, guid: c29a9e7ce76198c428acc24f8a1ec717, type: 3}
   solarHexPrefab: {fileID: -3159184665351456025, guid: e648e14f249948e498f1d70d6f68fcbc, type: 3}
+  windTurbinePrefab: {fileID: -1968271607633712438, guid: 1dc17acd40388f2448cf0561a200d8b0, type: 3}
   specialBuildingList: []
   allHouses: []
   allSolar: []
   allStadiums: []
   allHeat: []
   allChurches: []
-  scrambleSolar: []
-  scrambleHeat: []
+  scrabbleSolar: []
+  scrabbleHeat: []
+  windTurbines: []

@@ -54,6 +54,11 @@ public class GameState : MonoBehaviourPun
     protected bool isHeatConnectionEnd = false;
     protected bool isSolarConnectionEnd = false;
 
+    public int Connector1Count;
+    public int Connector2Count;
+    public int Connector3Count;
+
+
     [HideInInspector]
     public TextMeshProUGUI text;
 
@@ -111,6 +116,12 @@ public class GameState : MonoBehaviourPun
         }
         createPlayer();
         turnConnections = new List<Connection>();
+
+        Connector1Count = 0;
+        Connector2Count = 0;
+        Connector3Count = 0;
+
+
     }
 
     private void Update()
@@ -253,7 +264,6 @@ public class GameState : MonoBehaviourPun
         {
             player1 = Instantiate(config.PlayerStateClass)
                       .RefillHand();
-            player1.name = PhotonNetwork.CurrentRoom.GetPlayer(1).NickName;
         }
         else if (player2 == null)
         {
@@ -627,6 +637,7 @@ public class GameState : MonoBehaviourPun
             selectedConnector = player1.gameData.Inventory.Find(x => x.MaxLength == 1);
             player1.gameData.Inventory.Remove(selectedConnector);
             hasStandard = true;
+            Connector1Count++;
         }
 
         GameState.Track("SingleConnector", ("Selection", ((selectedConnector) ? "Enabled" : "Disabled")));
@@ -646,6 +657,7 @@ public class GameState : MonoBehaviourPun
             selectedConnector = player1.gameData.Inventory.Find(x => x.MaxLength == 2);
             player1.gameData.Inventory.Remove(selectedConnector);
             hasStandard = true;
+            Connector2Count++;
         }
 
         GameState.Track("DoubleConnector", ("Selection", ((selectedConnector) ? "Enabled" : "Disabled")));
@@ -665,6 +677,7 @@ public class GameState : MonoBehaviourPun
             selectedConnector = player1.gameData.Inventory.Find(x => x.MaxLength == 3);
             player1.gameData.Inventory.Remove(selectedConnector);
             hasStandard = true;
+            Connector3Count++;
         }
 
         GameState.Track("TripleConnector", ("Selection", ((selectedConnector) ? "Enabled" : "Disabled")));

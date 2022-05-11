@@ -22,6 +22,7 @@ public struct MapData
     public List<string> heats;
     public List<string> scrabbleSolar;
     public List<string> scrabbleHeats;
+    public List<string> windTurbines;
 }
 
 [Serializable]
@@ -50,7 +51,12 @@ public class MultiplayerState : GameState
     new public static MultiplayerState instance;
 
     [SerializeField]
-    TextMeshPro name;
+    TextMeshProUGUI playey1Name;
+    [SerializeField]
+    TextMeshProUGUI BuildingsCount;
+    [SerializeField]
+    TextMeshProUGUI ConnectorsCount;
+
 
     private void Start()
     {
@@ -63,6 +69,7 @@ public class MultiplayerState : GameState
         mapData.heats = new List<string>();
         mapData.scrabbleSolar = new List<string>();
         mapData.scrabbleHeats = new List<string>();
+        mapData.windTurbines = new List<string>();
 
         turnTime = new Timer();
         instantiatePopup();
@@ -74,8 +81,9 @@ public class MultiplayerState : GameState
             SetPlayers();
         }
 
-        name.text = PhotonNetwork.LocalPlayer.NickName;
-
+        // name.text = PhotonNetwork.LocalPlayer.NickName;
+        playey1Name.text = PhotonNetwork.LocalPlayer.NickName;
+        Debug.Log(PhotonNetwork.LocalPlayer.NickName + " THIS WORKS");
 
     }
 
@@ -96,6 +104,8 @@ public class MultiplayerState : GameState
 
     private void Update()
     {
+        
+
         if (player1.gameData.IsTurn)
         {
             if (Input.GetKeyDown(KeyCode.Space) || turnCheck)
@@ -171,6 +181,7 @@ public class MultiplayerState : GameState
             endTurnData.tilesChosen = new List<string>();
             endTurnData.nodesPlaced = new List<string>();
             endTurnData.totalPoint = player1.gameData.totalPoint;
+            int count = 0;
 
             foreach (var item in chosenTiles)
             {
@@ -180,6 +191,15 @@ public class MultiplayerState : GameState
                     endTurnData.nodesPlaced.Add(item.X.ToString().PadLeft(3, '0') + "|" + item.Y.ToString().PadLeft(3, '0'));
                 }
             }
+            foreach(var item in chosenTiles)
+            {
+                if(item.Structure.GetType() == typeof(House))
+                {
+                    count++;
+                }
+            }
+            BuildingsCount.text = "Buildings Owned: " + count;
+            ConnectorsCount.text = "Connector1: " + Connector1Count + " \n Connector2: " + Connector2Count + " \n Connector3: " + Connector3Count;
 
             photonView.RPC("SendTiles", RpcTarget.Others, ObjectToByteArray(endTurnData));
 
@@ -187,7 +207,6 @@ public class MultiplayerState : GameState
 
             photonView.RPC("WinCondition", RpcTarget.All);
         }
-
         return returnObj;
     }
 
@@ -273,6 +292,7 @@ public class MultiplayerState : GameState
             player1.gameData.IsTurn = false;
             player2.gameData.IsTurn = true;
         }
+        player1.name = PhotonNetwork.LocalPlayer.NickName;
 
         /*if(player1 == MultiplayerPlayerState.me)
         {
@@ -294,7 +314,6 @@ public class MultiplayerState : GameState
     {
         MapData mapData = (MapData)ByteArrayToObject(transferObject);
         tileManager.scrabbleSolar = mapData.scrabbleSolar;
-
         for (int x = 0; x < 30; x++)
         {
             List<Tile> tileRow = new List<Tile>();
@@ -306,12 +325,11 @@ public class MultiplayerState : GameState
 
             TileManager.tiles.Add(tileRow);
         }
-
         foreach (List<Tile> tileRow in TileManager.tiles)
         {
             foreach (Tile tile in tileRow)
             {
-                tileManager.instantiateSpecialTile(tile, mapData.churches, mapData.solars, mapData.stadiums, mapData.houses, mapData.scrabbleSolar, mapData.scrabbleHeats, mapData.heats);
+                tileManager.instantiateSpecialTile(tile, mapData.churches, mapData.solars, mapData.stadiums, mapData.houses, mapData.scrabbleSolar, mapData.windTurbines, mapData.scrabbleHeats, mapData.heats);
             }
         }
     }
@@ -354,7 +372,8 @@ public class MultiplayerState : GameState
     {
         if (tile.IsScrambleForHeat)
         {
-            player1.AddHeatPipeConnector()
+            player1
+                .AddHeatPipeConnector()
                 .AddHeatPipeConnector();
 
         }
@@ -389,18 +408,21 @@ public class MultiplayerState : GameState
         houses.Add("16|28,18|26,15|27");
         houses.Add("2|26,11|28,11|24");
         houses.Add("18|16,18|19,18|13");
-        houses.Add("27|26,25|22,23|27");
+        houses.Add("27|26,26|25,23|27");
         houses.Add("19|23,21|20,23|22");
         houses.Add("27|18,28|14,25|16");
         houses.Add("21|14,22|12,21|17");
         houses.Add("27|9,27|6,24|7");
         houses.Add("28|1,25|1,27|4");
-        houses.Add("14|22,14|22,14|22");
-        houses.Add("12|11,12|11,12|11");
+        
         /*houses.Add("|,|,|");
         houses.Add("|,|,|");
         houses.Add("|,|,|");
         houses.Add("|,|,|");*/
+
+        List<string> windTurbines = new List<string>();
+        windTurbines.Add("14|22,14|22,14|22");
+        windTurbines.Add("12|11,12|11,12|11");
 
         int x = Random.Range(1, 3);
         foreach(string hex in houses)
@@ -417,7 +439,20 @@ public class MultiplayerState : GameState
                 }
             }
         }
+        foreach (string hex in windTurbines)
+        {
+            string[] y = hex.Split(',');
 
+            for (int i = 0; i < y.Length; i++)
+            {
+                if (i == x)
+                {
+                    string[] h = y[i].Split('|');
+                    output = h[0].ToString().PadLeft(3, '0') + "|" + h[1].ToString().PadLeft(3, '0');
+                    mapData.windTurbines.Add(output);
+                }
+            }
+        }
         KeyLocation();
 
     }
@@ -435,18 +470,17 @@ public class MultiplayerState : GameState
          mapData.solars.Add(randomizeTile(19, 19, 19, 19));
          mapData.solars.Add(randomizeTile(27, 9, 27, 9));
 
-        mapData.scrabbleSolar.Add(randomizeTile(19, 19, 19, 19));
+        mapData.scrabbleSolar.Add(randomizeTile(17, 17, 17, 17));
         mapData.scrabbleSolar.Add(randomizeTile(16, 18, 16, 18));
         mapData.scrabbleSolar.Add(randomizeTile(17, 6, 17, 6));
         mapData.scrabbleSolar.Add(randomizeTile(13, 17, 13, 17));
 
 
-        tileManager.scrabbleSolar = mapData.scrabbleSolar;
-
         /*mapData.solars.Add(randomizeTile(19, 19, 2, 1));
         mapData.solars.Add(randomizeTile(19, 19, 2, 1));*/
 
         //mapData.stadiums.Add(randomizeTile(9, 17, 9, 17));
+        tileManager.scrabbleSolar = mapData.scrabbleSolar;
 
     }
 
