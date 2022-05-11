@@ -4,7 +4,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml;
 using UnityEngine;
@@ -62,7 +61,7 @@ public class MultiplayerState : GameState
         if (PhotonNetwork.IsMasterClient)
         {
             addSpecialTiles();
-            photonView.RPC("CreateMap", RpcTarget.All, SerializeData(mapData));
+            photonView.RPC("CreateMap", RpcTarget.All, ObjectToByteArray(mapData));
             SetPlayers();
         }
     }
@@ -158,7 +157,7 @@ public class MultiplayerState : GameState
                 endTurnData.tilesChosen.Add(item.X.ToString().PadLeft(3, '0') + "|" + item.Y.ToString().PadLeft(3, '0'));
             }
 
-            photonView.RPC("SendTiles", RpcTarget.Others, SerializeData(endTurnData));
+            photonView.RPC("SendTiles", RpcTarget.Others, ObjectToByteArray(endTurnData));
 
             photonView.RPC("EndTurn", RpcTarget.Others);
         }
@@ -267,7 +266,7 @@ public class MultiplayerState : GameState
     [PunRPC]
     void CreateMap(byte[] transferObject)
     {
-        MapData mapData = DeserializeData<MapData>(transferObject);
+        MapData mapData = (MapData)ByteArrayToObject(transferObject);
         for (int x = 0; x < 30; x++)
         {
             List<Tile> tileRow = new List<Tile>();
@@ -291,7 +290,7 @@ public class MultiplayerState : GameState
     [PunRPC]
     void SendTiles(byte[] transferObject)
     {
-        EndTurnData _endTurnData = DeserializeData<EndTurnData>(transferObject);
+        EndTurnData _endTurnData = (EndTurnData)ByteArrayToObject(transferObject);
 
         foreach(string tileLocation in _endTurnData.tilesChosen)
         {
@@ -303,59 +302,30 @@ public class MultiplayerState : GameState
                 tile.OwnedBy = player2;
             }
             tile.SelectedBy = null;
-           // AssignScrabbleTileRewards(tile);
+            AssignScrabbleTileRewards(tile);
         }
         player2.gameData.tilesTaken.AddRange(player2.gameData.tilesChosen);
         player2.gameData.totalPoint = _endTurnData.totalPoint;
     }
      
-/*    public void AssignScrabbleTileRewards(Tile tile)
+    public void AssignScrabbleTileRewards(Tile tile)
     {
         if (tile.IsScrambleForHeat)
         {
-            this.AddHeatPipeConnector()
-                .AddHeatPipeConnector()
-                .AddHeatPipeConnector()
+            player1.AddHeatPipeConnector()
                 .AddHeatPipeConnector();
+
         }
         else if (tile.IsScrambleForSolar)
         {
-            this
-                .AddSolarConnector()
-                .AddSolarConnector()
+            player1
                 .AddSolarConnector()
                 .AddSolarConnector();
         }
-    }*/
+    }
 
     void addSpecialTiles()
     {
-        //  List<>
-        //mapData.houses.Add(PickRandomTiles());
-
-        /* mapData.stadiums.Add(randomizeTile(9, 17, 9, 17));
-
-         mapData.houses.Add(randomizeTile(9, 16, 5, 12));
-         mapData.houses.Add(randomizeTile(12, 16, 5, 12));
-         mapData.houses.Add(randomizeTile(17, 12, 5, 5));
-         mapData.houses.Add(randomizeTile(19, 19, 2, 1));
-         mapData.houses.Add(randomizeTile(19, 19, 2, 1));
-         mapData.houses.Add(randomizeTile(19, 19, 2, 1));
-         mapData.houses.Add(randomizeTile(12, 16, 12, 16));
-         mapData.houses.Add(randomizeTile(10, 16, 10, 16));
-         mapData.houses.Add(randomizeTile(14, 22, 14, 22));
-
-         mapData.scrabbleSolar.Add(randomizeTile(19, 19, 2, 1));
-         mapData.scrabbleSolar.Add(randomizeTile(19, 19, 2, 1));
-         mapData.scrabbleSolar.Add(randomizeTile(19, 19, 2, 1));
-
-         mapData.churches.Add(randomizeTile(5, 14, 5, 14));
-
-         mapData.solars.Add(randomizeTile(19, 19, 2, 1));
-         mapData.solars.Add(randomizeTile(19, 19, 2, 1));
-         mapData.solars.Add(randomizeTile(19, 19, 2, 1));
-         mapData.solars.Add(randomizeTile(19, 19, 2, 1));*/
-
         PickRandomTiles();
     }
 
@@ -422,6 +392,13 @@ public class MultiplayerState : GameState
 
          mapData.solars.Add(randomizeTile(19, 19, 19, 19));
          mapData.solars.Add(randomizeTile(27, 9, 27, 9));
+
+        mapData.scrabbleSolar.Add(randomizeTile(19, 19, 19, 19));
+        mapData.scrabbleSolar.Add(randomizeTile(16, 18, 16, 18));
+        mapData.scrabbleSolar.Add(randomizeTile(17, 6, 17, 6));
+        mapData.scrabbleSolar.Add(randomizeTile(13, 17, 13, 17));
+
+
         /*mapData.solars.Add(randomizeTile(19, 19, 2, 1));
         mapData.solars.Add(randomizeTile(19, 19, 2, 1));*/
 
@@ -446,37 +423,28 @@ public class MultiplayerState : GameState
         return player == player1 ? player2 : player1;
     }
 
-    public static byte[] SerializeData<T>(T data)
+    public static byte[] ObjectToByteArray(object obj)
     {
-        Console.WriteLine("Serializing an instance of the object.");
-        byte[] bytes;
-        using (var stream = new MemoryStream())
+        BinaryFormatter bf = new BinaryFormatter();
+        using (var ms = new MemoryStream())
         {
-            var serializer = new DataContractSerializer(typeof(T));
-            serializer.WriteObject(stream, data);
-            bytes = new byte[stream.Length];
-            stream.Position = 0;
-            stream.Read(bytes, 0, (int)stream.Length);
+            bf.Serialize(ms, obj);
+            return ms.ToArray();
         }
-        return bytes;
     }
 
-    public static T DeserializeData<T>(byte[] data)
+    public static object ByteArrayToObject(byte[] arrBytes)
     {
-        Console.WriteLine("Deserializing an instance of the object.");
-
-        T deserializedThing = default(T);
-
-        using (var stream = new MemoryStream(data))
-        using (var reader = XmlDictionaryReader.CreateTextReader(stream, new XmlDictionaryReaderQuotas()))
+        using (var memStream = new MemoryStream())
         {
-            var serializer = new DataContractSerializer(typeof(T));
-
-            // Deserialize the data and read it from the instance.
-            deserializedThing = (T)serializer.ReadObject(reader, true);
+            var binForm = new BinaryFormatter();
+            memStream.Write(arrBytes, 0, arrBytes.Length);
+            memStream.Seek(0, SeekOrigin.Begin);
+            var obj = binForm.Deserialize(memStream);
+            return obj;
         }
-        return deserializedThing;
     }
+
 
     void instantiatePopup()
     {
