@@ -405,7 +405,7 @@ public class TileManager : MonoBehaviour
                 }
                 else if (hex_cell.Y % 2 != 0)
                 {
-                    SolarPanel solar_cell = (SolarPanel)Instantiate(solarPrefab, new Vector3(hex_cell.X + 0.62f, 0.2f, hex_cell.Y * zOffset - 0.065f), Quaternion.Euler(0, -90, 0));
+                    SolarPanel solar_cell = (SolarPanel)Instantiate(solarPrefab, new Vector3(hex_cell.X + 1.28f, 0.2f, hex_cell.Y * zOffset - 0.065f), Quaternion.Euler(0, -90, 0));
                     solar_cell.transform.SetParent(hex_cell.transform);
                     solar_cell.name = "solar_" + hex_cell.X + "_" + hex_cell.Y;
                     hex_cell.AddStructure<SolarPanel>(solar_cell);
@@ -473,7 +473,7 @@ public class TileManager : MonoBehaviour
                 }
                 else
                 {
-                    House house_cell = (House)Instantiate(windTurbinePrefab, new Vector3(hex_cell.X * xOffset, 1.25f, hex_cell.Y * zOffset), Quaternion.identity);
+                    House house_cell = (House)Instantiate(windTurbinePrefab, new Vector3(hex_cell.X * xOffset + 0.52f, 1.25f, hex_cell.Y * zOffset), Quaternion.identity);
                     house_cell.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
                     hex_cell.AddStructure<House>(house_cell);
                 }
