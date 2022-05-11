@@ -403,13 +403,13 @@ public class GameState : MonoBehaviourPun
 
                             if (connector.GetLastTile().Structure.GetType().Equals(typeof(House)))
                             {
-                                player1.gameData.totalPoint -= 10 / connectorCount;
+                                player1.gameData.totalPoint -= 20 / connectorCount;
                                 Debug.LogError(connectorCount);
                                 Debug.LogError(player1.gameData.totalPoint);
                             }
                             else if (connector.GetLastTile().Structure.GetType().Equals(typeof(SpecialBuilding)))
                             {
-                                player1.gameData.totalPoint -= 20 / conn.Connectors.Count; //TODO: multiply by bonus
+                                player1.gameData.totalPoint -= 30 / conn.Connectors.Count; //TODO: multiply by bonus
 
                             }
                             else if (connector.GetLastTile().Structure.GetType().Equals(typeof(Node)))
