@@ -264,7 +264,6 @@ public class GameState : MonoBehaviourPun
         {
             player1 = Instantiate(config.PlayerStateClass)
                       .RefillHand();
-            player1.name = PhotonNetwork.CurrentRoom.GetPlayer(1).NickName;
         }
         else if (player2 == null)
         {

@@ -292,6 +292,7 @@ public class MultiplayerState : GameState
             player1.gameData.IsTurn = false;
             player2.gameData.IsTurn = true;
         }
+        player1.name = PhotonNetwork.LocalPlayer.NickName;
 
         /*if(player1 == MultiplayerPlayerState.me)
         {
@@ -370,7 +371,8 @@ public class MultiplayerState : GameState
     {
         if (tile.IsScrambleForHeat)
         {
-            player1.AddHeatPipeConnector()
+            player1
+                .AddHeatPipeConnector()
                 .AddHeatPipeConnector();
 
         }
