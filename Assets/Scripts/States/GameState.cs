@@ -606,7 +606,7 @@ public class GameState : MonoBehaviourPun
             }
 
             Node nodeP = Instantiate(tileManager.nodePrefab, (tileTouched.Y % 2 == 0) ? new Vector3(tileTouched.X * 1.04f, 0.2f, tileTouched.Y * 0.9f) : new Vector3(tileTouched.X * 1.04f + 0.498f, 0.2f, tileTouched.Y * 0.9f - 0.084f), Quaternion.identity);
-            tileTouched.AddStructure<Tile>(nodeP);
+            tileTouched.AddStructure<Node>(nodeP);
             playerNode = null;
             return tileTouched;
         }
