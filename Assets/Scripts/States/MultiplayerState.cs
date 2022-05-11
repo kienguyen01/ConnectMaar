@@ -28,6 +28,7 @@ public struct EndTurnData
 {
     public List<string> tilesChosen;
     public float totalPoint;
+    public List<string> nodesPlaced;
 }
 
 public class MultiplayerState : GameState
@@ -149,12 +150,16 @@ public class MultiplayerState : GameState
         if (returnObj)
         {
             endTurnData.tilesChosen = new List<string>();
-
+            endTurnData.nodesPlaced = new List<string>();
             endTurnData.totalPoint = player1.gameData.totalPoint;
 
             foreach (var item in chosenTiles)
             {
                 endTurnData.tilesChosen.Add(item.X.ToString().PadLeft(3, '0') + "|" + item.Y.ToString().PadLeft(3, '0'));
+                if (item.Structure.GetType() == typeof(Node))
+                {
+                    endTurnData.nodesPlaced.Add(item.X.ToString().PadLeft(3, '0') + "|" + item.Y.ToString().PadLeft(3, '0'));
+                }
             }
 
             photonView.RPC("SendTiles", RpcTarget.Others, ObjectToByteArray(endTurnData));
@@ -292,7 +297,18 @@ public class MultiplayerState : GameState
     {
         EndTurnData _endTurnData = (EndTurnData)ByteArrayToObject(transferObject);
 
-        foreach(string tileLocation in _endTurnData.tilesChosen)
+
+        foreach (string tileLocation in _endTurnData.nodesPlaced)
+        {
+            var tileCoords = tileLocation.Split('|');
+            int local_X = Convert.ToInt32(tileCoords[0]);
+            int local_Y = Convert.ToInt32(tileCoords[1]);
+
+            Node nodeP = Instantiate(tileManager.nodePrefab, (local_Y % 2 == 0) ? new Vector3(local_X * 1.04f, 0.2f, local_Y * 0.9f) : new Vector3(local_X * 1.04f + 0.498f, 0.2f, local_Y * 0.9f - 0.084f), Quaternion.identity);
+            TileManager.tiles[local_X][local_Y].AddStructure<Node>(nodeP);
+        }
+
+        foreach (string tileLocation in _endTurnData.tilesChosen)
         {
             var tileCoords = tileLocation.Split('|');
             Tile tile = TileManager.tiles[Convert.ToInt32(tileCoords[0])][Convert.ToInt32(tileCoords[1])];
@@ -304,6 +320,8 @@ public class MultiplayerState : GameState
             tile.SelectedBy = null;
             AssignScrabbleTileRewards(tile);
         }
+
+
         player2.gameData.tilesTaken.AddRange(player2.gameData.tilesChosen);
         player2.gameData.totalPoint = _endTurnData.totalPoint;
     }
