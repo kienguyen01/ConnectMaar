@@ -186,6 +186,8 @@ public class MultiplayerState : GameState
             photonView.RPC("SendTiles", RpcTarget.Others, ObjectToByteArray(endTurnData));
 
             photonView.RPC("EndTurn", RpcTarget.Others);
+
+            photonView.RPC("WinCondition", RpcTarget.All);
         }
 
         return returnObj;
