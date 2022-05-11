@@ -295,6 +295,8 @@ public class MultiplayerState : GameState
     void CreateMap(byte[] transferObject)
     {
         MapData mapData = (MapData)ByteArrayToObject(transferObject);
+        tileManager.scrambleSolar = mapData.scrabbleSolar;
+
         for (int x = 0; x < 30; x++)
         {
             List<Tile> tileRow = new List<Tile>();
@@ -306,6 +308,7 @@ public class MultiplayerState : GameState
 
             TileManager.tiles.Add(tileRow);
         }
+
         foreach (List<Tile> tileRow in TileManager.tiles)
         {
             foreach (Tile tile in tileRow)
