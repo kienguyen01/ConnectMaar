@@ -1,0 +1,35 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
+using System;
+
+public class InfoScr : MonoBehaviour
+{
+    private Button exitBtn;
+    private void Awake()
+    {
+        exitBtn = transform.Find("exitBtn").GetComponent<Button>();
+        Hide();
+    }
+
+    public void ShowQuestion(Action exitAction)
+    {
+        gameObject.SetActive(true);
+        exitBtn.onClick.AddListener(() =>
+        {
+            Hide();
+            exitAction();
+        });
+
+    }
+
+
+    private void Hide()
+    {
+        gameObject.SetActive(false);
+    }
+}
+
+
