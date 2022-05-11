@@ -84,7 +84,7 @@ public class MultiplayerState : GameState
         {
             if (Input.GetKeyDown(KeyCode.Alpha0) || clearBtn)
             {
-                clearAllSelected(player1);
+                clearAllSelected();
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1) || p1)

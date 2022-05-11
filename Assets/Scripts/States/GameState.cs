@@ -123,7 +123,7 @@ public class GameState : MonoBehaviourPun
         {
             if (Input.GetKeyDown(KeyCode.Alpha0) || clearBtn)
             {
-                clearAllSelected(player1);
+                clearAllSelected();
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1) || p1)
@@ -475,10 +475,10 @@ public class GameState : MonoBehaviourPun
 
 
 
-    public virtual void skipTurn(PlayerState player)
+    public virtual void skipTurn()
     {
-        clearAllSelected(player1);
-        player.gameData.IsTurn = false;
+        clearAllSelected();
+        player1.gameData.IsTurn = false;
     }
 
     /// <summary>
@@ -725,7 +725,7 @@ public class GameState : MonoBehaviourPun
         GameState.Track("Node", ("Selection", ((selectedConnector) ? "Enabled" : "Disabled")));
     }
 
-    public void clearAllSelected(PlayerState player1)
+    public void clearAllSelected()
     {
         GameState.Track("ClearAll");
 

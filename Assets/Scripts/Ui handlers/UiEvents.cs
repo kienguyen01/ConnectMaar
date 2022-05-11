@@ -7,10 +7,6 @@ public class UiEvents : MonoBehaviour
 {
 
 
-    void Update()
-    {
-    }
-
     public void DisableCamera()
     {
         GameObject varGameObject = GameObject.Find("object");
@@ -64,10 +60,10 @@ public class UiEvents : MonoBehaviour
         }
     }
 
-    //public void BtnClearAll()
-    //{
-    //    GameState.instance.clearAllSelected();
-    //}
+    public void btnClearAll()
+    {
+        GameState.instance.clearAllSelected();
+    }
 
 
 
