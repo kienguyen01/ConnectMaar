@@ -110,19 +110,19 @@ public class TutorialState : GameState
                     text.text = "On the left side of your screen you can see your inventory.";
                     break;  
                 case 5:
-                    text.text = "In your inventory you have items called Connectors. They are your main tool to make Alkmaar a greener and more sustainable place";
+                    text.text = "In your inventory, you have items called Connectors. They are your main tool to make Alkmaar a greener and more sustainable place";
                     break;
                 case 6:
-                    text.text = "Right now in your inventory you have a single connector, a double connector and a triple connector";
+                    text.text = "Right now in your inventory you have a single connector, a double connector, and a triple connector";
                     break;
                 case 7:
-                    text.text = "Connecting buildings to your renewable energy source reduces your emmision bar on the left";
+                    text.text = "Connecting buildings to your renewable energy source reduces your emission bar on the left";
                     break;
                 case 8:
                     text.text = "To start a connection on the map tap a connector in your inventory then click on the tile next to a building in your grid";
                     break;
                 case 9:
-                    text.text = "Follow the highligted tiles by using the available connectors";
+                    text.text = "Follow the highlighted tiles by using the available connectors";
                     EnableHighlightChanager(0, 1);
                     EnableHighlightChanager(1, 1);
                     EnableHighlightChanager(2, 1);
@@ -151,7 +151,7 @@ public class TutorialState : GameState
                     text.text = "Your inventory will be refiled at the end of the turn";
                     break;
                 case 15:
-                    text.text = "Would you look at that, Your emission bar has descreased by 3 points";
+                    text.text = "Would you look at that? Your emission bar has decreased by 3 points";
                     break;
                 case 16:
                     text.text = "1 connector = 3 points  \n 2 Connectors =  2 points  \n  3 Connectors = 1 point";
@@ -190,16 +190,16 @@ public class TutorialState : GameState
                     player1.clearHand();
                     break;
                 case 23:
-                    text.text = "Special connectors are used to connect to special renewable resource in your grid such as heatpumps and solar panels. This will be useful in a bit.";
+                    text.text = "Special connectors are used to connect to special renewable resources in your grid such as heat pumps and solar panels. This will be useful in a bit.";
                     break;
                 case 24:
-                    text.text = "The special connector you have can only be used to connect to a solar pannel.";
+                    text.text = "The special connector you have can only be used to connect to a solar panel.";
                     break;
                 case 25:
                     text.text = "Special connectors like these can only be placed on one grid one at a time";
                     break;
                 case 26:
-                    text.text = "Please use the special solar connector to connect to the solar panel ahead. But first start your turn";
+                    text.text = "Please use the special solar connector to connect to the solar panel ahead. But first, start your turn";
                     EnableHighlightChanager(6, 1);
                     EnableHighlightChanager(7, 0);
                     break;
@@ -230,13 +230,13 @@ public class TutorialState : GameState
                            .refilSpecificHand(1, 1, 2);
                     break;
                 case 31:
-                    text.text = "There are two types of special connectors you can get from the random tiles scatered over the map and they can ony be used for a specific powersource";
+                    text.text = "There are two types of special connectors you can get from the random tiles scattered over the map and they can only be used for a specific power source";
                     break;
                 case 32:
                     text.text = "Heat connectors = Heat pumps, \n Solar connectors = Solar pannels";
                     break;
                 case 33:
-                    text.text = "Let us use our newly aquired solar energy in our grid to power a key location in Alkmmar  ";
+                    text.text = "Let us use our newly acquired solar energy in our grid to power a key location in Alkmaar  ";
                     break;
                 case 34:
                     text.text = "First, please tap on the stadium at the bottom of the map";
@@ -247,13 +247,13 @@ public class TutorialState : GameState
                     break;
                 case 36:
                     EnablePopup();
-                    text.text = "That was the info-Card for the AFAS Stadium. Each card has some fun facts about the location on the left hand side.";
+                    text.text = "That was the info-Card for the AFAS Stadium. Each card has some fun facts about the location on the left-hand side.";
                     break;
                 case 37:
-                    text.text = "The right hand side shows what renewable building you need to have in your grid in order to claim this stadium and rewards you get";
+                    text.text = "The right-hand side shows what renewable building you need to have in your grid in order to claim this stadium and the rewards you get";
                     break;
                 case 38:
-                    text.text = "For AFAS stadium to be connected to our grid by you need a Solar pannel in your grid. As a reward, you'll get an extra double connector next turn";
+                    text.text = "For AFAS stadium to be connected to our grid you need a Solar panel in your grid. As a reward, you'll get an extra double connector next turn";
                     break;
                 case 39:
                     text.text = "Start your turn";
@@ -285,7 +285,7 @@ public class TutorialState : GameState
                     text.text = "It looks like the second player has been making moves around Alkmaar while you were busy";
                     break;
                 case 45:
-                    text.text = "Lets claim that house above shall we?";
+                    text.text = "Let's claim that house above shall we?";
                     break;
                 case 46:
                     text.text = "Start your turn and build as close as you can to that house";
@@ -340,7 +340,7 @@ public class TutorialState : GameState
                     }
                 case 56:
                     EnablePopup();
-                    text.text = "Congratulations on finsihing the tutorial! Continue making Alkmaar a Greener place!";
+                    text.text = "Congratulations on finsihing the tutorial! Continue making Alkmaar a greener place!";
                     break;
             }
         }
