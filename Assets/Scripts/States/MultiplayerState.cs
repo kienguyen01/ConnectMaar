@@ -399,7 +399,7 @@ public class MultiplayerState : GameState
         houses.Add("8|6,10|3,10|8");
         houses.Add("9|12,8|16,6|11");
         houses.Add("3|25,5|23,4|27");
-        houses.Add("8|19,9|23,6|21");
+        houses.Add("8|19,9|23,0|25");
         houses.Add("12|2,12|5,14|4");
         houses.Add("16|17,18|9,16|10");
         houses.Add("16|28,18|26,15|27");
@@ -412,10 +412,16 @@ public class MultiplayerState : GameState
         houses.Add("27|9,27|6,24|7");
         houses.Add("28|1,25|1,27|4");
         
-        /*houses.Add("|,|,|");
-        houses.Add("|,|,|");
-        houses.Add("|,|,|");
-        houses.Add("|,|,|");*/
+        houses.Add("2|15,4|12,1|2");
+        houses.Add("15|26,13|25,12|29");
+        houses.Add("11|23,12|20,15|16");
+        houses.Add("2|8,3|12,2|14");
+
+        houses.Add("1|20,3|20,5|18");
+        houses.Add("25|28,22|28,7|22");
+        houses.Add("15|12,9|9,11|14");
+        houses.Add("18|3,13|9,9|1");
+
 
         List<string> windTurbines = new List<string>();
         windTurbines.Add("14|22,14|22,14|22");
@@ -472,6 +478,12 @@ public class MultiplayerState : GameState
         mapData.scrabbleSolar.Add(randomizeTile(17, 6, 17, 6));
         mapData.scrabbleSolar.Add(randomizeTile(13, 17, 13, 17));
 
+        mapData.scrabbleSolar.Add(randomizeTile(5, 27, 5, 27));
+
+        mapData.scrabbleSolar.Add(randomizeTile(9, 26, 9, 26));
+        mapData.scrabbleSolar.Add(randomizeTile(25, 14, 25, 14));
+
+        mapData.scrabbleSolar.Add(randomizeTile(6, 3, 6, 3));
 
         /*mapData.solars.Add(randomizeTile(19, 19, 2, 1));
         mapData.solars.Add(randomizeTile(19, 19, 2, 1));*/

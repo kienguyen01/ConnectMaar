@@ -130,12 +130,12 @@ public class PlayerState : MonoBehaviourPun
                 tile.OwnedBy = this;
             }
             tile.SelectedBy = null;
-            AssignScrabbleTileRewards(tile);
+            //AssignScrabbleTileRewards(tile);
         }
         this.gameData.tilesTaken.AddRange(this.gameData.tilesChosen);
     }
 
-    public void AssignScrabbleTileRewards(Tile tile)
+/*    public void AssignScrabbleTileRewards(Tile tile)
     {
         if (tile.IsScrambleForHeat)
         {
@@ -152,7 +152,7 @@ public class PlayerState : MonoBehaviourPun
                 .AddSolarConnector()
                 .AddSolarConnector();
         }
-    }
+    }*/
 
 
 
