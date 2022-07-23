@@ -333,89 +333,6 @@ MonoBehaviour:
   sceneViewId: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!1 &338751678
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 338751680}
-  - component: {fileID: 338751679}
-  - component: {fileID: 338751681}
-  m_Layer: 0
-  m_Name: MultiplayerState
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &338751679
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 338751678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87dd9a6bef92a8c4fbc0c7a6c4a41105, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  config:
-    PlayerStateClass: {fileID: 1642091268455989437, guid: b1bcd0ef7cca4234089352c8c6391110, type: 3}
-    TileManagerClass: {fileID: 6393859954093753031, guid: b50a3aca46555f64ba44296ac5c29862, type: 3}
-  player1: {fileID: 136995009}
-  player2: {fileID: 424589832}
-  tileManager: {fileID: 0}
-  p3: 0
-  turnCheck: 0
-  Connector1Count: 0
-  Connector2Count: 0
-  Connector3Count: 0
-  text: {fileID: 0}
-  turnTime: {fileID: 0}
-  playey1Name: {fileID: 519305116}
-  BuildingsCount: {fileID: 519305119}
-  ConnectorsCount: {fileID: 519305118}
---- !u!4 &338751680
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 338751678}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &338751681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 338751678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 4
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &424589830
 GameObject:
   m_ObjectHideFlags: 0
@@ -997,3 +914,84 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1001 &2624935193748525260
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2624935193416146956, guid: dc3e4b68b0d459c4daafdc127c43a39a, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624935193416146956, guid: dc3e4b68b0d459c4daafdc127c43a39a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624935193416146956, guid: dc3e4b68b0d459c4daafdc127c43a39a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624935193416146956, guid: dc3e4b68b0d459c4daafdc127c43a39a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624935193416146956, guid: dc3e4b68b0d459c4daafdc127c43a39a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624935193416146956, guid: dc3e4b68b0d459c4daafdc127c43a39a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624935193416146956, guid: dc3e4b68b0d459c4daafdc127c43a39a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624935193416146956, guid: dc3e4b68b0d459c4daafdc127c43a39a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624935193416146956, guid: dc3e4b68b0d459c4daafdc127c43a39a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624935193416146956, guid: dc3e4b68b0d459c4daafdc127c43a39a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624935193416146956, guid: dc3e4b68b0d459c4daafdc127c43a39a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624935193416146957, guid: dc3e4b68b0d459c4daafdc127c43a39a, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624935193416147058, guid: dc3e4b68b0d459c4daafdc127c43a39a, type: 3}
+      propertyPath: m_Name
+      value: MultiplayerState
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624935193416147059, guid: dc3e4b68b0d459c4daafdc127c43a39a, type: 3}
+      propertyPath: player1
+      value: 
+      objectReference: {fileID: 136995009}
+    - target: {fileID: 2624935193416147059, guid: dc3e4b68b0d459c4daafdc127c43a39a, type: 3}
+      propertyPath: player2
+      value: 
+      objectReference: {fileID: 424589832}
+    - target: {fileID: 2624935193416147059, guid: dc3e4b68b0d459c4daafdc127c43a39a, type: 3}
+      propertyPath: playey1Name
+      value: 
+      objectReference: {fileID: 519305116}
+    - target: {fileID: 2624935193416147059, guid: dc3e4b68b0d459c4daafdc127c43a39a, type: 3}
+      propertyPath: BuildingsCount
+      value: 
+      objectReference: {fileID: 519305119}
+    - target: {fileID: 2624935193416147059, guid: dc3e4b68b0d459c4daafdc127c43a39a, type: 3}
+      propertyPath: ConnectorsCount
+      value: 
+      objectReference: {fileID: 519305118}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dc3e4b68b0d459c4daafdc127c43a39a, type: 3}

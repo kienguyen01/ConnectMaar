@@ -71,7 +71,6 @@ public class MultiplayerState : GameState
         mapData.scrabbleHeats = new List<string>();
         mapData.windTurbines = new List<string>();
 
-        turnTime = new Timer();
         instantiatePopup();
         Debug.Log("Multiplayer");
         if (PhotonNetwork.IsMasterClient)
