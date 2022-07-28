@@ -75,8 +75,12 @@ public class Menu : MonoBehaviourPunCallbacks
         {
             gameStartingText.gameObject.SetActive(true);
 
+            bool _success = PhotonNetwork.SetMasterClient(PhotonNetwork.CurrentRoom.GetPlayer(1));
+            Debug.LogWarning($"Local player Nickname: {PhotonNetwork.LocalPlayer.NickName}, Actor Number: {PhotonNetwork.LocalPlayer.ActorNumber}, IsMasyer: {PhotonNetwork.LocalPlayer.IsMasterClient}, UserID: {PhotonNetwork.LocalPlayer.UserId}");
+
+
             //Masterclient allow to call to try and start the game function
-            if (PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient && _success)
             {
                 Invoke("TryStartGame", 4.0f);
             }
