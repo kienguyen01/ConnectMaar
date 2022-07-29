@@ -304,12 +304,14 @@ public class PlayerState : MonoBehaviourPun
         }
         Destroy(conn);
 
-
         return this;
     }
 
     public PlayerState AbortConnector(Connector c, bool Hard = false)
     {
+        if (!c)
+            return null;
+
         if (Hard || c.MaxLength > c.getLength())
         {
             foreach (Tile t in c.GetTiles())

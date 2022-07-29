@@ -416,6 +416,7 @@ public class GameState : MonoBehaviourPun
                             int connectorCount = turnConnections.Count;
                             Connector connector = conn.GetLastConnector();
 
+                            //Point Modifier checks
                             if (connector.GetLastTile().Structure.GetType().Equals(typeof(House)))
                             {
                                 player1.gameData.totalPoint -= 10 / connectorCount;
@@ -427,33 +428,29 @@ public class GameState : MonoBehaviourPun
                                 player1.gameData.totalPoint -= 20 / conn.Connectors.Count; //TODO: multiply by bonus
 
                             }
-                            else if (connector.GetLastTile().Structure.GetType().Equals(typeof(Node)))
+                            else if (connector.GetLastTile().Structure.GetType().Equals(typeof(Node))) 
                             {
-
+                                //empty because no points are awarded on node connection
                             }
                             else if (connector.GetLastTile().Structure.GetType().Equals(typeof(SolarPanel)) || connector.GetLastTile().Structure.GetType().Equals(typeof(HeatPipe)))
                             {
-
+                                //empty because no points are awarded on Energy source connection
                             }
                             player1.FinalizeConnection(conn);
                         }
                         //else if (hasStandard && !hasHeat && !hasSolar && !isNormalConnectionEnd)
                         //{
                         //    returnObj = true;
-
                         //    skipTurn(player1);
                         //}
                         //else if (allHeat && !isHeatConnectionEnd)
                         //{
                         //    returnObj = true;
-
                         //    skipTurn(player1);
-
                         //}
                         //else if (allSolar && !isSolarConnectionEnd)
                         //{
                         //    returnObj = true;
-
                         //    skipTurn(player1);
                         //}
                     }
@@ -487,8 +484,6 @@ public class GameState : MonoBehaviourPun
             TileManager.tiles[12][16].OwnedBy = player1;
         }
     }
-
-
 
     public virtual void skipTurn()
     {
@@ -757,6 +752,9 @@ public class GameState : MonoBehaviourPun
     {
         GameState.Track("ClearAll");
 
+        //player1.AbortConnection(currentConnection);
+        //Debug.LogWarning(selectedConnector);
+        player1.AbortConnector(selectedConnector);
         foreach (Connection conn in turnConnections)
         {
             player1.AbortConnection(conn);
