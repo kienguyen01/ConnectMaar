@@ -595,7 +595,7 @@ public class TileManager : MonoBehaviour
     {
         foreach (Tile tile in getNeigbours(t))
         {
-            if (tile.Structure.IsNode || isOccupiedBySamePlayer(tile, playerState) && (tile.HasBuilding() || tile.SelectedBy != null))
+            if (tile.Structure.IsNode || isOccupiedBySamePlayer(tile, playerState) /*&& (tile.HasBuilding() || tile.SelectedBy != null))*/)
             {
                 return true;
             }

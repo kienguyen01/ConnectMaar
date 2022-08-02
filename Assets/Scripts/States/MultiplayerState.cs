@@ -207,6 +207,10 @@ public class MultiplayerState : GameState
 
             photonView.RPC("WinCondition", RpcTarget.All);
         }
+        foreach(var item in player1.gameData.tilesTaken)
+        {
+            photonView.RPC("RPC_Log", RpcTarget.All, $"{item.X} : {item.Y}");
+        }
         return returnObj;
     }
 

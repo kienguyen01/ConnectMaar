@@ -298,7 +298,7 @@ public class GameState : MonoBehaviourPun
                 {
                     if (t.SelectedBy != null && selectedConnector != null && !(t == selectedConnector.GetLastTile()))
                     {
-                        if (t.IsSpecial() && isNormalConnectionEnd)
+                        if (t.IsSpecial() /*&& isNormalConnectionEnd*/)
                         {
                             foreach (Tile tile in tileManager.getSpecialNeighbours(t))
                             {
@@ -398,7 +398,7 @@ public class GameState : MonoBehaviourPun
                                 allHeat = false;
                             }
                         }
-                        if ((isSolarConnectionEnd && allSolar) || (isHeatConnectionEnd && allHeat) || (hasStandard && !hasHeat && !hasSolar && isNormalConnectionEnd))
+                        if ((isSolarConnectionEnd && allSolar) || (isHeatConnectionEnd && allHeat) || (hasStandard && !hasHeat && !hasSolar /*&& isNormalConnectionEnd*/))
                         {
                             returnObj = true;
                             player1.RefillHand();
@@ -426,7 +426,6 @@ public class GameState : MonoBehaviourPun
                             else if (connector.GetLastTile().Structure.GetType().Equals(typeof(SpecialBuilding)))
                             {
                                 player1.gameData.totalPoint -= 20 / conn.Connectors.Count; //TODO: multiply by bonus
-
                             }
                             else if (connector.GetLastTile().Structure.GetType().Equals(typeof(Node))) 
                             {
@@ -541,6 +540,8 @@ public class GameState : MonoBehaviourPun
                     {
                         isHeatConnectionEnd = true;
                         HeatConnection = currentConnection;
+                        currentConnection = new Connection();
+                        turnConnections.Add(currentConnection);
                     }
                     else if (tileManager.IsSolarPanel(tileTouched))
                     {
