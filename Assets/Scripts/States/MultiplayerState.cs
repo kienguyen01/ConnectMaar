@@ -364,7 +364,6 @@ public class MultiplayerState : GameState
                 tile.OwnedBy = player2;
             }
             tile.SelectedBy = null;
-            AssignScrabbleTileRewards(tile);
         }
 
 
@@ -372,22 +371,7 @@ public class MultiplayerState : GameState
         player2.gameData.totalPoint = _endTurnData.totalPoint;
     }
 
-    public void AssignScrabbleTileRewards(Tile tile)
-    {
-        if (tile.IsScrambleForHeat)
-        {
-            player1
-                .AddHeatPipeConnector()
-                .AddHeatPipeConnector();
-
-        }
-        else if (tile.IsScrambleForSolar)
-        {
-            player1
-                .AddSolarConnector()
-                .AddSolarConnector();
-        }
-    }
+    
 
     void addSpecialTiles()
     {

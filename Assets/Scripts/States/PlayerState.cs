@@ -330,7 +330,33 @@ public class PlayerState : MonoBehaviourPun
 
     public PlayerState FinalizeConnection(Connection conn)
     {
+        foreach (Connector c in conn.Connectors)
+        {
+            foreach (Tile t in c.GetTiles())
+            {
+                AssignScrabbleTileRewards(t);
+            }
+            
+        }
+
         gameData.connectionsDone.Add(conn);
         return this;
+    }
+
+    public void AssignScrabbleTileRewards(Tile tile)
+    {
+        if (tile.IsScrambleForHeat)
+        {
+            this
+                .AddHeatPipeConnector()
+                .AddHeatPipeConnector();
+
+        }
+        else if (tile.IsScrambleForSolar)
+        {
+            this
+                .AddSolarConnector()
+                .AddSolarConnector();
+        }
     }
 }
