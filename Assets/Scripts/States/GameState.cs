@@ -419,13 +419,22 @@ public class GameState : MonoBehaviourPun
                             //Point Modifier checks
                             if (connector.GetLastTile().Structure.GetType().Equals(typeof(House)))
                             {
-                                player1.gameData.totalPoint -= 10 / connectorCount;
+                                player1.gameData.totalPoint -= 10 * player1.gameData.pointCoeffient / connectorCount;
                                 Debug.LogError(connectorCount);
+                                Debug.LogError("point deducted = " + 10 * player1.gameData.pointCoeffient / connectorCount + "10 * " +  player1.gameData.pointCoeffient + " / " + connectorCount);
                                 Debug.LogError(player1.gameData.totalPoint);
                             }
                             else if (connector.GetLastTile().Structure.GetType().Equals(typeof(SpecialBuilding)))
                             {
-                                player1.gameData.totalPoint -= 20 / conn.Connectors.Count; //TODO: multiply by bonus
+                                player1.gameData.totalPoint -= 20 * player1.gameData.pointCoeffient / conn.Connectors.Count; //TODO: multiply by bonus
+                                if(connector.GetLastTile().X == 9 && connector.GetLastTile().Y == 17)
+                                {
+                                    player1.AddSolarConnector();
+                                }
+                                else if (connector.GetLastTile().X == 7 && connector.GetLastTile().Y == 6)
+                                {
+                                    player1.gameData.pointCoeffient = 1.2f;
+                                }
                             }
                             else if (connector.GetLastTile().Structure.GetType().Equals(typeof(Node))) 
                             {

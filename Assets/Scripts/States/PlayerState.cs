@@ -41,6 +41,7 @@ public class PlayerGameData
     public Connector SelectedConnector;
     public List<Node> nodesOwned;
     public Color PlayerColour;
+    public float pointCoeffient;
 
     public bool IsTurn { get => isTurn;
         set
@@ -107,6 +108,7 @@ public class PlayerState : MonoBehaviourPun
         gameData.nodesOwned.Add(this.gameObject.AddComponent<Node>());
         gameData.nodesOwned.Add(this.gameObject.AddComponent<Node>());
         gameData.totalPoint = 50;
+        gameData.pointCoeffient = 1f;
     }
     private void Update()
     {
