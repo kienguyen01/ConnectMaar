@@ -366,6 +366,7 @@ MonoBehaviour:
   config:
     PlayerStateClass: {fileID: 1642091268455989437, guid: b1bcd0ef7cca4234089352c8c6391110, type: 3}
     TileManagerClass: {fileID: 6393859954093753031, guid: b50a3aca46555f64ba44296ac5c29862, type: 3}
+  timer: {fileID: 530982073}
   player1: {fileID: 136995009}
   player2: {fileID: 424589832}
   tileManager: {fileID: 0}
@@ -375,7 +376,6 @@ MonoBehaviour:
   Connector2Count: 0
   Connector3Count: 0
   text: {fileID: 0}
-  turnTime: {fileID: 0}
   playey1Name: {fileID: 519305116}
   BuildingsCount: {fileID: 519305119}
   ConnectorsCount: {fileID: 519305118}
@@ -722,6 +722,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &530982073 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3789904714005971024, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+  m_PrefabInstance: {fileID: 519305114}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff4d06392fedf4f889dbf33a0fc22884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!20 &865698801 stripped
