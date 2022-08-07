@@ -424,8 +424,11 @@ public class GameState : MonoBehaviourPun
                                 Debug.LogError("point deducted = " + 10 * player1.gameData.pointCoeffient / connectorCount + "10 * " +  player1.gameData.pointCoeffient + " / " + connectorCount);
                                 Debug.LogError(player1.gameData.totalPoint);
                             }
-                            else if (connector.GetLastTile().Structure.GetType().Equals(typeof(SpecialBuilding)))
+                            else if (connector.GetLastTile().IsSpecial())
                             {
+                                Debug.Log(connector.GetLastTile().GetSpecialOriginTile().Structure.name);//TEST FOR STRUCTURE
+
+
                                 player1.gameData.totalPoint -= 20 * player1.gameData.pointCoeffient / conn.Connectors.Count; //TODO: multiply by bonus
                                 if(connector.GetLastTile().X == 9 && connector.GetLastTile().Y == 17)
                                 {
@@ -436,11 +439,11 @@ public class GameState : MonoBehaviourPun
                                     player1.gameData.pointCoeffient = 1.2f;
                                 }
                             }
-                            else if (connector.GetLastTile().Structure.GetType().Equals(typeof(Node))) 
+                            else if (connector.GetLastTile().GetStructureType().Equals(typeof(Node))) 
                             {
                                 //empty because no points are awarded on node connection
                             }
-                            else if (connector.GetLastTile().Structure.GetType().Equals(typeof(SolarPanel)) || connector.GetLastTile().Structure.GetType().Equals(typeof(HeatPipe)))
+                            else if (connector.GetLastTile().GetStructureType().Equals(typeof(SolarPanel)) || connector.GetLastTile().Structure.GetType().Equals(typeof(HeatPipe)))
                             {
                                 //empty because no points are awarded on Energy source connection
                             }

@@ -64,6 +64,11 @@ public class Tile : MonoBehaviour
         return this;
     }
 
+    public Type GetStructureType()
+    {
+        return Structure.GetType();
+    }
+
     public bool HasBuilding()
     {
         return this.Structure.IsBuilding;
