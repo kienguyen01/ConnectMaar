@@ -19,7 +19,8 @@ public struct GameStateConfig
 public class GameState : MonoBehaviourPun
 {
     public GameStateConfig config;
-
+    [SerializeField]
+    protected Timer timer;
     [HideInInspector]
     public PlayerState player1;
     [HideInInspector]
@@ -64,8 +65,7 @@ public class GameState : MonoBehaviourPun
 
 
     public static PopupHandler pH;
-
-    public Timer turnTime;
+    
 
     Value props;
 
@@ -404,6 +404,8 @@ public class GameState : MonoBehaviourPun
                             player1.RefillHand();
                             player1.gameData.IsTurn = false;
                             player1.EndTurn();
+                            //TIMER reset
+                            timer.Tick(timer.Duration);
 
                             if (isSolarConnectionEnd && allSolar)
                             {
