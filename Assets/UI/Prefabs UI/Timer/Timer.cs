@@ -37,5 +37,6 @@ public class Timer :  PlayerState
     private void OnEnd()
     {
         EndTurn();
+        Tick(Duration);
     }
 }
