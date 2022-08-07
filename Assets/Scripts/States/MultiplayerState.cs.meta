@@ -3,7 +3,16 @@ guid: 87dd9a6bef92a8c4fbc0c7a6c4a41105
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - player1: {instanceID: 0}
+  - player2: {instanceID: 0}
+  - tileManager: {instanceID: 0}
+  - text: {instanceID: 0}
+  - turnTime: {instanceID: 0}
+  - playey1Name: {instanceID: 0}
+  - BuildingsCount: {instanceID: 0}
+  - ConnectorsCount: {instanceID: 0}
+  - timer: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

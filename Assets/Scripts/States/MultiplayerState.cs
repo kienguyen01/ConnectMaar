@@ -71,7 +71,8 @@ public class MultiplayerState : GameState
         mapData.scrabbleHeats = new List<string>();
         mapData.windTurbines = new List<string>();
 
-        turnTime = new Timer();
+        //timer.GetComponent<Renderer>().enabled = true;
+        //turnTime = new Timer();
         instantiatePopup();
         Debug.Log("Multiplayer");
         if (PhotonNetwork.IsMasterClient)
@@ -206,6 +207,7 @@ public class MultiplayerState : GameState
             photonView.RPC("EndTurn", RpcTarget.Others);
 
             photonView.RPC("WinCondition", RpcTarget.All);
+
         }
         return returnObj;
     }
