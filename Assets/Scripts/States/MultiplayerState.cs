@@ -34,9 +34,6 @@ public struct EndTurnData
 }
 
 
-
-
-
 public class MultiplayerState : GameState
 {
     List<string> factPopups;
@@ -71,7 +68,7 @@ public class MultiplayerState : GameState
         mapData.scrabbleHeats = new List<string>();
         mapData.windTurbines = new List<string>();
 
-        turnTime = new Timer();
+        //turnTime = new Timer();
         instantiatePopup();
         Debug.Log("Multiplayer");
         if (PhotonNetwork.IsMasterClient)

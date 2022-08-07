@@ -296,11 +296,11 @@ public class PlayerState : MonoBehaviourPun
         return c;
     }
 
-    public PlayerState AbortConnection(Connection conn)
+    public PlayerState AbortConnection(Connection conn, bool Hard = false)
     {
         foreach (Connector c in conn.Connectors)
         {
-            AbortConnector(c, true);
+            AbortConnector(c, Hard);
         }
         Destroy(conn);
 

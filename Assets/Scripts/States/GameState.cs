@@ -256,7 +256,7 @@ public class GameState : MonoBehaviourPun
 
     protected Connector selectedConnector;
     protected Connection currentConnection;
-    protected List<Connection> turnConnections; 
+    protected List<Connection> turnConnections;
 
     protected void createPlayer()
     {
