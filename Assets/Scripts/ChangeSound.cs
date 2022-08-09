@@ -10,7 +10,14 @@ public class ChangeSound : MonoBehaviour
     public Sprite soundOffImage;
     public Button button;
     private bool isSoundOn = true;
-    public AudioSource audio;
+    public AudioSource clearBtnAudio;
+    public AudioSource endTurnBtnAudio;
+    public AudioSource inventoryBtnSound;
+    public AudioSource nodeBtnAudio;
+    public AudioSource sliderBtnAudio;
+    public AudioSource onHoverAudio;
+    public AudioSource exitBtnAudio;
+
 
 
     // 
@@ -20,23 +27,32 @@ public class ChangeSound : MonoBehaviour
     }
 
     // 
-    void Update()
-    {
-
-    }
     public void ButtonClicked()
     {
         if (isSoundOn)
         {
             button.image.sprite = soundOffImage;
             isSoundOn = false;
-            audio.mute = true;
+            clearBtnAudio.mute = true;
+            endTurnBtnAudio.mute = true;
+            nodeBtnAudio.mute = true;
+            inventoryBtnSound.mute = true;
+            sliderBtnAudio.mute = true;
+            onHoverAudio.mute = true;
+            exitBtnAudio.mute = true;
         }
         else
         {
             button.image.sprite = soundOnImage;
             isSoundOn = true;
-            audio.mute = false;
+            clearBtnAudio.mute = false;
+            endTurnBtnAudio.mute = false;
+            nodeBtnAudio.mute = false;
+            inventoryBtnSound.mute = false;
+            sliderBtnAudio.mute = false;
+            onHoverAudio.mute = false;
+            exitBtnAudio.mute = false;
+
         }
     }
 }
