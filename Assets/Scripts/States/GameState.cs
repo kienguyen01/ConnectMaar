@@ -419,9 +419,9 @@ public class GameState : MonoBehaviourPun
                             //Point Modifier checks
                             if (connector.GetLastTile().Structure.GetType().Equals(typeof(House)))
                             {
-                                player1.gameData.totalPoint -= 10 * player1.gameData.pointCoeffient / connectorCount;
-                                Debug.LogError(connectorCount);
-                                Debug.LogError("point deducted = " + 10 * player1.gameData.pointCoeffient / connectorCount + "10 * " +  player1.gameData.pointCoeffient + " / " + connectorCount);
+                                player1.gameData.totalPoint -= (float)Math.Round(10 * player1.gameData.pointCoeffient / conn.Connectors.Count * 10f) / 10f;
+                                Debug.LogError(conn.Connectors.Count);
+                                Debug.LogError("point deducted = " + 10 * player1.gameData.pointCoeffient / conn.Connectors.Count + " 10 * " +  player1.gameData.pointCoeffient + " / " + conn.Connectors.Count);
                                 Debug.LogError(player1.gameData.totalPoint);
                             }
                             else if (connector.GetLastTile().IsSpecial())
