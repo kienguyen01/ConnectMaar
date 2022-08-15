@@ -15,6 +15,15 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         LoadedPrefs = false;
+
+
+    }
+    void OnGUI()
+    {
+        if (GUILayout.Button("connectmaar"))
+            Application.OpenURL("connectmaar://join");
+        if (GUILayout.Button("https"))
+            Application.OpenURL("https://join.connectmaar/?ionwaij");
     }
 
     private void Update()
