@@ -26,7 +26,11 @@ public class Menu : MonoBehaviourPunCallbacks
         //Payer did not connect 
         playButton.interactable = false;
         gameStartingText.gameObject.SetActive(false);
-
+        Debug.Log(ProcessDeepLinkMngr.Instance.roomName);
+        if(ProcessDeepLinkMngr.Instance.roomName != null)
+        {
+            SceneManager.LoadScene("Tutorial");
+        }
     }
 
     public override void OnConnectedToMaster()
