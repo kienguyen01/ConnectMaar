@@ -26,6 +26,11 @@ public class NetManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRandomRoom();
     }
 
+    public void JoinInvRoom(string name)
+    {
+        PhotonNetwork.JoinRoom(name);
+    }
+
     [PunRPC]
     public void ChangeScene(string sceneName)
     {

@@ -21,6 +21,8 @@ public class Menu : MonoBehaviourPunCallbacks
     public TextMeshProUGUI player2NameText;
     public TextMeshProUGUI gameStartingText;
 
+    
+
     private void Start()
     {
         //Payer did not connect 
@@ -56,7 +58,13 @@ public class Menu : MonoBehaviourPunCallbacks
 
     public void OnplayButton()
     {
-        NetManager.instance.CreateOrJoinRoom();
+        if(ProcessDeepLinkMngr.Instance.roomName != null)
+        {
+            NetManager.instance.JoinInvRoom(ProcessDeepLinkMngr.Instance.roomName);
+        } else
+        {
+            NetManager.instance.CreateOrJoinRoom();
+        }
     }
 
     public override void OnJoinedRoom()
@@ -67,15 +75,23 @@ public class Menu : MonoBehaviourPunCallbacks
         photonView.RPC("updateLobbyUI", RpcTarget.All);
     }
 
+    public void CreateInviteLink()
+    {
+        GUIUtility.systemCopyBuffer = "https://connectmaar?"+PhotonNetwork.CurrentRoom.Name;
+    }
+
     [PunRPC]
     void updateLobbyUI()
     {
         player1NameText.text = PhotonNetwork.CurrentRoom.GetPlayer(1).NickName;
         player2NameText.text = PhotonNetwork.PlayerList.Length == 2?PhotonNetwork.CurrentRoom.GetPlayer(2).NickName : "...";
 
+        Debug.Log(PhotonNetwork.CurrentRoom.Name);
+
+        
 
         //Set the game startign text
-        if(PhotonNetwork.PlayerList.Length == 2)
+        if (PhotonNetwork.PlayerList.Length == 2)
         {
             gameStartingText.gameObject.SetActive(true);
 

@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 90797236224
-    m_Localized: START GAME
+    m_Localized: LEAVE
     m_Metadata:
       m_Items: []
   references:
