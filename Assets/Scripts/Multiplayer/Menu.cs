@@ -28,11 +28,6 @@ public class Menu : MonoBehaviourPunCallbacks
         //Payer did not connect 
         playButton.interactable = false;
         gameStartingText.gameObject.SetActive(false);
-        Debug.Log(ProcessDeepLinkMngr.Instance.roomName);
-        if(ProcessDeepLinkMngr.Instance.roomName != null)
-        {
-            SceneManager.LoadScene("Tutorial");
-        }
     }
 
     public override void OnConnectedToMaster()
@@ -58,14 +53,21 @@ public class Menu : MonoBehaviourPunCallbacks
 
     public void OnplayButton()
     {
-        if(ProcessDeepLinkMngr.Instance.roomName != null)
-        {
-            NetManager.instance.JoinInvRoom(ProcessDeepLinkMngr.Instance.roomName);
-        } else
+        Debug.Log("This is the Instance room name: " + ProcessDeepLinkMngr.Instance.roomName);
+        if(ProcessDeepLinkMngr.Instance.active == false)
         {
             NetManager.instance.CreateOrJoinRoom();
         }
+        else
+        {
+            NetManager.instance.JoinInvRoom(ProcessDeepLinkMngr.Instance.roomName);
+        }
     }
+
+/*    public void OnplayButton()
+    {
+            NetManager.instance.CreateOrJoinRoom();
+    }*/
 
     public override void OnJoinedRoom()
     {
