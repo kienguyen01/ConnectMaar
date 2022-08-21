@@ -79,7 +79,9 @@ public class Menu : MonoBehaviourPunCallbacks
 
     public void CreateInviteLink()
     {
-        GUIUtility.systemCopyBuffer = "https://connectmaar?"+PhotonNetwork.CurrentRoom.Name;
+        new NativeShare().SetSubject("Game Invite").SetText(player1NameText.text + " would like to invite you to a game").SetUrl("https://connectmaar?" + PhotonNetwork.CurrentRoom.Name).Share();
+
+        // GUIUtility.systemCopyBuffer = "https://connectmaar?"+PhotonNetwork.CurrentRoom.Name;
     }
 
     [PunRPC]
