@@ -34,9 +34,6 @@ public struct EndTurnData
 }
 
 
-
-
-
 public class MultiplayerState : GameState
 {
     List<string> factPopups;

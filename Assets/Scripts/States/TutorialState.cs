@@ -522,7 +522,7 @@ public class TutorialState : GameState
 
     private void addTile(int x, int y)
     {
-        player2.gameData.tilesChosen.Push(TileManager.tiles[x][y]);
+        player2.gameData.tilesChosen.Add(TileManager.tiles[x][y]);
         TileManager.tiles[x][y].OwnedBy = player2;
     }
 

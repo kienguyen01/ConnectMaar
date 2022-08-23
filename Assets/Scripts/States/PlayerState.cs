@@ -34,24 +34,26 @@ public class PlayerGameData
     public bool hasSolarInNetwork;
     public bool hasHeatInNetwork;
     public List<Tile> tilesTaken;
-    public Stack<Tile> tilesChosen;
-    public List<Connection> connectionsDone;
+    public List<Tile> tilesChosen;
+    //public List<Connection> connectionsDone;
+    public List<Connector> ConnectorsPlaced;
     public List<Connector> Inventory;
     public List<Connector> SpecialConnector;
     public Connector SelectedConnector;
     public List<Node> nodesOwned;
     public Color PlayerColour;
+    public List<Tile> StructuresClaimed;
 
     public bool IsTurn { get => isTurn;
         set
         {
             if (value)
             {
-                GameState.Track("TurnStart", ("Connections", connectionsDone), ("Points", totalPoint), ("Tiles", tilesTaken));
+                GameState.Track("TurnStart", ("Connections", StructuresClaimed.Count), ("Points", totalPoint), ("Tiles", tilesTaken));
             }
             else
             {
-                GameState.Track("TurnEnd", ("Connections", connectionsDone), ("Points", totalPoint), ("Tiles", tilesTaken));
+                GameState.Track("TurnEnd", ("Connections", StructuresClaimed.Count), ("Points", totalPoint), ("Tiles", tilesTaken));
             }
             isTurn = value;
         }
@@ -83,7 +85,7 @@ public class PlayerState : MonoBehaviourPun
     public void Awake()
     {
         gameData.IsTurn = false;
-        gameData.tilesChosen = new Stack<Tile>();
+        gameData.tilesChosen = new List<Tile>();
         //Assert.IsNotNull(playerClass);
         //Assert.IsNotNull(cameraClass);
 
@@ -118,7 +120,7 @@ public class PlayerState : MonoBehaviourPun
         Debug.Log("clicked end button");
         this.gameData.IsTurn = false;
         EndTurnCheck();
-        this.gameData.tilesChosen = new Stack<Tile>();
+        this.gameData.tilesChosen = new List<Tile>();
     }
 
     public void EndTurnCheck()
@@ -287,16 +289,16 @@ public class PlayerState : MonoBehaviourPun
         return this;
     }
 
-    public Connection StartConnection()
+    /*public Connection StartConnection()
     {
         Connection c = new Connection();
         c.Connectors = new List<Connector>();
         //Connection c = ;
         //gameData.connectionsDone.Add(c);
         return c;
-    }
+    }*/
 
-    public PlayerState AbortConnection(Connection conn)
+    /*public PlayerState AbortConnection(Connection conn)
     {
         foreach (Connector c in conn.Connectors)
         {
@@ -305,7 +307,7 @@ public class PlayerState : MonoBehaviourPun
         Destroy(conn);
 
         return this;
-    }
+    }*/
 
     public PlayerState AbortConnector(Connector c, bool Hard = false)
     {
@@ -316,19 +318,23 @@ public class PlayerState : MonoBehaviourPun
         {
             foreach (Tile t in c.GetTiles())
             {
-                gameData.tilesChosen.Pop();
+                if(t.Connector.PreviousStep && t.Connector.PreviousStep.Connector)
+                    t.Connector.PreviousStep.Connector.UsedForConnector = false;
+                t.SelectedBy = null;
+                t.Connector.PreviousStep = null;
+                t.Connector.Source = null;
+                t.Connector = null;
+                gameData.tilesChosen.Remove(t);
             }
-
             if (!c.IsSpecial)
                 this.gameData.Inventory.Add(c.ResetConnector());
             else
                 this.gameData.SpecialConnector.Add(c.ResetConnector());
         }
-
         return this;
     }
 
-    public PlayerState FinalizeConnection(Connection conn)
+    /*public PlayerState FinalizeConnection(Connection conn)
     {
         foreach (Connector c in conn.Connectors)
         {
@@ -341,18 +347,32 @@ public class PlayerState : MonoBehaviourPun
 
         gameData.connectionsDone.Add(conn);
         return this;
+    }*/
+
+    public PlayerState FinalizeConnectors(List<Connector> connectors)
+    {
+        foreach (Connector c in connectors)
+        {
+            foreach (Tile t in c.GetTiles())
+            {
+                AssignScrabbleTileRewards(t);//TODO IF CAN FIND NON-SOURCE BUILDING CONNECTED via recursion
+            }
+
+            gameData.ConnectorsPlaced.Add(c);
+        }
+        return this;
     }
 
     public void AssignScrabbleTileRewards(Tile tile)
     {
-        if (tile.IsScrambleForHeat)
+        if (tile.IsScrabbleForHeat)
         {
             this
                 .AddHeatPipeConnector()
                 .AddHeatPipeConnector();
 
         }
-        else if (tile.IsScrambleForSolar)
+        else if (tile.IsScrabbleForSolar)
         {
             this
                 .AddSolarConnector()

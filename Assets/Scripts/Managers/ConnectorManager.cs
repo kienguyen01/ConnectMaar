@@ -17,6 +17,16 @@ public abstract class Connector : Structure
 
     protected List<Tile> tiles;
 
+    public Tile Source { get => connectorSource; set => connectorSource = value; }
+    public bool UsedForConnector { set => usedForConnector = value; get => usedForConnector; }
+    public Tile PreviousStep { get => previousStep; set => previousStep = value; }
+
+    private Tile connectorSource;
+
+    private Tile previousStep;
+
+    private bool usedForConnector;
+
     private void Awake()
     {
         tiles = new List<Tile>();

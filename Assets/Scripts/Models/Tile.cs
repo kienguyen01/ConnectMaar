@@ -12,11 +12,12 @@ public class Tile : MonoBehaviour
     private PlayerState selectedBy;
     private PlayerState ownedBy;
     private Tile specialOriginTile;
-    public bool IsScrambleForSolar;
-    public bool IsScrambleForHeat;
+    public bool IsScrabbleForSolar;
+    public bool IsScrabbleForHeat;
 
     public Structure Structure;
 
+    public Connector Connector;
 
     public bool occupied;
 
