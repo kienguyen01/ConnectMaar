@@ -67,7 +67,7 @@ public class GameState : MonoBehaviourPun
 
     public static PopupHandler pH;
 
-    public Timer turnTime;
+    //public Timer turnTime;
 
     Value props;
 
@@ -404,7 +404,7 @@ public class GameState : MonoBehaviourPun
                         {
                             //empty because no points are awarded on node connection
                         }
-                        else if (ctr.GetLastTile().Structure.GetType().Equals(typeof(SolarPanel)) || ctr.GetLastTile().Structure.GetType().Equals(typeof(HeatPipe)))
+                        else if (ctr.GetLastTile().Structure.GetType().Equals(typeof(SolarPanel)) || ctr.GetLastTile().Structure.GetType().Equals(typeof(HeatPump)))
                         {
                             //empty because no points are awarded on Energy source connection
                         }

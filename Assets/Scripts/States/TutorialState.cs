@@ -60,7 +60,7 @@ public class TutorialState : GameState
 
     IEnumerator TutorialRoutine()
     {
-        changeTutorialMessage();
+        //changeTutorialMessage();
         go = true;
         autoAdvance = false;
         temporaryRoutines = 0;
