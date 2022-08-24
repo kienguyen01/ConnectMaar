@@ -455,8 +455,11 @@ public class MultiplayerState : GameState
         //School
         //
 
-         mapData.solars.Add(randomizeTile(19, 19, 19, 19));
-         mapData.solars.Add(randomizeTile(27, 9, 27, 9));
+        mapData.solars.Add(randomizeTile(19, 19, 19, 19));
+        mapData.solars.Add(randomizeTile(27, 9, 27, 9));
+
+        mapData.heats.Add(randomizeTile(23, 9, 23, 9));
+        mapData.heats.Add(randomizeTile(5, 10, 5, 10));
 
         mapData.scrabbleSolar.Add(randomizeTile(17, 17, 17, 17));
         mapData.scrabbleSolar.Add(randomizeTile(16, 18, 16, 18));
@@ -475,7 +478,6 @@ public class MultiplayerState : GameState
 
         //mapData.stadiums.Add(randomizeTile(9, 17, 9, 17));
         tileManager.scrabbleSolar = mapData.scrabbleSolar;
-
     }
 
 

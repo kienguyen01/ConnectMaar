@@ -16,6 +16,7 @@ public class TileManager : MonoBehaviour
     public Node nodePrefab;
     public Tile solarHexPrefab;
     public House windTurbinePrefab;
+    public HeatPump heatPumpPrefab;
     
     public static PopupHandler pH;
 
@@ -457,6 +458,28 @@ public class TileManager : MonoBehaviour
             if(tileCoords == tile)
             {
                 hex_cell.IsScrabbleForSolar = true;
+            }
+        }
+
+        foreach (string tile in heats)
+        {
+            if(tileCoords == tile)
+            {
+                if(hex_cell.Y % 2 == 0)
+                {
+                    HeatPump heat_cell = (HeatPump)Instantiate(heatPumpPrefab, new Vector3(hex_cell.X * xOffset + 0.116f, 0.4f, hex_cell.Y * zOffset + 0.15f), Quaternion.identity);
+                    heat_cell.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+
+                    hex_cell.AddStructure<HeatPump>(heat_cell);
+
+                }
+                else
+                {
+                    HeatPump heat_cell = (HeatPump)Instantiate(heatPumpPrefab, new Vector3(hex_cell.X * xOffset + 0.066f, 0.4f, hex_cell.Y * zOffset + 0.177f), Quaternion.identity);
+                    heat_cell.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+
+                    hex_cell.AddStructure<HeatPump>(heat_cell);
+                }
             }
         }
 
