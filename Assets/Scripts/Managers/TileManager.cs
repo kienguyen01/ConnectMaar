@@ -17,6 +17,7 @@ public class TileManager : MonoBehaviour
     public Tile solarHexPrefab;
     public House windTurbinePrefab;
     public HeatPump heatPumpPrefab;
+    public Tile heatpumpHexPrefab;
     
     public static PopupHandler pH;
 
@@ -332,6 +333,16 @@ public class TileManager : MonoBehaviour
             setEmpties(hex_cell);
             return hex_cell;
         }
+        else if (scrabbleHeat.Contains(tileCoords))
+        {
+            hex_cell = (Tile)Instantiate(heatpumpHexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
+            hex_cell.name = "Hex_" + x + "_" + y;
+            hex_cell.X = x;
+            hex_cell.Y = y;
+            addMethods(hex_cell);
+            setEmpties(hex_cell);
+            return hex_cell;
+        }
         hex_cell = (Tile)Instantiate(hexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
         hex_cell.name = "Hex_" + x + "_" + y;
         hex_cell.X = x;
@@ -475,7 +486,7 @@ public class TileManager : MonoBehaviour
                 }
                 else
                 {
-                    HeatPump heat_cell = (HeatPump)Instantiate(heatPumpPrefab, new Vector3(hex_cell.X * xOffset + 0.066f, 0.4f, hex_cell.Y * zOffset + 0.177f), Quaternion.identity);
+                    HeatPump heat_cell = (HeatPump)Instantiate(heatPumpPrefab, new Vector3(hex_cell.X * xOffset + 1.455f, 0.4f, hex_cell.Y * zOffset + 0.155f), Quaternion.identity);
                     heat_cell.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
                     hex_cell.AddStructure<HeatPump>(heat_cell);

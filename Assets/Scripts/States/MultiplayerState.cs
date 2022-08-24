@@ -315,6 +315,7 @@ public class MultiplayerState : GameState
     {
         MapData mapData = (MapData)ByteArrayToObject(transferObject);
         tileManager.scrabbleSolar = mapData.scrabbleSolar;
+        tileManager.scrabbleHeat = mapData.scrabbleHeats;
         for (int x = 0; x < 30; x++)
         {
             List<Tile> tileRow = new List<Tile>();
@@ -465,14 +466,17 @@ public class MultiplayerState : GameState
         mapData.scrabbleSolar.Add(randomizeTile(16, 18, 16, 18));
         mapData.scrabbleSolar.Add(randomizeTile(17, 6, 17, 6));
         mapData.scrabbleSolar.Add(randomizeTile(13, 17, 13, 17));
-
         mapData.scrabbleSolar.Add(randomizeTile(5, 27, 5, 27));
-
         mapData.scrabbleSolar.Add(randomizeTile(9, 26, 9, 26));
         mapData.scrabbleSolar.Add(randomizeTile(25, 14, 25, 14));
-
         mapData.scrabbleSolar.Add(randomizeTile(6, 3, 6, 3));
 
+        mapData.scrabbleHeats.Add(randomizeTile(14, 14, 14, 14));
+        mapData.scrabbleHeats.Add(randomizeTile(12, 20, 12, 20));
+        mapData.scrabbleHeats.Add(randomizeTile(17, 23, 17, 23));
+        mapData.scrabbleHeats.Add(randomizeTile(4, 17, 4, 17));
+        mapData.scrabbleHeats.Add(randomizeTile(19, 16, 19, 16));
+        mapData.scrabbleHeats.Add(randomizeTile(15, 24, 15, 24));
         /*mapData.solars.Add(randomizeTile(19, 19, 2, 1));
         mapData.solars.Add(randomizeTile(19, 19, 2, 1));*/
 

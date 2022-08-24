@@ -392,13 +392,13 @@ public class GameState : MonoBehaviourPun
                         //Point Modifier checks
                         if (ctr.GetLastTile().Structure.GetType().Equals(typeof(House)))
                         {
-                            player1.gameData.totalPoint -= 10 /*/ connectorCount*/; //TODO: CHANGE PLACEHOLDER VALUE
+                            player1.gameData.totalPoint -= 2 /*/ connectorCount*/; //TODO: CHANGE PLACEHOLDER VALUE
                             //Debug.LogError(connectorCount);
                             Debug.LogError(player1.gameData.totalPoint);
                         }
                         else if (ctr.GetLastTile().Structure.GetType().Equals(typeof(SpecialBuilding)))
                         {
-                            player1.gameData.totalPoint -= 20 /*/ conn.Connectors.Count*/; //TODO: CHANGE PLACEHOLDER VALUE
+                            player1.gameData.totalPoint -= 5 /*/ conn.Connectors.Count*/; //TODO: CHANGE PLACEHOLDER VALUE
                         }
                         else if (ctr.GetLastTile().Structure.GetType().Equals(typeof(Node)))
                         {
