@@ -372,6 +372,8 @@ public class GameState : MonoBehaviourPun
                         foreach (Tile t in ctr.GetTiles())
                         {
                             //check if t is scrablle and find a finished connection
+
+                            CheckScrabbleRewards(t);
                         }
 
                         returnObj = true;
@@ -432,6 +434,69 @@ public class GameState : MonoBehaviourPun
             }
         }
         return returnObj;
+    }
+
+    private List<Tile> visitedForScrabble;
+    private bool foundScrabbleEnd;
+    private Tile originalScrabble;
+    private bool CheckScrabbleRewards(Tile t, bool looping = false)
+    {
+        if (!looping)
+        {
+            originalScrabble = t;
+            foundScrabbleEnd = false;
+            visitedForScrabble = new List<Tile>();
+        }
+
+        if (foundScrabbleEnd)
+            return true;
+
+        visitedForScrabble.Add(t);
+
+        if (t.Structure && (t.Structure is House or SpecialBuilding) && t != originalScrabble.Connector.Source )
+        {
+            foundScrabbleEnd = true;
+            return true;
+        }
+        if (!looping && (t.IsScrabbleForHeat || t.IsScrabbleForSolar)){
+            foreach (var neighbour in tileManager.getNeigbours(t))
+            {
+                if (neighbour.Connector && !visitedForScrabble.Contains(neighbour))
+                {
+                    if (CheckScrabbleRewards(neighbour, true))
+                    {
+                        //shouldn't be possible
+                    }
+                }
+            }
+        }
+        else if(looping)
+        {
+            foreach (var neighbour in tileManager.getNeigbours(t))
+            {
+                if (neighbour.Connector && neighbour.Connector.PreviousStep != t && !visitedForScrabble.Contains(neighbour))
+                {
+                    if (CheckScrabbleRewards(neighbour, true))
+                    {
+                        if (originalScrabble.IsScrabbleForHeat)
+                        {
+                            player1.AddHeatPipeConnector();
+                            player1.AddHeatPipeConnector();
+                        }
+                        else if (originalScrabble.IsScrabbleForSolar)
+                        {
+                            player1.AddSolarConnector();
+                            player1.AddSolarConnector();
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            return false;
+        }
+        return false;
     }
 
     public virtual void startPoint()
