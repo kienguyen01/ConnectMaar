@@ -45,15 +45,13 @@ public class ProcessDeepLinkMngr : MonoBehaviour
         active = true;
         // update DeepLink Manager global variable, so URL can be accessed from anywhere 
         deeplinkURL = url;
-        Debug.Log("ProcessDeepLinkMng line 43: " + deeplinkURL);
+        Debug.Log("ProcessDeepLinkMng line 43: " +  deeplinkURL);
 
         //Decode the DeepLink url to determine action
         roomName = url.Split("?"[0])[1];
         Debug.Log("ProcessDeepLinkMng line 47: " + roomName);
         //Debug.Log($"Deep Link Scene:{roomName}");
        
-        //SceneManager.LoadScene("Lobby");
-
-
+        SceneManager.LoadScene("Lobby");
     }
 }

@@ -21,6 +21,12 @@ public class Menu : MonoBehaviourPunCallbacks
     public TextMeshProUGUI player2NameText;
     public TextMeshProUGUI gameStartingText;
 
+    [Header("Matchmaking")]
+    public TextMeshProUGUI MatchmakingStatusText;
+
+    private bool masterConn;
+    private bool matchMakingStatus;
+
     
 
     private void Start()
@@ -28,11 +34,21 @@ public class Menu : MonoBehaviourPunCallbacks
         //Payer did not connect 
         playButton.interactable = false;
         gameStartingText.gameObject.SetActive(false);
+        matchMakingStatus = false;
     }
 
     public override void OnConnectedToMaster()
     {
+
         playButton.interactable = true;
+        if (masterConn)
+        {
+            matchMakingStatus = true;
+            NetManager.instance.CreateOrJoinRoom();
+            masterConn = false;
+            
+        }
+       // masterConn = false;
     }
 
     public void SetScreen(GameObject screen)
@@ -56,7 +72,8 @@ public class Menu : MonoBehaviourPunCallbacks
         Debug.Log("This is the Instance room name: " + ProcessDeepLinkMngr.Instance.roomName);
         if(ProcessDeepLinkMngr.Instance.active == false)
         {
-            NetManager.instance.CreateOrJoinRoom();
+            NetManager.instance.CreateRoom();
+            //NetManager.instance.CreateOrJoinRoom();
         }
         else
         {
@@ -72,7 +89,10 @@ public class Menu : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         SetScreen(lobbyScreen);
-
+        if (!matchMakingStatus)
+        {
+            PhotonNetwork.CurrentRoom.IsVisible = false;
+        }
         //update the ui of all players in the loby
         photonView.RPC("updateLobbyUI", RpcTarget.All);
     }
@@ -126,13 +146,40 @@ public class Menu : MonoBehaviourPunCallbacks
         {
             gameStartingText.gameObject.SetActive(false);
         }
-    }
+    }   
 
     [PunRPC]
     public void OnLeaveButton()
     {
+        matchMakingStatus = false;
         PhotonNetwork.LeaveRoom();
         SetScreen(mainScreen);
+    }
+
+    public void MatchmakingStatus()
+    {
+        Debug.LogError(PhotonNetwork.CurrentRoom);
+
+       
+
+        if (PhotonNetwork.CurrentRoom.IsVisible == false)
+        {
+            Debug.LogError("BEFORE: "+PhotonNetwork.CurrentRoom);
+            //masterConn = false;
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            PhotonNetwork.LeaveRoom(false);
+            masterConn=true;
+            //SceneManager.LoadScene("Lobby");
+
+            MatchmakingStatusText.text = "Searching";
+            //NetManager.instance.JoinInvRoom();
+        }
+        else
+        {
+            PhotonNetwork.CurrentRoom.IsVisible = false;
+            matchMakingStatus = false;
+            MatchmakingStatusText.text = "Matchmake";
+        }
     }
 
 
