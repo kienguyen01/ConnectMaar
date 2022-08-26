@@ -446,8 +446,12 @@ public class GameState : MonoBehaviourPun
             originalScrabble = t;
             foundScrabbleEnd = false;
             visitedForScrabble = new List<Tile>();
-        }
 
+            if (!t.IsScrabbleForHeat && !t.IsScrabbleForSolar)
+            {
+                return false;
+            }
+        }
         if (foundScrabbleEnd)
             return true;
 
