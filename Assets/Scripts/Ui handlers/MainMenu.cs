@@ -15,6 +15,29 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         LoadedPrefs = false;
+        //Debug.Log("MainMenu line 18: " + ProcessDeepLinkMngr.Instance.roomName);
+
+        if (ProcessDeepLinkMngr.Instance.active == true)
+        {
+            TextMeshProUGUI inv = GameObject.Find("link").GetComponent<TextMeshProUGUI>();
+            Debug.Log("MainMenu line 23: " + ProcessDeepLinkMngr.Instance.roomName);
+            inv.text = ProcessDeepLinkMngr.Instance.roomName;
+        }
+        else
+        {
+            TextMeshProUGUI inv = GameObject.Find("link").GetComponent<TextMeshProUGUI>();
+            Debug.Log("MainMenu line 29: " + ProcessDeepLinkMngr.Instance.roomName);
+            inv.text = "INSTANCE IS NULL";
+
+        }
+
+    }
+    void OnGUI()
+    {
+        if (GUILayout.Button("connectmaar"))
+            Application.OpenURL("connectmaar://join");
+        if (GUILayout.Button("https"))
+            Application.OpenURL("https://join.connectmaar/?ionwaij");
     }
 
     private void Update()
