@@ -90,8 +90,8 @@ public class TutorialState : GameState
             {
                 case 0:
                     {
-                        GameObject varGameObject = GameObject.Find("Plane");
-                        varGameObject.GetComponent<PhoneCameraMovement>().enabled = false;
+                        /*GameObject varGameObject = GameObject.Find("Plane");
+                        varGameObject.GetComponent<PhoneCameraMovement>().enabled = false;*/
                         text.text = "Welcome to the Tutorial! In this tutorial we will teach you how to play ConnectMaar. Tap on Screen to continue.";
                         player1.clearHand()
                                .refilSpecificHand(1, 1, 2);
@@ -496,8 +496,8 @@ public class TutorialState : GameState
         text.enabled = false;
         tutBox.enabled = false;
         textTitle.enabled = false;
-        GameObject varGameObject = GameObject.Find("Plane");
-        varGameObject.GetComponent<PhoneCameraMovement>().enabled = true;
+        /*GameObject varGameObject = GameObject.Find("Plane");
+        varGameObject.GetComponent<PhoneCameraMovement>().enabled = true;*/
     }
 
     public void EnablePopup()
@@ -506,8 +506,8 @@ public class TutorialState : GameState
         tutBox.enabled = true;
         textTitle.enabled = true;
         textTitle.text = "Tutorial:";
-        GameObject varGameObject = GameObject.Find("Plane");
-        varGameObject.GetComponent<PhoneCameraMovement>().enabled = false;
+        /*GameObject varGameObject = GameObject.Find("Plane");
+        varGameObject.GetComponent<PhoneCameraMovement>().enabled = false;*/
     }
 
     public void startAiMoves()

@@ -19,7 +19,7 @@ public class ProcessDeepLinkMngr : MonoBehaviour
     {
         if (Instance == null)
         {
-            Debug.LogError("THIS DOES NOT WORK");
+            //Debug.LogError("THIS DOES NOT WORK");
             Instance = this;
             Debug.Log("ProcessDeepLinkMng line 20: " + Instance);
             Application.deepLinkActivated += onDeepLinkActivated;
