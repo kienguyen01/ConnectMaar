@@ -639,21 +639,24 @@ public class TileManager : MonoBehaviour
         List<Tile> neighbours = getNeigbours(t);
         foreach (Tile neighbour in neighbours)
         {
-            if ((neighbour.Structure.IsNode || isOccupiedBySamePlayer(neighbour, playerState)))
+            bool go = true;
+            if (neighbour.Structure.IsNode || isOccupiedBySamePlayer(neighbour, playerState))
             {
                 if (neighbour.Connector)
                 {
+                    go = false;
                     if (neighbour.Connector == GameState.instance.SelectedConnector)
                     {
-                        // if the tile is being added to the connector and not starting a new connector
+                        go = true;
                     }
-                    else if (neighbour.Connector.GetLastTile() == neighbour && !neighbour.Connector.UsedForConnector)
+                    else if (neighbour.Connector.GetLastTile() == neighbour && !neighbour.Connector.UsedForConnector && neighbour == neighbour.Connector.GetLastTile())
                     {
                         neighbour.Connector.UsedForConnector = true;
+                        go = true;
                     }
                 }
-
-                return (true, t, (neighbour.Connector ? neighbour.Connector.Source : neighbour), neighbour);
+                if (go)
+                    return (true, t, (neighbour.Connector ? neighbour.Connector.Source : neighbour), neighbour);
             }
         }
         return (false, null, null, null);

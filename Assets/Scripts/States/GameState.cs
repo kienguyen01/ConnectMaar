@@ -390,26 +390,30 @@ public class GameState : MonoBehaviourPun
                             player1.gameData.hasHeatInNetwork = true;
                         }
                         //int connectorCount = turnConnections.Count; Makes no sense with new connection system and made no sense even with the previous one
-                        
+
                         //Point Modifier checks
-                        if (ctr.GetLastTile().Structure.GetType().Equals(typeof(House)))
+                        if (ctr.GetLastTile())
                         {
-                            player1.gameData.totalPoint -= 2 /*/ connectorCount*/; //TODO: CHANGE PLACEHOLDER VALUE
-                            //Debug.LogError(connectorCount);
-                            Debug.LogError(player1.gameData.totalPoint);
+                            if (ctr.GetLastTile().Structure.GetType().Equals(typeof(House)))
+                            {
+                                player1.gameData.totalPoint -= 2 /*/ connectorCount*/; //TODO: CHANGE PLACEHOLDER VALUE
+                                                                                       //Debug.LogError(connectorCount);
+                                Debug.LogError(player1.gameData.totalPoint);
+                            }
+                            else if (ctr.GetLastTile().Structure.GetType().Equals(typeof(SpecialBuilding)))
+                            {
+                                player1.gameData.totalPoint -= 5 /*/ conn.Connectors.Count*/; //TODO: CHANGE PLACEHOLDER VALUE
+                            }
+                            else if (ctr.GetLastTile().Structure.GetType().Equals(typeof(Node)))
+                            {
+                                //empty because no points are awarded on node connection
+                            }
+                            else if (ctr.GetLastTile().Structure.GetType().Equals(typeof(SolarPanel)) || ctr.GetLastTile().Structure.GetType().Equals(typeof(HeatPump)))
+                            {
+                                //empty because no points are awarded on Energy source connection
+                            }
                         }
-                        else if (ctr.GetLastTile().Structure.GetType().Equals(typeof(SpecialBuilding)))
-                        {
-                            player1.gameData.totalPoint -= 5 /*/ conn.Connectors.Count*/; //TODO: CHANGE PLACEHOLDER VALUE
-                        }
-                        else if (ctr.GetLastTile().Structure.GetType().Equals(typeof(Node)))
-                        {
-                            //empty because no points are awarded on node connection
-                        }
-                        else if (ctr.GetLastTile().Structure.GetType().Equals(typeof(SolarPanel)) || ctr.GetLastTile().Structure.GetType().Equals(typeof(HeatPump)))
-                        {
-                            //empty because no points are awarded on Energy source connection
-                        }
+                        
                         player1.FinalizeConnectors(turnConnectors);
                     }
                     hasHeat = false;
