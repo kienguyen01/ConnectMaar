@@ -81,6 +81,18 @@ MonoBehaviour:
     m_Address: Assets/Localization/Tables/PlayerNaamLobby Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
+  - m_GUID: f23f612d359844f4bb421c31d821a6e8
+    m_Address: Assets/Localization/Tables/Playername Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 222f1d966081849e0ae48d2d2a5bc775
+    m_Address: Assets/Localization/Tables/GameStartMessage Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 9e540bdc7ab684467b8a5abd4e331ae6
+    m_Address: Assets/Localization/Tables/CreateInvite Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 47fe1e794f5af47abbbe831c258f4d60, type: 2}
   m_SchemaSet:

@@ -113,6 +113,24 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-nl
     - Preload
+  - m_GUID: 55e5476bc705f4bc49cc6a66467c51de
+    m_Address: Playername_nl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-nl
+    - Preload
+  - m_GUID: 72b1b9854219d4756897b1777ba8b3ff
+    m_Address: GameStartMessage_nl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-nl
+    - Preload
+  - m_GUID: 3a0005529d6724b3e83dbe84cbc8ac87
+    m_Address: CreateInvite_nl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-nl
+    - Preload
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 47fe1e794f5af47abbbe831c258f4d60, type: 2}
   m_SchemaSet:
