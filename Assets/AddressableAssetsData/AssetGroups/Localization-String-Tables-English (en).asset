@@ -89,6 +89,30 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     - Preload
+  - m_GUID: 241abe0dc6972452087a2683ba8975ad
+    m_Address: DialogTexts_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: c38c602d899b742d898618280be30ce0
+    m_Address: BottomRightBtns_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: 554e760064b1a4a9ea6083b651f2ab74
+    m_Address: LeaveLobby_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: b5eae5fc2588d49d5ab820044bae73eb
+    m_Address: PlayerNaamLobby_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 47fe1e794f5af47abbbe831c258f4d60, type: 2}
   m_SchemaSet:

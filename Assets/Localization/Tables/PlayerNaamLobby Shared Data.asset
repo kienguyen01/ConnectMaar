@@ -10,31 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
-  m_Name: EndTurnBtn Shared Data
+  m_Name: PlayerNaamLobby Shared Data
   m_EditorClassIdentifier: 
-  m_TableCollectionName: EndTurnBtn
-  m_TableCollectionNameGuidString: f890f6f53e55744338f4b84dea1bac82
+  m_TableCollectionName: PlayerNaamLobby
+  m_TableCollectionNameGuidString: a990f834095e94dfaab33f726d3b9594
   m_Entries:
-  - m_Id: 8056201216
-    m_Key: EndTurnText
-    m_Metadata:
-      m_Items: []
-  - m_Id: 48316070723837952
-    m_Key: New Entry
-    m_Metadata:
-      m_Items: []
-  - m_Id: 48316083583574016
-    m_Key: New Entry 1
+  - m_Id: 6986653696
+    m_Key: PlayerName
     m_Metadata:
       m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
-    rid: 2287216623871590470
+    rid: 6997317959066320914
   references:
     version: 2
     RefIds:
-    - rid: 2287216623871590470
+    - rid: 6997317959066320914
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
       data:
-        m_CustomEpoch: 1650373022997
+        m_CustomEpoch: 1661893348482
