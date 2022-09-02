@@ -10,4 +10,6 @@ public class SpecialBuilding : Structure
     {
         
     }
+
+    public virtual void GetSpecialBonus() { GameState.instance.player1.gameData.totalPoint -= 2; }
 }
