@@ -43,6 +43,8 @@ public class PlayerGameData
     public List<Node> nodesOwned;
     public Color PlayerColour;
     public List<Tile> StructuresClaimed;
+    public bool HasPassiveIncome;
+    public float PassiveIncome;
 
     public bool IsTurn { get => isTurn;
         set
@@ -86,6 +88,8 @@ public class PlayerState : MonoBehaviourPun
     {
         gameData.IsTurn = false;
         gameData.tilesChosen = new List<Tile>();
+        gameData.HasPassiveIncome = false;
+        gameData.PassiveIncome = 0.0f;
         //Assert.IsNotNull(playerClass);
         //Assert.IsNotNull(cameraClass);
 
@@ -117,6 +121,10 @@ public class PlayerState : MonoBehaviourPun
 
     public virtual void EndTurn()
     {
+        if (this.gameData.HasPassiveIncome)
+        {
+            this.gameData.totalPoint -= this.gameData.PassiveIncome;
+        }
         Debug.Log("clicked end button");
         this.gameData.IsTurn = false;
         EndTurnCheck();
