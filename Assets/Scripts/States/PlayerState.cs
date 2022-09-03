@@ -65,7 +65,7 @@ public class PlayerState : MonoBehaviourPun
     public ConnectorConfig config;
     public Player playerClass;
     public PlayerCamera cameraClass;
-
+    public bool IsTutorial;
     
 
     [HideInInspector]
@@ -161,6 +161,10 @@ public class PlayerState : MonoBehaviourPun
 
     public PlayerState RefillHand()
     {
+        if(this.IsTutorial == true)
+        {
+            return this;
+        }
         for (int i = gameData.Inventory.Count; i < gameData.handSize; i++)
         {
             switch (UnityEngine.Random.Range(1, 4))

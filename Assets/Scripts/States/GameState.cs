@@ -87,6 +87,7 @@ public class GameState : MonoBehaviourPun
 
     protected void onAwake()
     {
+
         Assert.IsNull(instance);
         instance = this;  
         // Track with event-name and property
