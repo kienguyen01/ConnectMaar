@@ -41,6 +41,7 @@ public class MultiplayerState : GameState
     MapData mapData;
     EndTurnData endTurnData;
     public Button EndturnButton;
+    public Button ClearButton;
 
     /*public MultiplayerPlayerState player1;
     public MultiplayerPlayerState player2;*/
@@ -202,6 +203,7 @@ public class MultiplayerState : GameState
             photonView.RPC("SendTiles", RpcTarget.Others, ObjectToByteArray(endTurnData));
 
             EndturnButton.gameObject.SetActive(false);
+            ClearButton.gameObject.SetActive(false);
 
             photonView.RPC("EndTurn", RpcTarget.Others);
 
@@ -298,6 +300,7 @@ public class MultiplayerState : GameState
             player1.gameData.IsTurn = false;
             player2.gameData.IsTurn = true;
             EndturnButton.gameObject.SetActive(false);
+            ClearButton.gameObject.SetActive(false);
         }
         player1.name = PhotonNetwork.LocalPlayer.NickName;
 
@@ -313,6 +316,7 @@ public class MultiplayerState : GameState
         player1.gameData.IsTurn = true;
         player2.gameData.IsTurn = false;
         EndturnButton.gameObject.SetActive(true);
+        ClearButton.gameObject.SetActive(true);
         Debug.LogError("turn changed");
         Debug.LogError(player1.gameData.IsTurn ? "p1" : "p2");
     }
