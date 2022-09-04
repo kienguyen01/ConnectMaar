@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1306,7 +1306,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: DUTCH
+  m_text: ENGLISH
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dbb6dc645241547e1b42267af4c1480f, type: 2}
   m_sharedMaterial: {fileID: 8309820493744841418, guid: dbb6dc645241547e1b42267af4c1480f, type: 2}
@@ -1473,13 +1473,13 @@ MonoBehaviour:
   m_Placeholder: {fileID: 0}
   m_ItemText: {fileID: 1892293051}
   m_ItemImage: {fileID: 0}
-  m_Value: 0
+  m_Value: 1
   m_Options:
     m_Options:
     - m_Text: DUTCH
-      m_Image: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+      m_Image: {fileID: 21300000, guid: 3de02e4c6072644a7a55c6b7fed46705, type: 3}
     - m_Text: ENGLISH
-      m_Image: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+      m_Image: {fileID: 21300000, guid: 8b9fd038c1098427db6e8f7eb00ef321, type: 3}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -1606,6 +1606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deeplinkURL: 
   roomName: 
+  active: 0
 --- !u!4 &530746035
 Transform:
   m_ObjectHideFlags: 0
@@ -3821,6 +3822,18 @@ MonoBehaviour:
       - m_Target: {fileID: 2058352386}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 930343973}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: StartSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
