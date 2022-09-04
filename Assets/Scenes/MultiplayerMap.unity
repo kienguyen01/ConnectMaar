@@ -381,6 +381,7 @@ MonoBehaviour:
   Connector3Count: 0
   text: {fileID: 0}
   EndturnButton: {fileID: 1519939382}
+  ClearButton: {fileID: 993865030}
   playey1Name: {fileID: 519305116}
   BuildingsCount: {fileID: 519305119}
   ConnectorsCount: {fileID: 519305118}
@@ -736,6 +737,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &993865030 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5031659293620338254, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+  m_PrefabInstance: {fileID: 519305114}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1519939382 stripped
