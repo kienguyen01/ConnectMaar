@@ -380,6 +380,7 @@ MonoBehaviour:
   Connector2Count: 0
   Connector3Count: 0
   text: {fileID: 0}
+  EndturnButton: {fileID: 1519939382}
   playey1Name: {fileID: 519305116}
   BuildingsCount: {fileID: 519305119}
   ConnectorsCount: {fileID: 519305118}
