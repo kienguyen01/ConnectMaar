@@ -105,9 +105,10 @@ public class MultiplayerState : GameState
 
         if (player1.gameData.IsTurn)
         {
-            if (Input.GetKeyDown(KeyCode.Space) || turnCheck)
+            if (Input.GetKeyDown(KeyCode.Space) || turnCheck || config.timer.isOver)
             {
-                    CheckEndTurn();
+                if(CheckEndTurn())
+                    config.timer.Tick();
             }
             if (Input.GetKeyDown(KeyCode.Alpha0) || clearBtn)
             {
@@ -304,6 +305,8 @@ public class MultiplayerState : GameState
     [PunRPC]
     void EndTurn()
     {
+        config.timer.Tick();
+
         player1.gameData.IsTurn = true;
         player2.gameData.IsTurn = false;
         Debug.LogError("turn changed");

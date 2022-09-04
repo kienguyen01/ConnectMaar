@@ -14,6 +14,7 @@ public struct GameStateConfig
 {
     public PlayerState PlayerStateClass;
     public TileManager TileManagerClass;
+    public Timer timer;
 }
 
 public class GameState : MonoBehaviourPun
@@ -357,7 +358,7 @@ public class GameState : MonoBehaviourPun
         bool returnObj = false;
         //Debug.LogError("asdasdfgjkl");
 
-        if (Input.GetKeyDown(KeyCode.Space) || turnCheck)
+        if (Input.GetKeyDown(KeyCode.Space) || turnCheck || config.timer.isOver)
         {
             //turnTime.endTurn = false;
             //turnTime.SetDuration(10).Begin();
