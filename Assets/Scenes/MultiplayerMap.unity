@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -279,18 +279,23 @@ MonoBehaviour:
     ConnectorManagerClass: {fileID: 0}
   playerClass: {fileID: 0}
   cameraClass: {fileID: 0}
+  IsTutorial: 0
   gameData:
     totalPoint: 0
     handSize: 0
     hasSolarInNetwork: 0
     hasHeatInNetwork: 0
     tilesTaken: []
-    connectionsDone: []
+    tilesChosen: []
+    ConnectorsPlaced: []
     Inventory: []
     SpecialConnector: []
     SelectedConnector: {fileID: 0}
     nodesOwned: []
     PlayerColour: {r: 0, g: 0, b: 0, a: 0}
+    StructuresClaimed: []
+    HasPassiveIncome: 0
+    PassiveIncome: 0
   connectorManager: {fileID: 0}
   points: 0
   sdtatingPoints: []
@@ -375,7 +380,6 @@ MonoBehaviour:
   Connector2Count: 0
   Connector3Count: 0
   text: {fileID: 0}
-  turnTime: {fileID: 0}
   playey1Name: {fileID: 519305116}
   BuildingsCount: {fileID: 519305119}
   ConnectorsCount: {fileID: 519305118}
@@ -450,18 +454,23 @@ MonoBehaviour:
     ConnectorManagerClass: {fileID: 0}
   playerClass: {fileID: 0}
   cameraClass: {fileID: 0}
+  IsTutorial: 0
   gameData:
     totalPoint: 0
     handSize: 0
     hasSolarInNetwork: 0
     hasHeatInNetwork: 0
     tilesTaken: []
-    connectionsDone: []
+    tilesChosen: []
+    ConnectorsPlaced: []
     Inventory: []
     SpecialConnector: []
     SelectedConnector: {fileID: 0}
     nodesOwned: []
     PlayerColour: {r: 0, g: 0, b: 0, a: 0}
+    StructuresClaimed: []
+    HasPassiveIncome: 0
+    PassiveIncome: 0
   connectorManager: {fileID: 0}
   points: 0
   sdtatingPoints: []
@@ -657,6 +666,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5447771045163600685, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+      propertyPath: EndturnButton
+      value: 
+      objectReference: {fileID: 1519939382}
     - target: {fileID: 5921759036958687778, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 711
@@ -722,6 +735,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1519939382 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5031659291671418377, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+  m_PrefabInstance: {fileID: 519305114}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1803333140

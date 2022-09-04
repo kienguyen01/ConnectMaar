@@ -16,7 +16,7 @@ public struct GameStateConfig
     public TileManager TileManagerClass;
 }
 
-public class GameState : MonoBehaviourPun
+public class GameState : MonoBehaviourPunCallbacks
 {
     public GameStateConfig config;
 
@@ -397,8 +397,9 @@ public class GameState : MonoBehaviourPun
                         {
                             if (ctr.GetLastTile().Structure.GetType().Equals(typeof(House)))
                             {
-                                float multiplier = 1.5f;
+                                float multiplier = 1.0f;
                                 if(ctr.Source.Structure.GetType().Equals(typeof(SpecialBuilding)))
+                                    multiplier = 1.5f;
 
                                 player1.gameData.totalPoint -= 2 * multiplier /*/ connectorCount*/; //TODO: CHANGE PLACEHOLDER VALUE
                                                                                        //Debug.LogError(connectorCount);

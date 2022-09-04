@@ -10,6 +10,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 [Serializable]
@@ -39,7 +40,8 @@ public class MultiplayerState : GameState
     List<string> factPopups;
     MapData mapData;
     EndTurnData endTurnData;
-    
+    public Button EndturnButton;
+
     /*public MultiplayerPlayerState player1;
     public MultiplayerPlayerState player2;*/
 
@@ -101,7 +103,7 @@ public class MultiplayerState : GameState
 
     private void Update()
     {
-        
+
 
         if (player1.gameData.IsTurn)
         {
@@ -197,8 +199,9 @@ public class MultiplayerState : GameState
             }
             BuildingsCount.text = "Buildings Owned: " + count;
             ConnectorsCount.text = "Connector1: " + Connector1Count + " \n Connector2: " + Connector2Count + " \n Connector3: " + Connector3Count;
-
             photonView.RPC("SendTiles", RpcTarget.Others, ObjectToByteArray(endTurnData));
+
+            EndturnButton.gameObject.SetActive(false);
 
             photonView.RPC("EndTurn", RpcTarget.Others);
 
@@ -306,6 +309,7 @@ public class MultiplayerState : GameState
     {
         player1.gameData.IsTurn = true;
         player2.gameData.IsTurn = false;
+        EndturnButton.gameObject.SetActive(true);
         Debug.LogError("turn changed");
         Debug.LogError(player1.gameData.IsTurn ? "p1" : "p2");
     }

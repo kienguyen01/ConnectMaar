@@ -73,6 +73,11 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Tutorial");
     }
 
+    public void WinnerToMainMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
     public void OnLanguageChange(TMP_Dropdown dropdown)
     {
         PlayerPrefs.SetString("Selected_Language", (dropdown.value == 0) ? LanguageCodes.Dutch : LanguageCodes.English);

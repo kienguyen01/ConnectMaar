@@ -100,7 +100,6 @@ public class Menu : MonoBehaviourPunCallbacks
     public void CreateInviteLink()
     {
         new NativeShare().SetSubject("Game Invite").SetText(player1NameText.text + " would like to invite you to a game").SetUrl("https://connectmaar?" + PhotonNetwork.CurrentRoom.Name).Share();
-
         // GUIUtility.systemCopyBuffer = "https://connectmaar?"+PhotonNetwork.CurrentRoom.Name;
     }
 
@@ -160,7 +159,7 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         Debug.LogError(PhotonNetwork.CurrentRoom);
 
-       
+        
 
         if (PhotonNetwork.CurrentRoom.IsVisible == false)
         {

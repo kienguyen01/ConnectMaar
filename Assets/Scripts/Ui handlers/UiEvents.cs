@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UiEvents : MonoBehaviour
 {
+    public TextMeshPro turnStatus;
+    public Button EndturnButton;
 
-
-    public void DisableCamera()
+/*    public void DisableCamera()
     {
         GameObject varGameObject = GameObject.Find("object");
         varGameObject.GetComponent<PhoneCameraMovement>().enabled = false;
 
-    }
+    }*/
 
     public void btnClickConnector1()
     {
@@ -50,14 +52,7 @@ public class UiEvents : MonoBehaviour
 
     public void BtnClickEndTurn()
     {
-        GameState.instance.turnCheck ^= true;
-        if (GameState.instance.turnCheck == false)
-        {
-            GameObject varGameObject = GameObject.Find("object");
-
-            varGameObject.GetComponent<PhoneCameraMovement>().enabled = true;
-
-        }
+       GameState.instance.turnCheck = true;
     }
 
     public void btnClearAll()
