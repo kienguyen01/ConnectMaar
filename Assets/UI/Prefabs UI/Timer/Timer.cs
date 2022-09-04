@@ -14,7 +14,7 @@ public class Timer :  PlayerState
 
     private void Start()
     {
-        
+        Tick(Duration);
     }
 
     public void Tick(int Second)
