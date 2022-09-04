@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -371,6 +371,7 @@ MonoBehaviour:
   config:
     PlayerStateClass: {fileID: 1642091268455989437, guid: b1bcd0ef7cca4234089352c8c6391110, type: 3}
     TileManagerClass: {fileID: 6393859954093753031, guid: b50a3aca46555f64ba44296ac5c29862, type: 3}
+    timer: {fileID: 1329654265}
   player1: {fileID: 136995009}
   player2: {fileID: 424589832}
   tileManager: {fileID: 0}
@@ -748,6 +749,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1329654265 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6874333141898617877, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+  m_PrefabInstance: {fileID: 519305114}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d77537b92d5b72d4db8505d084a4b891, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1519939382 stripped
