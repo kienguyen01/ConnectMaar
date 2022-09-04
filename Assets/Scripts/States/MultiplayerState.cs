@@ -286,15 +286,18 @@ public class MultiplayerState : GameState
     [PunRPC]
     void SetFirstTurn()
     {
+
         if(((MultiplayerPlayerState)player1).photonPlayer.IsMasterClient)
         {
             player1.gameData.IsTurn = true;
             player2.gameData.IsTurn = false;
+
         }
         else
         {
             player1.gameData.IsTurn = false;
             player2.gameData.IsTurn = true;
+            EndturnButton.gameObject.SetActive(false);
         }
         player1.name = PhotonNetwork.LocalPlayer.NickName;
 
