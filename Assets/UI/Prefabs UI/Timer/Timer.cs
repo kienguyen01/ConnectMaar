@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour
 {
+    public bool Enabled = true;
     public int Duration;
+
 
     [SerializeField] private Image uiFill;
 
@@ -19,7 +21,8 @@ public class Timer : MonoBehaviour
     private void Start()
     {
         routines = new List<Coroutine>();
-        Tick(Duration);
+        if(Enabled)
+            Tick(Duration);
     }
 
     public void Tick(int Seconds)
