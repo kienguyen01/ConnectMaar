@@ -661,7 +661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1616414636
+--- !u!114 &1616414638
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -675,9 +675,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_StringReference:
     m_TableReference:
-      m_TableCollectionName: GUID:f7b3713fb511a4256b7b33e3136bde72
+      m_TableCollectionName: GUID:5f78500eacc1a4d4b8b18f057a124737
     m_TableEntryReference:
-      m_KeyId: 8056201216
+      m_KeyId: 12221145088
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -1001,6 +1001,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 103628386607535401, guid: fc925fb3cf40924408ba61d6e5c79b1a, type: 3}
+      propertyPath: m_fontStyle
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 431082300170186946, guid: fc925fb3cf40924408ba61d6e5c79b1a, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 180
@@ -1215,6 +1219,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6974370973933689038, guid: fc925fb3cf40924408ba61d6e5c79b1a, type: 3}
+    - {fileID: 2296965405736905857, guid: fc925fb3cf40924408ba61d6e5c79b1a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: fc925fb3cf40924408ba61d6e5c79b1a, type: 3}
 --- !u!114 &6097610304344784201 stripped
 MonoBehaviour:

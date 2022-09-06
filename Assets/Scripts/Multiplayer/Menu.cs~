@@ -171,12 +171,13 @@ public class Menu : MonoBehaviourPunCallbacks
             PhotonNetwork.LeaveRoom(false);
             masterConn = true;
             //SceneManager.LoadScene("Lobby");
-            
+
+           // LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[0];
             if (LocalizationSettings.SelectedLocale == LocalizationSettings.AvailableLocales.Locales[0])
             {
                 MatchmakingStatusText.text = "Zoeken";
             }
-            else if(LocalizationSettings.SelectedLocale == LocalizationSettings.AvailableLocales.Locales[1])
+            else
             {
                 MatchmakingStatusText.text = "Searching";
             }

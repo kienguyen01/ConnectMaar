@@ -97,6 +97,26 @@ MonoBehaviour:
     m_Address: Assets/Localization/Tables/VOLUME Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
+  - m_GUID: 5f78500eacc1a4d4b8b18f057a124737
+    m_Address: Assets/Localization/Tables/LeaveButtonTranslation Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: ef6590c5ab79c4841be3f8c3c00d52a6
+    m_Address: Assets/Localization/Tables/cablesUsedLabel Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: aae8be488ad614be69612a52caf86ac6
+    m_Address: Assets/Localization/Tables/housesLabel Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 7d621e765a01d416aae837ca009fd849
+    m_Address: Assets/Localization/Tables/KabelsLbl Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 733d066d30a3f435f838dda4993bd931
+    m_Address: Assets/Localization/Tables/PlayerNameTxt Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 47fe1e794f5af47abbbe831c258f4d60, type: 2}
   m_SchemaSet:

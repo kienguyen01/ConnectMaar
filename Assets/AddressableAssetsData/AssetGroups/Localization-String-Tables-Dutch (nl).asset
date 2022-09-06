@@ -137,6 +137,36 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-nl
     - Preload
+  - m_GUID: 965df186d3be84da39e8bd9ec2b1a067
+    m_Address: LeaveButtonTranslation_nl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-nl
+    - Preload
+  - m_GUID: dc64d1465c08a4272b392ab6d69d8504
+    m_Address: cablesUsedLabel_nl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-nl
+    - Preload
+  - m_GUID: c222f7769c85e485eae4fc77968921d1
+    m_Address: housesLabel_nl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-nl
+    - Preload
+  - m_GUID: 24919ebff198c4b4785791c720a313fd
+    m_Address: KabelsLbl_nl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-nl
+    - Preload
+  - m_GUID: 5fead5bce177543799ce34c252d47a15
+    m_Address: PlayerNameTxt_nl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-nl
+    - Preload
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 47fe1e794f5af47abbbe831c258f4d60, type: 2}
   m_SchemaSet:
