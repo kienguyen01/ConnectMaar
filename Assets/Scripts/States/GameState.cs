@@ -368,7 +368,6 @@ public class GameState : MonoBehaviourPunCallbacks
             {
                 if (player1.gameData.IsTurn)
                 {
-                    Debug.LogError("turn changed");
                     foreach (Connector ctr in turnConnectors)
                     {
                         foreach (Tile t in ctr.GetTiles())
@@ -439,8 +438,6 @@ public class GameState : MonoBehaviourPunCallbacks
                 {
                     player1.gameData.IsTurn = true;
                 }
-
-                Debug.Log("isTurn" + player1.gameData.IsTurn.ToString());
 
             }
         }
