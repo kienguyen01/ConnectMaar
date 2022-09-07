@@ -97,7 +97,7 @@ public class GameState : MonoBehaviourPunCallbacks
 
 
         //addEventHandlers();
-        GameObject ExStadium = GameObject.Find("ExitBtnStadium");
+        GameObject ExStadium = GameObject.Find("ExitBtnStadiumAFAS");
         ExStadium.GetComponent<Button>()
             .onClick.AddListener(
             () => {
@@ -112,6 +112,18 @@ public class GameState : MonoBehaviourPunCallbacks
                 TileManager.pH.Popup();
             });
 
+        GameObject ExDeMeent = GameObject.Find("ExitBtnDeMeent");
+        ExDeMeent.GetComponent<Button>().onClick.AddListener(
+            () => {
+                TileManager.pH.canvas = ExDeMeent.transform.parent.parent.gameObject.GetComponent<Canvas>();
+                TileManager.pH.Popup();
+            });
+        GameObject ExDalton = GameObject.Find("ExitBtnDalton");
+        ExDalton.GetComponent<Button>().onClick.AddListener(
+            () => {
+                TileManager.pH.canvas = ExDalton.transform.parent.parent.gameObject.GetComponent<Canvas>();
+                TileManager.pH.Popup();
+            });
         //Assert.IsNotNull(config.PlayerStateClass);
         //Assert.IsTrue(PlayerStarts.Length > 0);
 

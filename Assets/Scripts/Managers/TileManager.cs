@@ -446,7 +446,7 @@ public class TileManager : MonoBehaviour
 
         if(tileCoords == "030|023")
         {
-            SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(AFASPrefab, new Vector3(hex_cell.X * xOffset + 1.22f, 0.205f, hex_cell.Y * zOffset), Quaternion.Euler(-90, 0, 0));
+            SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(AFASPrefab, new Vector3(hex_cell.X * xOffset + 1.04f, 0.205f, hex_cell.Y * zOffset), Quaternion.Euler(-90, 0, 0));
             stadium_cell.transform.localScale = new Vector3(0.18f, 0.18f, 0.3f);
             stadium_cell.name = "stadium_" + hex_cell.X + "_" + hex_cell.Y;
             stadium_cell.SolarRequired = true;
