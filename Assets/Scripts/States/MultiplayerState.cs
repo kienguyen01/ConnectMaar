@@ -404,7 +404,7 @@ public class MultiplayerState : GameState
         houses.Add("16|17,18|9,16|10");
         houses.Add("16|28,18|26,15|27");
         houses.Add("2|26,11|28,11|24");
-        houses.Add("18|16,18|19,18|13");
+        houses.Add("18|16,18|19,20|13");
         houses.Add("27|26,26|25,23|27");
         houses.Add("19|23,21|20,23|22");
         houses.Add("27|18,28|14,25|16");

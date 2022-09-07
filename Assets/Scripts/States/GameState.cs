@@ -210,10 +210,6 @@ public class GameState : MonoBehaviourPunCallbacks
         Mixpanel.Track(eventName, eventProperty);
     }
 
-    public void CheckStadiumPopup()
-    {
-        //@TODO why does this exist? it's empty
-    }
 
     public void FirstpipeCheck()
     {
@@ -622,6 +618,9 @@ public class GameState : MonoBehaviourPunCallbacks
 
             if (tileTouched.IsSpecial())
             {
+                Debug.Log("Tile touched " + tileTouched);
+                Debug.Log("Player touched " + player.name);
+
                 tileTouched.GetSpecialOriginTile().openInfoCard(player);
             }
 

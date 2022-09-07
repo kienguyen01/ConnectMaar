@@ -7,12 +7,12 @@ public class UiEvents : MonoBehaviour
 {
 
 
-    public void DisableCamera()
+/*    public void DisableCamera()
     {
         GameObject varGameObject = GameObject.Find("object");
         varGameObject.GetComponent<PhoneCameraMovement>().enabled = false;
 
-    }
+    }*/
 
     public void btnClickConnector1()
     {
@@ -58,11 +58,6 @@ public class UiEvents : MonoBehaviour
         GameState.instance.clearAllSelected();
     }
 
-    public void CloseStadiumPopup()
-    {
-        GameState.instance.CheckStadiumPopup();
-
-     }
 
 
 
