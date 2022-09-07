@@ -474,9 +474,6 @@ public class MultiplayerState : GameState
 
     public void KeyLocation()
     {
-        mapData.stadiums.Add(randomizeTile(9, 17, 9, 17));
-        mapData.stadiums.Add(randomizeTile(21, 5, 21, 5));
-        mapData.stadiums.Add(randomizeTile(24, 19, 24, 19));
         mapData.churches.Add(randomizeTile(7, 6, 7, 6));
 
         //School
