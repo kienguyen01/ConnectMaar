@@ -812,7 +812,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2140143089}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: Winner
+        m_MethodName: StartMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1673,9 +1673,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_StringReference:
     m_TableReference:
-      m_TableCollectionName: GUID:137a87ec3baea4d799ac3bd500a6315b
+      m_TableCollectionName: GUID:f25726abbae8c6a4d972ab851ba2d60f
     m_TableEntryReference:
-      m_KeyId: 53272367098294272
+      m_KeyId: 12918255616
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -2237,9 +2237,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_StringReference:
     m_TableReference:
-      m_TableCollectionName: GUID:137a87ec3baea4d799ac3bd500a6315b
+      m_TableCollectionName: GUID:4c322e5a2a927c04298b0b6457ce4452
     m_TableEntryReference:
-      m_KeyId: 6080684032
+      m_KeyId: 11798376448
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
