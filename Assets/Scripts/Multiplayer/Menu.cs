@@ -6,6 +6,7 @@ using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;
+using UnityEngine.Localization.Settings;
 
 public class Menu : MonoBehaviourPunCallbacks
 {
@@ -159,20 +160,28 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         Debug.LogError(PhotonNetwork.CurrentRoom);
 
-        
-
         if (PhotonNetwork.CurrentRoom.IsVisible == false)
         {
-            Debug.LogError("BEFORE: "+PhotonNetwork.CurrentRoom);
+            Debug.LogError("BEFORE: " + PhotonNetwork.CurrentRoom);
             //masterConn = false;
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.LeaveRoom(false);
-            masterConn=true;
+            masterConn = true;
             //SceneManager.LoadScene("Lobby");
-
-            MatchmakingStatusText.text = "Searching";
-            //NetManager.instance.JoinInvRoom();
+            
+            if (LocalizationSettings.SelectedLocale == LocalizationSettings.AvailableLocales.Locales[0])
+            {
+                MatchmakingStatusText.text = "Zoeken";
+            }
+            else if(LocalizationSettings.SelectedLocale == LocalizationSettings.AvailableLocales.Locales[1])
+            {
+                MatchmakingStatusText.text = "Searching";
+            }
         }
+
+       // MatchmakingStatusText.text = "Searching";
+            //NetManager.instance.JoinInvRoom();
+        
         else
         {
             PhotonNetwork.CurrentRoom.IsVisible = false;
