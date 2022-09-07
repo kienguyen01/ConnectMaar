@@ -20,13 +20,13 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.2804379, g: 0.38939065, b: 0.4339623, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 2b71fc3c8576a594182f29e9e3ff6cde, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.48311317, g: 0.5279242, b: 0.59743935, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -279,18 +279,23 @@ MonoBehaviour:
     ConnectorManagerClass: {fileID: 0}
   playerClass: {fileID: 0}
   cameraClass: {fileID: 0}
+  IsTutorial: 0
   gameData:
     totalPoint: 0
     handSize: 0
     hasSolarInNetwork: 0
     hasHeatInNetwork: 0
     tilesTaken: []
-    connectionsDone: []
+    tilesChosen: []
+    ConnectorsPlaced: []
     Inventory: []
     SpecialConnector: []
     SelectedConnector: {fileID: 0}
     nodesOwned: []
     PlayerColour: {r: 0, g: 0, b: 0, a: 0}
+    StructuresClaimed: []
+    HasPassiveIncome: 0
+    PassiveIncome: 0
   connectorManager: {fileID: 0}
   points: 0
   sdtatingPoints: []
@@ -366,6 +371,7 @@ MonoBehaviour:
   config:
     PlayerStateClass: {fileID: 1642091268455989437, guid: b1bcd0ef7cca4234089352c8c6391110, type: 3}
     TileManagerClass: {fileID: 6393859954093753031, guid: b50a3aca46555f64ba44296ac5c29862, type: 3}
+    timer: {fileID: 1329654265}
   player1: {fileID: 136995009}
   player2: {fileID: 424589832}
   tileManager: {fileID: 0}
@@ -375,7 +381,8 @@ MonoBehaviour:
   Connector2Count: 0
   Connector3Count: 0
   text: {fileID: 0}
-  turnTime: {fileID: 0}
+  EndturnButton: {fileID: 1519939382}
+  ClearButton: {fileID: 993865030}
   playey1Name: {fileID: 519305116}
   BuildingsCount: {fileID: 519305119}
   ConnectorsCount: {fileID: 519305118}
@@ -450,18 +457,23 @@ MonoBehaviour:
     ConnectorManagerClass: {fileID: 0}
   playerClass: {fileID: 0}
   cameraClass: {fileID: 0}
+  IsTutorial: 0
   gameData:
     totalPoint: 0
     handSize: 0
     hasSolarInNetwork: 0
     hasHeatInNetwork: 0
     tilesTaken: []
-    connectionsDone: []
+    tilesChosen: []
+    ConnectorsPlaced: []
     Inventory: []
     SpecialConnector: []
     SelectedConnector: {fileID: 0}
     nodesOwned: []
     PlayerColour: {r: 0, g: 0, b: 0, a: 0}
+    StructuresClaimed: []
+    HasPassiveIncome: 0
+    PassiveIncome: 0
   connectorManager: {fileID: 0}
   points: 0
   sdtatingPoints: []
@@ -657,6 +669,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5447771045163600685, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+      propertyPath: EndturnButton
+      value: 
+      objectReference: {fileID: 1519939382}
     - target: {fileID: 5921759036958687778, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 711
@@ -722,6 +738,39 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &993865030 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5031659293620338254, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+  m_PrefabInstance: {fileID: 519305114}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1329654265 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6874333141898617877, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+  m_PrefabInstance: {fileID: 519305114}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d77537b92d5b72d4db8505d084a4b891, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1519939382 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5031659291671418377, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+  m_PrefabInstance: {fileID: 519305114}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1803333140

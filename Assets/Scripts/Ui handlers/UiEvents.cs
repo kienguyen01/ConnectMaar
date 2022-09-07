@@ -50,14 +50,7 @@ public class UiEvents : MonoBehaviour
 
     public void BtnClickEndTurn()
     {
-        GameState.instance.turnCheck ^= true;
-        if (GameState.instance.turnCheck == false)
-        {
-            GameObject varGameObject = GameObject.Find("object");
-
-            varGameObject.GetComponent<PhoneCameraMovement>().enabled = true;
-
-        }
+        GameState.instance.turnCheck = true;
     }
 
     public void btnClearAll()

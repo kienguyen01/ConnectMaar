@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeatPipe : Structure
+public class HeatPump : Structure
 {
     public override bool IsHeat { get => true; }
 

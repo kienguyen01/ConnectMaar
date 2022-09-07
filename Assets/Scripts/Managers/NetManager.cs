@@ -40,6 +40,14 @@ public class NetManager : MonoBehaviourPunCallbacks
         } while (!result);
     }
 
+    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    {
+        base.OnPlayerLeftRoom(otherPlayer);
+
+        NetManager.instance.photonView.RPC("ChangeScene", RpcTarget.All, "Lobby");
+
+    }
+
     private string CreateRoomName()
     {
         var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

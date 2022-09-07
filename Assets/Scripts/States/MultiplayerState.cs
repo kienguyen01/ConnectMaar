@@ -10,6 +10,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 [Serializable]
@@ -34,15 +35,14 @@ public struct EndTurnData
 }
 
 
-
-
-
 public class MultiplayerState : GameState
 {
     List<string> factPopups;
     MapData mapData;
     EndTurnData endTurnData;
-    
+    public Button EndturnButton;
+    public Button ClearButton;
+
     /*public MultiplayerPlayerState player1;
     public MultiplayerPlayerState player2;*/
 
@@ -71,7 +71,7 @@ public class MultiplayerState : GameState
         mapData.scrabbleHeats = new List<string>();
         mapData.windTurbines = new List<string>();
 
-        turnTime = new Timer();
+        //turnTime = new Timer();
         instantiatePopup();
         Debug.Log("Multiplayer");
         if (PhotonNetwork.IsMasterClient)
@@ -104,13 +104,14 @@ public class MultiplayerState : GameState
 
     private void Update()
     {
-        
+
 
         if (player1.gameData.IsTurn)
         {
-            if (Input.GetKeyDown(KeyCode.Space) || turnCheck)
+            if (Input.GetKeyDown(KeyCode.Space) || turnCheck || config.timer.isOver)
             {
-                    CheckEndTurn();
+                if(CheckEndTurn())
+                    config.timer.Tick();
             }
             if (Input.GetKeyDown(KeyCode.Alpha0) || clearBtn)
             {
@@ -200,8 +201,10 @@ public class MultiplayerState : GameState
             }
             BuildingsCount.text = "Buildings Owned: " + count;
             ConnectorsCount.text = "Connector1: " + Connector1Count + " \n Connector2: " + Connector2Count + " \n Connector3: " + Connector3Count;
-
             photonView.RPC("SendTiles", RpcTarget.Others, ObjectToByteArray(endTurnData));
+
+            EndturnButton.gameObject.SetActive(false);
+            ClearButton.gameObject.SetActive(false);
 
             photonView.RPC("EndTurn", RpcTarget.Others);
 
@@ -286,15 +289,19 @@ public class MultiplayerState : GameState
     [PunRPC]
     void SetFirstTurn()
     {
+
         if(((MultiplayerPlayerState)player1).photonPlayer.IsMasterClient)
         {
             player1.gameData.IsTurn = true;
             player2.gameData.IsTurn = false;
+
         }
         else
         {
             player1.gameData.IsTurn = false;
             player2.gameData.IsTurn = true;
+            EndturnButton.gameObject.SetActive(false);
+            ClearButton.gameObject.SetActive(false);
         }
         player1.name = PhotonNetwork.LocalPlayer.NickName;
 
@@ -307,8 +314,12 @@ public class MultiplayerState : GameState
     [PunRPC]
     void EndTurn()
     {
+        config.timer.Tick();
+
         player1.gameData.IsTurn = true;
         player2.gameData.IsTurn = false;
+        EndturnButton.gameObject.SetActive(true);
+        ClearButton.gameObject.SetActive(true);
         Debug.LogError("turn changed");
         Debug.LogError(player1.gameData.IsTurn ? "p1" : "p2");
     }
@@ -318,6 +329,7 @@ public class MultiplayerState : GameState
     {
         MapData mapData = (MapData)ByteArrayToObject(transferObject);
         tileManager.scrabbleSolar = mapData.scrabbleSolar;
+        tileManager.scrabbleHeat = mapData.scrabbleHeats;
         for (int x = 0; x < 30; x++)
         {
             List<Tile> tileRow = new List<Tile>();
@@ -458,27 +470,32 @@ public class MultiplayerState : GameState
         //School
         //
 
-         mapData.solars.Add(randomizeTile(19, 19, 19, 19));
-         mapData.solars.Add(randomizeTile(27, 9, 27, 9));
+        mapData.solars.Add(randomizeTile(19, 19, 19, 19));
+        mapData.solars.Add(randomizeTile(27, 9, 27, 9));
+
+        mapData.heats.Add(randomizeTile(23, 9, 23, 9));
+        mapData.heats.Add(randomizeTile(5, 10, 5, 10));
 
         mapData.scrabbleSolar.Add(randomizeTile(17, 17, 17, 17));
         mapData.scrabbleSolar.Add(randomizeTile(16, 18, 16, 18));
         mapData.scrabbleSolar.Add(randomizeTile(17, 6, 17, 6));
         mapData.scrabbleSolar.Add(randomizeTile(13, 17, 13, 17));
-
         mapData.scrabbleSolar.Add(randomizeTile(5, 27, 5, 27));
-
         mapData.scrabbleSolar.Add(randomizeTile(9, 26, 9, 26));
         mapData.scrabbleSolar.Add(randomizeTile(25, 14, 25, 14));
-
         mapData.scrabbleSolar.Add(randomizeTile(6, 3, 6, 3));
 
+        mapData.scrabbleHeats.Add(randomizeTile(14, 14, 14, 14));
+        mapData.scrabbleHeats.Add(randomizeTile(12, 20, 12, 20));
+        mapData.scrabbleHeats.Add(randomizeTile(17, 23, 17, 23));
+        mapData.scrabbleHeats.Add(randomizeTile(4, 17, 4, 17));
+        mapData.scrabbleHeats.Add(randomizeTile(19, 16, 19, 16));
+        mapData.scrabbleHeats.Add(randomizeTile(15, 24, 15, 24));
         /*mapData.solars.Add(randomizeTile(19, 19, 2, 1));
         mapData.solars.Add(randomizeTile(19, 19, 2, 1));*/
 
         //mapData.stadiums.Add(randomizeTile(9, 17, 9, 17));
         tileManager.scrabbleSolar = mapData.scrabbleSolar;
-
     }
 
 
