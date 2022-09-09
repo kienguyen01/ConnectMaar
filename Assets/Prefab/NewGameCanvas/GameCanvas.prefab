@@ -4709,7 +4709,7 @@ GameObject:
   - component: {fileID: 7121304626865745739}
   - component: {fileID: 2488646010165839445}
   m_Layer: 5
-  m_Name: ExitBtn
+  m_Name: ExitBtnDeMeent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6318,7 +6318,7 @@ GameObject:
   - component: {fileID: 5856760528996865012}
   - component: {fileID: 327359387742098765}
   m_Layer: 5
-  m_Name: ExitBtn
+  m_Name: ExitBtnDalton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12725,7 +12725,7 @@ GameObject:
   - component: {fileID: 5031659292019420135}
   - component: {fileID: 5031659292019420132}
   m_Layer: 5
-  m_Name: ExitBtnStadium
+  m_Name: ExitBtnStadiumAFAS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20480,7 +20480,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4066644383596083913
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21734,7 +21734,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &532162105575932182
 RectTransform:
   m_ObjectHideFlags: 0

@@ -47,13 +47,15 @@ MonoBehaviour:
   hexPrefab: {fileID: -1727450691104041770, guid: ee9cefcd5d0a6904fb8e61aabae82936, type: 3}
   housePrefab: {fileID: 1251334238118037910, guid: 86491ebb1ab7eeb47bab67b087ff9343, type: 3}
   solarPrefab: {fileID: 33546426220886354, guid: 91be685d712222d4699056da8fb7e534, type: 3}
-  church: {fileID: 8251950123301102173, guid: 6463fb1eb8ad1524bb46a0321267c526, type: 3}
-  stadium: {fileID: 4467196121627705901, guid: 54803134503aef24da1c8b7919121c75, type: 3}
+  ChurchPrefab: {fileID: 8251950123301102173, guid: 6463fb1eb8ad1524bb46a0321267c526, type: 3}
+  deMeentStadiumPrefab: {fileID: 4467196121627705901, guid: 54803134503aef24da1c8b7919121c75, type: 3}
   nodePrefab: {fileID: 1634176675827848267, guid: c29a9e7ce76198c428acc24f8a1ec717, type: 3}
   solarHexPrefab: {fileID: -3159184665351456025, guid: e648e14f249948e498f1d70d6f68fcbc, type: 3}
   windTurbinePrefab: {fileID: -1968271607633712438, guid: 1dc17acd40388f2448cf0561a200d8b0, type: 3}
   heatPumpPrefab: {fileID: -2070865276014616400, guid: cd18cdb88986fef4d85bc6fcf4feb4f5, type: 3}
   heatpumpHexPrefab: {fileID: -8291326073510544790, guid: d75c0befa50d41742960826c54745f73, type: 3}
+  daltonPrefab: {fileID: 1076306671731438260, guid: 3f82e4f458be3764e83ef0ca8c392753, type: 3}
+  AFASPrefab: {fileID: 3123087348766461978, guid: a08d7c7580da2774eb15d63628c5a0a4, type: 3}
   specialBuildingList: []
   allHouses: []
   allSolar: []
