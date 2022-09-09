@@ -366,7 +366,7 @@ public class GameState : MonoBehaviourPunCallbacks
         bool returnObj = false;
         //Debug.LogError("asdasdfgjkl");
 
-        if (Input.GetKeyDown(KeyCode.Space) || turnCheck || config.timer.isOver)
+        if (Input.GetKeyDown(KeyCode.Space) || turnCheck || (config.timer ? config.timer.isOver : true))
         {
             //turnTime.endTurn = false;
             //turnTime.SetDuration(10).Begin();

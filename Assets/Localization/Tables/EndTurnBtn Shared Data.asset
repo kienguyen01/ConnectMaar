@@ -19,6 +19,14 @@ MonoBehaviour:
     m_Key: EndTurnText
     m_Metadata:
       m_Items: []
+  - m_Id: 48316070723837952
+    m_Key: New Entry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48316083583574016
+    m_Key: New Entry 1
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

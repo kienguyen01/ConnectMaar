@@ -65,6 +65,58 @@ MonoBehaviour:
     m_Address: Assets/Localization/Tables/clearBtn Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
+  - m_GUID: ae722a2b834cb4936ac404a05aeda5b5
+    m_Address: Assets/Localization/Tables/DialogTexts Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 7fed2ae6140464f6e8c26298b2ecff0b
+    m_Address: Assets/Localization/Tables/BottomRightBtns Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: f7b3713fb511a4256b7b33e3136bde72
+    m_Address: Assets/Localization/Tables/LeaveLobby Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: a990f834095e94dfaab33f726d3b9594
+    m_Address: Assets/Localization/Tables/PlayerNaamLobby Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: f23f612d359844f4bb421c31d821a6e8
+    m_Address: Assets/Localization/Tables/Playername Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 222f1d966081849e0ae48d2d2a5bc775
+    m_Address: Assets/Localization/Tables/GameStartMessage Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 9e540bdc7ab684467b8a5abd4e331ae6
+    m_Address: Assets/Localization/Tables/CreateInvite Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: a79c4260185864d1eb0ab6320a925b65
+    m_Address: Assets/Localization/Tables/VOLUME Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 5f78500eacc1a4d4b8b18f057a124737
+    m_Address: Assets/Localization/Tables/LeaveButtonTranslation Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: ef6590c5ab79c4841be3f8c3c00d52a6
+    m_Address: Assets/Localization/Tables/cablesUsedLabel Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: aae8be488ad614be69612a52caf86ac6
+    m_Address: Assets/Localization/Tables/housesLabel Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 7d621e765a01d416aae837ca009fd849
+    m_Address: Assets/Localization/Tables/KabelsLbl Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 733d066d30a3f435f838dda4993bd931
+    m_Address: Assets/Localization/Tables/PlayerNameTxt Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 47fe1e794f5af47abbbe831c258f4d60, type: 2}
   m_SchemaSet:

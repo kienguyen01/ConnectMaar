@@ -89,6 +89,84 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     - Preload
+  - m_GUID: 241abe0dc6972452087a2683ba8975ad
+    m_Address: DialogTexts_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: c38c602d899b742d898618280be30ce0
+    m_Address: BottomRightBtns_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: 554e760064b1a4a9ea6083b651f2ab74
+    m_Address: LeaveLobby_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: b5eae5fc2588d49d5ab820044bae73eb
+    m_Address: PlayerNaamLobby_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: 9b0f89dd688304c08a22fd26ce5cce1d
+    m_Address: Playername_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: e32393b4000b34a35b9e269338abdfac
+    m_Address: GameStartMessage_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: 258b9b383c96a4e73a9daf90ff2309d3
+    m_Address: CreateInvite_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: bfe6a2734254a49ada1608d5a71d5333
+    m_Address: VOLUME_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: 45b202bd7dfd84746b4cba9407d87dea
+    m_Address: LeaveButtonTranslation_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: 3c51405ab78de484d9479f1618b958f2
+    m_Address: cablesUsedLabel_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: 9b64917bd211e4f26a52f92312b3a397
+    m_Address: housesLabel_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: e03df7c6e8b8048a794478bf6df28f13
+    m_Address: KabelsLbl_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+  - m_GUID: 8ef4530b1ab8c4586bcb1eb49b979f24
+    m_Address: PlayerNameTxt_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 47fe1e794f5af47abbbe831c258f4d60, type: 2}
   m_SchemaSet:
