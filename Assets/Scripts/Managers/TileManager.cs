@@ -20,6 +20,8 @@ public class TileManager : MonoBehaviour
     public Tile heatpumpHexPrefab;
     public SpecialBuilding daltonPrefab;
     public SpecialBuilding AFASPrefab;
+    public SpecialBuilding bloemwijkPrefab;
+    public SpecialBuilding investaPrefab;
 
     public static PopupHandler pH;
 
@@ -465,6 +467,38 @@ public class TileManager : MonoBehaviour
             hex_cell.AddStructure<SpecialBuilding>(stadium_cell);
         }
         
+        if(tileCoords == "020|008")
+        {
+            SpecialBuilding bloemwijk_cell = (SpecialBuilding)Instantiate(bloemwijkPrefab, new Vector3(hex_cell.X * xOffset + 0.36f, 0.35f, hex_cell.Y * zOffset), Quaternion.Euler(-90, 0, 90));
+            bloemwijk_cell.transform.localScale = new Vector3(13f, 13f, 13f);
+            bloemwijk_cell.name = "bloemwijk_" + hex_cell.X + "_" + hex_cell.Y;
+            bloemwijk_cell.SolarRequired = true;
+            hex_cell.openInfoCard += (PlayerState player) =>
+            {
+                pH.canvas = GameObject.Find("BloemwijkCard").GetComponent<Canvas>();
+                pH.Popup();
+                //Debug.Log("!!! OpenInfoCard !!!");
+                //todo open infocard
+            };
+            hex_cell.AddStructure<SpecialBuilding>(bloemwijk_cell);
+        }
+
+        if(tileCoords == "032|030")
+        {
+            SpecialBuilding investa_cell = (SpecialBuilding)Instantiate(investaPrefab, new Vector3(hex_cell.X * xOffset + 0382f, 0.205f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
+            investa_cell.transform.localScale = new Vector3(0.13f, 0.13f, 0.13f);
+            investa_cell.name = "investa_" + hex_cell.X + "_" + hex_cell.Y;
+            investa_cell.SolarRequired = true;
+            hex_cell.openInfoCard += (PlayerState player) =>
+            {
+                pH.canvas = GameObject.Find("InvestaCard").GetComponent<Canvas>();
+                pH.Popup();
+                //Debug.Log("!!! OpenInfoCard !!!");
+                //todo open infocard
+            };
+            hex_cell.AddStructure<SpecialBuilding>(investa_cell);
+        }
+
         if(tileCoords == "017|013")
         {
             SpecialBuilding dalton_cell = (SpecialBuilding)Instantiate(daltonPrefab, new Vector3(hex_cell.X * xOffset + 1.06f, 0.222f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));

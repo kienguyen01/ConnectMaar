@@ -105,6 +105,22 @@ public class GameState : MonoBehaviourPunCallbacks
                 TileManager.pH.Popup();
             });
 
+        GameObject ExInvesta = GameObject.Find("InvestaExitBtn");
+        ExInvesta.GetComponent<Button>()
+            .onClick.AddListener(
+            () => {
+                TileManager.pH.canvas = ExInvesta.transform.parent.parent.gameObject.GetComponent<Canvas>();
+                TileManager.pH.Popup();
+            });
+
+        GameObject ExBloemwijk = GameObject.Find("BloemwijkExitBtn");
+        ExBloemwijk.GetComponent<Button>()
+            .onClick.AddListener(
+            () => {
+                TileManager.pH.canvas = ExBloemwijk.transform.parent.parent.gameObject.GetComponent<Canvas>();
+                TileManager.pH.Popup();
+            });
+
         GameObject ExChurch = GameObject.Find("ExitBtnChurch");
         ExChurch.GetComponent<Button>().onClick.AddListener(
             () => {
