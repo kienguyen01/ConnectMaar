@@ -392,6 +392,7 @@ public class GameState : MonoBehaviourPunCallbacks
             {
                 if (player1.gameData.IsTurn)
                 {
+                    returnObj = true;
                     foreach (Connector ctr in turnConnectors)
                     {
                         foreach (Tile t in ctr.GetTiles())
@@ -401,7 +402,6 @@ public class GameState : MonoBehaviourPunCallbacks
                             CheckScrabbleRewards(t);
                         }
 
-                        returnObj = true;
                         player1.RefillHand();
                         player1.gameData.IsTurn = false;
                         player1.EndTurn();

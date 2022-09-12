@@ -289,7 +289,6 @@ public class MultiplayerState : GameState
     [PunRPC]
     void SetFirstTurn()
     {
-
         if(((MultiplayerPlayerState)player1).photonPlayer.IsMasterClient)
         {
             player1.gameData.IsTurn = true;
