@@ -56,7 +56,7 @@ MonoBehaviour:
   heatpumpHexPrefab: {fileID: -8291326073510544790, guid: d75c0befa50d41742960826c54745f73, type: 3}
   daltonPrefab: {fileID: 1076306671731438260, guid: 3f82e4f458be3764e83ef0ca8c392753, type: 3}
   AFASPrefab: {fileID: 3123087348766461978, guid: a08d7c7580da2774eb15d63628c5a0a4, type: 3}
-  bloemwijkPrefab: {fileID: -8054792457285929343, guid: 20a8317287568b043a48007e4c799f73, type: 3}
+  bloemwijkPrefab: {fileID: 9016274035402877360, guid: f5fd48cde0785fd4d90f63f1c8329757, type: 3}
   investaPrefab: {fileID: -7138654259734958630, guid: 0c7d46b16ecd25343a1229a8be3f1175, type: 3}
   specialBuildingList: []
   allHouses: []
