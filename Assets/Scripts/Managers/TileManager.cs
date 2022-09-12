@@ -1,3 +1,4 @@
+using mixpanel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -348,6 +349,7 @@ public class TileManager : MonoBehaviour
             return hex_cell;
         }
         hex_cell = (Tile)Instantiate(hexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
+        hex_cell.GetComponentInChildren<MeshRenderer>().material.color = new Color(0.55f, 0.74f, 0.22f, 1);
         hex_cell.name = "Hex_" + x + "_" + y;
         hex_cell.X = x;
         hex_cell.Y = y;

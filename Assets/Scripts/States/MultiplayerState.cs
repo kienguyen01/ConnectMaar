@@ -266,12 +266,12 @@ public class MultiplayerState : GameState
         if (player.IsLocal)
         {
             ((MultiplayerPlayerState)player1).photonPlayer = player;
-            player1.gameData.PlayerColour = Color.blue;
+            player1.gameData.PlayerColour = Color.white;
         }
         else
         {
             ((MultiplayerPlayerState)player2).photonPlayer = player;
-            player2.gameData.PlayerColour = Color.black;
+            player2.gameData.PlayerColour = Color.yellow;
         }
 
         if (player1 && (((MultiplayerPlayerState)player1).photonPlayer != null && ((MultiplayerPlayerState)player1).photonPlayer.IsMasterClient))

@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 163a628312ed56a4cac613c5c0ab212d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hexPrefab: {fileID: -1727450691104041770, guid: ee9cefcd5d0a6904fb8e61aabae82936, type: 3}
+  hexPrefab: {fileID: 8292479042000127254, guid: 43ba3ce4c0ab46445b6cdd0dc4e28d50, type: 3}
   housePrefab: {fileID: 1251334238118037910, guid: 86491ebb1ab7eeb47bab67b087ff9343, type: 3}
   solarPrefab: {fileID: 33546426220886354, guid: 91be685d712222d4699056da8fb7e534, type: 3}
   ChurchPrefab: {fileID: 8251950123301102173, guid: 6463fb1eb8ad1524bb46a0321267c526, type: 3}
