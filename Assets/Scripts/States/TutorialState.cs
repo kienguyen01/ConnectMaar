@@ -144,18 +144,14 @@ public class TutorialState : GameState
                 case 10:
                     text.text = "Start your turn by pressing the start turn button.";
                     DisablePopup();
-                    StartCoroutine(TurnCheckRoutine());
+                    StartCoroutine(TileCheckRoutine(2,1));
+                    turnCheck = true;
                     break;
                 case 11:
-                    if(player1.gameData.IsTurn == true)
-                    {
-                        DisableHighlightChanager(0, 1);
-                        DisableHighlightChanager(1, 1);
-                        DisableHighlightChanager(2, 1);
-                    }
+                    turnCheck = true;
                     break;
                 case 12:
-                    StartCoroutine(TileCheckRoutine(2, 1));
+                    StartCoroutine(TileCheckRoutine(6, 2)); //Remove if time left
                     break;
                 case 13:
                     EnablePopup();
@@ -181,19 +177,14 @@ public class TutorialState : GameState
                     break;
                 case 18:
                     DisablePopup();
-                    StartCoroutine(TurnCheckRoutine());
+                    StartCoroutine(TileCheckRoutine(6, 2));
+                    turnCheck = true;
                     break;
                 case 19:
-                    if (player1.gameData.IsTurn == true)
-                    {
-                        DisableHighlightChanager(3, 2);
-                        DisableHighlightChanager(4, 2);
-                        DisableHighlightChanager(5, 2);
-                        DisableHighlightChanager(6, 2);
-                    }
+                    turnCheck = true;
                     break;
                 case 20:
-                    StartCoroutine(TileCheckRoutine(6, 2));
+                    StartCoroutine(TileCheckRoutine(6, 2)); //remove
                     break;
                 case 21:
                     EnablePopup();
@@ -218,21 +209,14 @@ public class TutorialState : GameState
                     EnableHighlightChanager(7, 0);
                     break;
                 case 27:
-                    {
-                        startAiMoves();
-                        player2.gameData.totalPoint = 47;
-                        DisablePopup();
-                        StartCoroutine(TurnCheckRoutine());
-
-                        break;
-                    }
+                    startAiMoves();
+                    player2.gameData.totalPoint = 47;
+                    DisablePopup();
+                    StartCoroutine(TileCheckRoutine(7, 0));
+                    turnCheck = true;
+                    break;
                 case 28:
-                    if (player1.gameData.IsTurn == true)
-                    {
-                        DisableHighlightChanager(6, 1);
-                        DisableHighlightChanager(7, 0);
-                        DisableHighlightChanager(2, 1);
-                    }
+                    turnCheck = true;
                     break;
                 case 29:
                     StartCoroutine(SolarHeatCheckRoutine());
@@ -270,8 +254,8 @@ public class TutorialState : GameState
                     text.text = "For AFAS stadium to be connected to our grid you need a Solar panel in your grid. As a reward, you'll get an extra double connector next turn";
                     break;
                 case 39:
-                    text.text = "Start your turn";
-                    StartCoroutine(TurnCheckRoutine());
+                    //text.text = "Start your turn";
+                    //StartCoroutine(TurnCheckRoutine());
                     player1.clearHand()
                            .refilSpecificHand(1, 1, 2);
                     break;
@@ -281,7 +265,7 @@ public class TutorialState : GameState
                 case 41:
                     player1.gameData.totalPoint = 45;
                     DisablePopup();
-                    StartCoroutine(TileCheckRoutine(1, 7));
+                    //StartCoroutine(TileCheckRoutine(1, 7));
                     addTile(3, 13);
                     addTile(4, 13);
                     break;
@@ -425,7 +409,7 @@ public class TutorialState : GameState
     }
     private void DisableHighlightChanager(int x, int y)
     {
-        if (TileManager.tiles[x][y].OwnedBy != player1)
+        if (TileManager.tiles[x][y].OwnedBy != player1 )
         {
             Outline o = TileManager.tiles[x][y].gameObject.GetComponent<Outline>();
 
