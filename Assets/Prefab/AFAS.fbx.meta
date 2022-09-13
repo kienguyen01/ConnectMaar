@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: 7a5166fac05519441a1c607286e955fd
+guid: 8e49b7a61bde04c4b99e1ab9e7d563ad
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Investa.Diffuse
-    second: {fileID: 2800000, guid: 6e4c881ab49931c48a4fa6dc77903236, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

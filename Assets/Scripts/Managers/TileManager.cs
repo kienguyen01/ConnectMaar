@@ -1,3 +1,4 @@
+using mixpanel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,14 +12,18 @@ public class TileManager : MonoBehaviour
     public Tile hexPrefab;
     public House housePrefab;
     public SolarPanel solarPrefab;
-    public SpecialBuilding church;
-    public SpecialBuilding stadium;
+    public SpecialBuilding ChurchPrefab;
+    public SpecialBuilding deMeentStadiumPrefab;
     public Node nodePrefab;
     public Tile solarHexPrefab;
     public House windTurbinePrefab;
     public HeatPump heatPumpPrefab;
     public Tile heatpumpHexPrefab;
-    
+    public SpecialBuilding daltonPrefab;
+    public SpecialBuilding AFASPrefab;
+    public SpecialBuilding bloemwijkPrefab;
+    public SpecialBuilding investaPrefab;
+
     public static PopupHandler pH;
 
     public List<SpecialBuilding> specialBuildingList;
@@ -81,11 +86,11 @@ public class TileManager : MonoBehaviour
         } 
         else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("SampleScene"))
         {
-            for (int x = 0; x < 30; x++)
+            for (int x = 0; x < 35; x++)
             {
                 List<Tile> tileRow = new List<Tile>();
 
-                for (int y = 0; y < 30; y++)
+                for (int y = 0; y < 35; y++)
                 {
                     tileRow.Add((GenerateTilesMap(x, y)));
                 }
@@ -225,7 +230,7 @@ public class TileManager : MonoBehaviour
         if ((x == 2 && y == 1) || (x == 6 && y == 2) || (x == 10 && y == 0) || (x == 8 && y == 5) || (x == 8 && y == 8) || (x == 8 && y == 5) 
             || (x == 13 && y == 10) || (x == 6 && y == 10) || (x == 4 && y == 13) || (x == 2 && y == 13))
         {
-            House house_cell = (House)Instantiate(housePrefab, new Vector3(xPos, 0.2f, y * zOffset), Quaternion.identity);
+            House house_cell = (House)Instantiate(housePrefab, new Vector3(xPos, 0.2f, y * zOffset), Quaternion.Euler(0, 90, 0));
             house_cell.transform.localScale = new Vector3(0.08f, 0.16f, 0.16f);
             house_cell.name = "house_" + x + "_" + y;
             house_cell.transform.localScale = new Vector3(0.08f, 0.16f, 0.16f);
@@ -261,7 +266,7 @@ public class TileManager : MonoBehaviour
                 hex_cell.AddStructure<House>(solar_cell);
                 break;
             case "000|007":
-                SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(stadium, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
+                SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(deMeentStadiumPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
                 stadium_cell.transform.localScale = new Vector3(0.18f, 0.18f, 0.18f);
                 stadium_cell.name = "stadium_" + hex_cell.X + "_" + hex_cell.Y;
                 stadium_cell.SolarRequired = true;
@@ -275,7 +280,7 @@ public class TileManager : MonoBehaviour
                 hex_cell.AddStructure<SpecialBuilding>(stadium_cell);
                 break;
             case "011|006":
-                SpecialBuilding church_cell = (SpecialBuilding)Instantiate(church, new Vector3(hex_cell.X * xOffset + 0.507f, 0.2f, hex_cell.Y * zOffset - 0.55f), Quaternion.Euler(0, 0, 0));
+                SpecialBuilding church_cell = (SpecialBuilding)Instantiate(ChurchPrefab, new Vector3(hex_cell.X * xOffset + 0.507f, 0.2f, hex_cell.Y * zOffset - 0.55f), Quaternion.Euler(0, 0, 0));
                 church_cell.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
                 church_cell.name = "church_" + hex_cell.X + "_" + hex_cell.Y;
                 church_cell.SolarRequired = true;
@@ -344,6 +349,7 @@ public class TileManager : MonoBehaviour
             return hex_cell;
         }
         hex_cell = (Tile)Instantiate(hexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
+        hex_cell.GetComponentInChildren<MeshRenderer>().material.color = new Color(0.55f, 0.74f, 0.22f, 1);
         hex_cell.name = "Hex_" + x + "_" + y;
         hex_cell.X = x;
         hex_cell.Y = y;
@@ -396,9 +402,14 @@ public class TileManager : MonoBehaviour
         {
             if(tileCoords == tile)
             {
-                SpecialBuilding church_cell = (SpecialBuilding)Instantiate(church, new Vector3(hex_cell.X + 0.737f, 0.2f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
+                SpecialBuilding church_cell = (SpecialBuilding)Instantiate(ChurchPrefab, new Vector3(hex_cell.X + 0.737f, 0.2f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
                 church_cell.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
                 church_cell.name = "church_" + hex_cell.X + "_" + hex_cell.Y;
+                hex_cell.openInfoCard += (PlayerState player) =>
+                {
+                    pH.canvas = GameObject.Find("ChurchCard").GetComponent<Canvas>();
+                    pH.Popup();
+                };
                 hex_cell.AddStructure<SpecialBuilding>(church_cell);
             }
         }
@@ -425,23 +436,85 @@ public class TileManager : MonoBehaviour
             }
         }
 
-        foreach (string tile in stadiums)
+        
+        if(tileCoords == "031|005")
         {
-            if(tileCoords == tile)
+            SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(deMeentStadiumPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset - 1.67f), Quaternion.Euler(0, 0, 0));
+            stadium_cell.transform.localScale = new Vector3(0.18f, 0.18f, 0.18f);
+            stadium_cell.name = "stadium_" + hex_cell.X + "_" + hex_cell.Y;
+            stadium_cell.SolarRequired = true;
+            hex_cell.openInfoCard += (PlayerState player) =>
             {
-                SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(stadium, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset - 1.67f), Quaternion.Euler(0, 0, 0));
-                stadium_cell.transform.localScale = new Vector3(0.18f, 0.18f, 0.18f);
-                stadium_cell.name = "stadium_" + hex_cell.X + "_" + hex_cell.Y;
-                stadium_cell.SolarRequired = true;
-                hex_cell.openInfoCard += (PlayerState player) =>
-                {
-                    pH.canvas = GameObject.Find("StadiumCard").GetComponent<Canvas>();
-                    pH.Popup();
-                    //Debug.Log("!!! OpenInfoCard !!!");
-                    //todo open infocard
-                };
-                hex_cell.AddStructure<SpecialBuilding>(stadium_cell);
-            }
+                pH.canvas = GameObject.Find("DeMeentCard").GetComponent<Canvas>();
+                pH.Popup();
+                //Debug.Log("!!! OpenInfoCard !!!");
+                //todo open infocard
+            };
+            hex_cell.AddStructure<SpecialBuilding>(stadium_cell);
+        }
+
+        if(tileCoords == "030|023")
+        {
+            SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(AFASPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset - 0.2f), Quaternion.Euler(0, 0, 0));
+            stadium_cell.transform.localScale = new Vector3(0.13f, 0.13f, 0.13f);
+            stadium_cell.name = "stadium_" + hex_cell.X + "_" + hex_cell.Y;
+            stadium_cell.SolarRequired = true;
+            hex_cell.openInfoCard += (PlayerState player) =>
+            {
+                pH.canvas = GameObject.Find("StadiumCard").GetComponent<Canvas>();
+                pH.Popup();
+                //Debug.Log("!!! OpenInfoCard !!!");
+                //todo open infocard
+            };
+            hex_cell.AddStructure<SpecialBuilding>(stadium_cell);
+        }
+        
+        if(tileCoords == "020|008")
+        {
+            SpecialBuilding bloemwijk_cell = (SpecialBuilding)Instantiate(bloemwijkPrefab, new Vector3(hex_cell.X * xOffset + 0.36f, 0.35f, hex_cell.Y * zOffset), Quaternion.Euler(-90, 0, 90));
+            bloemwijk_cell.transform.localScale = new Vector3(13f, 13f, 13f);
+            bloemwijk_cell.name = "bloemwijk_" + hex_cell.X + "_" + hex_cell.Y;
+            bloemwijk_cell.SolarRequired = true;
+            hex_cell.openInfoCard += (PlayerState player) =>
+            {
+                pH.canvas = GameObject.Find("BloemwijkCard").GetComponent<Canvas>();
+                pH.Popup();
+                //Debug.Log("!!! OpenInfoCard !!!");
+                //todo open infocard
+            };
+            hex_cell.AddStructure<SpecialBuilding>(bloemwijk_cell);
+        }
+
+        if(tileCoords == "032|030")
+        {
+            SpecialBuilding investa_cell = (SpecialBuilding)Instantiate(investaPrefab, new Vector3(hex_cell.X * xOffset + 0382f, 0.205f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
+            investa_cell.transform.localScale = new Vector3(0.13f, 0.13f, 0.13f);
+            investa_cell.name = "investa_" + hex_cell.X + "_" + hex_cell.Y;
+            investa_cell.SolarRequired = true;
+            hex_cell.openInfoCard += (PlayerState player) =>
+            {
+                pH.canvas = GameObject.Find("InvestaCard").GetComponent<Canvas>();
+                pH.Popup();
+                //Debug.Log("!!! OpenInfoCard !!!");
+                //todo open infocard
+            };
+            hex_cell.AddStructure<SpecialBuilding>(investa_cell);
+        }
+
+        if(tileCoords == "017|013")
+        {
+            SpecialBuilding dalton_cell = (SpecialBuilding)Instantiate(daltonPrefab, new Vector3(hex_cell.X * xOffset + 1.06f, 0.222f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
+            dalton_cell.transform.localScale = new Vector3(0.002f, 0.003f, 0.003f);
+            dalton_cell.name = "dalton_" + hex_cell.X + "_" + hex_cell.Y;
+            dalton_cell.SolarRequired = true;
+            hex_cell.openInfoCard += (PlayerState player) =>
+            {
+                pH.canvas = GameObject.Find("DaltonCollegeCard").GetComponent<Canvas>();
+                pH.Popup();
+                //Debug.Log("!!! OpenInfoCard !!!");
+                //todo open infocard
+            };
+            hex_cell.AddStructure<SpecialBuilding>(dalton_cell);
         }
 
         foreach (string tile in houses)
@@ -450,14 +523,14 @@ public class TileManager : MonoBehaviour
             {
                 if (hex_cell.Y % 2 == 0)
                 {
-                    House house_cell = (House)Instantiate(housePrefab, new Vector3(hex_cell.X * xOffset, 0.2f, hex_cell.Y * zOffset), Quaternion.identity);
+                    House house_cell = (House)Instantiate(housePrefab, new Vector3(hex_cell.X * xOffset, 0.2f, hex_cell.Y * zOffset), Quaternion.Euler(0, 90, 0));
                     house_cell.transform.localScale = new Vector3(0.08f, 0.16f, 0.16f);
 
                     hex_cell.AddStructure<House>(house_cell);
                 }
                 else
                 {
-                    House house_cell = (House)Instantiate(housePrefab, new Vector3(hex_cell.X * xOffset + 0.52f, 0.2f, hex_cell.Y * zOffset + 0.012f), Quaternion.identity);
+                    House house_cell = (House)Instantiate(housePrefab, new Vector3(hex_cell.X * xOffset + 0.52f, 0.2f, hex_cell.Y * zOffset + 0.012f), Quaternion.Euler(0, 90, 0));
                     house_cell.transform.localScale = new Vector3(0.08f, 0.16f, 0.16f);
                     hex_cell.AddStructure<House>(house_cell);
                 }
@@ -500,14 +573,14 @@ public class TileManager : MonoBehaviour
             {
                 if (hex_cell.Y % 2 == 0)
                 {
-                    House house_cell = (House)Instantiate(windTurbinePrefab, new Vector3(hex_cell.X * xOffset, 1.25f, hex_cell.Y * zOffset), Quaternion.identity);
+                    House house_cell = (House)Instantiate(windTurbinePrefab, new Vector3(hex_cell.X * xOffset, 1.25f, hex_cell.Y * zOffset), Quaternion.Euler(0, 180, 0));
                     house_cell.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
 
                     hex_cell.AddStructure<House>(house_cell);
                 }
                 else
                 {
-                    House house_cell = (House)Instantiate(windTurbinePrefab, new Vector3(hex_cell.X * xOffset + 0.52f, 1.25f, hex_cell.Y * zOffset), Quaternion.identity);
+                    House house_cell = (House)Instantiate(windTurbinePrefab, new Vector3(hex_cell.X * xOffset + 0.52f, 1.25f, hex_cell.Y * zOffset), Quaternion.Euler(0, 180, 0));
                     house_cell.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
                     hex_cell.AddStructure<House>(house_cell);
                 }

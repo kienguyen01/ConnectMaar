@@ -965,7 +965,6 @@ namespace Photon.Pun
             //if (result == null)
             //{
             //    PhotonView[] views = GameObject.FindObjectsOfType(typeof(PhotonView)) as PhotonView[];
-
             //    for (int i = 0; i < views.Length; i++)
             //    {
             //        PhotonView view = views[i];

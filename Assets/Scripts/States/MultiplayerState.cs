@@ -171,7 +171,7 @@ public class MultiplayerState : GameState
 
     new protected bool CheckEndTurn()
     {
-        photonView.RPC("RPC_Log", RpcTarget.All, $"{PhotonNetwork.LocalPlayer.UserId} --- local player: {player1.gameData.IsTurn} - foreign player: {player2.gameData.IsTurn}");
+        //photonView.RPC("RPC_Log", RpcTarget.All, $"{PhotonNetwork.LocalPlayer.UserId} --- local player: {player1.gameData.IsTurn} - foreign player: {player2.gameData.IsTurn}");
 
         List<Tile> chosenTiles = new List<Tile>(player1.gameData.tilesChosen);
 
@@ -266,12 +266,12 @@ public class MultiplayerState : GameState
         if (player.IsLocal)
         {
             ((MultiplayerPlayerState)player1).photonPlayer = player;
-            player1.gameData.PlayerColour = Color.blue;
+            player1.gameData.PlayerColour = Color.white;
         }
         else
         {
             ((MultiplayerPlayerState)player2).photonPlayer = player;
-            player2.gameData.PlayerColour = Color.black;
+            player2.gameData.PlayerColour = new Color(1f, 0.91f, 0.49f, 1);
         }
 
         if (player1 && (((MultiplayerPlayerState)player1).photonPlayer != null && ((MultiplayerPlayerState)player1).photonPlayer.IsMasterClient))
@@ -289,7 +289,6 @@ public class MultiplayerState : GameState
     [PunRPC]
     void SetFirstTurn()
     {
-
         if(((MultiplayerPlayerState)player1).photonPlayer.IsMasterClient)
         {
             player1.gameData.IsTurn = true;
@@ -330,11 +329,11 @@ public class MultiplayerState : GameState
         MapData mapData = (MapData)ByteArrayToObject(transferObject);
         tileManager.scrabbleSolar = mapData.scrabbleSolar;
         tileManager.scrabbleHeat = mapData.scrabbleHeats;
-        for (int x = 0; x < 30; x++)
+        for (int x = 0; x < 35; x++)
         {
             List<Tile> tileRow = new List<Tile>();
 
-            for (int y = 0; y < 30; y++)
+            for (int y = 0; y < 35; y++)
             {
                 tileRow.Add((tileManager.GenerateTilesMap(x, y)));
             }
@@ -404,7 +403,7 @@ public class MultiplayerState : GameState
         houses.Add("16|17,18|9,16|10");
         houses.Add("16|28,18|26,15|27");
         houses.Add("2|26,11|28,11|24");
-        houses.Add("18|16,18|19,18|13");
+        houses.Add("18|16,18|19,20|13");
         houses.Add("27|26,26|25,23|27");
         houses.Add("19|23,21|20,23|22");
         houses.Add("27|18,28|14,25|16");
@@ -421,6 +420,18 @@ public class MultiplayerState : GameState
         houses.Add("25|28,22|28,7|22");
         houses.Add("15|12,9|9,11|14");
         houses.Add("18|3,13|9,9|1");
+
+        houses.Add("29|30,26|32,27|28");
+        houses.Add("33|2,31|2,33|7");
+        houses.Add("30|11,28|12,29|15");
+        houses.Add("31|19,34|18,32|21");
+        houses.Add("19|28,17|32,19|33");
+        houses.Add("2|33,5|32,7|34");
+        houses.Add("11|32,14|34,17|32");
+        houses.Add("0|33,2|34,3|31");
+        houses.Add("19|27,21|29,20|25");
+        houses.Add("24|34,26|34,28|33");
+
 
 
         List<string> windTurbines = new List<string>();
@@ -462,9 +473,6 @@ public class MultiplayerState : GameState
 
     public void KeyLocation()
     {
-        mapData.stadiums.Add(randomizeTile(9, 17, 9, 17));
-        mapData.stadiums.Add(randomizeTile(21, 5, 21, 5));
-        mapData.stadiums.Add(randomizeTile(24, 19, 24, 19));
         mapData.churches.Add(randomizeTile(7, 6, 7, 6));
 
         //School
@@ -491,6 +499,7 @@ public class MultiplayerState : GameState
         mapData.scrabbleHeats.Add(randomizeTile(4, 17, 4, 17));
         mapData.scrabbleHeats.Add(randomizeTile(19, 16, 19, 16));
         mapData.scrabbleHeats.Add(randomizeTile(15, 24, 15, 24));
+
         /*mapData.solars.Add(randomizeTile(19, 19, 2, 1));
         mapData.solars.Add(randomizeTile(19, 19, 2, 1));*/
 

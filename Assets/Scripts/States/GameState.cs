@@ -98,11 +98,27 @@ public class GameState : MonoBehaviourPunCallbacks
 
 
         //addEventHandlers();
-        GameObject ExStadium = GameObject.Find("ExitBtnStadium");
+        GameObject ExStadium = GameObject.Find("ExitBtnStadiumAFAS");
         ExStadium.GetComponent<Button>()
             .onClick.AddListener(
             () => {
                 TileManager.pH.canvas = ExStadium.transform.parent.parent.gameObject.GetComponent<Canvas>();
+                TileManager.pH.Popup();
+            });
+
+        GameObject ExInvesta = GameObject.Find("InvestaExitBtn");
+        ExInvesta.GetComponent<Button>()
+            .onClick.AddListener(
+            () => {
+                TileManager.pH.canvas = ExInvesta.transform.parent.parent.gameObject.GetComponent<Canvas>();
+                TileManager.pH.Popup();
+            });
+
+        GameObject ExBloemwijk = GameObject.Find("BloemwijkExitBtn");
+        ExBloemwijk.GetComponent<Button>()
+            .onClick.AddListener(
+            () => {
+                TileManager.pH.canvas = ExBloemwijk.transform.parent.parent.gameObject.GetComponent<Canvas>();
                 TileManager.pH.Popup();
             });
 
@@ -113,6 +129,18 @@ public class GameState : MonoBehaviourPunCallbacks
                 TileManager.pH.Popup();
             });
 
+        GameObject ExDeMeent = GameObject.Find("ExitBtnDeMeent");
+        ExDeMeent.GetComponent<Button>().onClick.AddListener(
+            () => {
+                TileManager.pH.canvas = ExDeMeent.transform.parent.parent.gameObject.GetComponent<Canvas>();
+                TileManager.pH.Popup();
+            });
+        GameObject ExDalton = GameObject.Find("ExitBtnDalton");
+        ExDalton.GetComponent<Button>().onClick.AddListener(
+            () => {
+                TileManager.pH.canvas = ExDalton.transform.parent.parent.gameObject.GetComponent<Canvas>();
+                TileManager.pH.Popup();
+            });
         //Assert.IsNotNull(config.PlayerStateClass);
         //Assert.IsTrue(PlayerStarts.Length > 0);
 
@@ -199,10 +227,6 @@ public class GameState : MonoBehaviourPunCallbacks
         Mixpanel.Track(eventName, eventProperty);
     }
 
-    public void CheckStadiumPopup()
-    {
-        //@TODO why does this exist? it's empty
-    }
 
     public void FirstpipeCheck()
     {
@@ -387,7 +411,7 @@ public class GameState : MonoBehaviourPunCallbacks
             {
                 if (player1.gameData.IsTurn)
                 {
-                    Debug.LogError("turn changed");
+                    returnObj = true;
                     foreach (Connector ctr in turnConnectors)
                     {
                         foreach (Tile t in ctr.GetTiles())
@@ -397,7 +421,6 @@ public class GameState : MonoBehaviourPunCallbacks
                             CheckScrabbleRewards(t);
                         }
 
-                        returnObj = true;
                         player1.RefillHand();
                         player1.gameData.IsTurn = false;
                         player1.EndTurn();
@@ -458,8 +481,6 @@ public class GameState : MonoBehaviourPunCallbacks
                 {
                     player1.gameData.IsTurn = true;
                 }
-
-                Debug.Log("isTurn" + player1.gameData.IsTurn.ToString());
 
             }
         }
@@ -632,6 +653,9 @@ public class GameState : MonoBehaviourPunCallbacks
 
             if (tileTouched.IsSpecial())
             {
+                Debug.Log("Tile touched " + tileTouched);
+                Debug.Log("Player touched " + player.name);
+
                 tileTouched.GetSpecialOriginTile().openInfoCard(player);
             }
 
