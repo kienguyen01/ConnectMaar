@@ -415,7 +415,7 @@ public class MultiplayerState : GameState
         houses.Add("2|15,4|12,1|2");
         houses.Add("15|26,13|25,12|29");
         houses.Add("11|23,12|20,15|16");
-        houses.Add("2|8,3|12,2|14");
+        houses.Add("2|8,|12,2|14");
 
         houses.Add("1|20,3|20,5|18");
         houses.Add("25|28,22|28,7|22");
@@ -430,8 +430,8 @@ public class MultiplayerState : GameState
         houses.Add("2|33,5|32,7|34");
         houses.Add("11|32,14|34,17|32");
         houses.Add("0|33,2|34,3|31");
-        houses.Add("19|27,21|29,20|25");
-        houses.Add("24|34,26|34,28|33");
+        houses.Add("19|27,26|20,20|25");
+        houses.Add("24|34,32|33,28|33");
 
 
 
@@ -479,11 +479,13 @@ public class MultiplayerState : GameState
         //School
         //
 
-        mapData.solars.Add(randomizeTile(19, 19, 19, 19));
-        mapData.solars.Add(randomizeTile(27, 9, 27, 9));
+        mapData.solars.Add(randomizeTile(11, 32, 11, 32));
+        mapData.solars.Add(randomizeTile(32, 11, 32, 11));
 
-        mapData.heats.Add(randomizeTile(23, 9, 23, 9));
         mapData.heats.Add(randomizeTile(5, 10, 5, 10));
+        mapData.heats.Add(randomizeTile(28,27,28,27));
+
+       
 
         mapData.scrabbleSolar.Add(randomizeTile(17, 17, 17, 17));
         mapData.scrabbleSolar.Add(randomizeTile(16, 18, 16, 18));
@@ -493,13 +495,25 @@ public class MultiplayerState : GameState
         mapData.scrabbleSolar.Add(randomizeTile(9, 26, 9, 26));
         mapData.scrabbleSolar.Add(randomizeTile(25, 14, 25, 14));
         mapData.scrabbleSolar.Add(randomizeTile(6, 3, 6, 3));
+        mapData.scrabbleSolar.Add(randomizeTile(32, 13, 32, 13));
+        mapData.scrabbleSolar.Add(randomizeTile(10, 33, 10, 33));
+        mapData.scrabbleSolar.Add(randomizeTile(0, 31, 0, 31));
+        mapData.scrabbleSolar.Add(randomizeTile(25, 21, 25, 21));
+        mapData.scrabbleSolar.Add(randomizeTile(29, 17, 29, 17));
 
+        mapData.scrabbleHeats.Add(randomizeTile(20, 3, 20, 3));
+        mapData.scrabbleHeats.Add(randomizeTile(23, 8, 23, 8));
+        mapData.scrabbleHeats.Add(randomizeTile(14, 29, 14, 29));
         mapData.scrabbleHeats.Add(randomizeTile(14, 14, 14, 14));
         mapData.scrabbleHeats.Add(randomizeTile(12, 20, 12, 20));
         mapData.scrabbleHeats.Add(randomizeTile(17, 23, 17, 23));
         mapData.scrabbleHeats.Add(randomizeTile(4, 17, 4, 17));
         mapData.scrabbleHeats.Add(randomizeTile(19, 16, 19, 16));
         mapData.scrabbleHeats.Add(randomizeTile(15, 24, 15, 24));
+        mapData.scrabbleHeats.Add(randomizeTile(28, 22, 28, 22));
+        mapData.scrabbleHeats.Add(randomizeTile(33, 21, 33, 21));
+
+        mapData.scrabbleHeats.Add(randomizeTile(30, 16, 30, 16));
 
         /*mapData.solars.Add(randomizeTile(19, 19, 2, 1));
         mapData.solars.Add(randomizeTile(19, 19, 2, 1));*/
