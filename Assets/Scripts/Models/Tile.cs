@@ -33,14 +33,15 @@ public class Tile : MonoBehaviour
             }
             else
             {
-                if (this.gameObject.GetComponent<Outline>())
+                Outline o = this.gameObject.GetComponent<Outline>();
+                if(!o)
                 {
-                    Destroy(this.gameObject.GetComponent<Outline>());
+                    o = this.gameObject.AddComponent<Outline>();
                 }
                 //change to highlight
-                this.gameObject.AddComponent<Outline>()
-                    .OutlineWidth = 4.0f;
-                this.gameObject.GetComponent<Outline>().OutlineMode = Outline.Mode.OutlineAndSilhouette;
+                o.OutlineWidth = 4.0f;
+                o.OutlineMode = Outline.Mode.OutlineAndSilhouette;
+                o.OutlineColor = value.gameData.PlayerColour;
             }
             
             selectedBy = value;

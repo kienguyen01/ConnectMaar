@@ -1,3 +1,4 @@
+using Google.Cloud.Translation.V2;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -30,8 +31,12 @@ public class TutorialState : GameState
     private bool autoAdvance;
     private int temporaryRoutines;
 
+    private GoogleTranslate translateService;
+
     new private void Awake()
     {
+        translateService = new GoogleTranslate();
+
         onAwake();
         createPlayer();
     }
@@ -83,6 +88,16 @@ public class TutorialState : GameState
         }
     }
 
+    private string doTranslation(string _Text)
+    {
+        string locale = PlayerPrefs.GetString("Selected_Language");
+        if (locale != "en")
+        {
+            _Text = translateService.TranslateText(LanguageCodes.English, LanguageCodes.Dutch, _Text);
+        }
+        return _Text;
+    }
+
     private void changeTutorialMessage()
     {
         if (text)
@@ -91,25 +106,25 @@ public class TutorialState : GameState
             {
                 case 0:
                     {   
-                        text.text = "Welcome to the Tutorial! In this tutorial we will teach you how to play ConnectMaar. Tap on Screen to continue.";
+                        text.text = doTranslation("Welcome to the Tutorial! In this tutorial we will teach you how to play ConnectMaar. Tap on Screen to continue.");
                         player1.clearHand()
                                .refilSpecificHand(1, 1, 2);
                         break;
                     }
                 case 1:
-                    text.text = "The main objective of this game is to reduce the Emission bar at the top of the screen by expanding your grid over Alkmaar";
+                    text.text = doTranslation("The main objective of this game is to reduce the Emission bar at the top of the screen by expanding your grid over Alkmaar");
                     break;
                 case 2:
-                    text.text = "Your Start point is the wind turbine";
+                    text.text = doTranslation("Your Start point is the wind turbine");
                     break;
                 case 3:
-                    text.text = "From there you can start building your power grid.";
+                    text.text = doTranslation("From there you can start building your power grid.");
                     break;
                 case 4:
-                    text.text = "On the left side of your screen you can see your inventory.";
+                    text.text = doTranslation("On the left side of your screen you can see your inventory.");
                     break;  
                 case 5:
-                    text.text = "In your inventory, you have items called Connectors. They are your main tool to make Alkmaar a greener and more sustainable place";
+                    text.text = doTranslation("In your inventory, you have items called Connectors. They are your main tool to make Alkmaar a greener and more sustainable place");
                     break;
                 case 6:
                     text.text = "Right now in your inventory you have a single connector, a double connector, and a triple connector";
