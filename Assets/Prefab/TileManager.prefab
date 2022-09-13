@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 163a628312ed56a4cac613c5c0ab212d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hexPrefab: {fileID: -1727450691104041770, guid: ee9cefcd5d0a6904fb8e61aabae82936, type: 3}
+  hexPrefab: {fileID: 8292479042000127254, guid: 43ba3ce4c0ab46445b6cdd0dc4e28d50, type: 3}
   housePrefab: {fileID: 1251334238118037910, guid: 86491ebb1ab7eeb47bab67b087ff9343, type: 3}
   solarPrefab: {fileID: 33546426220886354, guid: 91be685d712222d4699056da8fb7e534, type: 3}
   ChurchPrefab: {fileID: 8251950123301102173, guid: 6463fb1eb8ad1524bb46a0321267c526, type: 3}
@@ -55,7 +55,9 @@ MonoBehaviour:
   heatPumpPrefab: {fileID: -2070865276014616400, guid: cd18cdb88986fef4d85bc6fcf4feb4f5, type: 3}
   heatpumpHexPrefab: {fileID: -8291326073510544790, guid: d75c0befa50d41742960826c54745f73, type: 3}
   daltonPrefab: {fileID: 1076306671731438260, guid: 3f82e4f458be3764e83ef0ca8c392753, type: 3}
-  AFASPrefab: {fileID: -4581833014947893947, guid: 83b4af855fb86ff4eb38ba51a9580d3c, type: 3}
+  AFASPrefab: {fileID: 3123087348766461978, guid: a08d7c7580da2774eb15d63628c5a0a4, type: 3}
+  bloemwijkPrefab: {fileID: 9016274035402877360, guid: f5fd48cde0785fd4d90f63f1c8329757, type: 3}
+  investaPrefab: {fileID: -7138654259734958630, guid: 0c7d46b16ecd25343a1229a8be3f1175, type: 3}
   specialBuildingList: []
   allHouses: []
   allSolar: []
