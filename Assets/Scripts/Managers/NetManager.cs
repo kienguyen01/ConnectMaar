@@ -22,6 +22,7 @@ public class NetManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         //Conect to master server
+        PhotonNetwork.Disconnect();
         PhotonNetwork.ConnectUsingSettings();
     }
 
