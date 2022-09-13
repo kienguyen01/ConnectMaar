@@ -43,7 +43,7 @@ public class TutorialState : GameState
 
         if (TileManager.tiles[0][0].OwnedBy == null)
         {
-            player1.gameData.PlayerColour = Color.blue;
+            player1.gameData.PlayerColour = Color.white;
             TileManager.tiles[0][0].OwnedBy = player1;
             
         }
@@ -150,7 +150,7 @@ public class TutorialState : GameState
                     text.text = "Your inventory will be refiled at the end of the turn";
                     break;
                 case 15:
-                    text.text = "Would you look at that? Your emission bar has decreased by 3 points";
+                    text.text = "Would you look at that? Your emission bar has decreased by 2 points";
                     break;
                 case 16:
                     text.text = "1 connector = 3 points  \n 2 Connectors =  2 points  \n  3 Connectors = 1 point";
