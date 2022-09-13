@@ -271,7 +271,7 @@ public class MultiplayerState : GameState
         else
         {
             ((MultiplayerPlayerState)player2).photonPlayer = player;
-            player2.gameData.PlayerColour = Color.yellow;
+            player2.gameData.PlayerColour = new Color(1f, 0.91f, 0.49f, 1);
         }
 
         if (player1 && (((MultiplayerPlayerState)player1).photonPlayer != null && ((MultiplayerPlayerState)player1).photonPlayer.IsMasterClient))

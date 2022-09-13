@@ -230,7 +230,7 @@ public class TileManager : MonoBehaviour
         if ((x == 2 && y == 1) || (x == 6 && y == 2) || (x == 10 && y == 0) || (x == 8 && y == 5) || (x == 8 && y == 8) || (x == 8 && y == 5) 
             || (x == 13 && y == 10) || (x == 6 && y == 10) || (x == 4 && y == 13) || (x == 2 && y == 13))
         {
-            House house_cell = (House)Instantiate(housePrefab, new Vector3(xPos, 0.2f, y * zOffset), Quaternion.identity);
+            House house_cell = (House)Instantiate(housePrefab, new Vector3(xPos, 0.2f, y * zOffset), Quaternion.Euler(0, 90, 0));
             house_cell.transform.localScale = new Vector3(0.08f, 0.16f, 0.16f);
             house_cell.name = "house_" + x + "_" + y;
             house_cell.transform.localScale = new Vector3(0.08f, 0.16f, 0.16f);
@@ -523,14 +523,14 @@ public class TileManager : MonoBehaviour
             {
                 if (hex_cell.Y % 2 == 0)
                 {
-                    House house_cell = (House)Instantiate(housePrefab, new Vector3(hex_cell.X * xOffset, 0.2f, hex_cell.Y * zOffset), Quaternion.identity);
+                    House house_cell = (House)Instantiate(housePrefab, new Vector3(hex_cell.X * xOffset, 0.2f, hex_cell.Y * zOffset), Quaternion.Euler(0, 90, 0));
                     house_cell.transform.localScale = new Vector3(0.08f, 0.16f, 0.16f);
 
                     hex_cell.AddStructure<House>(house_cell);
                 }
                 else
                 {
-                    House house_cell = (House)Instantiate(housePrefab, new Vector3(hex_cell.X * xOffset + 0.52f, 0.2f, hex_cell.Y * zOffset + 0.012f), Quaternion.identity);
+                    House house_cell = (House)Instantiate(housePrefab, new Vector3(hex_cell.X * xOffset + 0.52f, 0.2f, hex_cell.Y * zOffset + 0.012f), Quaternion.Euler(0, 90, 0));
                     house_cell.transform.localScale = new Vector3(0.08f, 0.16f, 0.16f);
                     hex_cell.AddStructure<House>(house_cell);
                 }
@@ -573,14 +573,14 @@ public class TileManager : MonoBehaviour
             {
                 if (hex_cell.Y % 2 == 0)
                 {
-                    House house_cell = (House)Instantiate(windTurbinePrefab, new Vector3(hex_cell.X * xOffset, 1.25f, hex_cell.Y * zOffset), Quaternion.identity);
+                    House house_cell = (House)Instantiate(windTurbinePrefab, new Vector3(hex_cell.X * xOffset, 1.25f, hex_cell.Y * zOffset), Quaternion.Euler(0, 180, 0));
                     house_cell.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
 
                     hex_cell.AddStructure<House>(house_cell);
                 }
                 else
                 {
-                    House house_cell = (House)Instantiate(windTurbinePrefab, new Vector3(hex_cell.X * xOffset + 0.52f, 1.25f, hex_cell.Y * zOffset), Quaternion.identity);
+                    House house_cell = (House)Instantiate(windTurbinePrefab, new Vector3(hex_cell.X * xOffset + 0.52f, 1.25f, hex_cell.Y * zOffset), Quaternion.Euler(0, 180, 0));
                     house_cell.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
                     hex_cell.AddStructure<House>(house_cell);
                 }
