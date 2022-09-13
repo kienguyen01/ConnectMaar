@@ -3,7 +3,22 @@ guid: 8e49b7a61bde04c4b99e1ab9e7d563ad
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: lastwall.Diffuse
+    second: {fileID: 2800000, guid: f0a05643ba61d414abfb3e27dc32d9f8, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: long wall color
+    second: {fileID: 2800000, guid: 92e5ae0f2f6048b4c98ee4bb5ad9b5af, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: wall diagonal.Diffuse
+    second: {fileID: 2800000, guid: 425c1d12c7be1984d8621ba66e16fb3d, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
