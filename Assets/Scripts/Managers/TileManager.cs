@@ -12,17 +12,17 @@ public class TileManager : MonoBehaviour
     public Tile hexPrefab;
     public House housePrefab;
     public SolarPanel solarPrefab;
-    public SpecialBuilding ChurchPrefab;
-    public SpecialBuilding deMeentStadiumPrefab;
+    public HMaria ChurchPrefab;
+    public DeMeent deMeentStadiumPrefab;
     public Node nodePrefab;
     public Tile solarHexPrefab;
     public House windTurbinePrefab;
     public HeatPump heatPumpPrefab;
     public Tile heatpumpHexPrefab;
-    public SpecialBuilding daltonPrefab;
-    public SpecialBuilding AFASPrefab;
-    public SpecialBuilding bloemwijkPrefab;
-    public SpecialBuilding investaPrefab;
+    public DaltonCollege daltonPrefab;
+    public Afas AFASPrefab;
+    public Bloemwijk bloemwijkPrefab;
+    public Investa investaPrefab;
 
     public static PopupHandler pH;
 
@@ -267,7 +267,7 @@ public class TileManager : MonoBehaviour
                 hex_cell.AddStructure<House>(solar_cell);
                 break;
             case "000|007":
-                SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(deMeentStadiumPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset - 1.67f), Quaternion.Euler(0, 0, 0));
+                DeMeent stadium_cell = (DeMeent)Instantiate(deMeentStadiumPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset - 1.67f), Quaternion.Euler(0, 0, 0));
                 stadium_cell.transform.localScale = new Vector3(0.18f, 0.18f, 0.18f);
                 stadium_cell.name = "stadium_" + hex_cell.X + "_" + hex_cell.Y;
                 stadium_cell.SolarRequired = true;
@@ -278,10 +278,10 @@ public class TileManager : MonoBehaviour
                     //Debug.Log("!!! OpenInfoCard !!!");
                     //todo open infocard
                 };
-                hex_cell.AddStructure<SpecialBuilding>(stadium_cell);
+                hex_cell.AddStructure<DeMeent>(stadium_cell);
                 break;
             case "011|006":
-                SpecialBuilding church_cell = (SpecialBuilding)Instantiate(ChurchPrefab, new Vector3(hex_cell.X * xOffset + 0.507f, 0.2f, hex_cell.Y * zOffset - 0.55f), Quaternion.Euler(0, 0, 0));
+                HMaria church_cell = (HMaria)Instantiate(ChurchPrefab, new Vector3(hex_cell.X * xOffset + 0.507f, 0.2f, hex_cell.Y * zOffset - 0.55f), Quaternion.Euler(0, 0, 0));
                 church_cell.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
                 church_cell.name = "church_" + hex_cell.X + "_" + hex_cell.Y;
                 church_cell.SolarRequired = true;
@@ -292,7 +292,7 @@ public class TileManager : MonoBehaviour
                     //Debug.Log("!!! OpenInfoCard !!!");
                     //todo open infocard
                 };
-                hex_cell.AddStructure<SpecialBuilding>(church_cell);
+                hex_cell.AddStructure<HMaria>(church_cell);
                 break;
             case "004|002":
                 hex_cell.IsScrabbleForSolar = true;
