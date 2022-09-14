@@ -267,7 +267,7 @@ public class TileManager : MonoBehaviour
                 hex_cell.AddStructure<House>(solar_cell);
                 break;
             case "000|007":
-                SpecialBuilding stadium_cell = (DeMeent)Instantiate(deMeentStadiumPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
+                SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(deMeentStadiumPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset - 1.67f), Quaternion.Euler(0, 0, 0));
                 stadium_cell.transform.localScale = new Vector3(0.18f, 0.18f, 0.18f);
                 stadium_cell.name = "stadium_" + hex_cell.X + "_" + hex_cell.Y;
                 stadium_cell.SolarRequired = true;
@@ -281,7 +281,7 @@ public class TileManager : MonoBehaviour
                 hex_cell.AddStructure<SpecialBuilding>(stadium_cell);
                 break;
             case "011|006":
-                SpecialBuilding church_cell = (HMaria)Instantiate(ChurchPrefab, new Vector3(hex_cell.X * xOffset + 0.507f, 0.2f, hex_cell.Y * zOffset - 0.55f), Quaternion.Euler(0, 0, 0));
+                SpecialBuilding church_cell = (SpecialBuilding)Instantiate(ChurchPrefab, new Vector3(hex_cell.X * xOffset + 0.507f, 0.2f, hex_cell.Y * zOffset - 0.55f), Quaternion.Euler(0, 0, 0));
                 church_cell.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
                 church_cell.name = "church_" + hex_cell.X + "_" + hex_cell.Y;
                 church_cell.SolarRequired = true;
@@ -403,7 +403,7 @@ public class TileManager : MonoBehaviour
         {
             if(tileCoords == tile)
             {
-                SpecialBuilding church_cell = (HMaria)Instantiate(ChurchPrefab, new Vector3(hex_cell.X + 0.737f, 0.2f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
+                SpecialBuilding church_cell = (SpecialBuilding)Instantiate(ChurchPrefab, new Vector3(hex_cell.X + 0.737f, 0.2f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
                 church_cell.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
                 church_cell.name = "church_" + hex_cell.X + "_" + hex_cell.Y;
                 hex_cell.openInfoCard += (PlayerState player) =>
@@ -440,7 +440,7 @@ public class TileManager : MonoBehaviour
         
         if(tileCoords == "031|005")
         {
-            SpecialBuilding stadium_cell = (DeMeent)Instantiate(deMeentStadiumPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset - 1.67f), Quaternion.Euler(0, 0, 0));
+            SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(deMeentStadiumPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset - 1.67f), Quaternion.Euler(0, 0, 0));
             stadium_cell.transform.localScale = new Vector3(0.18f, 0.18f, 0.18f);
             stadium_cell.name = "stadium_" + hex_cell.X + "_" + hex_cell.Y;
             stadium_cell.SolarRequired = true;
@@ -456,7 +456,7 @@ public class TileManager : MonoBehaviour
 
         if(tileCoords == "030|023")
         {
-            SpecialBuilding stadium_cell = (Afas)Instantiate(AFASPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset - 0.2f), Quaternion.Euler(0, 0, 0));
+            SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(AFASPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset - 0.2f), Quaternion.Euler(0, 0, 0));
             stadium_cell.transform.localScale = new Vector3(0.13f, 0.13f, 0.13f);
             stadium_cell.name = "stadium_" + hex_cell.X + "_" + hex_cell.Y;
             stadium_cell.SolarRequired = true;
@@ -472,7 +472,7 @@ public class TileManager : MonoBehaviour
         
         if(tileCoords == "020|008")
         {
-            SpecialBuilding bloemwijk_cell = (Bloemwijk)Instantiate(bloemwijkPrefab, new Vector3(hex_cell.X * xOffset + 0.36f, 0.35f, hex_cell.Y * zOffset), Quaternion.Euler(-90, 0, 90));
+            SpecialBuilding bloemwijk_cell = (SpecialBuilding)Instantiate(bloemwijkPrefab, new Vector3(hex_cell.X * xOffset + 0.36f, 0.35f, hex_cell.Y * zOffset), Quaternion.Euler(-90, 0, 90));
             bloemwijk_cell.transform.localScale = new Vector3(13f, 13f, 13f);
             bloemwijk_cell.name = "bloemwijk_" + hex_cell.X + "_" + hex_cell.Y;
             bloemwijk_cell.SolarRequired = true;
@@ -488,7 +488,7 @@ public class TileManager : MonoBehaviour
 
         if(tileCoords == "032|030")
         {
-            SpecialBuilding investa_cell = (Investa)Instantiate(investaPrefab, new Vector3(hex_cell.X * xOffset + 0382f, 0.205f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
+            SpecialBuilding investa_cell = (SpecialBuilding)Instantiate(investaPrefab, new Vector3(hex_cell.X * xOffset + 0382f, 0.205f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
             investa_cell.transform.localScale = new Vector3(0.13f, 0.13f, 0.13f);
             investa_cell.name = "investa_" + hex_cell.X + "_" + hex_cell.Y;
             investa_cell.SolarRequired = true;
@@ -504,7 +504,7 @@ public class TileManager : MonoBehaviour
 
         if(tileCoords == "017|013")
         {
-            SpecialBuilding dalton_cell = (DaltonCollege)Instantiate(daltonPrefab, new Vector3(hex_cell.X * xOffset + 1.06f, 0.222f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
+            SpecialBuilding dalton_cell = (SpecialBuilding)Instantiate(daltonPrefab, new Vector3(hex_cell.X * xOffset + 1.06f, 0.222f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
             dalton_cell.transform.localScale = new Vector3(0.002f, 0.003f, 0.003f);
             dalton_cell.name = "dalton_" + hex_cell.X + "_" + hex_cell.Y;
             dalton_cell.SolarRequired = true;
