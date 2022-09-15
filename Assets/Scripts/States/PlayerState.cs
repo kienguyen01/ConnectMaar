@@ -116,7 +116,7 @@ public class PlayerState : MonoBehaviourPun
     }
     private void Update()
     {
-
+       
     }
 
     public virtual void EndTurn()

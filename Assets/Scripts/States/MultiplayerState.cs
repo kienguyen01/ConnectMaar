@@ -104,7 +104,7 @@ public class MultiplayerState : GameState
 
     private void Update()
     {
-
+        player1.updateInventoryUI();
 
         if (player1.gameData.IsTurn)
         {
