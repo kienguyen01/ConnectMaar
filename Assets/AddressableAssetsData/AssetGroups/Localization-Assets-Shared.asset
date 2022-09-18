@@ -117,8 +117,12 @@ MonoBehaviour:
     m_Address: Assets/Localization/Tables/PlayerNameTxt Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
-  - m_GUID: 2aa2815e56d5c403bad89ce97e63c9e4
-    m_Address: Assets/Localization/Tables/SettingsLabel Shared Data.asset
+  - m_GUID: f25726abbae8c6a4d972ab851ba2d60f
+    m_Address: Assets/Localization/Tables/Back to Menu Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 4c322e5a2a927c04298b0b6457ce4452
+    m_Address: Assets/Localization/Tables/PlayAgainTxt Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
   m_ReadOnly: 1
