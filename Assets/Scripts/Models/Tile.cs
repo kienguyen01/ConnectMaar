@@ -23,26 +23,29 @@ public class Tile : MonoBehaviour
 
     public int X { get => x; set => x = value; }
     public int Y { get => y; set => y = value; }
-    public PlayerState SelectedBy { get => selectedBy; 
-        set 
+    public PlayerState SelectedBy
+    {
+        get => selectedBy;
+        set
         {
-            if(value == null)
+            if (value == null)
             {
                 //remove highlight
                 Destroy(this.gameObject.GetComponent<Outline>());
             }
             else
             {
-                if (this.gameObject.GetComponent<Outline>())
+                Outline o = this.gameObject.GetComponent<Outline>();
+                if (!o)
                 {
-                    Destroy(this.gameObject.GetComponent<Outline>());
+                    o = this.gameObject.AddComponent<Outline>();
                 }
                 //change to highlight
-                this.gameObject.AddComponent<Outline>()
-                    .OutlineWidth = 4.0f;
-                this.gameObject.GetComponent<Outline>().OutlineMode = Outline.Mode.OutlineAndSilhouette;
+                o.OutlineWidth = 4.0f;
+                o.OutlineMode = Outline.Mode.OutlineAndSilhouette;
+                o.OutlineColor = value.gameData.PlayerColour;
             }
-            
+
             selectedBy = value;
         }
     }

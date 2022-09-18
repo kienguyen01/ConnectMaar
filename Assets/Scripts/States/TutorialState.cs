@@ -1,3 +1,4 @@
+using Google.Cloud.Translation.V2;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -30,8 +31,12 @@ public class TutorialState : GameState
     private bool autoAdvance;
     private int temporaryRoutines;
 
+    private GoogleTranslate translateService;
+
     new private void Awake()
     {
+        translateService = new GoogleTranslate();
+
         onAwake();
         createPlayer();
     }
@@ -43,7 +48,7 @@ public class TutorialState : GameState
 
         if (TileManager.tiles[0][0].OwnedBy == null)
         {
-            player1.gameData.PlayerColour = Color.blue;
+            player1.gameData.PlayerColour = Color.white;
             TileManager.tiles[0][0].OwnedBy = player1;
             
         }
@@ -83,6 +88,16 @@ public class TutorialState : GameState
         }
     }
 
+    private string doTranslation(string _Text)
+    {
+        string locale = PlayerPrefs.GetString("Selected_Language");
+        if (locale != "en")
+        {
+            _Text = translateService.TranslateText(LanguageCodes.English, LanguageCodes.Dutch, _Text);
+        }
+        return _Text;
+    }
+
     private void changeTutorialMessage()
     {
         if (text)
@@ -91,25 +106,25 @@ public class TutorialState : GameState
             {
                 case 0:
                     {   
-                        text.text = "Welcome to the Tutorial! In this tutorial we will teach you how to play ConnectMaar. Tap on Screen to continue.";
+                        text.text = doTranslation("Welcome to the Tutorial! In this tutorial we will teach you how to play ConnectMaar. Tap on Screen to continue.");
                         player1.clearHand()
                                .refilSpecificHand(1, 1, 2);
                         break;
                     }
                 case 1:
-                    text.text = "The main objective of this game is to reduce the Emission bar at the top of the screen by expanding your grid over Alkmaar";
+                    text.text = doTranslation("The main objective of this game is to reduce the Emission bar at the top of the screen by expanding your grid over Alkmaar");
                     break;
                 case 2:
-                    text.text = "Your Start point is the wind turbine";
+                    text.text = doTranslation("Your Start point is the wind turbine");
                     break;
                 case 3:
-                    text.text = "From there you can start building your power grid.";
+                    text.text = doTranslation("From there you can start building your power grid.");
                     break;
                 case 4:
-                    text.text = "On the left side of your screen you can see your inventory.";
+                    text.text = doTranslation("On the left side of your screen you can see your inventory.");
                     break;  
                 case 5:
-                    text.text = "In your inventory, you have items called Connectors. They are your main tool to make Alkmaar a greener and more sustainable place";
+                    text.text = doTranslation("In your inventory, you have items called Connectors. They are your main tool to make Alkmaar a greener and more sustainable place");
                     break;
                 case 6:
                     text.text = "Right now in your inventory you have a single connector, a double connector, and a triple connector";
@@ -129,18 +144,14 @@ public class TutorialState : GameState
                 case 10:
                     text.text = "Start your turn by pressing the start turn button.";
                     DisablePopup();
-                    StartCoroutine(TurnCheckRoutine());
+                    StartCoroutine(TileCheckRoutine(2,1));
+                    turnCheck = true;
                     break;
                 case 11:
-                    if(player1.gameData.IsTurn == true)
-                    {
-                        DisableHighlightChanager(0, 1);
-                        DisableHighlightChanager(1, 1);
-                        DisableHighlightChanager(2, 1);
-                    }
+                    turnCheck = true;
                     break;
                 case 12:
-                    StartCoroutine(TileCheckRoutine(2, 1));
+                    StartCoroutine(TileCheckRoutine(6, 2)); //Remove if time left
                     break;
                 case 13:
                     EnablePopup();
@@ -150,7 +161,7 @@ public class TutorialState : GameState
                     text.text = "Your inventory will be refiled at the end of the turn";
                     break;
                 case 15:
-                    text.text = "Would you look at that? Your emission bar has decreased by 3 points";
+                    text.text = "Would you look at that? Your emission bar has decreased by 2 points";
                     break;
                 case 16:
                     text.text = "1 connector = 3 points  \n 2 Connectors =  2 points  \n  3 Connectors = 1 point";
@@ -166,19 +177,14 @@ public class TutorialState : GameState
                     break;
                 case 18:
                     DisablePopup();
-                    StartCoroutine(TurnCheckRoutine());
+                    StartCoroutine(TileCheckRoutine(6, 2));
+                    turnCheck = true;
                     break;
                 case 19:
-                    if (player1.gameData.IsTurn == true)
-                    {
-                        DisableHighlightChanager(3, 2);
-                        DisableHighlightChanager(4, 2);
-                        DisableHighlightChanager(5, 2);
-                        DisableHighlightChanager(6, 2);
-                    }
+                    turnCheck = true;
                     break;
                 case 20:
-                    StartCoroutine(TileCheckRoutine(6, 2));
+                    StartCoroutine(TileCheckRoutine(6, 2)); //remove
                     break;
                 case 21:
                     EnablePopup();
@@ -203,21 +209,14 @@ public class TutorialState : GameState
                     EnableHighlightChanager(7, 0);
                     break;
                 case 27:
-                    {
-                        startAiMoves();
-                        player2.gameData.totalPoint = 47;
-                        DisablePopup();
-                        StartCoroutine(TurnCheckRoutine());
-
-                        break;
-                    }
+                    startAiMoves();
+                    player2.gameData.totalPoint = 47;
+                    DisablePopup();
+                    StartCoroutine(TileCheckRoutine(7, 0));
+                    turnCheck = true;
+                    break;
                 case 28:
-                    if (player1.gameData.IsTurn == true)
-                    {
-                        DisableHighlightChanager(6, 1);
-                        DisableHighlightChanager(7, 0);
-                        DisableHighlightChanager(2, 1);
-                    }
+                    turnCheck = true;
                     break;
                 case 29:
                     StartCoroutine(SolarHeatCheckRoutine());
@@ -255,8 +254,8 @@ public class TutorialState : GameState
                     text.text = "For AFAS stadium to be connected to our grid you need a Solar panel in your grid. As a reward, you'll get an extra double connector next turn";
                     break;
                 case 39:
-                    text.text = "Start your turn";
-                    StartCoroutine(TurnCheckRoutine());
+                    //text.text = "Start your turn";
+                    //StartCoroutine(TurnCheckRoutine());
                     player1.clearHand()
                            .refilSpecificHand(1, 1, 2);
                     break;
@@ -266,7 +265,7 @@ public class TutorialState : GameState
                 case 41:
                     player1.gameData.totalPoint = 45;
                     DisablePopup();
-                    StartCoroutine(TileCheckRoutine(1, 7));
+                    //StartCoroutine(TileCheckRoutine(1, 7));
                     addTile(3, 13);
                     addTile(4, 13);
                     break;
@@ -410,7 +409,7 @@ public class TutorialState : GameState
     }
     private void DisableHighlightChanager(int x, int y)
     {
-        if (TileManager.tiles[x][y].OwnedBy != player1)
+        if (TileManager.tiles[x][y].OwnedBy != player1 )
         {
             Outline o = TileManager.tiles[x][y].gameObject.GetComponent<Outline>();
 
