@@ -2,12 +2,12 @@
 using System;
 using UnityEngine;
 
-public class GoogleTranslate : MonoBehaviour
+public class GoogleTranslate
 {
-    private const string Key = "AIzaSyB8HhV-DG4BgfGNFqm4zbeaBICOh9qT8S8";
+    private const string Key = "AIzaSyA_-9yRxR-f_xSI2ZRT6HLXfcbdENPgiZE";
     TranslationClient client;
 
-    private void Awake()
+    public GoogleTranslate()
     {
         client = TranslationClient.CreateFromApiKey(Key);
     }
@@ -21,6 +21,7 @@ public class GoogleTranslate : MonoBehaviour
 
     public string TranslateText(string sourceLanguage, string targetLanguage, string sourceText)
     {
+        doTest();
         TranslationResult result = client.TranslateText(sourceText, targetLanguage, sourceLanguage);
         Debug.Log($"Result: {result.TranslatedText}");
 

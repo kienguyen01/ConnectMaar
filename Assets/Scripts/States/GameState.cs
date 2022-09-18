@@ -62,6 +62,18 @@ public class GameState : MonoBehaviourPunCallbacks
     public int Connector2Count;
     public int Connector3Count;
 
+    [SerializeField]
+    GameObject ExStadiumAFAS;
+    [SerializeField]
+    GameObject ExInvesta;
+    [SerializeField]
+    GameObject ExBloemwijk;
+    [SerializeField]
+    GameObject ExChurch;
+    [SerializeField]
+    GameObject ExDeMeent;
+    [SerializeField]
+    GameObject ExDalton;
 
     [HideInInspector]
     public TextMeshProUGUI text;
@@ -98,49 +110,64 @@ public class GameState : MonoBehaviourPunCallbacks
 
 
         //addEventHandlers();
-        GameObject ExStadium = GameObject.Find("ExitBtnStadiumAFAS");
-        ExStadium.GetComponent<Button>()
+
+        if (!ExStadiumAFAS)
+        {
+            ExStadiumAFAS.GetComponent<Button>()
             .onClick.AddListener(
             () => {
-                TileManager.pH.canvas = ExStadium.transform.parent.parent.gameObject.GetComponent<Canvas>();
+                TileManager.pH.canvas = ExStadiumAFAS.transform.parent.parent.gameObject.GetComponent<Canvas>();
                 TileManager.pH.Popup();
             });
+        }
 
-        GameObject ExInvesta = GameObject.Find("InvestaExitBtn");
-        ExInvesta.GetComponent<Button>()
-            .onClick.AddListener(
-            () => {
-                TileManager.pH.canvas = ExInvesta.transform.parent.parent.gameObject.GetComponent<Canvas>();
-                TileManager.pH.Popup();
-            });
+        if (!ExInvesta)
+        {
+            ExInvesta.GetComponent<Button>()
+                .onClick.AddListener(
+                () => {
+                    TileManager.pH.canvas = ExInvesta.transform.parent.parent.gameObject.GetComponent<Canvas>();
+                    TileManager.pH.Popup();
+                });
+        }
 
-        GameObject ExBloemwijk = GameObject.Find("BloemwijkExitBtn");
-        ExBloemwijk.GetComponent<Button>()
-            .onClick.AddListener(
-            () => {
-                TileManager.pH.canvas = ExBloemwijk.transform.parent.parent.gameObject.GetComponent<Canvas>();
-                TileManager.pH.Popup();
-            });
+        if (!ExBloemwijk)
+        {
+            ExBloemwijk.GetComponent<Button>()
+                .onClick.AddListener(
+                () => {
+                    TileManager.pH.canvas = ExBloemwijk.transform.parent.parent.gameObject.GetComponent<Canvas>();
+                    TileManager.pH.Popup();
+                });
+        }
 
-        GameObject ExChurch = GameObject.Find("ExitBtnChurch");
-        ExChurch.GetComponent<Button>().onClick.AddListener(
-            () => {
-                TileManager.pH.canvas = ExChurch.transform.parent.parent.gameObject.GetComponent<Canvas>();
-                TileManager.pH.Popup();
-            });
+        if (!ExChurch)
+        {
+            ExChurch.GetComponent<Button>().onClick.AddListener(
+                () => {
+                    TileManager.pH.canvas = ExChurch.transform.parent.parent.gameObject.GetComponent<Canvas>();
+                    TileManager.pH.Popup();
+                });
+        }
 
-        GameObject ExDeMeent = GameObject.Find("ExitBtnDeMeent");
-        ExDeMeent.GetComponent<Button>().onClick.AddListener(
-            () => {
-                TileManager.pH.canvas = ExDeMeent.transform.parent.parent.gameObject.GetComponent<Canvas>();
-                TileManager.pH.Popup();
-            });
-        GameObject ExDalton = GameObject.Find("ExitBtnDalton");
-        ExDalton.GetComponent<Button>().onClick.AddListener(
-            () => {
-                TileManager.pH.canvas = ExDalton.transform.parent.parent.gameObject.GetComponent<Canvas>();
-                TileManager.pH.Popup();
-            });
+        if (!ExDeMeent)
+        {
+            ExDeMeent.GetComponent<Button>().onClick.AddListener(
+                () => {
+                    TileManager.pH.canvas = ExDeMeent.transform.parent.parent.gameObject.GetComponent<Canvas>();
+                    TileManager.pH.Popup();
+                });
+        }
+
+        if (!ExDalton)
+        {
+            ExDalton.GetComponent<Button>().onClick.AddListener(
+                () => {
+                    TileManager.pH.canvas = ExDalton.transform.parent.parent.gameObject.GetComponent<Canvas>();
+                    TileManager.pH.Popup();
+                });
+        }
+
         //Assert.IsNotNull(config.PlayerStateClass);
         //Assert.IsTrue(PlayerStarts.Length > 0);
 
@@ -401,7 +428,7 @@ public class GameState : MonoBehaviourPunCallbacks
         bool returnObj = false;
         //Debug.LogError("asdasdfgjkl");
 
-        if (Input.GetKeyDown(KeyCode.Space) || turnCheck || (config.timer ? config.timer.isOver : true))
+        if (Input.GetKeyDown(KeyCode.Space) || turnCheck || (config.timer ? config.timer.isOver : false))
         {
             //turnTime.endTurn = false;
             //turnTime.SetDuration(10).Begin();
