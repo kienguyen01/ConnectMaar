@@ -428,30 +428,9 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1776116031, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1776116034, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2082834509, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1456130487797049656, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5031659291639492081, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
-      propertyPath: m_fontStyle
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5031659293369411347, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
-      propertyPath: m_text
-      value: The AFAS stadium was opened in August 2006 as a successor to the Alkmaarderhout.
-        The stadium has a capacity of over 17000 spectators.
       objectReference: {fileID: 0}
     - target: {fileID: 5031659293516314580, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
       propertyPath: m_Pivot.x
@@ -540,14 +519,6 @@ PrefabInstance:
     - target: {fileID: 5031659293516314584, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
       propertyPath: m_Name
       value: GameCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 6886085727835053048, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8216934616207320637, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
