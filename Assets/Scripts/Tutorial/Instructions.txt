@@ -1,4 +1,5 @@
-Welcome to the Tutorial! In this tutorial we will teach you how to play ConnectMaar. Tap on Screen to continue;The main objective of this game is to reduce the Emission bar at the top of the screen by expanding your grid over Alkmaar
+In this tutorial we will teach you how to play ConnectMaar.
+The main objective of this game is to reduce the Emission bar at the top of the screen by expanding your grid over Alkmaar
 Your Start point is the wind turbine
 From there you can start building your power grid
 On the left side of your screen you can see your inventory

@@ -16,15 +16,17 @@ public struct TutorialStateConfig
 
 public class TutorialState : GameState
 {
-    private Image tutBox;
+    public Image tutBox;
 
     public GameObject popups;
     private int index = -1;
 
     private string[] tutorialMessage;
 
-    [HideInInspector]
     public TextMeshProUGUI textTitle;
+
+    public TextMeshProUGUI text;
+
 
     public TextAsset dataFile;
 
@@ -54,14 +56,17 @@ public class TutorialState : GameState
             
         }
 
-        tutBox = GameObject.Find("TutorialBox").GetComponent<Image>();
-
-        if (tutBox.enabled == true)
+        //tutBox = GameObject.Find("TutorialBox").GetComponent<Image>();
+        tutBox.enabled = true;
+        text.enabled = true;
+        textTitle.enabled = true;
+        
+       /* if (tutBox.enabled == true)
         {
-            text = GameObject.Find("txtBody").GetComponent<TextMeshProUGUI>();
-            textTitle = GameObject.Find("txtTitle").GetComponent<TextMeshProUGUI>();
-            textTitle.text = "Tutorial:";
-        }
+            //text = GameObject.Find("txtBody").GetComponent<TextMeshProUGUI>();
+            //textTitle = GameObject.Find("txtTitle").GetComponent<TextMeshProUGUI>();
+            //textTitle.text = "Tutorial:";
+        }*/
         getInstructions();
         StartCoroutine(TutorialRoutine());
     }
@@ -136,32 +141,35 @@ public class TutorialState : GameState
                 case 10:
                     text.text = dataLines[10];
                     DisablePopup();
-                    StartCoroutine(TileCheckRoutine(2,1));
                     turnCheck = true;
+                    StartCoroutine(TileCheckRoutine(2,1));
                     break;
                 case 11:
                     turnCheck = true;
-                    break;
-                case 12:
-                    StartCoroutine(TileCheckRoutine(6, 2)); //Remove if time left
-                    break;
-                case 13:
                     EnablePopup();
                     text.text = dataLines[11];
                     break;
-                case 14:
+                case 12:
                     text.text = dataLines[12];
+                    //StartCoroutine(TileCheckRoutine(6, 2)); //Remove if time left
                     break;
-                case 15:
+                case 13:
+                    //EnablePopup();
                     text.text = dataLines[13];
                     break;
-                case 16:
+                case 14:
                     text.text = dataLines[14];
+                    break;
+                case 15:
+                    text.text = dataLines[15];
+                    break;
+                case 16:
+                    text.text = dataLines[16];
                     break;
                 case 17:
                     player1.clearHand()
                            .refilSpecificHand(1, 2, 1);
-                    text.text = dataLines[15];
+                    text.text = dataLines[17];
                     EnableHighlightChanager(3, 2);
                     EnableHighlightChanager(4, 2);
                     EnableHighlightChanager(5, 2);
@@ -169,34 +177,36 @@ public class TutorialState : GameState
                     break;
                 case 18:
                     DisablePopup();
+                    //turnCheck = true;
                     StartCoroutine(TileCheckRoutine(6, 2));
-                    turnCheck = true;
                     break;
                 case 19:
                     turnCheck = true;
+                    EnablePopup();
                     break;
                 case 20:
-                    StartCoroutine(TileCheckRoutine(6, 2)); //remove
+                    //StartCoroutine(TileCheckRoutine(6, 2)); //remove
+                    text.text = dataLines[18];
                     break;
                 case 21:
                     EnablePopup();
-                    text.text = dataLines[16];
+                    text.text = dataLines[19];
                     break;
                 case 22:
-                    text.text = dataLines[17];
+                    text.text = dataLines[20];
                     player1.clearHand();
                     break;
                 case 23:
-                    text.text = dataLines[18];
+                    text.text = dataLines[21];
                     break;
                 case 24:
-                    text.text = dataLines[19];
+                    text.text = dataLines[22];
                     break;
                 case 25:
-                    text.text = dataLines[20];
+                    text.text = dataLines[23];
                     break;
                 case 26:
-                    text.text = dataLines[21];
+                    text.text = dataLines[24];
                     EnableHighlightChanager(6, 1);
                     EnableHighlightChanager(7, 0);
                     break;
@@ -205,25 +215,25 @@ public class TutorialState : GameState
                     player2.gameData.totalPoint = 47;
                     DisablePopup();
                     StartCoroutine(TileCheckRoutine(7, 0));
-                    turnCheck = true;
+                    //turnCheck = true;
                     break;
                 case 28:
                     turnCheck = true;
+                    EnablePopup();
                     break;
                 case 29:
                     StartCoroutine(SolarHeatCheckRoutine());
                     break;
                 case 30:
-                    EnablePopup();
-                    text.text = dataLines[22];
+                    text.text = dataLines[25];
                     player1.clearHand()
                            .refilSpecificHand(1, 1, 2);
                     break;
                 case 31:
-                    text.text = dataLines[23];
+                    text.text = dataLines[26];
                     break;
                 case 32:
-                    text.text = dataLines[24];
+                    text.text = dataLines[27];
                     break;
                 case 33:
                     text.text = "Let us use our newly acquired solar energy in our grid to power a key location in Alkmaar  ";
@@ -335,25 +345,6 @@ public class TutorialState : GameState
             }
         }
     }
-
-    /*string[] TutorialText =
-    {
-        "Welcome to the Tutorial! In this tutorial we will teach you how to play ConnectMaar. Tap on Screen to start.",
-        "This is a tutorial to show you the basic gameplay of our game: ConnectMaar. Tap to continue.",
-        "On the left side of your screen you can see your inventory.",
-        "In your inventory you have Items called Connectors. They are your main tool to make Alkmaar a greener and more sustainable place",
-        "Right now in your inventory you have a single connector, a double connector and a triple connector",
-        "By connecting buildings to renewable energy sources in the most efficient way possible, you'll reduce the emission level at the top of the screen!",
-        "Let's begin using renewable energy to make Alkmaar a Greener city!",
-        "Start your turn by pressing the start turn button.",
-        "Click on the length-3 connector on the left side of the screen and then place it on the grid starting from your wind turbine to the nearest house",
-
-        "When making connections your emission bar will decrease. The more connectors you used, the less efficient the connection will be",
-        "Congratulations, you have started to make Alkmaar a greener city!", 
-        "", 
-        "", 
-        "", 
-    };*/
 
     private void getInstructions()
     {
