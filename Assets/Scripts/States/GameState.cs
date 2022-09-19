@@ -111,7 +111,7 @@ public class GameState : MonoBehaviourPunCallbacks
 
         //addEventHandlers();
 
-        if (!ExStadiumAFAS)
+        if (ExStadiumAFAS)
         {
             ExStadiumAFAS.GetComponent<Button>()
             .onClick.AddListener(
@@ -121,7 +121,7 @@ public class GameState : MonoBehaviourPunCallbacks
             });
         }
 
-        if (!ExInvesta)
+        if (ExInvesta)
         {
             ExInvesta.GetComponent<Button>()
                 .onClick.AddListener(
@@ -131,7 +131,7 @@ public class GameState : MonoBehaviourPunCallbacks
                 });
         }
 
-        if (!ExBloemwijk)
+        if (ExBloemwijk)
         {
             ExBloemwijk.GetComponent<Button>()
                 .onClick.AddListener(
@@ -141,7 +141,7 @@ public class GameState : MonoBehaviourPunCallbacks
                 });
         }
 
-        if (!ExChurch)
+        if (ExChurch)
         {
             ExChurch.GetComponent<Button>().onClick.AddListener(
                 () => {
@@ -150,7 +150,7 @@ public class GameState : MonoBehaviourPunCallbacks
                 });
         }
 
-        if (!ExDeMeent)
+        if (ExDeMeent)
         {
             ExDeMeent.GetComponent<Button>().onClick.AddListener(
                 () => {
@@ -159,7 +159,7 @@ public class GameState : MonoBehaviourPunCallbacks
                 });
         }
 
-        if (!ExDalton)
+        if (ExDalton)
         {
             ExDalton.GetComponent<Button>().onClick.AddListener(
                 () => {
