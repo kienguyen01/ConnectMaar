@@ -20,7 +20,7 @@ public class TileManager : MonoBehaviour
     public HeatPump heatPumpPrefab;
     public Tile heatpumpHexPrefab;
     public DaltonCollege daltonPrefab;
-    public Afas AFASPrefab;
+    public AFAS AFASPrefab;
     public Bloemwijk bloemwijkPrefab;
     public Investa investaPrefab;
 
@@ -456,7 +456,7 @@ public class TileManager : MonoBehaviour
 
         if(tileCoords == "030|023")
         {
-            Afas stadium_cell = (Afas)Instantiate(AFASPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset - 0.2f), Quaternion.Euler(0, 0, 0));
+            AFAS stadium_cell = (AFAS)Instantiate(AFASPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset - 0.2f), Quaternion.Euler(0, 0, 0));
             stadium_cell.transform.localScale = new Vector3(0.13f, 0.13f, 0.13f);
             stadium_cell.name = "stadium_" + hex_cell.X + "_" + hex_cell.Y;
             stadium_cell.SolarRequired = true;
@@ -467,7 +467,7 @@ public class TileManager : MonoBehaviour
                 //Debug.Log("!!! OpenInfoCard !!!");
                 //todo open infocard
             };
-            hex_cell.AddStructure<Afas>(stadium_cell);
+            hex_cell.AddStructure<AFAS>(stadium_cell);
         }
         
         if(tileCoords == "020|008")
