@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Afas : SpecialBuilding
+public class AFAS : SpecialBuilding
 {
     public override bool IsSpecial { get => true; }
-    public Afas()
+    public AFAS()
     {
         solarRequired = true;
         heatRequired = false;
