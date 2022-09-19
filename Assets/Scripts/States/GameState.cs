@@ -889,14 +889,16 @@ public class GameState : MonoBehaviourPunCallbacks
 
         //player1.AbortConnection(currentConnection);
         //Debug.LogWarning(selectedConnector);
+
+        if (SelectedConnector)
+        {
+            player1.AbortConnector(SelectedConnector, true);
+            return;
+        }
         foreach (var item in turnConnectors)
         {
             player1.AbortConnector(item, true);
         }
-
-        if(SelectedConnector)
-            player1.AbortConnector(SelectedConnector, true);
-
         /*foreach (Connection conn in turnConnections)
         {
             player1.AbortConnection(conn);
