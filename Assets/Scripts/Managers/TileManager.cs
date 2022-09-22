@@ -773,7 +773,11 @@ public class TileManager : MonoBehaviour
             bool go = true;
             if (neighbour.Structure.IsNode || isOccupiedBySamePlayer(neighbour, playerState))
             {
-                if (neighbour.Connector)
+                if (neighbour.Structure is House || neighbour.IsSpecial())
+                {
+                    go = true;
+                }
+                else if (neighbour.Connector)
                 {
                     go = false;
                     if (neighbour.Connector == GameState.instance.SelectedConnector)
