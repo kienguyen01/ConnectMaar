@@ -655,7 +655,7 @@ public class TileManager : MonoBehaviour
                     foreach(Tile t in tile.Connector.GetTiles())
                     {
                         Instigator.gameData.tilesChosen.Remove(t);
-                        t.Connector.PreviousStep.Connector.UsedForConnector = false;
+                        // t.Connector.PreviousStep.Connector.UsedForConnector = false;
                         t.SelectedBy = null;
                         t.Connector.PreviousStep = null;
                         t.Connector.Source = null;

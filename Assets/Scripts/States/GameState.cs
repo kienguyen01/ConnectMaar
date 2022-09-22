@@ -435,114 +435,110 @@ public class GameState : MonoBehaviourPunCallbacks
             //turnTime.SetDuration(10).Begin();
             
             turnCheck = false;
-            if (selectedConnector == null || selectedConnector.getLength() >= selectedConnector.MaxLength)
+            if (player1.gameData.IsTurn)
             {
-                if (player1.gameData.IsTurn)
+                returnObj = true;
+                foreach (Connector ctr in turnConnectors)
                 {
-                    returnObj = true;
-                    foreach (Connector ctr in turnConnectors)
-                    {
                         
 
-                        player1.RefillHand();
-                        player1.gameData.IsTurn = false;
+                    player1.RefillHand();
+                    player1.gameData.IsTurn = false;
 
-                        foreach(Tile t in player1.gameData.tilesChosen)
+                    foreach(Tile t in player1.gameData.tilesChosen)
+                    {
+                        if (t.Structure.GetType().Equals(typeof(House)))
                         {
-                            if (t.Structure.GetType().Equals(typeof(House)))
-                            {
-                                float multiplier = 1.0f;
-                                if (ctr.Source.Structure.GetType().Equals(typeof(SpecialBuilding)))
-                                    multiplier = 1.5f;
+                            float multiplier = 1.0f;
+                            if (ctr.Source.Structure.GetType().Equals(typeof(SpecialBuilding)))
+                                multiplier = 1.5f;
 
-                                player1.gameData.totalPoint -= 2 * multiplier /*/ connectorCount*/; //TODO: CHANGE PLACEHOLDER VALUE
-                                                                                                    //Debug.LogError(connectorCount);
-                                Debug.LogError(player1.gameData.totalPoint);
-                            }
-                            else if (t.Structure.GetType().Equals(typeof(SpecialBuilding)))
-                            {
-                                ((SpecialBuilding)ctr.GetLastTile().Structure).GetSpecialBonus();
-                                player1.gameData.totalPoint -= 5 /*/ conn.Connectors.Count*/; //TODO: CHANGE PLACEHOLDER VALUE
-                            }
-
+                            player1.gameData.totalPoint -= 2 * multiplier /*/ connectorCount*/; //TODO: CHANGE PLACEHOLDER VALUE
+                                                                                                //Debug.LogError(connectorCount);
+                            Debug.LogError(player1.gameData.totalPoint);
+                        }
+                        else if (t.Structure.GetType().Equals(typeof(SpecialBuilding)))
+                        {
+                            ((SpecialBuilding)ctr.GetLastTile().Structure).GetSpecialBonus();
+                            player1.gameData.totalPoint -= 5 /*/ conn.Connectors.Count*/; //TODO: CHANGE PLACEHOLDER VALUE
                         }
 
-                        player1.EndTurn();
+                    }
 
-                        if (isSolarConnectionEnd && allSolar)
-                        {
-                            player1.gameData.hasSolarInNetwork = true;
-                        }
-                        if (isHeatConnectionEnd && allHeat)
-                        {
-                            player1.gameData.hasHeatInNetwork = true;
-                        }
-                        //int connectorCount = turnConnections.Count; Makes no sense with new connection system and made no sense even with the previous one
+                    player1.EndTurn();
 
-                        foreach (Tile t in ctr.GetTiles())
-                        {
-                            //check if t is scrablle and find a finished connection
+                    if (isSolarConnectionEnd && allSolar)
+                    {
+                        player1.gameData.hasSolarInNetwork = true;
+                    }
+                    if (isHeatConnectionEnd && allHeat)
+                    {
+                        player1.gameData.hasHeatInNetwork = true;
+                    }
+                    //int connectorCount = turnConnections.Count; Makes no sense with new connection system and made no sense even with the previous one
 
-                            CheckScrabbleRewards(t);
+                    foreach (Tile t in ctr.GetTiles())
+                    {
+                        //check if t is scrablle and find a finished connection
+
+                        CheckScrabbleRewards(t);
 
                             
-                        }
+                    }
 
-                        //Point Modifier checks
-                        //if (ctr.GetLastTile())
-                        //{
-                        //    if (ctr.GetLastTile().Structure.GetType().Equals(typeof(House)))
-                        //    {
-                        //        float multiplier = 1.0f;
-                        //        if(ctr.Source.Structure.GetType().Equals(typeof(SpecialBuilding)))
-                        //            multiplier = 1.5f;
+                    //Point Modifier checks
+                    //if (ctr.GetLastTile())
+                    //{
+                    //    if (ctr.GetLastTile().Structure.GetType().Equals(typeof(House)))
+                    //    {
+                    //        float multiplier = 1.0f;
+                    //        if(ctr.Source.Structure.GetType().Equals(typeof(SpecialBuilding)))
+                    //            multiplier = 1.5f;
 
-                        //        player1.gameData.totalPoint -= 2 * multiplier /*/ connectorCount*/; //TODO: CHANGE PLACEHOLDER VALUE
-                        //                                                               //Debug.LogError(connectorCount);
-                        //        Debug.LogError(player1.gameData.totalPoint);
-                        //    }
-                        //    else if (ctr.GetLastTile().Structure.GetType().Equals(typeof(SpecialBuilding)))
-                        //    {
-                        //        ((SpecialBuilding)ctr.GetLastTile().Structure).GetSpecialBonus();
-                        //        player1.gameData.totalPoint -= 5 /*/ conn.Connectors.Count*/; //TODO: CHANGE PLACEHOLDER VALUE
-                        //    }
-                        //    else if (ctr.GetLastTile().Structure.GetType().Equals(typeof(Node)))
-                        //    {
-                        //        //empty because no points are awarded on node connection
-                        //    }
-                        //    else if (ctr.GetLastTile().Structure.GetType().Equals(typeof(SolarPanel)) || ctr.GetLastTile().Structure.GetType().Equals(typeof(HeatPump)))
-                        //    {
-                        //        //empty because no points are awarded on Energy source connection
-                        //    }
-                        //}
+                    //        player1.gameData.totalPoint -= 2 * multiplier /*/ connectorCount*/; //TODO: CHANGE PLACEHOLDER VALUE
+                    //                                                               //Debug.LogError(connectorCount);
+                    //        Debug.LogError(player1.gameData.totalPoint);
+                    //    }
+                    //    else if (ctr.GetLastTile().Structure.GetType().Equals(typeof(SpecialBuilding)))
+                    //    {
+                    //        ((SpecialBuilding)ctr.GetLastTile().Structure).GetSpecialBonus();
+                    //        player1.gameData.totalPoint -= 5 /*/ conn.Connectors.Count*/; //TODO: CHANGE PLACEHOLDER VALUE
+                    //    }
+                    //    else if (ctr.GetLastTile().Structure.GetType().Equals(typeof(Node)))
+                    //    {
+                    //        //empty because no points are awarded on node connection
+                    //    }
+                    //    else if (ctr.GetLastTile().Structure.GetType().Equals(typeof(SolarPanel)) || ctr.GetLastTile().Structure.GetType().Equals(typeof(HeatPump)))
+                    //    {
+                    //        //empty because no points are awarded on Energy source connection
+                    //    }
+                    //}
                         
-                        player1.FinalizeConnectors(turnConnectors);
+                    player1.FinalizeConnectors(turnConnectors);
 
-                        foreach(Tile t in player1.gameData.tilesChosen)
+                    foreach(Tile t in player1.gameData.tilesChosen)
+                    {
+                        if (t.Structure.GetType().Equals(typeof(House)))
                         {
-                            if (t.Structure.GetType().Equals(typeof(House)))
-                            {
-                                Debug.LogError($"{t.X} {t.Y}");
-                            }
+                            Debug.LogError($"{t.X} {t.Y}");
                         }
                     }
-                    hasHeat = false;
-                    hasSolar = false;
-                    allSolar = true;
-                    allHeat = true;
-                    hasStandard = false;
-                    isHeatConnectionEnd = false;
-                    isSolarConnectionEnd = false;
-                    /*currentConnection = null;
-                    turnConnections = new List<Connection>();*/
-
-                    isNormalConnectionEnd = false;
                 }
-                else
-                {
-                    player1.gameData.IsTurn = true;
-                }
+                hasHeat = false;
+                hasSolar = false;
+                allSolar = true;
+                allHeat = true;
+                hasStandard = false;
+                isHeatConnectionEnd = false;
+                isSolarConnectionEnd = false;
+                /*currentConnection = null;
+                turnConnections = new List<Connection>();*/
 
+                isNormalConnectionEnd = false;
+            }
+            else
+            {
+                player1.gameData.IsTurn = true;
             }
         }
         return returnObj;
