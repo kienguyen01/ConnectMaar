@@ -670,47 +670,64 @@ public class TileManager : MonoBehaviour
         {
             List<Tile> neighbours = getNeigbours(tile);
             
-            if (tile.IsSpecial() && ((tile.GetSpecialOriginTile().Structure.SolarRequired && Instigator.gameData.hasSolarInNetwork) || (tile.GetSpecialOriginTile().Structure.HeatRequired && Instigator.gameData.hasHeatInNetwork)))
+            if (tile.IsSpecial() && ((tile.GetSpecialOriginTile().Structure.SolarRequired ? Instigator.gameData.hasSolarInNetwork : true) && (tile.GetSpecialOriginTile().Structure.HeatRequired ? Instigator.gameData.hasHeatInNetwork : true)))
             {
-                foreach (Tile t in getSpecialNeighbours(tile))
-                {
-                    Instigator.gameData.tilesChosen.Add(t);
-                    t.SelectedBy = Instigator;
-                }
-            }
-            (bool valid, Tile tile, Tile source, Tile previous) result = isValidTileToChoose(tile, Instigator);
-            if (result.valid && !tile.IsSpecial())
-            {
-                if (tile.OwnedBy == null && tile.SelectedBy == null /*&& ((Instigator.gameData.tilesChosen.Count > 0) ? (neighbours.Contains(Instigator.gameData.tilesChosen.Peek()) || neighbours.Exists(x=>x.OwnedBy == Instigator)) : true)*/)
-                {//Save previous steps of the connection for the connector to trace back origin
-                    Instigator.gameData.tilesChosen.Add(tile);
-                    tile.SelectedBy = Instigator;
-                    GameState.instance.SelectedConnector.PreviousStep = result.previous;
-                    GameState.instance.SelectedConnector.Source = result.source;
-                    tile.Connector = GameState.instance.SelectedConnector;
-                }
-                else if (tile.SelectedBy == Instigator && !tile.Connector.UsedForConnector)
-                {//Remove all traces of the connector from the previous connector when it gets unselected
+                (bool valid, Tile tile, Tile source, Tile previous) result = isValidTileToChoose(tile.GetSpecialOriginTile(), Instigator);
+                var specialNeighbours = getSpecialNeighbours(tile.GetSpecialOriginTile());
+                bool specialValid = false;
 
-                    foreach(Tile t in tile.Connector.GetTiles())
+                foreach (var item in specialNeighbours)
+                {
+                    if(isValidTileToChoose(tile.GetSpecialOriginTile(), Instigator).valid)
                     {
-                        Instigator.gameData.tilesChosen.Remove(t);
-                        // t.Connector.PreviousStep.Connector.UsedForConnector = false;
-                        t.SelectedBy = null;
-                        t.Connector.PreviousStep = null;
-                        t.Connector.Source = null;
-                        t.Connector = null;
+                        specialValid = true;
+                    }
+                }
+                if (specialValid)
+                {
+                    foreach (Tile t in specialNeighbours)
+                    {
+                        Instigator.gameData.tilesChosen.Add(t);
+                        t.SelectedBy = Instigator;
                     }
                 }
             }
             else
             {
-                /*Debug.LogWarning(Instigator.gameData.tilesChosen.Peek());
-                Debug.LogWarning(tile);
-                foreach (Tile t in getNeigbours(tile))
+                (bool valid, Tile tile, Tile source, Tile previous) result = isValidTileToChoose(tile, Instigator);
+                if (result.valid)
                 {
-                    Debug.Log(t.X + "   " + t.Y);
-                }*/
+                    if (tile.OwnedBy == null && tile.SelectedBy == null /*&& ((Instigator.gameData.tilesChosen.Count > 0) ? (neighbours.Contains(Instigator.gameData.tilesChosen.Peek()) || neighbours.Exists(x=>x.OwnedBy == Instigator)) : true)*/)
+                    {//Save previous steps of the connection for the connector to trace back origin
+                        Instigator.gameData.tilesChosen.Add(tile);
+                        tile.SelectedBy = Instigator;
+                        GameState.instance.SelectedConnector.PreviousStep = result.previous;
+                        GameState.instance.SelectedConnector.Source = result.source;
+                        tile.Connector = GameState.instance.SelectedConnector;
+                    }
+                    else if (tile.SelectedBy == Instigator && !tile.Connector.UsedForConnector)
+                    {//Remove all traces of the connector from the previous connector when it gets unselected
+
+                        foreach (Tile t in tile.Connector.GetTiles())
+                        {
+                            Instigator.gameData.tilesChosen.Remove(t);
+                            // t.Connector.PreviousStep.Connector.UsedForConnector = false;
+                            t.SelectedBy = null;
+                            t.Connector.PreviousStep = null;
+                            t.Connector.Source = null;
+                            t.Connector = null;
+                        }
+                    }
+                }
+                else
+                {
+                    /*Debug.LogWarning(Instigator.gameData.tilesChosen.Peek());
+                    Debug.LogWarning(tile);
+                    foreach (Tile t in getNeigbours(tile))
+                    {
+                        Debug.Log(t.X + "   " + t.Y);
+                    }*/
+                }
             }
         };
 
