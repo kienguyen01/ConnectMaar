@@ -705,19 +705,19 @@ public class TileManager : MonoBehaviour
                         GameState.instance.SelectedConnector.Source = result.source;
                         tile.Connector = GameState.instance.SelectedConnector;
                     }
-                    else if (tile.SelectedBy == Instigator && !tile.Connector.UsedForConnector)
-                    {//Remove all traces of the connector from the previous connector when it gets unselected
+                    //else if (tile.SelectedBy == Instigator && !tile.Connector.UsedForConnector)
+                    //{//Remove all traces of the connector from the previous connector when it gets unselected
 
-                        foreach (Tile t in tile.Connector.GetTiles())
-                        {
-                            Instigator.gameData.tilesChosen.Remove(t);
-                            // t.Connector.PreviousStep.Connector.UsedForConnector = false;
-                            t.SelectedBy = null;
-                            t.Connector.PreviousStep = null;
-                            t.Connector.Source = null;
-                            t.Connector = null;
-                        }
-                    }
+                    //    foreach (Tile t in tile.Connector.GetTiles())
+                    //    {
+                    //        Instigator.gameData.tilesChosen.Remove(t);
+                    //        // t.Connector.PreviousStep.Connector.UsedForConnector = false;
+                    //        t.SelectedBy = null;
+                    //        t.Connector.PreviousStep = null;
+                    //        t.Connector.Source = null;
+                    //        t.Connector = null;
+                    //    }
+                    //}
                 }
                 else
                 {

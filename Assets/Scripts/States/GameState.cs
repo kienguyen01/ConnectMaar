@@ -393,10 +393,10 @@ public class GameState : MonoBehaviourPunCallbacks
                             }
                         }
                     }
-                    else
-                    {
-                        selectedConnector.RemoveTile(result.Tile);
-                    }
+                    //else
+                    //{
+                    //    selectedConnector.RemoveTile(result.Tile);
+                    //}
                 }
             }
         }
@@ -461,6 +461,17 @@ public class GameState : MonoBehaviourPunCallbacks
                             player1.gameData.totalPoint -= 5 /*/ conn.Connectors.Count*/; //TODO: CHANGE PLACEHOLDER VALUE
                         }
 
+                        if (t.IsScrabbleForHeat)
+                        {
+                            player1.AddHeatPipeConnector();
+                            player1.AddHeatPipeConnector();
+                        }
+                        if (t.IsScrabbleForSolar)
+                        {
+                            player1.AddSolarConnector();
+                            player1.AddSolarConnector();
+                        }
+
                     }
 
                     player1.EndTurn();
@@ -479,7 +490,8 @@ public class GameState : MonoBehaviourPunCallbacks
                     {
                         //check if t is scrablle and find a finished connection
 
-                        CheckScrabbleRewards(t);
+                        //CheckScrabbleRewards(t);
+
 
                             
                     }
