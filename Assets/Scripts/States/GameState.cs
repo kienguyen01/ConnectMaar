@@ -440,8 +440,6 @@ public class GameState : MonoBehaviourPunCallbacks
                 returnObj = true;
                 foreach (Connector ctr in turnConnectors)
                 {
-                        
-
                     player1.RefillHand();
                     player1.gameData.IsTurn = false;
 

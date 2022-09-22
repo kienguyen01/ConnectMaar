@@ -11,6 +11,7 @@ public class TileManager : MonoBehaviour
 {
     public Tile hexPrefab;
     public House housePrefab;
+    public House houseConnectedPrefab;
     public SolarPanel solarPrefab;
     public HMaria ChurchPrefab;
     public DeMeent deMeentStadiumPrefab;
@@ -367,33 +368,66 @@ public class TileManager : MonoBehaviour
         }
     }
 
-/*    public void addSpecialTiles()
+    /*    public void addSpecialTiles()
+        {
+            allStadiums.Add(randomizeTile(9, 17, 9, 17));
+
+            allHouses.Add(randomizeTile(9, 16, 5, 12));
+            allHouses.Add(randomizeTile(12, 16, 5, 12));
+            allHouses.Add(randomizeTile(17, 12, 5, 5));
+            allHouses.Add(randomizeTile(19, 19, 2, 1));
+            allHouses.Add(randomizeTile(19, 19, 2, 1));
+            allHouses.Add(randomizeTile(19, 19, 2, 1));
+            allHouses.Add(randomizeTile(12, 16, 12, 16));
+            allHouses.Add(randomizeTile(10, 16, 10, 16));
+            allHouses.Add(randomizeTile(15, 15, 15, 15));
+
+
+            scrambleSolar.Add(randomizeTile(19, 19, 2, 1));
+            scrambleSolar.Add(randomizeTile(19, 19, 2, 1));
+            scrambleSolar.Add(randomizeTile(19, 19, 2, 1));
+
+            allChurches.Add(randomizeTile(5, 14, 5, 14));
+
+            allSolar.Add(randomizeTile(19, 19, 2, 1));
+            allSolar.Add(randomizeTile(19, 19, 2, 1));
+            allSolar.Add(randomizeTile(19, 19, 2, 1));
+            allSolar.Add(randomizeTile(19, 19, 2, 1));
+
+        }*/
+
+    private void Update()
     {
-        allStadiums.Add(randomizeTile(9, 17, 9, 17));
+        
+    }
 
-        allHouses.Add(randomizeTile(9, 16, 5, 12));
-        allHouses.Add(randomizeTile(12, 16, 5, 12));
-        allHouses.Add(randomizeTile(17, 12, 5, 5));
-        allHouses.Add(randomizeTile(19, 19, 2, 1));
-        allHouses.Add(randomizeTile(19, 19, 2, 1));
-        allHouses.Add(randomizeTile(19, 19, 2, 1));
-        allHouses.Add(randomizeTile(12, 16, 12, 16));
-        allHouses.Add(randomizeTile(10, 16, 10, 16));
-        allHouses.Add(randomizeTile(15, 15, 15, 15));
+    public void replacePrefab(Tile hex_cell, List<string> houses)
+    {
+        string tileCoords = hex_cell.X.ToString().PadLeft(3, '0') + "|" + hex_cell.Y.ToString().PadLeft(3, '0');
+        foreach(string tile in houses)
+        {
+            if(tileCoords == tile)
+            {
+                if(hex_cell.OwnedBy != null)
+                {
+                    hex_cell.GetComponentInChildren <House>().enabled = false;
+                    if (hex_cell.Y % 2 == 0)
+                    {
+                        House house_cell = (House)Instantiate(houseConnectedPrefab, new Vector3(hex_cell.X * xOffset, 0.2f, hex_cell.Y * zOffset), Quaternion.Euler(0, 90, 0));
+                        house_cell.transform.localScale = new Vector3(0.08f, 0.16f, 0.16f);
 
-
-        scrambleSolar.Add(randomizeTile(19, 19, 2, 1));
-        scrambleSolar.Add(randomizeTile(19, 19, 2, 1));
-        scrambleSolar.Add(randomizeTile(19, 19, 2, 1));
-
-        allChurches.Add(randomizeTile(5, 14, 5, 14));
-
-        allSolar.Add(randomizeTile(19, 19, 2, 1));
-        allSolar.Add(randomizeTile(19, 19, 2, 1));
-        allSolar.Add(randomizeTile(19, 19, 2, 1));
-        allSolar.Add(randomizeTile(19, 19, 2, 1));
-
-    }*/
+                        hex_cell.AddStructure<House>(house_cell);
+                    }
+                    else
+                    {
+                        House house_cell = (House)Instantiate(houseConnectedPrefab, new Vector3(hex_cell.X * xOffset + 0.52f, 0.2f, hex_cell.Y * zOffset + 0.012f), Quaternion.Euler(0, 90, 0));
+                        house_cell.transform.localScale = new Vector3(0.08f, 0.16f, 0.16f);
+                        hex_cell.AddStructure<House>(house_cell);
+                    }
+                }
+            }
+        }
+    }
 
     public void instantiateSpecialTile(Tile hex_cell, List<string> churches, List<string> solars, List<string> stadiums, List<string> houses, List<string> scrambleSolars, List<string> windTurbines, List<string> scrambleHeats, List<string> heats)
     {
@@ -545,7 +579,13 @@ public class TileManager : MonoBehaviour
                 hex_cell.IsScrabbleForSolar = true;
             }
         }
-
+        foreach (string tile in scrambleHeats)
+        {
+            if (tileCoords == tile)
+            {
+                hex_cell.IsScrabbleForHeat = true;
+            }
+        }
         foreach (string tile in heats)
         {
             if(tileCoords == tile)
