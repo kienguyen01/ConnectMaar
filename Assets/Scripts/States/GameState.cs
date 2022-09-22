@@ -385,9 +385,10 @@ public class GameState : MonoBehaviourPunCallbacks
                         else
                         {
                             selectedConnector.AddTile(result.Tile);
-
+                            
                             if (selectedConnector.MaxLength == selectedConnector.getLength())
                             {
+                                Debug.LogError("Max Length Reached");
                                 turnConnectors.Add(selectedConnector);
                                 selectedConnector = null;
                             }
@@ -671,7 +672,8 @@ public class GameState : MonoBehaviourPunCallbacks
                 return (false, null, null);
             }
 
-            if (selectedConnector.getLength() < 2 || (selectedConnector.GetTiles().Contains(tileTouched)) || Connector.IsValidLengthThree(selectedConnector.GetTiles()[0], selectedConnector.GetTiles()[1], tileTouched))
+            if (selectedConnector.getLength() < 2 || selectedConnector.GetTiles().Contains(tileTouched) ||
+                (Connector.IsValidLengthThree(selectedConnector.GetTiles()[0], selectedConnector.GetTiles()[1], tileTouched)))
             {
                 if (tileTouched.OwnedBy == null)
                 {
@@ -899,12 +901,14 @@ public class GameState : MonoBehaviourPunCallbacks
         if (SelectedConnector)
         {
             player1.AbortConnector(SelectedConnector, true);
+            SelectedConnector = null;
             return;
         }
         foreach (var item in turnConnectors)
         {
             player1.AbortConnector(item, true);
         }
+        turnConnectors.Clear();
         /*foreach (Connection conn in turnConnections)
         {
             player1.AbortConnection(conn);
