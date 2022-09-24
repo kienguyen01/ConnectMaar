@@ -434,10 +434,18 @@ public class GameState : MonoBehaviourPunCallbacks
         {
             //turnTime.endTurn = false;
             //turnTime.SetDuration(10).Begin();
-            
+
             turnCheck = false;
             if (player1.gameData.IsTurn)
             {
+                if (selectedConnector)
+                {
+                    if (selectedConnector.MaxLength > selectedConnector.getLength())
+                    {
+                        player1.AbortConnector(SelectedConnector, true);
+                        SelectedConnector = null;
+                    }
+                }
                 returnObj = true;
                 foreach (Connector ctr in turnConnectors)
                 {
@@ -476,6 +484,8 @@ public class GameState : MonoBehaviourPunCallbacks
                     }
 
                     player1.EndTurn();
+
+                    Debug.LogError(player1.gameData.IsTurn);
 
                     if (isSolarConnectionEnd && allSolar)
                     {
@@ -672,10 +682,15 @@ public class GameState : MonoBehaviourPunCallbacks
                 return (false, null, null);
             }
 
+            if (selectedConnector.GetTiles().Contains(tileTouched))
+            {
+                Debug.LogError("ehehe");
+            }
+
             if (selectedConnector.getLength() < 2 || selectedConnector.GetTiles().Contains(tileTouched) ||
                 (Connector.IsValidLengthThree(selectedConnector.GetTiles()[0], selectedConnector.GetTiles()[1], tileTouched)))
             {
-                if (tileTouched.OwnedBy == null)
+                if (tileTouched.OwnedBy == null && tileTouched.SelectedBy == null) 
                 {
                     if (selectedConnector.MaxLength == (selectedConnector.getLength() + 1) && tileManager.isOccupied(tileTouched) && !tileManager.IsHeatPipe(tileTouched) && !tileManager.IsSolarPanel(tileTouched))
                     {
