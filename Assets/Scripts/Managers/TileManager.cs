@@ -223,10 +223,23 @@ public class TileManager : MonoBehaviour
         else
         {
             hex_cell = (Tile)Instantiate(hexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
-            hex_cell.GetComponentInChildren<MeshRenderer>().material.color = new Color(0.55f, 0.74f, 0.22f, 1);
             hex_cell.name = "Hex_" + x + "_" + y;
             hex_cell.X = x;
             hex_cell.Y = y;
+            if (x % 3 == 0) 
+            {
+                hex_cell.GetComponentInChildren<MeshRenderer>().material.color = new Color(0.55f, 0.74f, 0.22f, 1);
+            }
+            else if(x % 3 == 1)
+            {
+                hex_cell.GetComponentInChildren<MeshRenderer>().material.color = new Color(0.42f, 0.63f, 0.3f, 1);
+            }
+            else if(x % 3 == 2)
+            {
+                hex_cell.GetComponentInChildren<MeshRenderer>().material.color = new Color(0.40f, 0.54f, 0.34f, 1);
+
+            }
+
         }
 
         if ((x == 2 && y == 1) || (x == 6 && y == 2) || (x == 10 && y == 0) || (x == 8 && y == 5) || (x == 8 && y == 8) || (x == 8 && y == 5) 
@@ -332,7 +345,8 @@ public class TileManager : MonoBehaviour
 
         if (scrabbleSolar.Contains(tileCoords))
         {
-            hex_cell = (Tile)Instantiate(solarHexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
+            hex_cell = (Tile)Instantiate(hexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
+            hex_cell.GetComponentInChildren<MeshRenderer>().material.color = new Color(0.1f, 0.56f, 0.89f, 1);
             hex_cell.name = "Hex_" + x + "_" + y;
             hex_cell.X = x;
             hex_cell.Y = y;
@@ -342,7 +356,8 @@ public class TileManager : MonoBehaviour
         }
         else if (scrabbleHeat.Contains(tileCoords))
         {
-            hex_cell = (Tile)Instantiate(heatpumpHexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
+            hex_cell = (Tile)Instantiate(hexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
+            hex_cell.GetComponentInChildren<MeshRenderer>().material.color = new Color(0.70f, 0.84f, 0.83f, 1);
             hex_cell.name = "Hex_" + x + "_" + y;
             hex_cell.X = x;
             hex_cell.Y = y;
@@ -351,12 +366,22 @@ public class TileManager : MonoBehaviour
             return hex_cell;
         }
         hex_cell = (Tile)Instantiate(hexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
-        hex_cell.GetComponentInChildren<MeshRenderer>().material.color = new Color(0.55f, 0.74f, 0.22f, 1);
         hex_cell.name = "Hex_" + x + "_" + y;
         hex_cell.X = x;
         hex_cell.Y = y;
-        addMethods(hex_cell);
-        setEmpties(hex_cell);
+        if (x % 3 == 0)
+        {
+            hex_cell.GetComponentInChildren<MeshRenderer>().material.color = new Color(0.55f, 0.74f, 0.22f, 1);
+        }
+        else if (x % 3 == 1)
+        {
+            hex_cell.GetComponentInChildren<MeshRenderer>().material.color = new Color(0.42f, 0.63f, 0.3f, 1);
+        }
+        else if (x % 3 == 2)
+        {
+            hex_cell.GetComponentInChildren<MeshRenderer>().material.color = new Color(0.40f, 0.54f, 0.34f, 1);
+
+        }
         return hex_cell;
     }
 
