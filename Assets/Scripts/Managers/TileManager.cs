@@ -215,7 +215,8 @@ public class TileManager : MonoBehaviour
         }
         if (x == 4 && y == 2)
         {
-            hex_cell = (Tile)Instantiate(solarHexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
+            hex_cell = (Tile)Instantiate(hexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
+            hex_cell.GetComponentInChildren<MeshRenderer>().material.color = new Color(0.1f, 0.56f, 0.89f, 1);
             hex_cell.name = "Hex_" + x + "_" + y;
             hex_cell.X = x;
             hex_cell.Y = y;
