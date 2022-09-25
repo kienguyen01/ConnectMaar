@@ -55,6 +55,8 @@ public class TileManager : MonoBehaviour
     float xOffset = 1.04f;
     float zOffset = 0.9f;
 
+    float[,] Noise;
+
     public static List<List<Tile>> tiles = new List<List<Tile>>();
 
     public UnityAction<PlayerState> OnTileChosen;
@@ -70,6 +72,9 @@ public class TileManager : MonoBehaviour
         scrabbleSolar = new List<string>();
         windTurbines = new List<string>();
         windTurbines.Add("000|000");
+
+        Noise = NoiseGenerator.Calc2D(35, 35, 0.10f);
+
         //addSpecialTiles();
         if (SceneManager.GetActiveScene() ==  SceneManager.GetSceneByName("Tutorial"))
         {
@@ -321,6 +326,7 @@ public class TileManager : MonoBehaviour
 
     public Tile GenerateTilesMap(int x, int y)
     {
+        Debug.Log(Noise[x, y]);
         Tile hex_cell;
         float xPos = x * xOffset;
         // check odd row => go inside
