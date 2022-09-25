@@ -267,7 +267,7 @@ public class TileManager : MonoBehaviour
                 hex_cell.AddStructure<House>(solar_cell);
                 break;
             case "000|007":
-                SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(deMeentStadiumPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
+                SpecialBuilding stadium_cell = (SpecialBuilding)Instantiate(deMeentStadiumPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset - 1.6f), Quaternion.Euler(0, 0, 0));
                 stadium_cell.transform.localScale = new Vector3(0.18f, 0.18f, 0.18f);
                 stadium_cell.name = "stadium_" + hex_cell.X + "_" + hex_cell.Y;
                 stadium_cell.SolarRequired = true;
