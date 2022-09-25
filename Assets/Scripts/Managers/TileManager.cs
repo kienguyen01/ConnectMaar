@@ -397,6 +397,9 @@ public class TileManager : MonoBehaviour
         {
             hex_cell.GetComponentInChildren<MeshRenderer>().material.color = new Color(0.40f, 0.54f, 0.34f, 1);
         }
+
+        addMethods(hex_cell);
+        setEmpties(hex_cell);
         return hex_cell;
     }
 
