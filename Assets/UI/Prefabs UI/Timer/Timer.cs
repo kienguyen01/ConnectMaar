@@ -51,6 +51,15 @@ public class Timer : MonoBehaviour
         {
             uiFill.fillAmount = Mathf.InverseLerp(0, Duration, remainingDuration);
             remainingDuration--;
+
+            if(remainingDuration <= 5)
+            {
+                uiFill.color = Color.red;
+            }
+            else
+            {
+                uiFill.color = new Color(0.066f, 0.55f, 0.023f, 1);
+            }
             yield return new WaitForSeconds(1f);
         }
         OnEnd();

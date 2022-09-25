@@ -116,7 +116,7 @@ public class PlayerState : MonoBehaviourPun
     }
     private void Update()
     {
-
+       
     }
 
     public virtual void EndTurn()
@@ -365,10 +365,10 @@ public class PlayerState : MonoBehaviourPun
     {
         foreach (Connector c in connectors)
         {
-            foreach (Tile t in c.GetTiles())
-            {
-                AssignScrabbleTileRewards(t);//TODO IF CAN FIND NON-SOURCE BUILDING CONNECTED via recursion
-            }
+            //foreach (Tile t in c.GetTiles())
+            //{
+            //    AssignScrabbleTileRewards(t);//TODO IF CAN FIND NON-SOURCE BUILDING CONNECTED via recursion
+            //}
 
             gameData.ConnectorsPlaced.Add(c);
         }

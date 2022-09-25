@@ -41,6 +41,11 @@ public class TutorialState : GameState
         createPlayer();
     }
 
+    private void Update()
+    {
+        player1.updateInventoryUI();
+    }
+
     private void Start()
     {
         player1.IsTutorial = true;
