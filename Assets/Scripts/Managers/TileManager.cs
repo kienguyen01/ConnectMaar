@@ -519,7 +519,7 @@ public class TileManager : MonoBehaviour
         {
             DeMeent stadium_cell = (DeMeent)Instantiate(deMeentStadiumPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset - 1.67f), Quaternion.Euler(0, 0, 0));
             stadium_cell.transform.localScale = new Vector3(0.18f, 0.18f, 0.18f);
-            stadium_cell.name = "stadium_" + hex_cell.X + "_" + hex_cell.Y;
+            stadium_cell.name = "demeent_" + hex_cell.X + "_" + hex_cell.Y;
             stadium_cell.SolarRequired = true;
             hex_cell.openInfoCard += (PlayerState player) =>
             {
