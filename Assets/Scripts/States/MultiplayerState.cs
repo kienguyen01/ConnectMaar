@@ -196,7 +196,7 @@ public class MultiplayerState : GameState
             {
                 endTurnData.nodesPlaced.Add(item.X.ToString().PadLeft(3, '0') + "|" + item.Y.ToString().PadLeft(3, '0'));
             }
-            turnNodes = null;
+            turnNodes = new();
             BuildingsCount.text = "Buildings Owned: " + count;
             ConnectorsCount.text = "Connector1: " + Connector1Count + " \n Connector2: " + Connector2Count + " \n Connector3: " + Connector3Count;
             photonView.RPC("SendTiles", RpcTarget.Others, ObjectToByteArray(endTurnData));

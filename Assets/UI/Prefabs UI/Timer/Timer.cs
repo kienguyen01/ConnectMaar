@@ -27,10 +27,7 @@ public class Timer : MonoBehaviour
 
     public void Tick(int Seconds)
     {
-        foreach (Coroutine r in routines)
-        {
-            StopCoroutine(r);
-        }
+        StopRoutines();
 
         if(Duration != 0)
         {
@@ -43,6 +40,14 @@ public class Timer : MonoBehaviour
     public void Tick()
     {
         Tick(Duration);
+    }
+
+    private void StopRoutines()
+    {
+        foreach (Coroutine r in routines)
+        {
+            StopCoroutine(r);
+        }
     }
 
     private IEnumerator UpdateTimer()
@@ -67,6 +72,7 @@ public class Timer : MonoBehaviour
 
     private void OnEnd()
     {
+        StopRoutines();
         isOver = true;
     }
 }
