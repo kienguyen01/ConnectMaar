@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.48311162, g: 0.5279228, b: 0.5974375, a: 1}
+  m_IndirectSpecularColor: {r: 0.48311317, g: 0.5279242, b: 0.59743935, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -372,6 +372,9 @@ MonoBehaviour:
     PlayerStateClass: {fileID: 1642091268455989437, guid: b1bcd0ef7cca4234089352c8c6391110, type: 3}
     TileManagerClass: {fileID: 6393859954093753031, guid: b50a3aca46555f64ba44296ac5c29862, type: 3}
     timer: {fileID: 602029078}
+  models:
+    UnLitBuilding: {fileID: 186562, guid: 86491ebb1ab7eeb47bab67b087ff9343, type: 3}
+    LitBuilding: {fileID: 186562, guid: 6d069029a27ecaa449153748f419bb2c, type: 3}
   player1: {fileID: 136995009}
   player2: {fileID: 424589832}
   tileManager: {fileID: 0}
@@ -386,7 +389,6 @@ MonoBehaviour:
   ExChurch: {fileID: 602029075}
   ExDeMeent: {fileID: 602029073}
   ExDalton: {fileID: 602029074}
-  text: {fileID: 0}
   EndturnButton: {fileID: 602029077}
   ClearButton: {fileID: 602029076}
   playey1Name: {fileID: 602029070}
