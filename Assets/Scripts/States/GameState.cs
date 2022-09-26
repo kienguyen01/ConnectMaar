@@ -96,6 +96,7 @@ public class GameState : MonoBehaviourPunCallbacks
 
     protected List<Connector> turnConnectors;
     protected Connector selectedConnector;
+    protected List<Tile> turnNodes;
     /*protected Connection currentConnection;
     protected List<Connection> turnConnections;*/
 
@@ -189,6 +190,7 @@ public class GameState : MonoBehaviourPunCallbacks
         createPlayer();
         //turnConnections = new List<Connection>();
         turnConnectors = new List<Connector>();
+        turnNodes = new();
 
         Connector1Count = 0;
         Connector2Count = 0;
@@ -428,6 +430,7 @@ public class GameState : MonoBehaviourPunCallbacks
 
         if (!(t == null))
         {
+            turnNodes.Add(t);
             placingNode = false;
         }
     }

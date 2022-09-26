@@ -117,7 +117,6 @@ public class MultiplayerState : GameState
             {
                 clearAllSelected();
             }
-
             if (Input.GetKeyDown(KeyCode.Alpha1) || p1)
             {
                 SelectSingleConnector();
@@ -142,12 +141,10 @@ public class MultiplayerState : GameState
             {
                 SelectNodeConnector();
             }
-
             if (Input.GetMouseButtonDown(0))
             {
                 HandleClickCheck();
             }
-            
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
@@ -171,19 +168,6 @@ public class MultiplayerState : GameState
         //photonView.RPC("updateHouse", RpcTarget.All, ObjectToByteArray(mapData));
     }
 
-    [PunRPC]
-    void updateHouse(byte[] transferObject)
-    {
-        MapData mapData = (MapData)ByteArrayToObject(transferObject);
-        foreach (List<Tile> t_row in TileManager.tiles)
-        {
-            foreach (Tile t in t_row)
-            {
-                tileManager.replacePrefab(t, mapData.houses);
-            }
-        }
-    }
-
     new protected bool CheckEndTurn()
     {
         //photonView.RPC("RPC_Log", RpcTarget.All, $"{PhotonNetwork.LocalPlayer.UserId} --- local player: {player1.gameData.IsTurn} - foreign player: {player2.gameData.IsTurn}");
@@ -202,18 +186,17 @@ public class MultiplayerState : GameState
             foreach (var item in chosenTiles)
             {
                 endTurnData.tilesChosen.Add(item.X.ToString().PadLeft(3, '0') + "|" + item.Y.ToString().PadLeft(3, '0'));
-                if (item.Structure.GetType() == typeof(Node))
-                {
-                    endTurnData.nodesPlaced.Add(item.X.ToString().PadLeft(3, '0') + "|" + item.Y.ToString().PadLeft(3, '0'));
-                }
-            }
-            foreach(var item in chosenTiles)
-            {
-                if(item.Structure.GetType() == typeof(House))
+                
+                if (item.Structure.GetType() == typeof(House))
                 {
                     count++;
                 }
             }
+            foreach (var item in turnNodes)
+            {
+                endTurnData.nodesPlaced.Add(item.X.ToString().PadLeft(3, '0') + "|" + item.Y.ToString().PadLeft(3, '0'));
+            }
+            turnNodes = null;
             BuildingsCount.text = "Buildings Owned: " + count;
             ConnectorsCount.text = "Connector1: " + Connector1Count + " \n Connector2: " + Connector2Count + " \n Connector3: " + Connector3Count;
             photonView.RPC("SendTiles", RpcTarget.Others, ObjectToByteArray(endTurnData));
