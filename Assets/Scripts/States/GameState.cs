@@ -377,7 +377,8 @@ public class GameState : MonoBehaviourPunCallbacks
                         {
                             foreach (Tile tile in tileManager.getSpecialNeighbours(result.Tile))
                             {
-                                selectedConnector.AddTile(result.Tile);
+                                selectedConnector.AddTile(tile);
+                                tile.onSelected(player1);
                             }
                             turnConnectors.Add(selectedConnector);
                             selectedConnector = null;
