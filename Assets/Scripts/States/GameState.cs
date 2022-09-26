@@ -711,6 +711,10 @@ public class GameState : MonoBehaviourPunCallbacks
                     }
                     tileTouched.onSelected(player);
                 }
+                else if (tileTouched.SelectedBy == player1)
+                {
+                    return (false, null, null);
+                }
             }
             return (true, tileTouched, null);
         }
