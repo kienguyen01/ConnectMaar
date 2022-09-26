@@ -47,6 +47,19 @@ MonoBehaviour:
   config:
     PlayerStateClass: {fileID: 0}
     TileManagerClass: {fileID: 0}
-  PlayerStarts: []
-  playerStates: []
+    timer: {fileID: 0}
+  player1: {fileID: 0}
+  player2: {fileID: 0}
   tileManager: {fileID: 0}
+  p3: 0
+  turnCheck: 0
+  Connector1Count: 0
+  Connector2Count: 0
+  Connector3Count: 0
+  ExStadiumAFAS: {fileID: 2451879683752316478, guid: 0c86b11fb967f93428d328e9ce877675, type: 3}
+  ExInvesta: {fileID: 739511748691915666, guid: 48b6eb90630353642b05715d0ebd9b14, type: 3}
+  ExBloemwijk: {fileID: 3445041192479720417, guid: aae3f94ff86984e41bbdebdb2b7ccf15, type: 3}
+  ExChurch: {fileID: 8202502932989119668, guid: 4474a146c430585489d8f2d30cd81a97, type: 3}
+  ExDeMeent: {fileID: 4525711823346090108, guid: b9ad2cdb858bdc049b96bd2601c5894b, type: 3}
+  ExDalton: {fileID: 6392138441538464273, guid: 7518ea3ead92c5b45b2fb9a8ecb9d049, type: 3}
+  text: {fileID: 0}

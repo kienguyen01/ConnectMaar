@@ -1,3 +1,4 @@
+using Google.Cloud.Translation.V2;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -38,10 +39,19 @@ public class TutorialState : GameState
     private bool autoAdvance;
     private int temporaryRoutines;
 
+    private GoogleTranslate translateService;
+
     new private void Awake()
     {
+        translateService = new GoogleTranslate();
+
         onAwake();
         createPlayer();
+    }
+
+    private void Update()
+    {
+        player1.updateInventoryUI();
     }
 
     private void Start()
@@ -95,6 +105,16 @@ public class TutorialState : GameState
         }
     }
 
+    private string doTranslation(string _Text)
+    {
+        string locale = PlayerPrefs.GetString("Selected_Language");
+        if (locale != "en")
+        {
+            _Text = translateService.TranslateText(LanguageCodes.English, LanguageCodes.Dutch, _Text);
+        }
+        return _Text;
+    }
+
     private void changeTutorialMessage()
     {
         if (text)
@@ -103,25 +123,25 @@ public class TutorialState : GameState
             {
                 case 0:
                     {   
-                        text.text = dataLines[0];
+                        text.text = doTranslation(dataLines[0]);
                         player1.clearHand()
                                .refilSpecificHand(1, 1, 2);
                         break;
                     }
                 case 1:
-                    text.text = dataLines[1];
+                    text.text = doTranslation(dataLines[1]);
                     break;
                 case 2:
-                    text.text = dataLines[2];
+                    text.text = doTranslation(dataLines[2]);
                     break;
                 case 3:
-                    text.text = dataLines[3];
+                    text.text = doTranslation(dataLines[3]);
                     break;
                 case 4:
-                    text.text = dataLines[4];
+                    text.text = doTranslation(dataLines[4]);
                     break;  
                 case 5:
-                    text.text = dataLines[5];
+                    text.text = doTranslation(dataLines[5]);
                     break;
                 case 6:
                     text.text = dataLines[6];

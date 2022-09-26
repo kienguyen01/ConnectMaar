@@ -3,7 +3,17 @@ guid: 84eb2276061530b4baedd703ba61b004
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Dalton Texture
+    second: {fileID: 2800000, guid: 1b62f2eb008e6984da8f84d867a57d95, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: grid big.Diffuse
+    second: {fileID: 2800000, guid: c2cec05544a588f4d8cfccb9b6a17df5, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -32,7 +42,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1

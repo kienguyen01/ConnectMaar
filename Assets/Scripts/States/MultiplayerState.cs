@@ -104,7 +104,7 @@ public class MultiplayerState : GameState
 
     private void Update()
     {
-
+        player1.updateInventoryUI();
 
         if (player1.gameData.IsTurn)
         {
@@ -167,6 +167,21 @@ public class MultiplayerState : GameState
         }
         if (Input.GetMouseButtonDown(0) && !selectedConnector)
             GetInfoCard(player1);
+
+        //photonView.RPC("updateHouse", RpcTarget.All, ObjectToByteArray(mapData));
+    }
+
+    [PunRPC]
+    void updateHouse(byte[] transferObject)
+    {
+        MapData mapData = (MapData)ByteArrayToObject(transferObject);
+        foreach (List<Tile> t_row in TileManager.tiles)
+        {
+            foreach (Tile t in t_row)
+            {
+                tileManager.replacePrefab(t, mapData.houses);
+            }
+        }
     }
 
     new protected bool CheckEndTurn()
@@ -271,18 +286,25 @@ public class MultiplayerState : GameState
         else
         {
             ((MultiplayerPlayerState)player2).photonPlayer = player;
-            player2.gameData.PlayerColour = Color.yellow;
+            player2.gameData.PlayerColour = new Color(1f, 0.91f, 0.49f, 1);
         }
-
         if (player1 && (((MultiplayerPlayerState)player1).photonPlayer != null && ((MultiplayerPlayerState)player1).photonPlayer.IsMasterClient))
         {
             TileManager.tiles[14][22].OwnedBy = player2;
             TileManager.tiles[12][11].OwnedBy = player1;
+            if (!player1.gameData.tilesTaken.Contains(TileManager.tiles[12][11]))
+            {
+                player1.gameData.tilesTaken.Add(TileManager.tiles[12][11]);
+            }
         }
         else
         {
             TileManager.tiles[14][22].OwnedBy = player1;
             TileManager.tiles[12][11].OwnedBy = player2;
+            if (!player1.gameData.tilesTaken.Contains(TileManager.tiles[14][22]))
+            {
+                player1.gameData.tilesTaken.Add(TileManager.tiles[14][22]);
+            }
         }
     }
 
@@ -519,6 +541,7 @@ public class MultiplayerState : GameState
 
         //mapData.stadiums.Add(randomizeTile(9, 17, 9, 17));
         tileManager.scrabbleSolar = mapData.scrabbleSolar;
+        tileManager.scrabbleHeat = mapData.scrabbleHeats;
     }
 
 

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class House : Structure
 {
+    private bool isWindmill;
+
+    public bool IsWindmill { get => isWindmill; set => isWindmill = value; }
+
     // Start is called before the first frame update
     void Start()
     {
