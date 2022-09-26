@@ -447,6 +447,9 @@ public class GameState : MonoBehaviourPunCallbacks
             turnCheck = false;
             if (player1.gameData.IsTurn)
             {
+                player1.RefillHand();
+                player1.gameData.IsTurn = false;
+
                 if (selectedConnector)
                 {
                     if (selectedConnector.MaxLength > selectedConnector.getLength())
@@ -458,10 +461,7 @@ public class GameState : MonoBehaviourPunCallbacks
                 returnObj = true;
                 foreach (Connector ctr in turnConnectors)
                 {
-                    player1.RefillHand();
-                    player1.gameData.IsTurn = false;
-
-                    foreach(Tile t in player1.gameData.tilesChosen)
+                    foreach (Tile t in player1.gameData.tilesChosen)
                     {
                         if (t.Structure.GetType().Equals(typeof(House)))
                         {
@@ -565,6 +565,7 @@ public class GameState : MonoBehaviourPunCallbacks
                 turnConnections = new List<Connection>();*/
 
                 isNormalConnectionEnd = false;
+                turnConnectors = new List<Connector>();
             }
             else
             {
@@ -932,11 +933,14 @@ public class GameState : MonoBehaviourPunCallbacks
             SelectedConnector = null;
             return;
         }
+        
         foreach (var item in turnConnectors)
         {
             player1.AbortConnector(item, true);
         }
         turnConnectors.Clear();
+
+        
         /*foreach (Connection conn in turnConnections)
         {
             player1.AbortConnection(conn);
