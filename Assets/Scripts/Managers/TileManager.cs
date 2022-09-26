@@ -519,7 +519,6 @@ public class TileManager : MonoBehaviour
             DeMeent stadium_cell = (DeMeent)Instantiate(deMeentStadiumPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset - 1.67f), Quaternion.Euler(0, 0, 0));
             stadium_cell.transform.localScale = new Vector3(0.18f, 0.18f, 0.18f);
             stadium_cell.name = "demeent_" + hex_cell.X + "_" + hex_cell.Y;
-
             hex_cell.openInfoCard += (PlayerState player) =>
             {
                 pH.canvas = GameObject.Find("DeMeentCard").GetComponent<Canvas>();
@@ -535,7 +534,6 @@ public class TileManager : MonoBehaviour
             AFAS stadium_cell = (AFAS)Instantiate(AFASPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset - 0.2f), Quaternion.Euler(0, 0, 0));
             stadium_cell.transform.localScale = new Vector3(0.13f, 0.13f, 0.13f);
             stadium_cell.name = "stadium_" + hex_cell.X + "_" + hex_cell.Y;
-
             hex_cell.openInfoCard += (PlayerState player) =>
             {
                 pH.canvas = GameObject.Find("StadiumCard").GetComponent<Canvas>();
@@ -551,7 +549,6 @@ public class TileManager : MonoBehaviour
             Bloemwijk bloemwijk_cell = (Bloemwijk)Instantiate(bloemwijkPrefab, new Vector3(hex_cell.X * xOffset + 0.36f, 0.22f, hex_cell.Y * zOffset), Quaternion.Euler(0, 90, 0));
             bloemwijk_cell.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
             bloemwijk_cell.name = "bloemwijk_" + hex_cell.X + "_" + hex_cell.Y;
-
             hex_cell.openInfoCard += (PlayerState player) =>
             {
                 pH.canvas = GameObject.Find("BloemwijkCard").GetComponent<Canvas>();
@@ -564,13 +561,12 @@ public class TileManager : MonoBehaviour
 
         if(tileCoords == "032|030")
         {
-            Investa investa_cell = (Investa)Instantiate(investaPrefab, new Vector3(hex_cell.X * xOffset + 0382f, 0.205f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
+            Investa investa_cell = (Investa)Instantiate(investaPrefab, new Vector3(hex_cell.X * xOffset + 0.34f, 0.205f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
             investa_cell.transform.localScale = new Vector3(0.13f, 0.13f, 0.13f);
             investa_cell.name = "investa_" + hex_cell.X + "_" + hex_cell.Y;
-
             hex_cell.openInfoCard += (PlayerState player) =>
             {
-                pH.canvas = GameObject.Find("InvestaCard").GetComponent<Canvas>();
+                pH.canvas = GameObject.Find("Investa").GetComponent<Canvas>();
                 pH.Popup();
                 //Debug.Log("!!! OpenInfoCard !!!");
                 //todo open infocard
@@ -583,7 +579,6 @@ public class TileManager : MonoBehaviour
             DaltonCollege dalton_cell = (DaltonCollege)Instantiate(daltonPrefab, new Vector3(hex_cell.X * xOffset + 1.06f, 0.222f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
             dalton_cell.transform.localScale = new Vector3(0.002f, 0.003f, 0.003f);
             dalton_cell.name = "dalton_" + hex_cell.X + "_" + hex_cell.Y;
-
             hex_cell.openInfoCard += (PlayerState player) =>
             {
                 pH.canvas = GameObject.Find("DaltonCollegeCard").GetComponent<Canvas>();

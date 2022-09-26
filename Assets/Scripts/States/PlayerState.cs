@@ -173,25 +173,10 @@ public class PlayerState : MonoBehaviourPun
         {
             return this;
         }
-        for (int i = gameData.Inventory.Count; i < gameData.handSize; i++)
-        {
-            switch (UnityEngine.Random.Range(1, 4))
-            {
-                case 1:
-                    gameData.Inventory.Add(this.gameObject.AddComponent<StandardConnector>());
-                    Debug.Log("---1---");
-                    break;
-                case 2:
-                    gameData.Inventory.Add(this.gameObject.AddComponent<StandardConnector2>());
-                    Debug.Log("---2---");
-                    break;
-                case 3:
-                    gameData.Inventory.Add(this.gameObject.AddComponent<StandardConnector3>());
-                    Debug.Log("---3---");
-                    break;
-                default: break;
-            }
-        }
+        gameData.Inventory.Add(this.gameObject.AddComponent<StandardConnector>());
+        gameData.Inventory.Add(this.gameObject.AddComponent<StandardConnector>());
+        gameData.Inventory.Add(this.gameObject.AddComponent<StandardConnector2>());
+        gameData.Inventory.Add(this.gameObject.AddComponent<StandardConnector3>());
         updateInventoryUI();
 
 
