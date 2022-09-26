@@ -201,6 +201,7 @@ public class GameState : MonoBehaviourPunCallbacks
 
     private void Update()
     {
+        player1.updateInventoryUI();
 
         TurnMsg();
 
