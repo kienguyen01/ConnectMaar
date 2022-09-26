@@ -293,7 +293,7 @@ public class TileManager : MonoBehaviour
                 hex_cell.AddStructure<House>(solar_cell);
                 break;
             case "000|007":
-                DeMeent stadium_cell = (DeMeent)Instantiate(deMeentStadiumPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset - 1.67f), Quaternion.Euler(0, 0, 0));
+                DeMeent stadium_cell = (DeMeent)Instantiate(deMeentStadiumPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset - 1.6f), Quaternion.Euler(0, 0, 0));
                 stadium_cell.transform.localScale = new Vector3(0.18f, 0.18f, 0.18f);
                 stadium_cell.name = "stadium_" + hex_cell.X + "_" + hex_cell.Y;
 

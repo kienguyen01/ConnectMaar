@@ -1,0 +1,43 @@
+In this tutorial we will teach you how to play ConnectMaar.
+The main objective of this game is to reduce the Emission bar at the top of the screen by expanding your grid over Alkmaar
+Your Start point is the wind turbine
+From there you can start building your power grid
+On the left side of your screen you can see your inventory
+In your inventory, you have items called Connectors. They are your main tool to make Alkmaar a greener and more sustainable place
+Right now in your inventory you have a single connector, a double connector, and a triple connector
+Connecting buildings to your renewable energy source reduces your emission bar on the left
+To start a connection on the map tap a connector in your inventory then click on the tile next to a building in your grid
+Follow the highlighted tiles by using the available connectors
+Start your turn by pressing the start turn button.
+The more connectors you used, the less efficient the connection will be
+Your inventory will be refiled at the end of the turn
+Would you look at that? Your emission bar has decreased by 2 points
+1 connector = 3 points  \n 2 Connectors =  2 points  \n  3 Connectors = 1 point
+Use the newly acquired connectors to make a connection to the house nearby using one 3 connector and a single connector
+Your emission levels have further reduced by 2 points. This is because you used two connections instead of a single one
+It looks like you built over special tiles and gained 3 special connectors
+Special connectors are used to connect to special renewable resources in your grid such as heat pumps and solar panels. This will be useful in a bit.
+The special connector you have can only be used to connect to a solar panel.
+Special connectors like these can only be placed on one grid one at a time
+Please use the special solar connector to connect to the solar panel ahead. But first, start your turn
+You have now added a solar pannel to your connection. Congratulations! this will be useful later
+There are two types of special connectors you can get from the random tiles scattered over the map and they can only be used for a specific power source
+Heat connectors = Heat pumps, \n Solar connectors = Solar pannels
+Let us use our newly acquired solar energy in our grid to power a key location in Alkmaar
+First, please tap on the stadium at the bottom of the map
+That was the info-Card for the AFAS Stadium. Each card has some fun facts about the location on the left-hand side.
+The right-hand side shows what renewable building you need to have in your grid in order to claim this stadium and the rewards you get
+For AFAS stadium to be connected to our grid you need a Solar panel in your grid. As a reward, you'll get an extra double connector next turn
+Make a connection from a building in your grid to the stadium
+The AFAS stadium is now using sustainable energy. Congratulations!
+You are now supplying renewable energy to AFAS Stadium and would you look at that, the emission bar has decreased drastically because of that.
+It looks like the second player has been making moves around Alkmaar while you were busy
+Let's claim that house above shall we?
+Start your turn and build as close as you can to that house
+looks like you dont have enough connectors to reach the house. Let's use the last item in an inventory, this is called a node. Place it down at the end of the tile
+Nodes allow you to end your connection and continue the next turn
+But be careful you are only granted one per game and it comes as a cost
+Other players can also use your node to end their connection midway as well and continue their turn, So you'll have to be strategic about their placement
+Now place use your last connector to place over the node to end your turn
+Connect to a house closest to you starting from your node to complete the tutorial
+Congratulations on finsihing the tutorial! Continue making Alkmaar a greener place!

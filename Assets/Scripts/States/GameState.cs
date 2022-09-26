@@ -83,8 +83,6 @@ public class GameState : MonoBehaviourPunCallbacks
     [SerializeField]
     GameObject ExDalton;
 
-    [HideInInspector]
-    public TextMeshProUGUI text;
 
 
     public static PopupHandler pH;

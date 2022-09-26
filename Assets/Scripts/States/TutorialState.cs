@@ -1,6 +1,7 @@
 using Google.Cloud.Translation.V2;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -16,15 +17,22 @@ public struct TutorialStateConfig
 
 public class TutorialState : GameState
 {
-    private Image tutBox;
+    public Image tutBox;
 
     public GameObject popups;
     private int index = -1;
 
     private string[] tutorialMessage;
 
-    [HideInInspector]
     public TextMeshProUGUI textTitle;
+
+    public TextMeshProUGUI text;
+
+
+    public TextAsset dataFile;
+
+    private string[] dataLines;
+
 
 
     private bool go;
@@ -58,14 +66,18 @@ public class TutorialState : GameState
             
         }
 
-        tutBox = GameObject.Find("TutorialBox").GetComponent<Image>();
-
-        if (tutBox.enabled == true)
+        //tutBox = GameObject.Find("TutorialBox").GetComponent<Image>();
+        tutBox.enabled = true;
+        text.enabled = true;
+        textTitle.enabled = true;
+        
+       /* if (tutBox.enabled == true)
         {
-            text = GameObject.Find("txtBody").GetComponent<TextMeshProUGUI>();
-            textTitle = GameObject.Find("txtTitle").GetComponent<TextMeshProUGUI>();
-            textTitle.text = "Tutorial:";
-        }
+            //text = GameObject.Find("txtBody").GetComponent<TextMeshProUGUI>();
+            //textTitle = GameObject.Find("txtTitle").GetComponent<TextMeshProUGUI>();
+            //textTitle.text = "Tutorial:";
+        }*/
+        getInstructions();
         StartCoroutine(TutorialRoutine());
     }
 
@@ -111,70 +123,73 @@ public class TutorialState : GameState
             {
                 case 0:
                     {   
-                        text.text = doTranslation("Welcome to the Tutorial! In this tutorial we will teach you how to play ConnectMaar. Tap on Screen to continue.");
+                        text.text = doTranslation(dataLines[0]);
                         player1.clearHand()
                                .refilSpecificHand(1, 1, 2);
                         break;
                     }
                 case 1:
-                    text.text = doTranslation("The main objective of this game is to reduce the Emission bar at the top of the screen by expanding your grid over Alkmaar");
+                    text.text = doTranslation(dataLines[1]);
                     break;
                 case 2:
-                    text.text = doTranslation("Your Start point is the wind turbine");
+                    text.text = doTranslation(dataLines[2]);
                     break;
                 case 3:
-                    text.text = doTranslation("From there you can start building your power grid.");
+                    text.text = doTranslation(dataLines[3]);
                     break;
                 case 4:
-                    text.text = doTranslation("On the left side of your screen you can see your inventory.");
+                    text.text = doTranslation(dataLines[4]);
                     break;  
                 case 5:
-                    text.text = doTranslation("In your inventory, you have items called Connectors. They are your main tool to make Alkmaar a greener and more sustainable place");
+                    text.text = doTranslation(dataLines[5]);
                     break;
                 case 6:
-                    text.text = "Right now in your inventory you have a single connector, a double connector, and a triple connector";
+                    text.text = dataLines[6];
                     break;
                 case 7:
-                    text.text = "Connecting buildings to your renewable energy source reduces your emission bar on the left";
+                    text.text = dataLines[7];
                     break;
                 case 8:
-                    text.text = "To start a connection on the map tap a connector in your inventory then click on the tile next to a building in your grid";
+                    text.text = dataLines[8];
                     break;
                 case 9:
-                    text.text = "Follow the highlighted tiles by using the available connectors";
+                    text.text = dataLines[9];
                     EnableHighlightChanager(0, 1);
                     EnableHighlightChanager(1, 1);
                     EnableHighlightChanager(2, 1);
                     break;
                 case 10:
-                    text.text = "Start your turn by pressing the start turn button.";
+                    text.text = dataLines[10];
                     DisablePopup();
-                    StartCoroutine(TileCheckRoutine(2,1));
                     turnCheck = true;
+                    StartCoroutine(TileCheckRoutine(2,1));
                     break;
                 case 11:
                     turnCheck = true;
+                    EnablePopup();
+                    text.text = dataLines[11];
                     break;
                 case 12:
-                    StartCoroutine(TileCheckRoutine(6, 2)); //Remove if time left
+                    text.text = dataLines[12];
+                    //StartCoroutine(TileCheckRoutine(6, 2)); //Remove if time left
                     break;
                 case 13:
-                    EnablePopup();
-                    text.text = "The more connectors you used, the less efficient the connection will be";
+                    //EnablePopup();
+                    text.text = dataLines[13];
                     break;
                 case 14:
-                    text.text = "Your inventory will be refiled at the end of the turn";
+                    text.text = dataLines[14];
                     break;
                 case 15:
-                    text.text = "Would you look at that? Your emission bar has decreased by 2 points";
+                    text.text = dataLines[15];
                     break;
                 case 16:
-                    text.text = "1 connector = 3 points  \n 2 Connectors =  2 points  \n  3 Connectors = 1 point";
+                    text.text = dataLines[16];
                     break;
                 case 17:
                     player1.clearHand()
                            .refilSpecificHand(1, 2, 1);
-                    text.text = "Use the newly acquired connectors to make a connection to the house nearby using one 3 connector and a single connector";
+                    text.text = dataLines[17];
                     EnableHighlightChanager(3, 2);
                     EnableHighlightChanager(4, 2);
                     EnableHighlightChanager(5, 2);
@@ -182,34 +197,36 @@ public class TutorialState : GameState
                     break;
                 case 18:
                     DisablePopup();
+                    //turnCheck = true;
                     StartCoroutine(TileCheckRoutine(6, 2));
-                    turnCheck = true;
                     break;
                 case 19:
                     turnCheck = true;
+                    EnablePopup();
                     break;
                 case 20:
-                    StartCoroutine(TileCheckRoutine(6, 2)); //remove
+                    //StartCoroutine(TileCheckRoutine(6, 2)); //remove
+                    text.text = dataLines[18];
                     break;
                 case 21:
                     EnablePopup();
-                    text.text = "Your emission levels have further reduced by 2 points. This is because you used two connections instead of a single one";
+                    text.text = dataLines[19];
                     break;
                 case 22:
-                    text.text = "It looks like you built over special tiles and gained " + player1.gameData.SpecialConnector.Count + " special connectors";
+                    text.text = dataLines[20];
                     player1.clearHand();
                     break;
                 case 23:
-                    text.text = "Special connectors are used to connect to special renewable resources in your grid such as heat pumps and solar panels. This will be useful in a bit.";
+                    text.text = dataLines[21];
                     break;
                 case 24:
-                    text.text = "The special connector you have can only be used to connect to a solar panel.";
+                    text.text = dataLines[22];
                     break;
                 case 25:
-                    text.text = "Special connectors like these can only be placed on one grid one at a time";
+                    text.text = dataLines[23];
                     break;
                 case 26:
-                    text.text = "Please use the special solar connector to connect to the solar panel ahead. But first, start your turn";
+                    text.text = dataLines[24];
                     EnableHighlightChanager(6, 1);
                     EnableHighlightChanager(7, 0);
                     break;
@@ -218,25 +235,25 @@ public class TutorialState : GameState
                     player2.gameData.totalPoint = 47;
                     DisablePopup();
                     StartCoroutine(TileCheckRoutine(7, 0));
-                    turnCheck = true;
+                    //turnCheck = true;
                     break;
                 case 28:
                     turnCheck = true;
+                    EnablePopup();
                     break;
                 case 29:
                     StartCoroutine(SolarHeatCheckRoutine());
                     break;
                 case 30:
-                    EnablePopup();
-                    text.text = "You have now added a solar pannel to your connection. Congratulations! this will be useful later";
+                    text.text = dataLines[25];
                     player1.clearHand()
                            .refilSpecificHand(1, 1, 2);
                     break;
                 case 31:
-                    text.text = "There are two types of special connectors you can get from the random tiles scattered over the map and they can only be used for a specific power source";
+                    text.text = dataLines[26];
                     break;
                 case 32:
-                    text.text = "Heat connectors = Heat pumps, \n Solar connectors = Solar pannels";
+                    text.text = dataLines[27];
                     break;
                 case 33:
                     text.text = "Let us use our newly acquired solar energy in our grid to power a key location in Alkmaar  ";
@@ -349,24 +366,13 @@ public class TutorialState : GameState
         }
     }
 
-    /*string[] TutorialText =
+    private void getInstructions()
     {
-        "Welcome to the Tutorial! In this tutorial we will teach you how to play ConnectMaar. Tap on Screen to start.",
-        "This is a tutorial to show you the basic gameplay of our game: ConnectMaar. Tap to continue.",
-        "On the left side of your screen you can see your inventory.",
-        "In your inventory you have Items called Connectors. They are your main tool to make Alkmaar a greener and more sustainable place",
-        "Right now in your inventory you have a single connector, a double connector and a triple connector",
-        "By connecting buildings to renewable energy sources in the most efficient way possible, you'll reduce the emission level at the top of the screen!",
-        "Let's begin using renewable energy to make Alkmaar a Greener city!",
-        "Start your turn by pressing the start turn button.",
-        "Click on the length-3 connector on the left side of the screen and then place it on the grid starting from your wind turbine to the nearest house",
 
-        "When making connections your emission bar will decrease. The more connectors you used, the less efficient the connection will be",
-        "Congratulations, you have started to make Alkmaar a greener city!", 
-        "", 
-        "", 
-        "", 
-    };*/
+        dataLines = dataFile.text.Split('\n');
+        string[] lines = new string[dataLines.Length];
+
+    }
 
     private IEnumerator TurnCheckRoutine(bool YourTurn = true, bool AutoAdvance = true)
     {
@@ -556,6 +562,7 @@ public class TutorialState : GameState
                 }
                 return false;*/
     }
+
     /*
     private void checkTileTaken(int x, int y)
     {
