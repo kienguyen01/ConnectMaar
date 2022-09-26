@@ -268,7 +268,7 @@ public class TileManager : MonoBehaviour
         {
             House house_cell = (House)Instantiate(windTurbinePrefab, new Vector3(hex_cell.X * xOffset, 1.25f, hex_cell.Y * zOffset), Quaternion.identity);
             house_cell.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
-
+            house_cell.IsWindmill = true;
             hex_cell.AddStructure<House>(house_cell);
         }
 
@@ -658,13 +658,14 @@ public class TileManager : MonoBehaviour
                 {
                     House house_cell = (House)Instantiate(windTurbinePrefab, new Vector3(hex_cell.X * xOffset, 1.25f, hex_cell.Y * zOffset), Quaternion.Euler(0, 180, 0));
                     house_cell.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
-
+                    house_cell.IsWindmill = true;
                     hex_cell.AddStructure<House>(house_cell);
                 }
                 else
                 {
                     House house_cell = (House)Instantiate(windTurbinePrefab, new Vector3(hex_cell.X * xOffset + 0.52f, 1.25f, hex_cell.Y * zOffset), Quaternion.Euler(0, 180, 0));
                     house_cell.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+                    house_cell.IsWindmill = true;
                     hex_cell.AddStructure<House>(house_cell);
                 }
             }

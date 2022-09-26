@@ -55,6 +55,23 @@ public class Tile : MonoBehaviour
         get => ownedBy;
         set
         {
+            if(GameState.instance.models.LitBuilding)
+            {
+                House[] HouseArr = this.GetComponentsInChildren<House>();
+                House h = null;
+                if (HouseArr.Length > 0)
+                    h = HouseArr[0];
+                if (h != null && h is House && h.IsWindmill != true)
+                {
+                    GameObject newH = Instantiate(GameState.instance.models.LitBuilding, h.transform.position, h.transform.rotation);
+                    GameObject oldH = h.transform.gameObject;
+                    newH.transform.SetParent(h.transform.parent);
+
+                    Destroy(oldH);
+                }
+            }
+
+
             //todo add colours to playerstates so we can do playerstate.playercolour
             this.GetComponentInChildren<MeshRenderer>().material.color = value.gameData.PlayerColour;
             ownedBy = value;

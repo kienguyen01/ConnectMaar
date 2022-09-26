@@ -18,9 +18,17 @@ public struct GameStateConfig
     public Timer timer;
 }
 
+[System.Serializable]
+public struct DynamicBuildings
+{
+    public GameObject UnLitBuilding;
+    public GameObject LitBuilding;
+}
+
 public class GameState : MonoBehaviourPunCallbacks
 {
     public GameStateConfig config;
+    public DynamicBuildings models;
 
     [HideInInspector]
     public PlayerState player1;

@@ -288,16 +288,23 @@ public class MultiplayerState : GameState
             ((MultiplayerPlayerState)player2).photonPlayer = player;
             player2.gameData.PlayerColour = new Color(1f, 0.91f, 0.49f, 1);
         }
-
         if (player1 && (((MultiplayerPlayerState)player1).photonPlayer != null && ((MultiplayerPlayerState)player1).photonPlayer.IsMasterClient))
         {
             TileManager.tiles[14][22].OwnedBy = player2;
             TileManager.tiles[12][11].OwnedBy = player1;
+            if (!player1.gameData.tilesTaken.Contains(TileManager.tiles[12][11]))
+            {
+                player1.gameData.tilesTaken.Add(TileManager.tiles[12][11]);
+            }
         }
         else
         {
             TileManager.tiles[14][22].OwnedBy = player1;
             TileManager.tiles[12][11].OwnedBy = player2;
+            if (!player1.gameData.tilesTaken.Contains(TileManager.tiles[14][22]))
+            {
+                player1.gameData.tilesTaken.Add(TileManager.tiles[14][22]);
+            }
         }
     }
 
