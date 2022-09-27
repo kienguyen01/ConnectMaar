@@ -414,7 +414,7 @@ public class MultiplayerState : GameState
         houses.Add("2|26,11|28,11|24");
         houses.Add("18|16,18|19,20|13");
         houses.Add("27|26,26|25,23|27");
-        houses.Add("19|23,21|20,23|22");
+        houses.Add("19|23,27|20,23|22");
         houses.Add("27|18,28|14,25|16");
         houses.Add("21|14,22|12,21|17");
         houses.Add("27|9,27|6,24|7");
@@ -520,7 +520,6 @@ public class MultiplayerState : GameState
         mapData.scrabbleHeats.Add(randomizeTile(15, 24, 15, 24));
         mapData.scrabbleHeats.Add(randomizeTile(28, 22, 28, 22));
         mapData.scrabbleHeats.Add(randomizeTile(33, 21, 33, 21));
-
         mapData.scrabbleHeats.Add(randomizeTile(30, 16, 30, 16));
 
         /*mapData.solars.Add(randomizeTile(19, 19, 2, 1));
