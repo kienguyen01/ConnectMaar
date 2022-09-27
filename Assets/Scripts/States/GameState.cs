@@ -473,7 +473,7 @@ public class GameState : MonoBehaviourPunCallbacks
                             if (ctr.Source.Structure.GetType().Equals(typeof(SpecialBuilding)))
                                 multiplier = 1.5f;
 
-                            player1.gameData.totalPoint -= 2 * multiplier /*/ connectorCount*/; //TODO: CHANGE PLACEHOLDER VALUE
+                            player1.gameData.totalPoint -= 3 * multiplier /*/ connectorCount*/; //TODO: CHANGE PLACEHOLDER VALUE
                                                                                                 //Debug.LogError(connectorCount);
                             Debug.LogError(player1.gameData.totalPoint);
                         }
