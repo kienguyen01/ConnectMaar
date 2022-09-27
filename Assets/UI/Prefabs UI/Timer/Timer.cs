@@ -29,7 +29,7 @@ public class Timer : MonoBehaviour
     {
         StopRoutines();
 
-        if(Duration != 0)
+        if(Duration != 0 && Enabled)
         {
             isOver = false;
             remainingDuration = Seconds;

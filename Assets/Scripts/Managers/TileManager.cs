@@ -719,7 +719,6 @@ public class TileManager : MonoBehaviour
             
             if (tile.IsSpecial())
             {
-                
                 if ((tile.GetSpecialOriginTile().Structure.SolarRequired ? Instigator.gameData.hasSolarInNetwork : true) && (tile.GetSpecialOriginTile().Structure.HeatRequired ? Instigator.gameData.hasHeatInNetwork : true)){
                     (bool valid, Tile tile, Tile source, Tile previous) result = isValidTileToChoose(tile.GetSpecialOriginTile(), Instigator);
                     var specialNeighbours = getSpecialNeighbours(tile.GetSpecialOriginTile());
@@ -840,10 +839,16 @@ public class TileManager : MonoBehaviour
                     {
                         go = true;
                     }
-                    else if (neighbour.Connector.GetLastTile() == neighbour && !neighbour.Connector.UsedForConnector && neighbour == neighbour.Connector.GetLastTile())
+                    else if (neighbour.Connector.GetLastTile() == neighbour && !neighbour.Connector.UsedForConnector/*)*/ && neighbour == neighbour.Connector.GetLastTile())
                     {
-                        neighbour.Connector.UsedForConnector = true;
-                        go = true;
+                        if (!((t.Structure is HeatPump) ? !GameState.instance.SelectedConnector.IsHeat : false || (t.Structure is SolarPanel) ? !GameState.instance.SelectedConnector.IsSolar : false))
+                        {
+                            if (GameState.instance.SelectedConnector.IsSpecial == neighbour.Connector.IsSpecial)
+                            {
+                                neighbour.Connector.UsedForConnector = true;
+                                go = true;
+                            }
+                        }
                     }
                 }
                 if (go)

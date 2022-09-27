@@ -320,6 +320,7 @@ public class PlayerState : MonoBehaviourPun
                 t.SelectedBy = null;
                 t.Connector.PreviousStep = null;
                 t.Connector.Source = null;
+                t.Connector.UsedForConnector = false;
                 t.Connector = null;
                 foreach (Tile n in GameState.instance.tileManager.getNeigbours(t))
                 {
