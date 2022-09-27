@@ -98,7 +98,7 @@ public class MultiplayerState : GameState
     [PunRPC]
     void WinCondition()
     {
-        if (player1.gameData.totalPoint == 0)
+        if (player1.gameData.totalPoint <= 0)
         {
             NetManager.instance.photonView.RPC("ChangeScene", RpcTarget.All, "Winnner");
         }
