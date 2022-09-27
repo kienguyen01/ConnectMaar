@@ -48,8 +48,12 @@ MonoBehaviour:
     PlayerStateClass: {fileID: 0}
     TileManagerClass: {fileID: 0}
     timer: {fileID: 0}
+  models:
+    UnLitBuilding: {fileID: 0}
+    LitBuilding: {fileID: 0}
   player1: {fileID: 0}
   player2: {fileID: 0}
+  warningTextPrefab: {fileID: 3770527133714322741, guid: b52e9d4f79a4a294192ba48a3acd3b1b, type: 3}
   tileManager: {fileID: 0}
   p3: 0
   turnCheck: 0
@@ -62,4 +66,3 @@ MonoBehaviour:
   ExChurch: {fileID: 8202502932989119668, guid: 4474a146c430585489d8f2d30cd81a97, type: 3}
   ExDeMeent: {fileID: 4525711823346090108, guid: b9ad2cdb858bdc049b96bd2601c5894b, type: 3}
   ExDalton: {fileID: 6392138441538464273, guid: 7518ea3ead92c5b45b2fb9a8ecb9d049, type: 3}
-  text: {fileID: 0}
