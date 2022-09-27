@@ -37,6 +37,7 @@ public class GameState : MonoBehaviourPunCallbacks
     public PlayerState player2;
 
     public GameObject warningTextPrefab;
+    public GameObject welcomeTextPrefab;
 
     [HideInInspector]
     public TileManager tileManager;
@@ -197,7 +198,6 @@ public class GameState : MonoBehaviourPunCallbacks
         Connector1Count = 0;
         Connector2Count = 0;
         Connector3Count = 0;
-
 
     }
 
@@ -953,6 +953,10 @@ public class GameState : MonoBehaviourPunCallbacks
 
      public void showWarningMessage(Tile t)
      {
-        Instantiate(warningTextPrefab, new Vector3(t.transform.position.x - 2.22f, t.transform.position.y + 0.5f, t.transform.position.z + 0.87f), Quaternion.Euler(60, 0, 0), transform);  
+        Instantiate(warningTextPrefab, new Vector3(t.transform.position.x - 0.39f, t.transform.position.y + 0.382f, t.transform.position.z - 2.85f), Quaternion.Euler(60, 0, 0), transform);
+    }
+     public void showWelcomeMessage(Tile t)
+     {
+        Instantiate(welcomeTextPrefab, new Vector3(t.transform.position.x, t.transform.position.y + 0.5f, t.transform.position.z - 1.43f), Quaternion.Euler(60, 0, 0), transform);
      }
 }

@@ -85,6 +85,8 @@ public class MultiplayerState : GameState
         playey1Name.text = PhotonNetwork.LocalPlayer.NickName;
         Debug.Log(PhotonNetwork.LocalPlayer.NickName + " THIS WORKS");
 
+
+
     }
 
     [PunRPC]
@@ -275,6 +277,7 @@ public class MultiplayerState : GameState
         {
             TileManager.tiles[14][22].OwnedBy = player2;
             TileManager.tiles[12][11].OwnedBy = player1;
+            showWelcomeMessage(TileManager.tiles[12][11]);
             if (!player1.gameData.tilesTaken.Contains(TileManager.tiles[12][11]))
             {
                 player1.gameData.tilesTaken.Add(TileManager.tiles[12][11]);
@@ -283,6 +286,7 @@ public class MultiplayerState : GameState
         else
         {
             TileManager.tiles[14][22].OwnedBy = player1;
+            showWelcomeMessage(TileManager.tiles[14][22]);
             TileManager.tiles[12][11].OwnedBy = player2;
             if (!player1.gameData.tilesTaken.Contains(TileManager.tiles[14][22]))
             {

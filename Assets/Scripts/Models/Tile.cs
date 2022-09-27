@@ -43,7 +43,19 @@ public class Tile : MonoBehaviour
                 //change to highlight
                 o.OutlineWidth = 4.0f;
                 o.OutlineMode = Outline.Mode.OutlineAndSilhouette;
-                o.OutlineColor = value.gameData.PlayerColour;
+                if (GameState.instance.SelectedConnector.GetType().Equals(typeof(SolarPanelConnector)))
+                {
+                    o.OutlineColor = Color.cyan;
+                }
+                else if (GameState.instance.SelectedConnector.GetType().Equals(typeof(HeatPipeConnector)))
+                {
+                    o.OutlineColor = Color.yellow;
+                }
+                else
+                {
+                    o.OutlineColor = value.gameData.PlayerColour;
+                }
+                
             }
 
             selectedBy = value;

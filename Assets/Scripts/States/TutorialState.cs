@@ -355,7 +355,7 @@ public class TutorialState : GameState
                     }
                 case 56:
                     EnablePopup();
-                    text.text = "Congratulations on finsihing the tutorial! Continue making Alkmaar a greener place!";
+                    text.text = "Congratulations on finishing the tutorial! Continue making Alkmaar a greener place!";
                     break;
             }
         }
