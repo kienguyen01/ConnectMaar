@@ -710,6 +710,7 @@ public class TileManager : MonoBehaviour
             
             if (tile.IsSpecial())
             {
+                
                 if ((tile.GetSpecialOriginTile().Structure.SolarRequired ? Instigator.gameData.hasSolarInNetwork : true) && (tile.GetSpecialOriginTile().Structure.HeatRequired ? Instigator.gameData.hasHeatInNetwork : true)){
                     (bool valid, Tile tile, Tile source, Tile previous) result = isValidTileToChoose(tile.GetSpecialOriginTile(), Instigator);
                     var specialNeighbours = getSpecialNeighbours(tile.GetSpecialOriginTile());
@@ -732,6 +733,10 @@ public class TileManager : MonoBehaviour
                     }*/
                     Instigator.gameData.tilesChosen.Add(tile);
                     tile.SelectedBy = Instigator;
+                }
+                else
+                {
+                    GameState.instance.showWarningMessage(tile);
                 }
             }
             else

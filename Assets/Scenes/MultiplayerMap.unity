@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.48311317, g: 0.5279242, b: 0.59743935, a: 1}
+  m_IndirectSpecularColor: {r: 0.48311216, g: 0.52792263, b: 0.5974373, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -377,6 +377,7 @@ MonoBehaviour:
     LitBuilding: {fileID: 186562, guid: 6d069029a27ecaa449153748f419bb2c, type: 3}
   player1: {fileID: 136995009}
   player2: {fileID: 424589832}
+  warningTextPrefab: {fileID: 3770527133714322741, guid: b52e9d4f79a4a294192ba48a3acd3b1b, type: 3}
   tileManager: {fileID: 0}
   p3: 0
   turnCheck: 0
