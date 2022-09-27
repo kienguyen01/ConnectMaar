@@ -139,22 +139,21 @@ public class TutorialState : GameState
                     text.text = doTranslation(dataLines[5]);
                     break;
                 case 6:
-                    text.text = dataLines[6];
+                    text.text = doTranslation(dataLines[6]);
                     break;
                 case 7:
-                    text.text = dataLines[7];
+                    text.text = doTranslation(dataLines[7]);
                     break;
                 case 8:
-                    text.text = dataLines[8];
+                    text.text = doTranslation(dataLines[8]);
                     break;
                 case 9:
-                    text.text = dataLines[9];
+                    text.text = doTranslation(dataLines[9]);
                     EnableHighlightChanager(0, 1);
                     EnableHighlightChanager(1, 1);
                     EnableHighlightChanager(2, 1);
                     break;
                 case 10:
-                    text.text = dataLines[10];
                     DisablePopup();
                     turnCheck = true;
                     StartCoroutine(TileCheckRoutine(2,1));
@@ -162,150 +161,139 @@ public class TutorialState : GameState
                 case 11:
                     turnCheck = true;
                     EnablePopup();
-                    text.text = dataLines[11];
+                    text.text = doTranslation(dataLines[10]);
                     break;
                 case 12:
-                    text.text = dataLines[12];
+                    text.text = doTranslation(dataLines[11]);
                     //StartCoroutine(TileCheckRoutine(6, 2)); //Remove if time left
                     break;
                 case 13:
                     //EnablePopup();
-                    text.text = dataLines[13];
+                    text.text = doTranslation(dataLines[12]);
                     break;
                 case 14:
-                    text.text = dataLines[14];
+                    text.text = doTranslation(dataLines[13]);
                     break;
                 case 15:
-                    text.text = dataLines[15];
+                    text.text = doTranslation(dataLines[14]);
                     break;
                 case 16:
-                    text.text = dataLines[16];
-                    break;
-                case 17:
+                    DisablePopup();
                     player1.clearHand()
                            .refilSpecificHand(1, 2, 1);
-                    text.text = dataLines[17];
                     EnableHighlightChanager(3, 2);
                     EnableHighlightChanager(4, 2);
                     EnableHighlightChanager(5, 2);
                     EnableHighlightChanager(6, 2);
                     break;
-                case 18:
-                    DisablePopup();
+                case 17:
                     //turnCheck = true;
                     StartCoroutine(TileCheckRoutine(6, 2));
                     break;
-                case 19:
+                case 18:
                     turnCheck = true;
                     EnablePopup();
+                    text.text = doTranslation(dataLines[15]);
+                    break;
+                case 19:
+                    //StartCoroutine(TileCheckRoutine(6, 2)); //remove
                     break;
                 case 20:
-                    //StartCoroutine(TileCheckRoutine(6, 2)); //remove
-                    text.text = dataLines[18];
+                    //EnablePopup();
+                    text.text = doTranslation(dataLines[16]);
                     break;
                 case 21:
-                    EnablePopup();
-                    text.text = dataLines[19];
-                    break;
-                case 22:
-                    text.text = dataLines[20];
+                    text.text = doTranslation(dataLines[17]);
                     player1.clearHand();
                     break;
+                case 22:
+                    text.text = doTranslation(dataLines[18]);
+                    break;
                 case 23:
-                    text.text = dataLines[21];
-                    break;
-                case 24:
-                    text.text = dataLines[22];
-                    break;
-                case 25:
-                    text.text = dataLines[23];
-                    break;
-                case 26:
-                    text.text = dataLines[24];
+                    DisablePopup();
                     EnableHighlightChanager(6, 1);
                     EnableHighlightChanager(7, 0);
                     break;
-                case 27:
+                case 24:
                     startAiMoves();
                     player2.gameData.totalPoint = 47;
-                    DisablePopup();
                     StartCoroutine(TileCheckRoutine(7, 0));
                     //turnCheck = true;
                     break;
-                case 28:
+                case 25:
                     turnCheck = true;
                     EnablePopup();
                     break;
-                case 29:
+                case 26:
                     StartCoroutine(SolarHeatCheckRoutine());
                     break;
-                case 30:
-                    text.text = dataLines[25];
+                case 27:
+                    text.text = doTranslation(dataLines[19]);
                     player1.clearHand()
                            .refilSpecificHand(1, 1, 2);
                     break;
-                case 31:
-                    text.text = dataLines[26];
+                case 28:
+                    text.text = doTranslation(dataLines[20]);
                     break;
-                case 32:
-                    text.text = dataLines[27];
+                case 29:
+                    text.text = doTranslation(dataLines[21]);
                     break;
-                case 33:
+                case 30:
                     text.text = "Let us use our newly acquired solar energy in our grid to power a key location in Alkmaar  ";
                     break;
-                case 34:
+                case 31:
                     text.text = "First, please tap on the stadium at the bottom of the map";
                     break;
-                case 35:
+                case 32:
                     DisablePopup();
                     StartCoroutine(OpenInfoCardCheckRoutine());
                     break;
-                case 36:
+                case 33:
                     EnablePopup();
                     text.text = "That was the info-Card for the AFAS Stadium. Each card has some fun facts about the location on the left-hand side.";
                     break;
-                case 37:
+                case 34:
                     text.text = "The right-hand side shows what renewable building you need to have in your grid in order to claim this stadium and the rewards you get";
                     break;
-                case 38:
+                case 35:
                     text.text = "For AFAS stadium to be connected to our grid you need a Solar panel in your grid. As a reward, you'll get an extra double connector next turn";
                     break;
-                case 39:
+                case 36:
                     //text.text = "Start your turn";
                     //StartCoroutine(TurnCheckRoutine());
                     player1.clearHand()
                            .refilSpecificHand(1, 1, 2);
                     break;
-                case 40:
+                case 37:
                     text.text = "Make a connection from a building in your grid to the stadium";
                     break;
-                case 41:
+                case 38:
                     player1.gameData.totalPoint = 45;
                     DisablePopup();
-                    //StartCoroutine(TileCheckRoutine(1, 7));
+                    StartCoroutine(TileCheckRoutine(1, 7));
                     addTile(3, 13);
                     addTile(4, 13);
                     break;
-                case 42:
+                case 39:
                     player1.gameData.totalPoint = 35;
                     EnablePopup();
                     text.text = "The AFAS stadium is now using sustainable energy. Congratulations!";
                     break;
-                case 43:
+                case 40:
                     text.text = "You are now supplying renewable energy to AFAS Stadium and would you look at that, the emission bar has decreased drastically because of that.";
                     player1.clearHand()
                            .refilSpecificHand(4, 0, 0);
                     break;
-                case 44:
+                case 41:
                     text.text = "It looks like the second player has been making moves around Alkmaar while you were busy";
                     break;
-                case 45:
+                case 42:
                     text.text = "Let's claim that house above shall we?";
                     break;
-                case 46:
+                case 43:
                     text.text = "Start your turn and build as close as you can to that house";
                     break;
-                case 47:
+                case 44:
                     {
                         addTile(5, 12);
                         addTile(5, 11);
@@ -316,31 +304,31 @@ public class TutorialState : GameState
                         StartCoroutine(TilesChosenCheckRoutine(3));
                     }
                     break;
-                case 48:
+                case 45:
                     EnablePopup();
                     text.text = "looks like you dont have enough connectors to reach the house. Let's use the last item in an inventory, this is called a node. Place it down at the end of the tile";
                     break;
-                case 49:
+                case 46:
                     DisablePopup();
                     StartCoroutine(NodesOwnedCheckRoutine(0));
                     break;
-                case 50:
+                case 47:
                     EnablePopup();
                     text.text = "Nodes allow you to end your connection and continue the next turn";
                     break;
-                case 51:
+                case 48:
                     text.text = "But be careful you are only granted one per game and it comes as a cost";
                     break;
-                case 52:
+                case 49:
                     text.text = "Other players can also use your node to end their connection midway as well and continue their turn, So you'll have to be strategic about their placement";
                     break;
-                case 53:
+                case 50:
                     text.text = "Now place use your last connector to place over the node to end your turn ";
                     break;
-                case 54:
+                case 51:
                     text.text = "Connect to a house closest to you starting from your node to complete the tutorial";
                     break;
-                case 55:
+                case 52:
                     {
                         addTile(6, 9);
                         addTile(7, 9);
@@ -353,7 +341,7 @@ public class TutorialState : GameState
                         StartCoroutine(TileCheckRoutine(6, 10));
                         break;
                     }
-                case 56:
+                case 53:
                     EnablePopup();
                     text.text = "Congratulations on finsihing the tutorial! Continue making Alkmaar a greener place!";
                     break;
