@@ -491,28 +491,6 @@ public class TileManager : MonoBehaviour
                 hex_cell.AddStructure<HMaria>(church_cell);
             }
         }
-
-        foreach(string tile in solars)
-        {
-            if(tileCoords == tile)
-            {
-                if (hex_cell.Y % 2 == 0)
-                {
-                    SolarPanel solar_cell = (SolarPanel)Instantiate(solarPrefab, new Vector3(hex_cell.X + 0.56f, 0.2f, hex_cell.Y * zOffset), Quaternion.Euler(0, -90, 0));
-                    solar_cell.transform.SetParent(hex_cell.transform);
-                    solar_cell.name = "solar_" + hex_cell.X + "_" + hex_cell.Y;
-                    hex_cell.AddStructure<SolarPanel>(solar_cell);
-                }
-                else if (hex_cell.Y % 2 != 0)
-                {
-                    SolarPanel solar_cell = (SolarPanel)Instantiate(solarPrefab, new Vector3(hex_cell.X + 1.28f, 0.2f, hex_cell.Y * zOffset - 0.065f), Quaternion.Euler(0, -90, 0));
-                    solar_cell.transform.SetParent(hex_cell.transform);
-                    solar_cell.name = "solar_" + hex_cell.X + "_" + hex_cell.Y;
-                    hex_cell.AddStructure<SolarPanel>(solar_cell);
-                }
-            }
-        }
-
         
         if(tileCoords == "031|005")
         {
@@ -613,6 +591,11 @@ public class TileManager : MonoBehaviour
         {
             if(tileCoords == tile)
             {
+                Vector3 v3 = hex_cell.transform.position;
+                v3.y += 0.201f;
+                GameObject icon = Instantiate(GameState.instance.models.SolarCableIcon, hex_cell.transform);
+                icon.transform.position = v3;
+                icon.transform.parent = hex_cell.transform;
                 hex_cell.IsScrabbleForSolar = true;
             }
         }
@@ -620,6 +603,11 @@ public class TileManager : MonoBehaviour
         {
             if (tileCoords == tile)
             {
+                Vector3 v3 = hex_cell.transform.position;
+                v3.y += 0.201f;
+                GameObject icon = Instantiate(GameState.instance.models.HeatPipeIcon, hex_cell.transform);
+                icon.transform.position = v3;
+                icon.transform.parent = hex_cell.transform;
                 hex_cell.IsScrabbleForHeat = true;
             }
         }
@@ -645,7 +633,28 @@ public class TileManager : MonoBehaviour
             }
         }
 
-        foreach(string tile in windTurbines)
+        foreach (string tile in solars)
+        {
+            if (tileCoords == tile)
+            {
+                if (hex_cell.Y % 2 == 0)
+                {
+                    SolarPanel solar_cell = (SolarPanel)Instantiate(solarPrefab, new Vector3(hex_cell.X + 0.56f, 0.2f, hex_cell.Y * zOffset), Quaternion.Euler(0, -90, 0));
+                    solar_cell.transform.SetParent(hex_cell.transform);
+                    solar_cell.name = "solar_" + hex_cell.X + "_" + hex_cell.Y;
+                    hex_cell.AddStructure<SolarPanel>(solar_cell);
+                }
+                else if (hex_cell.Y % 2 != 0)
+                {
+                    SolarPanel solar_cell = (SolarPanel)Instantiate(solarPrefab, new Vector3(hex_cell.X + 1.28f, 0.2f, hex_cell.Y * zOffset - 0.065f), Quaternion.Euler(0, -90, 0));
+                    solar_cell.transform.SetParent(hex_cell.transform);
+                    solar_cell.name = "solar_" + hex_cell.X + "_" + hex_cell.Y;
+                    hex_cell.AddStructure<SolarPanel>(solar_cell);
+                }
+            }
+        }
+
+        foreach (string tile in windTurbines)
         {
             if (tileCoords == tile)
             {

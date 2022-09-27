@@ -21,8 +21,9 @@ public struct GameStateConfig
 [System.Serializable]
 public struct DynamicBuildings
 {
-    public GameObject UnLitBuilding;
     public GameObject LitBuilding;
+    public GameObject HeatPipeIcon;
+    public GameObject SolarCableIcon;
 }
 
 public class GameState : MonoBehaviourPunCallbacks
