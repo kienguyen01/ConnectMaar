@@ -5,7 +5,6 @@ using System.IO;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
@@ -310,7 +309,7 @@ public class TutorialState : GameState
                 case 41:
                     text.text = doTranslation(dataLines[30]);
                     player1.clearHand()
-                           .refilSpecificHand(4, 0, 0);
+                           .refilSpecificHand(3, 0, 1);
                     break;
                 case 42:
                     text.text = doTranslation(dataLines[31]);
