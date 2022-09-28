@@ -606,7 +606,7 @@ public class TutorialState : GameState
     public void startAiMoves(List<(int x, int y)> coordinates)
     {
         /*Make ai have connectionsns to the two houses closed to him */
-        player2.gameData.PlayerColour = Color.black;
+        player2.gameData.PlayerColour = new Color(1f, 0.91f, 0.49f, 1);
 
         foreach(var item in coordinates)
         {
