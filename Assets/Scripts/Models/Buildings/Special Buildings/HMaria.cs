@@ -14,16 +14,20 @@ public class HMaria : SpecialBuilding
 
     public override void GetSpecialBonus()
     {
-        for (int i = 0; i < 3; i++)
-        {
-            int rnd = Random.Range(1, 3);
-            GameState.instance.player1.gameData.Inventory.Add(
-                    (rnd == 1)? 
-                new StandardConnector() : (
-                    (rnd == 2)?
-                new StandardConnector2() : 
-                new StandardConnector3()));
-        }
+        //for (int i = 0; i < 3; i++)
+        //{
+        //    int rnd = Random.Range(1, 3);
+        //    GameState.instance.player1.gameData.Inventory.Add(
+        //            (rnd == 1)? 
+        //        new StandardConnector() : (
+        //            (rnd == 2)?
+        //        new StandardConnector2() : 
+        //        new StandardConnector3()));
+        //}
+        GameState.instance.player1.gameData.Inventory.Add(new StandardConnector3());
+        GameState.instance.player1.gameData.Inventory.Add(new StandardConnector3());
+
+
 
         base.GetSpecialBonus();
     }

@@ -14,8 +14,10 @@ public class Bloemwijk : SpecialBuilding
 
     public override void GetSpecialBonus()
     {
-        GameState.instance.player1.gameData.HasPassiveIncome = true;
-        GameState.instance.player1.gameData.PassiveIncome += 1.0f;
+        GameState.instance.player1.gameData.Inventory.Add(new StandardConnector());
+        GameState.instance.player1.gameData.Inventory.Add(new StandardConnector());
+        GameState.instance.player1.gameData.Inventory.Add(new StandardConnector());
+
 
         base.GetSpecialBonus();
     }

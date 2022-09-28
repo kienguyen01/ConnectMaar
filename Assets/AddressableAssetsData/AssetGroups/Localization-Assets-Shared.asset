@@ -125,6 +125,14 @@ MonoBehaviour:
     m_Address: Assets/Localization/Tables/PlayAgainTxt Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
+  - m_GUID: a76af247882b0c040a9e064a5b21c144
+    m_Address: Assets/Localization/Tables/Greener Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 84a512afe4b0cee42a54ca5fb940d639
+    m_Address: Assets/Localization/Tables/AlkmaarIsNow Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 47fe1e794f5af47abbbe831c258f4d60, type: 2}
   m_SchemaSet:

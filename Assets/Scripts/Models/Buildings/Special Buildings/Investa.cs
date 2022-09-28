@@ -15,11 +15,11 @@ public class Investa : SpecialBuilding
     public override void GetSpecialBonus()
     {
         GameState.instance.player1.gameData.Inventory.Add(new StandardConnector3());
-        GameState.instance.player1.gameData.Inventory.Add(new StandardConnector3());
+
 
 
         GameState.instance.player1.gameData.Inventory.Add(new StandardConnector2());
-        GameState.instance.player1.gameData.Inventory.Add(new StandardConnector2());
+
 
         base.GetSpecialBonus();
     }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.48311317, g: 0.5279242, b: 0.59743935, a: 1}
+  m_IndirectSpecularColor: {r: 0.48311216, g: 0.52792263, b: 0.5974373, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -358,6 +358,22 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 482182606, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268021176, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1297622815, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1464011533, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1776116034, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
@@ -612,7 +628,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5598444811338788655, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6874333141898617877, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
       propertyPath: Enabled
@@ -620,7 +636,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8216934616207320637, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
       propertyPath: m_PresetInfoIsWorld
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9115613460754731759, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
       propertyPath: m_Enabled
@@ -796,7 +812,7 @@ MonoBehaviour:
   ExStadiumAFAS: {fileID: 1274158691}
   ExInvesta: {fileID: 739511748691915666, guid: 48b6eb90630353642b05715d0ebd9b14, type: 3}
   ExBloemwijk: {fileID: 3445041192479720417, guid: aae3f94ff86984e41bbdebdb2b7ccf15, type: 3}
-  ExChurch: {fileID: 8202502932989119668, guid: 4474a146c430585489d8f2d30cd81a97, type: 3}
+  ExChurch: {fileID: 1725365294}
   ExDeMeent: {fileID: 4525711823346090108, guid: b9ad2cdb858bdc049b96bd2601c5894b, type: 3}
   ExDalton: {fileID: 6392138441538464273, guid: 7518ea3ead92c5b45b2fb9a8ecb9d049, type: 3}
   tutBox: {fileID: 1603818850}
@@ -815,6 +831,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1725365294 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 340959039, guid: 77ea3180bead37b4c850c4fa1df17f2a, type: 3}
+  m_PrefabInstance: {fileID: 1274158685}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1741199758
 PrefabInstance:
   m_ObjectHideFlags: 0

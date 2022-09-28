@@ -14,6 +14,9 @@ public class DaltonCollege : SpecialBuilding
 
     public override void GetSpecialBonus()
     {
+        GameState.instance.player1.gameData.Inventory.Add(new StandardConnector3());
+        GameState.instance.player1.gameData.Inventory.Add(new StandardConnector3());
+
         base.GetSpecialBonus();
     }
 }
