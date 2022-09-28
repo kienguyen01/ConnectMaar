@@ -75,6 +75,7 @@ public class GameState : MonoBehaviourPunCallbacks
     public int Connector1Count;
     public int Connector2Count;
     public int Connector3Count;
+    public int houseCount;
 
     [SerializeField]
     GameObject ExStadiumAFAS;
@@ -201,7 +202,7 @@ public class GameState : MonoBehaviourPunCallbacks
         Connector1Count = 0;
         Connector2Count = 0;
         Connector3Count = 0;
-
+        houseCount = 0;
     }
 
     private void Update()
