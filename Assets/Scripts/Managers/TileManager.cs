@@ -283,7 +283,8 @@ public class TileManager : MonoBehaviour
     private void addSpecialBuildingsTutorial(Tile hex_cell)
     {
         string tileCoords = hex_cell.X.ToString().PadLeft(3, '0') + "|" + hex_cell.Y.ToString().PadLeft(3, '0');
-
+        Vector3 v3 = hex_cell.transform.position;
+        GameObject icon;
         switch (tileCoords)
         {
             case "007|000":
@@ -321,12 +322,24 @@ public class TileManager : MonoBehaviour
                 hex_cell.AddStructure<HMaria>(church_cell);
                 break;
             case "004|002":
+                v3.y += 0.201f;
+                icon = Instantiate(GameState.instance.models.SolarCableIcon, hex_cell.transform);
+                icon.transform.position = v3;
+                icon.transform.parent = hex_cell.transform;
                 hex_cell.IsScrabbleForSolar = true;
                 break;
             case "009|002":
+                v3.y += 0.201f;
+                icon = Instantiate(GameState.instance.models.SolarCableIcon, hex_cell.transform);
+                icon.transform.position = v3;
+                icon.transform.parent = hex_cell.transform;
                 hex_cell.IsScrabbleForSolar = true;
                 break;
             case "010|009":
+                v3.y += 0.201f;
+                icon = Instantiate(GameState.instance.models.SolarCableIcon, hex_cell.transform);
+                icon.transform.position = v3;
+                icon.transform.parent = hex_cell.transform;
                 hex_cell.IsScrabbleForSolar = true;
                 break;
             default:
@@ -491,28 +504,6 @@ public class TileManager : MonoBehaviour
                 hex_cell.AddStructure<HMaria>(church_cell);
             }
         }
-
-        foreach(string tile in solars)
-        {
-            if(tileCoords == tile)
-            {
-                if (hex_cell.Y % 2 == 0)
-                {
-                    SolarPanel solar_cell = (SolarPanel)Instantiate(solarPrefab, new Vector3(hex_cell.X + 0.56f, 0.2f, hex_cell.Y * zOffset), Quaternion.Euler(0, -90, 0));
-                    solar_cell.transform.SetParent(hex_cell.transform);
-                    solar_cell.name = "solar_" + hex_cell.X + "_" + hex_cell.Y;
-                    hex_cell.AddStructure<SolarPanel>(solar_cell);
-                }
-                else if (hex_cell.Y % 2 != 0)
-                {
-                    SolarPanel solar_cell = (SolarPanel)Instantiate(solarPrefab, new Vector3(hex_cell.X + 1.28f, 0.2f, hex_cell.Y * zOffset - 0.065f), Quaternion.Euler(0, -90, 0));
-                    solar_cell.transform.SetParent(hex_cell.transform);
-                    solar_cell.name = "solar_" + hex_cell.X + "_" + hex_cell.Y;
-                    hex_cell.AddStructure<SolarPanel>(solar_cell);
-                }
-            }
-        }
-
         
         if(tileCoords == "031|005")
         {
@@ -559,9 +550,9 @@ public class TileManager : MonoBehaviour
             hex_cell.AddStructure<Bloemwijk>(bloemwijk_cell);
         }
 
-        if(tileCoords == "032|030")
+        if(tileCoords == "008|029")
         {
-            Investa investa_cell = (Investa)Instantiate(investaPrefab, new Vector3(hex_cell.X * xOffset + 0.34f, 0.205f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
+            Investa investa_cell = (Investa)Instantiate(investaPrefab, new Vector3(hex_cell.X * xOffset + 0.84f, 0.205f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
             investa_cell.transform.localScale = new Vector3(0.13f, 0.13f, 0.13f);
             investa_cell.name = "investa_" + hex_cell.X + "_" + hex_cell.Y;
             hex_cell.openInfoCard += (PlayerState player) =>
@@ -574,7 +565,7 @@ public class TileManager : MonoBehaviour
             hex_cell.AddStructure<Investa>(investa_cell);
         }
 
-        if(tileCoords == "017|013")
+        if(tileCoords == "019|021")
         {
             DaltonCollege dalton_cell = (DaltonCollege)Instantiate(daltonPrefab, new Vector3(hex_cell.X * xOffset + 1.06f, 0.222f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
             dalton_cell.transform.localScale = new Vector3(0.002f, 0.003f, 0.003f);
@@ -613,6 +604,11 @@ public class TileManager : MonoBehaviour
         {
             if(tileCoords == tile)
             {
+                Vector3 v3 = hex_cell.transform.position;
+                v3.y += 0.201f;
+                GameObject icon = Instantiate(GameState.instance.models.SolarCableIcon, hex_cell.transform);
+                icon.transform.position = v3;
+                icon.transform.parent = hex_cell.transform;
                 hex_cell.IsScrabbleForSolar = true;
             }
         }
@@ -620,6 +616,11 @@ public class TileManager : MonoBehaviour
         {
             if (tileCoords == tile)
             {
+                Vector3 v3 = hex_cell.transform.position;
+                v3.y += 0.201f;
+                GameObject icon = Instantiate(GameState.instance.models.HeatPipeIcon, hex_cell.transform);
+                icon.transform.position = v3;
+                icon.transform.parent = hex_cell.transform;
                 hex_cell.IsScrabbleForHeat = true;
             }
         }
@@ -645,7 +646,28 @@ public class TileManager : MonoBehaviour
             }
         }
 
-        foreach(string tile in windTurbines)
+        foreach (string tile in solars)
+        {
+            if (tileCoords == tile)
+            {
+                if (hex_cell.Y % 2 == 0)
+                {
+                    SolarPanel solar_cell = (SolarPanel)Instantiate(solarPrefab, new Vector3(hex_cell.X + 0.56f, 0.2f, hex_cell.Y * zOffset), Quaternion.Euler(0, -90, 0));
+                    solar_cell.transform.SetParent(hex_cell.transform);
+                    solar_cell.name = "solar_" + hex_cell.X + "_" + hex_cell.Y;
+                    hex_cell.AddStructure<SolarPanel>(solar_cell);
+                }
+                else if (hex_cell.Y % 2 != 0)
+                {
+                    SolarPanel solar_cell = (SolarPanel)Instantiate(solarPrefab, new Vector3(hex_cell.X + 1.8f, 0.2f, hex_cell.Y * zOffset - 0.065f), Quaternion.Euler(0, -90, 0));
+                    solar_cell.transform.SetParent(hex_cell.transform);
+                    solar_cell.name = "solar_" + hex_cell.X + "_" + hex_cell.Y;
+                    hex_cell.AddStructure<SolarPanel>(solar_cell);
+                }
+            }
+        }
+
+        foreach (string tile in windTurbines)
         {
             if (tileCoords == tile)
             {
@@ -714,14 +736,24 @@ public class TileManager : MonoBehaviour
                     (bool valid, Tile tile, Tile source, Tile previous) result = isValidTileToChoose(tile.GetSpecialOriginTile(), Instigator);
                     var specialNeighbours = getSpecialNeighbours(tile.GetSpecialOriginTile());
                     bool specialValid = false;
-
                     foreach (var item in specialNeighbours)
                     {
-                        if (isValidTileToChoose(tile.GetSpecialOriginTile(), Instigator).valid)
+                        if (isValidTileToChoose(item, Instigator).valid)
                         {
                             specialValid = true;
                         }
                     }
+                    
+                    if (tile.OwnedBy == null && tile.SelectedBy == null && specialValid)
+                    {//Save previous steps of the connection for the connector to trace back origin
+                        Instigator.gameData.tilesChosen.Add(tile);
+                        tile.SelectedBy = Instigator;
+                        GameState.instance.SelectedConnector.PreviousStep = result.previous;
+                        GameState.instance.SelectedConnector.Source = result.source;
+                        tile.Connector = GameState.instance.SelectedConnector;
+                    }
+                    
+
                     /*if (specialValid)
                     {
                         foreach (Tile t in specialNeighbours)
@@ -730,8 +762,19 @@ public class TileManager : MonoBehaviour
                             t.SelectedBy = Instigator;
                         }
                     }*/
-                    Instigator.gameData.tilesChosen.Add(tile);
-                    tile.SelectedBy = Instigator;
+                    /*Instigator.gameData.tilesChosen.Add(tile);
+                    tile.SelectedBy = Instigator;*/
+                }
+                else
+                {
+                    GameState.instance.showWarningMessage(tile);
+                    foreach (var item in neighbours)
+                    {
+                        if (item.Connector)
+                        {
+                            item.Connector.UsedForConnector = false;
+                        }
+                    }
                 }
             }
             else
@@ -826,10 +869,16 @@ public class TileManager : MonoBehaviour
                     {
                         go = true;
                     }
-                    else if (neighbour.Connector.GetLastTile() == neighbour && !neighbour.Connector.UsedForConnector && neighbour == neighbour.Connector.GetLastTile())
+                    else if (neighbour.Connector.GetLastTile() == neighbour /*&& !neighbour.Connector.UsedForConnector*/ && neighbour == neighbour.Connector.GetLastTile())
                     {
-                        neighbour.Connector.UsedForConnector = true;
-                        go = true;
+                        if (!((t.Structure is HeatPump) ? !GameState.instance.SelectedConnector.IsHeat : false || (t.Structure is SolarPanel) ? !GameState.instance.SelectedConnector.IsSolar : false))
+                        {
+                            if (GameState.instance.SelectedConnector.IsSpecial == neighbour.Connector.IsSpecial)
+                            {
+                                neighbour.Connector.UsedForConnector = true;
+                                go = true;
+                            }
+                        }
                     }
                 }
                 if (go)

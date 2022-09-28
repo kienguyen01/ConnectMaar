@@ -422,6 +422,7 @@ public class TutorialState : GameState
                     break;
                 case 56:
                     SceneManager.LoadScene("Menu");
+
                     break;
             }
         }

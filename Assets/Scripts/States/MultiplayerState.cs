@@ -85,6 +85,8 @@ public class MultiplayerState : GameState
         playey1Name.text = PhotonNetwork.LocalPlayer.NickName;
         Debug.Log(PhotonNetwork.LocalPlayer.NickName + " THIS WORKS");
 
+
+
     }
 
     [PunRPC]
@@ -96,7 +98,7 @@ public class MultiplayerState : GameState
     [PunRPC]
     void WinCondition()
     {
-        if (player1.gameData.totalPoint == 0)
+        if (player1.gameData.totalPoint <= 0)
         {
             NetManager.instance.photonView.RPC("ChangeScene", RpcTarget.All, "Winnner");
         }
@@ -275,6 +277,7 @@ public class MultiplayerState : GameState
         {
             TileManager.tiles[14][22].OwnedBy = player2;
             TileManager.tiles[12][11].OwnedBy = player1;
+            showWelcomeMessage(TileManager.tiles[12][11]);
             if (!player1.gameData.tilesTaken.Contains(TileManager.tiles[12][11]))
             {
                 player1.gameData.tilesTaken.Add(TileManager.tiles[12][11]);
@@ -283,12 +286,15 @@ public class MultiplayerState : GameState
         else
         {
             TileManager.tiles[14][22].OwnedBy = player1;
+            showWelcomeMessage(TileManager.tiles[14][22]);
             TileManager.tiles[12][11].OwnedBy = player2;
             if (!player1.gameData.tilesTaken.Contains(TileManager.tiles[14][22]))
             {
                 player1.gameData.tilesTaken.Add(TileManager.tiles[14][22]);
             }
         }
+
+        CameraObj.SetStartTurnCamera();
     }
 
     [PunRPC]
@@ -410,7 +416,7 @@ public class MultiplayerState : GameState
         houses.Add("2|26,11|28,11|24");
         houses.Add("18|16,18|19,20|13");
         houses.Add("27|26,26|25,23|27");
-        houses.Add("19|23,21|20,23|22");
+        houses.Add("19|23,27|20,23|22");
         houses.Add("27|18,28|14,25|16");
         houses.Add("21|14,22|12,21|17");
         houses.Add("27|9,27|6,24|7");
@@ -487,7 +493,8 @@ public class MultiplayerState : GameState
         mapData.solars.Add(randomizeTile(32, 11, 32, 11));
 
         mapData.heats.Add(randomizeTile(5, 10, 5, 10));
-        mapData.heats.Add(randomizeTile(28,27,28,27));
+        mapData.heats.Add(randomizeTile(32, 30, 32, 30));
+
 
        
 
@@ -504,6 +511,13 @@ public class MultiplayerState : GameState
         mapData.scrabbleSolar.Add(randomizeTile(0, 31, 0, 31));
         mapData.scrabbleSolar.Add(randomizeTile(25, 21, 25, 21));
         mapData.scrabbleSolar.Add(randomizeTile(29, 17, 29, 17));
+        mapData.scrabbleSolar.Add(randomizeTile(3, 5, 3, 5));
+        mapData.scrabbleSolar.Add(randomizeTile(16, 2, 16, 2));
+        mapData.scrabbleSolar.Add(randomizeTile(18, 12, 18, 12));
+        mapData.scrabbleSolar.Add(randomizeTile(24, 13, 24, 3));
+        mapData.scrabbleSolar.Add(randomizeTile(28, 7, 28, 7));
+        mapData.scrabbleSolar.Add(randomizeTile(27, 26, 27, 26));
+        mapData.scrabbleSolar.Add(randomizeTile(21, 30, 21, 30));
 
         mapData.scrabbleHeats.Add(randomizeTile(20, 3, 20, 3));
         mapData.scrabbleHeats.Add(randomizeTile(23, 8, 23, 8));
@@ -516,8 +530,14 @@ public class MultiplayerState : GameState
         mapData.scrabbleHeats.Add(randomizeTile(15, 24, 15, 24));
         mapData.scrabbleHeats.Add(randomizeTile(28, 22, 28, 22));
         mapData.scrabbleHeats.Add(randomizeTile(33, 21, 33, 21));
-
         mapData.scrabbleHeats.Add(randomizeTile(30, 16, 30, 16));
+        mapData.scrabbleHeats.Add(randomizeTile(7, 11, 7, 11));
+        mapData.scrabbleHeats.Add(randomizeTile(29, 12, 29, 12));
+        mapData.scrabbleHeats.Add(randomizeTile(10, 5, 10, 5));
+        mapData.scrabbleHeats.Add(randomizeTile(29, 1, 29, 1));
+        mapData.scrabbleHeats.Add(randomizeTile(23, 10, 23, 10));
+        mapData.scrabbleHeats.Add(randomizeTile(26, 31, 26, 31));
+        mapData.scrabbleHeats.Add(randomizeTile(25, 33, 25, 33));
 
         /*mapData.solars.Add(randomizeTile(19, 19, 2, 1));
         mapData.solars.Add(randomizeTile(19, 19, 2, 1));*/

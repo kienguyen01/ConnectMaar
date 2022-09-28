@@ -9,6 +9,7 @@ using mixpanel;
 using Photon.Pun;
 using System;
 using UnityEngine.Localization.Settings;
+using BitBenderGames;
 
 [System.Serializable]
 public struct GameStateConfig
@@ -21,8 +22,9 @@ public struct GameStateConfig
 [System.Serializable]
 public struct DynamicBuildings
 {
-    public GameObject UnLitBuilding;
     public GameObject LitBuilding;
+    public GameObject HeatPipeIcon;
+    public GameObject SolarCableIcon;
 }
 
 public class GameState : MonoBehaviourPunCallbacks
@@ -30,11 +32,15 @@ public class GameState : MonoBehaviourPunCallbacks
     public GameStateConfig config;
     public DynamicBuildings models;
 
+    public MobileTouchCamera CameraObj;
+
     [HideInInspector]
     public PlayerState player1;
     [HideInInspector]
     public PlayerState player2;
 
+    public GameObject warningTextPrefab;
+    public GameObject welcomeTextPrefab;
 
     [HideInInspector]
     public TileManager tileManager;
@@ -195,7 +201,6 @@ public class GameState : MonoBehaviourPunCallbacks
         Connector1Count = 0;
         Connector2Count = 0;
         Connector3Count = 0;
-
 
     }
 
@@ -471,7 +476,7 @@ public class GameState : MonoBehaviourPunCallbacks
                             if (ctr.Source.Structure.GetType().Equals(typeof(SpecialBuilding)))
                                 multiplier = 1.5f;
 
-                            player1.gameData.totalPoint -= 2 * multiplier /*/ connectorCount*/; //TODO: CHANGE PLACEHOLDER VALUE
+                            player1.gameData.totalPoint -= 3 * multiplier /*/ connectorCount*/; //TODO: CHANGE PLACEHOLDER VALUE
                                                                                                 //Debug.LogError(connectorCount);
                             Debug.LogError(player1.gameData.totalPoint);
                         }
@@ -948,4 +953,13 @@ public class GameState : MonoBehaviourPunCallbacks
             player1.AbortConnection(conn);
         }*/
     }
+
+     public void showWarningMessage(Tile t)
+     {
+        Instantiate(warningTextPrefab, new Vector3(t.transform.position.x - 0.39f, t.transform.position.y + 0.382f, t.transform.position.z - 2.85f), Quaternion.Euler(60, 0, 0), transform);
+    }
+     public void showWelcomeMessage(Tile t)
+     {
+        Instantiate(welcomeTextPrefab, new Vector3(t.transform.position.x, t.transform.position.y + 0.5f, t.transform.position.z - 1.43f), Quaternion.Euler(60, 0, 0), transform);
+     }
 }
