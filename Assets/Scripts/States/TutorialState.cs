@@ -3,9 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEditor;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [System.Serializable]
@@ -74,6 +78,9 @@ public class TutorialState : GameState
         }*/
         getInstructions();
         StartCoroutine(TutorialRoutine());
+        //(int x, int y)[] coordinates = { (8, 5), (10, 0) };
+
+
     }
 
     IEnumerator TutorialRoutine()
@@ -110,14 +117,22 @@ public class TutorialState : GameState
         return _Text;
     }
 
+    List<(int x, int y)> validHouses = new List<(int x, int y)>();
+
     private void changeTutorialMessage()
     {
+        List<(int x, int y)> aimoves = new List<(int x, int y)>();
+
         if (text)
         {
             switch (index)//TODO Ideally, move every text into an array and just change with index value
             {
                 case 0:
-                    {   
+                    {
+                        aimoves.Add((0, 14));
+
+                        startAiMoves(aimoves);
+
                         text.text = doTranslation(dataLines[0]);
                         player1.clearHand()
                                .refilSpecificHand(1, 1, 2);
@@ -215,7 +230,14 @@ public class TutorialState : GameState
                     EnableHighlightChanager(7, 0);
                     break;
                 case 24:
-                    startAiMoves();
+                    aimoves.Clear();
+
+                    aimoves.Add((0, 13));
+                    aimoves.Add((1, 13));
+                    aimoves.Add((2, 13));
+
+                    startAiMoves(aimoves);
+
                     player2.gameData.totalPoint = 47;
                     StartCoroutine(TileCheckRoutine(7, 0));
                     //turnCheck = true;
@@ -239,112 +261,182 @@ public class TutorialState : GameState
                     text.text = doTranslation(dataLines[21]);
                     break;
                 case 30:
-                    text.text = "Let us use our newly acquired solar energy in our grid to power a key location in Alkmaar  ";
+                    text.text = doTranslation(dataLines[22]);
                     break;
                 case 31:
-                    text.text = "First, please tap on the stadium at the bottom of the map";
+                    text.text = doTranslation(dataLines[23]);
                     break;
                 case 32:
+                    text.text = doTranslation(dataLines[24]);
+                    break;
+                case 33:
                     DisablePopup();
                     StartCoroutine(OpenInfoCardCheckRoutine());
                     break;
-                case 33:
-                    EnablePopup();
-                    text.text = "That was the info-Card for the AFAS Stadium. Each card has some fun facts about the location on the left-hand side.";
-                    break;
                 case 34:
-                    text.text = "The right-hand side shows what renewable building you need to have in your grid in order to claim this stadium and the rewards you get";
+                    EnablePopup();
+                    text.text = doTranslation(dataLines[25]);
                     break;
                 case 35:
-                    text.text = "For AFAS stadium to be connected to our grid you need a Solar panel in your grid. As a reward, you'll get an extra double connector next turn";
+                    text.text = doTranslation(dataLines[26]);
                     break;
                 case 36:
+                    text.text = doTranslation(dataLines[27]);
+                    break;
+                case 37:
                     //text.text = "Start your turn";
                     //StartCoroutine(TurnCheckRoutine());
                     player1.clearHand()
                            .refilSpecificHand(1, 1, 2);
                     break;
-                case 37:
-                    text.text = "Make a connection from a building in your grid to the stadium";
-                    break;
                 case 38:
-                    player1.gameData.totalPoint = 45;
+                    text.text = doTranslation(dataLines[28]);
+                    break;
+                case 39:
                     DisablePopup();
                     StartCoroutine(TileCheckRoutine(1, 7));
                     addTile(3, 13);
                     addTile(4, 13);
                     break;
-                case 39:
-                    player1.gameData.totalPoint = 35;
-                    EnablePopup();
-                    text.text = "The AFAS stadium is now using sustainable energy. Congratulations!";
-                    break;
                 case 40:
-                    text.text = "You are now supplying renewable energy to AFAS Stadium and would you look at that, the emission bar has decreased drastically because of that.";
+                    //player1.gameData.totalPoint = 35;
+                    player1.gameData.totalPoint = player1.gameData.totalPoint - 10;
+                    EnablePopup();
+                    aimoves.Add((3, 13));
+                    aimoves.Add((4, 13));
+                    startAiMoves(aimoves);
+                    text.text = doTranslation(dataLines[29]);
+                    break;
+                case 41:
+                    text.text = doTranslation(dataLines[30]);
                     player1.clearHand()
                            .refilSpecificHand(4, 0, 0);
                     break;
-                case 41:
-                    text.text = "It looks like the second player has been making moves around Alkmaar while you were busy";
-                    break;
                 case 42:
-                    text.text = "Let's claim that house above shall we?";
+                    text.text = doTranslation(dataLines[31]);
                     break;
                 case 43:
-                    text.text = "Start your turn and build as close as you can to that house";
+                    text.text = doTranslation(dataLines[32]);
                     break;
                 case 44:
-                    {
-                        addTile(5, 12);
-                        addTile(5, 11);
-                        addTile(6, 10);
-                        player2.gameData.totalPoint = 42;
-                        DisablePopup();
-
-                        StartCoroutine(TilesChosenCheckRoutine(3));
-                    }
+                    text.text = doTranslation(dataLines[33]);
                     break;
                 case 45:
-                    EnablePopup();
-                    text.text = "looks like you dont have enough connectors to reach the house. Let's use the last item in an inventory, this is called a node. Place it down at the end of the tile";
+                    text.text = doTranslation(dataLines[34]);
                     break;
                 case 46:
-                    DisablePopup();
-                    StartCoroutine(NodesOwnedCheckRoutine(0));
+                    text.text = doTranslation(dataLines[35]);
                     break;
                 case 47:
-                    EnablePopup();
-                    text.text = "Nodes allow you to end your connection and continue the next turn";
+                    text.text = doTranslation(dataLines[36]);
                     break;
                 case 48:
-                    text.text = "But be careful you are only granted one per game and it comes as a cost";
+                    text.text = doTranslation(dataLines[37]);
                     break;
                 case 49:
-                    text.text = "Other players can also use your node to end their connection midway as well and continue their turn, So you'll have to be strategic about their placement";
+                    DisablePopup();
+                    //(int x, int y)[] coordinates = { (8, 5), (10, 0), (8,8), (6,10)};
+                    validHouses.Add((8, 5));
+                    validHouses.Add((10, 0));
+                    validHouses.Add((8, 8));
+                    validHouses.Add((6, 10));
+                    validHouses.Add((11, 6));
+                    turnCheck = true;
+                    StartCoroutine(MultiTileCheckRoutine(validHouses));
                     break;
                 case 50:
-                    text.text = "Now place use your last connector to place over the node to end your turn ";
+                    turnCheck = true;
+                    if (TileManager.tiles[11][6].OwnedBy == player1 || TileManager.tiles[11][6].OwnedBy == player2)
+                    {
+                        SceneManager.LoadScene("Winnner");
+                    }
+                    else
+                    {
+                        if (TileManager.tiles[6][10].OwnedBy == null)
+                        {
+                            aimoves.Clear();
+                            aimoves.Add((5, 12));
+                            aimoves.Add((5, 11));
+                            aimoves.Add((6, 10));
+                            startAiMoves(aimoves);
+                            validHouses.Remove((6, 10));
+                        }
+                    }
                     break;
                 case 51:
-                    text.text = "Connect to a house closest to you starting from your node to complete the tutorial";
+                    player1.clearHand()
+                            .refilSpecificHand(1, 1, 2);
+                    turnCheck = true;
                     break;
                 case 52:
-                    {
-                        addTile(6, 9);
-                        addTile(7, 9);
-                        addTile(8, 8);
-                        player2.gameData.totalPoint = 42;
-                        DisablePopup();
-                        StartCoroutine(TileCheckRoutine(8, 5));
-                        StartCoroutine(TileCheckRoutine(8, 8));
-                        StartCoroutine(TileCheckRoutine(13, 10));
-                        StartCoroutine(TileCheckRoutine(6, 10));
-                        break;
-                    }
-                case 53:
-                    EnablePopup();
-                    text.text = "Congratulations on finsihing the tutorial! Continue making Alkmaar a greener place!";
+                    turnCheck = true;
+                    StartCoroutine(MultiTileCheckRoutine(validHouses));
                     break;
+                case 53:
+                    if (TileManager.tiles[11][6].OwnedBy == player1 || TileManager.tiles[11][6].OwnedBy == player2)
+                    {
+                        SceneManager.LoadScene("Winnner");
+                    } else
+                    {
+                        if (TileManager.tiles[13][10].OwnedBy == null)
+                        {
+                            aimoves.Clear();
+                            aimoves.Add((6, 11));
+                            aimoves.Add((7, 11));
+                            aimoves.Add((8, 11));
+                            aimoves.Add((9, 11));
+                            aimoves.Add((10, 11));
+                            aimoves.Add((11, 11));
+                            aimoves.Add((12, 10));
+                            aimoves.Add((13, 10));
+                            startAiMoves(aimoves);
+                        }
+                    }
+                    break;
+                case 54:
+                    player1.clearHand()
+                            .refilSpecificHand(1, 1, 2);
+                    turnCheck = true;
+                    break;
+                case 55:
+                    turnCheck = true;
+                    StartCoroutine(MultiTileCheckRoutine(validHouses));
+                    break;
+                case 56:
+                    turnCheck = true;
+                    if (TileManager.tiles[11][6].OwnedBy == player1 || TileManager.tiles[11][6].OwnedBy == player2)
+                    {
+                        SceneManager.LoadScene("Winnner");
+                    }
+                    else
+                    {
+                        if (TileManager.tiles[11][6].OwnedBy == null)
+                        {
+                            aimoves.Clear();
+                            aimoves.Add((12, 9));
+                            aimoves.Add((12, 8));
+                            aimoves.Add((11, 7));
+                            aimoves.Add((11, 6));
+                            startAiMoves(aimoves);
+                            
+                        }
+                    }
+                    break;
+                case 57:
+                    EnablePopup();
+                    text.text = "It looks like your oponent has bested you this time. Play the tutorial again or try your luck online";
+                    break;
+                case 58:
+                    text.text = "Have fun making Alkmaar a greener place to live";
+                    break;
+                case 59:
+                    SceneManager.LoadScene("Winnner");
+                    break;
+
+
+
+
+
             }
         }
     }
@@ -357,6 +449,29 @@ public class TutorialState : GameState
 
     }
 
+
+    private IEnumerator MultiTileCheckRoutine(List<(int x, int y)> coordinates)
+    {
+        go = false;
+        while (true)
+        {
+            foreach (var item in coordinates)
+            {
+                if (TileManager.tiles[item.x][item.y].OwnedBy == player1)
+                {
+                    go = true;
+                    autoAdvance = true;
+                    validHouses.Remove((item.x, item.y));
+                    yield break;
+
+                }
+
+            }
+            yield return 0;
+
+        }
+    }
+
     private IEnumerator TurnCheckRoutine(bool YourTurn = true, bool AutoAdvance = true)
     {
         go = false;
@@ -366,6 +481,7 @@ public class TutorialState : GameState
             {
                 go = true;
                 autoAdvance = AutoAdvance;
+
                 yield break;
             }
             yield return 0;
@@ -498,14 +614,15 @@ public class TutorialState : GameState
         textTitle.text = "Tutorial:";
     }
 
-    public void startAiMoves()
+    public void startAiMoves(List<(int x, int y)> coordinates)
     {
         /*Make ai have connectionsns to the two houses closed to him */
         player2.gameData.PlayerColour = Color.black;
-        addTile(0, 14);
-        addTile(0, 13);
-        addTile(1, 13);
-        addTile(2, 13);
+
+        foreach(var item in coordinates)
+        {
+            addTile(item.x, item.y);
+        }
     }
 
     private void addTile(int x, int y)
