@@ -723,14 +723,24 @@ public class TileManager : MonoBehaviour
                     (bool valid, Tile tile, Tile source, Tile previous) result = isValidTileToChoose(tile.GetSpecialOriginTile(), Instigator);
                     var specialNeighbours = getSpecialNeighbours(tile.GetSpecialOriginTile());
                     bool specialValid = false;
-
                     foreach (var item in specialNeighbours)
                     {
-                        if (isValidTileToChoose(tile.GetSpecialOriginTile(), Instigator).valid)
+                        if (isValidTileToChoose(item, Instigator).valid)
                         {
                             specialValid = true;
                         }
                     }
+                    
+                    if (tile.OwnedBy == null && tile.SelectedBy == null && specialValid)
+                    {//Save previous steps of the connection for the connector to trace back origin
+                        Instigator.gameData.tilesChosen.Add(tile);
+                        tile.SelectedBy = Instigator;
+                        GameState.instance.SelectedConnector.PreviousStep = result.previous;
+                        GameState.instance.SelectedConnector.Source = result.source;
+                        tile.Connector = GameState.instance.SelectedConnector;
+                    }
+                    
+
                     /*if (specialValid)
                     {
                         foreach (Tile t in specialNeighbours)
@@ -739,12 +749,19 @@ public class TileManager : MonoBehaviour
                             t.SelectedBy = Instigator;
                         }
                     }*/
-                    Instigator.gameData.tilesChosen.Add(tile);
-                    tile.SelectedBy = Instigator;
+                    /*Instigator.gameData.tilesChosen.Add(tile);
+                    tile.SelectedBy = Instigator;*/
                 }
                 else
                 {
                     GameState.instance.showWarningMessage(tile);
+                    foreach (var item in neighbours)
+                    {
+                        if (item.Connector)
+                        {
+                            item.Connector.UsedForConnector = false;
+                        }
+                    }
                 }
             }
             else
@@ -839,7 +856,7 @@ public class TileManager : MonoBehaviour
                     {
                         go = true;
                     }
-                    else if (neighbour.Connector.GetLastTile() == neighbour && !neighbour.Connector.UsedForConnector/*)*/ && neighbour == neighbour.Connector.GetLastTile())
+                    else if (neighbour.Connector.GetLastTile() == neighbour /*&& !neighbour.Connector.UsedForConnector*/ && neighbour == neighbour.Connector.GetLastTile())
                     {
                         if (!((t.Structure is HeatPump) ? !GameState.instance.SelectedConnector.IsHeat : false || (t.Structure is SolarPanel) ? !GameState.instance.SelectedConnector.IsSolar : false))
                         {
