@@ -223,7 +223,7 @@ public class TileManager : MonoBehaviour
         {
             xPos += xOffset / 2f;
         }
-        if (x == 4 && y == 2)
+        if ((x == 4 && y == 2) || (x == 9 && y == 2) || (x == 10 && y == 9))
         {
             hex_cell = (Tile)Instantiate(hexPrefab, new Vector3(xPos, 0, y * zOffset), Quaternion.identity);
             hex_cell.GetComponentInChildren<MeshRenderer>().material.color = new Color(0.1f, 0.56f, 0.89f, 1);
