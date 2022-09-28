@@ -1473,5 +1473,13 @@ namespace BitBenderGames {
       Gizmos.DrawWireCube(boundaryCenter, boundarySize);
     }
 
-  }
+    public void SetStartTurnCamera() {
+            Tile t = GameState.instance.player1.gameData.tilesTaken[0];
+
+            Transform.position = t.transform.position;
+
+            Transform.position = new Vector3(transform.position.x, transform.position.y + 4, transform.position.z - 4);
+            SetTargetPosition(Transform.position);
+        }
+    }
 }

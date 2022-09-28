@@ -376,6 +376,7 @@ MonoBehaviour:
     LitBuilding: {fileID: 186562, guid: 6d069029a27ecaa449153748f419bb2c, type: 3}
     HeatPipeIcon: {fileID: 2865793449883772308, guid: e4f784d36c4a21a4e8b3bff5fe239e0a, type: 3}
     SolarCableIcon: {fileID: 1549299620022607125, guid: 0a4073a51db66b24aadad4147003df68, type: 3}
+  CameraObj: {fileID: 1853396738}
   player1: {fileID: 136995009}
   player2: {fileID: 424589832}
   warningTextPrefab: {fileID: 6127957478970268862, guid: be8859025959f864ab135c70143dd8fe, type: 3}

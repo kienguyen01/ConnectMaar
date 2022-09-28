@@ -293,6 +293,8 @@ public class MultiplayerState : GameState
                 player1.gameData.tilesTaken.Add(TileManager.tiles[14][22]);
             }
         }
+
+        CameraObj.SetStartTurnCamera();
     }
 
     [PunRPC]

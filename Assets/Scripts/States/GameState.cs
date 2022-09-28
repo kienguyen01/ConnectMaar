@@ -9,6 +9,7 @@ using mixpanel;
 using Photon.Pun;
 using System;
 using UnityEngine.Localization.Settings;
+using BitBenderGames;
 
 [System.Serializable]
 public struct GameStateConfig
@@ -30,6 +31,8 @@ public class GameState : MonoBehaviourPunCallbacks
 {
     public GameStateConfig config;
     public DynamicBuildings models;
+
+    public MobileTouchCamera CameraObj;
 
     [HideInInspector]
     public PlayerState player1;
