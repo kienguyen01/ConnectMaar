@@ -283,7 +283,8 @@ public class TileManager : MonoBehaviour
     private void addSpecialBuildingsTutorial(Tile hex_cell)
     {
         string tileCoords = hex_cell.X.ToString().PadLeft(3, '0') + "|" + hex_cell.Y.ToString().PadLeft(3, '0');
-
+        Vector3 v3 = hex_cell.transform.position;
+        GameObject icon;
         switch (tileCoords)
         {
             case "007|000":
@@ -321,12 +322,24 @@ public class TileManager : MonoBehaviour
                 hex_cell.AddStructure<HMaria>(church_cell);
                 break;
             case "004|002":
+                v3.y += 0.201f;
+                icon = Instantiate(GameState.instance.models.SolarCableIcon, hex_cell.transform);
+                icon.transform.position = v3;
+                icon.transform.parent = hex_cell.transform;
                 hex_cell.IsScrabbleForSolar = true;
                 break;
             case "009|002":
+                v3.y += 0.201f;
+                icon = Instantiate(GameState.instance.models.SolarCableIcon, hex_cell.transform);
+                icon.transform.position = v3;
+                icon.transform.parent = hex_cell.transform;
                 hex_cell.IsScrabbleForSolar = true;
                 break;
             case "010|009":
+                v3.y += 0.201f;
+                icon = Instantiate(GameState.instance.models.SolarCableIcon, hex_cell.transform);
+                icon.transform.position = v3;
+                icon.transform.parent = hex_cell.transform;
                 hex_cell.IsScrabbleForSolar = true;
                 break;
             default:
