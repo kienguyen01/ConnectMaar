@@ -5,7 +5,6 @@ using System.IO;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;

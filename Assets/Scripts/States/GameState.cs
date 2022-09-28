@@ -477,13 +477,14 @@ public class GameState : MonoBehaviourPunCallbacks
                             if (ctr.Source.Structure.GetType().Equals(typeof(SpecialBuilding)))
                                 multiplier = 1.5f;
 
-                            player1.gameData.totalPoint -= 3 * multiplier /*/ connectorCount*/; //TODO: CHANGE PLACEHOLDER VALUE
+                            player1.gameData.totalPoint -= 2 * multiplier /*/ connectorCount*/; //TODO: CHANGE PLACEHOLDER VALUE
                                                                                                 //Debug.LogError(connectorCount);
                             Debug.LogError(player1.gameData.totalPoint);
                         }
-                        else if (t.Structure.GetType().Equals(typeof(SpecialBuilding)))
+                        else if (t.IsSpecial() && (t.Structure.GetType().Equals(typeof(AFAS)) || t.Structure.GetType().Equals(typeof(HMaria)) || t.Structure.GetType().Equals(typeof(Investa))
+                            || t.Structure.GetType().Equals(typeof(DeMeent)) || t.Structure.GetType().Equals(typeof(DaltonCollege)) || t.Structure.GetType().Equals(typeof(Bloemwijk))))
                         {
-                            ((SpecialBuilding)ctr.GetLastTile().Structure).GetSpecialBonus();
+                            ((SpecialBuilding)t.GetSpecialOriginTile().Structure).GetSpecialBonus();
                             player1.gameData.totalPoint -= 5 /*/ conn.Connectors.Count*/; //TODO: CHANGE PLACEHOLDER VALUE
                         }
 
