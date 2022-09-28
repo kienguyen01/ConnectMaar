@@ -86,6 +86,7 @@ public class TutorialState : GameState
     IEnumerator TutorialRoutine()
     {
         //changeTutorialMessage();
+        text.text = doTranslation(text.text);
         go = true;
         autoAdvance = false;
         temporaryRoutines = 0;
@@ -122,7 +123,6 @@ public class TutorialState : GameState
     private void changeTutorialMessage()
     {
         List<(int x, int y)> aimoves = new List<(int x, int y)>();
-
         if (text)
         {
             switch (index)//TODO Ideally, move every text into an array and just change with index value
@@ -346,9 +346,9 @@ public class TutorialState : GameState
                     break;
                 case 50:
                     turnCheck = true;
-                    if (TileManager.tiles[11][6].OwnedBy == player1 || TileManager.tiles[11][6].OwnedBy == player2)
+                    if (TileManager.tiles[11][6].OwnedBy == player1)
                     {
-                        SceneManager.LoadScene("Winnner");
+                        SceneManager.LoadScene("WINNER");
                     }
                     else
                     {
@@ -361,19 +361,15 @@ public class TutorialState : GameState
                             startAiMoves(aimoves);
                             validHouses.Remove((6, 10));
                         }
+                        player1.clearHand()
+                            .refilSpecificHand(1, 1, 2);
                     }
                     break;
                 case 51:
-                    player1.clearHand()
-                            .refilSpecificHand(1, 1, 2);
-                    turnCheck = true;
-                    break;
-                case 52:
-                    turnCheck = true;
                     StartCoroutine(MultiTileCheckRoutine(validHouses));
                     break;
-                case 53:
-                    if (TileManager.tiles[11][6].OwnedBy == player1 || TileManager.tiles[11][6].OwnedBy == player2)
+                case 52:
+                    if (TileManager.tiles[11][6].OwnedBy == player1)
                     {
                         SceneManager.LoadScene("Winnner");
                     } else
@@ -391,19 +387,15 @@ public class TutorialState : GameState
                             aimoves.Add((13, 10));
                             startAiMoves(aimoves);
                         }
+                        player1.clearHand()
+                                    .refilSpecificHand(1, 1, 2);
                     }
-                    break;
-                case 54:
-                    player1.clearHand()
-                            .refilSpecificHand(1, 1, 2);
                     turnCheck = true;
                     break;
-                case 55:
-                    turnCheck = true;
+                case 53:
                     StartCoroutine(MultiTileCheckRoutine(validHouses));
                     break;
-                case 56:
-                    turnCheck = true;
+                case 54:
                     if (TileManager.tiles[11][6].OwnedBy == player1 || TileManager.tiles[11][6].OwnedBy == player2)
                     {
                         SceneManager.LoadScene("Winnner");
@@ -417,26 +409,23 @@ public class TutorialState : GameState
                             aimoves.Add((12, 8));
                             aimoves.Add((11, 7));
                             aimoves.Add((11, 6));
+                            aimoves.Add((11, 5));
+                            aimoves.Add((11, 7));
+                            aimoves.Add((12, 6));
                             startAiMoves(aimoves);
-                            
                         }
                     }
                     break;
-                case 57:
+                case 55:
                     EnablePopup();
-                    text.text = "It looks like your oponent has bested you this time. Play the tutorial again or try your luck online";
+                    text.text = doTranslation(dataLines[38]);
                     break;
-                case 58:
-                    text.text = "Have fun making Alkmaar a greener place to live";
+                case 56:
+                    text.text = doTranslation(dataLines[39]);
                     break;
-                case 59:
-                    SceneManager.LoadScene("Winnner");
+                case 57:
+                    SceneManager.LoadScene("Menu");
                     break;
-
-
-
-
-
             }
         }
     }

@@ -11,7 +11,7 @@ Follow the highlighted tiles by using the available connectors
 The more connectors you used, the less efficient the connection will be
 Your inventory will be refiled at the end of the turn
 Would you look at that? Your emission bar has decreased by 3 points
-1 connector = 3 points  \n 2 Connectors =  2 points  \n  3 Connectors = 1 point
+1 connector = 3 points  /n 2 Connectors =  2 points  /n  3 Connectors = 1 point
 Use the newly acquired connectors to make a connection to the house nearby using one 3 connector and a single connector
 Your emission levels have further reduced by 2 points. This is because you used two connections instead of a single one
 It looks like you built over special tiles and gained 3 special connectors
@@ -36,3 +36,5 @@ But be careful you are only granted one per game and it comes with a cost
 Other players can also use your node the same way you could, So you'll have to be strategic about their placement
 Congratulations on finishing the tutorial! Continue making Alkmaar a greener place!
 Make your way to the church before your opponent catches up.
+It looks like your oponent has bested you this time. Play the tutorial again or try your luck online
+Have fun making Alkmaar a greener place to live
