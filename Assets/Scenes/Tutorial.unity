@@ -779,10 +779,14 @@ MonoBehaviour:
     TileManagerClass: {fileID: 6393859954093753031, guid: b50a3aca46555f64ba44296ac5c29862, type: 3}
     timer: {fileID: 0}
   models:
-    UnLitBuilding: {fileID: 0}
-    LitBuilding: {fileID: 0}
+    LitBuilding: {fileID: 186562, guid: 6d069029a27ecaa449153748f419bb2c, type: 3}
+    HeatPipeIcon: {fileID: 2865793449883772308, guid: e4f784d36c4a21a4e8b3bff5fe239e0a, type: 3}
+    SolarCableIcon: {fileID: 1549299620022607125, guid: 0a4073a51db66b24aadad4147003df68, type: 3}
+  CameraObj: {fileID: 0}
   player1: {fileID: 0}
   player2: {fileID: 0}
+  warningTextPrefab: {fileID: 0}
+  welcomeTextPrefab: {fileID: 0}
   tileManager: {fileID: 0}
   p3: 0
   turnCheck: 0
