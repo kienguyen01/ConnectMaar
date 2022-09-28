@@ -294,8 +294,8 @@ public class TileManager : MonoBehaviour
                 hex_cell.AddStructure<House>(solar_cell);
                 break;
             case "000|007":
-                DeMeent stadium_cell = (DeMeent)Instantiate(deMeentStadiumPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset - 1.6f), Quaternion.Euler(0, 0, 0));
-                stadium_cell.transform.localScale = new Vector3(0.18f, 0.18f, 0.18f);
+                AFAS stadium_cell = (AFAS)Instantiate(AFASPrefab, new Vector3(hex_cell.X * xOffset + 1f, 0.205f, hex_cell.Y * zOffset - 0.17f), Quaternion.Euler(0, 0, 0));
+                stadium_cell.transform.localScale = new Vector3(0.13f, 0.13f, 0.13f);
                 stadium_cell.name = "stadium_" + hex_cell.X + "_" + hex_cell.Y;
 
                 hex_cell.openInfoCard += (PlayerState player) =>
@@ -305,10 +305,10 @@ public class TileManager : MonoBehaviour
                     //Debug.Log("!!! OpenInfoCard !!!");
                     //todo open infocard
                 };
-                hex_cell.AddStructure<DeMeent>(stadium_cell);
+                hex_cell.AddStructure<AFAS>(stadium_cell);
                 break;
             case "011|006":
-                HMaria church_cell = (HMaria)Instantiate(ChurchPrefab, new Vector3(hex_cell.X * xOffset + 0.507f, 0.2f, hex_cell.Y * zOffset - 0.55f), Quaternion.Euler(0, 0, 0));
+                HMaria church_cell = (HMaria)Instantiate(ChurchPrefab, new Vector3(hex_cell.X * xOffset + 0.63f, 0.2f, hex_cell.Y * zOffset), Quaternion.Euler(0, 0, 0));
                 church_cell.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
                 church_cell.name = "church_" + hex_cell.X + "_" + hex_cell.Y;
 
