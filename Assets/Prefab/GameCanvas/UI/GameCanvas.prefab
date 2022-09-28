@@ -4899,7 +4899,7 @@ MonoBehaviour:
   m_fontSizeMin: 12
   m_fontSizeMax: 25
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -4928,7 +4928,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -230.77597, y: -36.2559, z: -224.70172, w: -35.058765}
+  m_margin: {x: -62.877934, y: -36.2559, z: -271.71262, w: -35.058765}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5212,7 +5212,7 @@ MonoBehaviour:
   m_fontSizeMin: 12
   m_fontSizeMax: 25
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -5241,7 +5241,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -230.77597, y: -36.2559, z: -224.70172, w: -35.058765}
+  m_margin: {x: -69.595566, y: -36.2559, z: -268.72604, w: -35.058765}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -6331,7 +6331,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -230.77597, y: -36.2559, z: -224.70172, w: -35.058765}
+  m_margin: {x: -183.07956, y: -36.2559, z: -178.43718, w: -35.058765}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -12097,7 +12097,7 @@ MonoBehaviour:
   m_fontSizeMin: 12
   m_fontSizeMax: 25
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -12126,7 +12126,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -230.77597, y: -36.2559, z: -224.70172, w: -35.058765}
+  m_margin: {x: -79.29359, y: -36.2559, z: -228.43097, w: -35.058765}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
