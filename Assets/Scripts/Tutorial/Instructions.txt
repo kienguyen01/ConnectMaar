@@ -11,7 +11,7 @@ Follow the highlighted tiles by using the available connectors
 The more connectors you used, the less efficient the connection will be
 Your inventory will be refiled at the end of the turn
 Would you look at that? Your emission bar has decreased by 3 points
-1 connector = 3 points  /n 2 Connectors =  2 points  /n  3 Connectors = 1 point
+1 connector = 3 points     2 Connectors =  2 points     3 Connectors = 1 point
 Use the newly acquired connectors to make a connection to the house nearby using one 3 connector and a single connector
 Your emission levels have further reduced by 2 points. This is because you used two connections instead of a single one
 It looks like you built over special tiles and gained 3 special connectors
@@ -20,7 +20,7 @@ The special connector you have can only be used to connect to a solar panel.
 Special connectors like these can only be placed on one grid one at a time
 You have now added a solar pannel to your connection. Congratulations! this will be useful later
 There are two types of special connectors you can get from the tiles over the map and they can only be used for a specific power source
-Heat connectors = Heat pumps, \n Solar connectors = Solar pannels
+Heat connectors = Heat pumps,    Solar connectors = Solar pannels
 Let us use our newly acquired solar energy in our grid to power a key location in Alkmaar
 First, please tap on the stadium at the bottom of the map
 That was the info-Card for the AFAS Stadium. Each card has some fun facts about the location on the left-hand side.

@@ -421,9 +421,6 @@ public class TutorialState : GameState
                     text.text = doTranslation(dataLines[38]);
                     break;
                 case 56:
-                    text.text = doTranslation(dataLines[39]);
-                    break;
-                case 57:
                     SceneManager.LoadScene("Menu");
                     break;
             }
