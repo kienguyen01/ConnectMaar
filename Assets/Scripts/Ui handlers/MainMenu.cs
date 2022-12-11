@@ -58,6 +58,10 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("Menu");
     }
+    public void JoinDiscord()
+    {
+        Application.OpenURL("https://discord.gg/bnNF7Krrbq");
+    }
     public void OnLanguageChange(TMP_Dropdown dropdown)
     {
         PlayerPrefs.SetString("Selected_Language", (dropdown.value == 0) ? LanguageCodes.Dutch : LanguageCodes.English);
